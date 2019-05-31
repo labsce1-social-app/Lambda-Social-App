@@ -1,15 +1,17 @@
 
-exports.up = function(knex, Promise) {
+exports.up = function (knex, Promise) {
   return knex.schema.createTable('user', user => {
-      user
+    user
       .increments('id');
-      user
+    user
       .string('username', 25)
       .unique()
       .notNullable()
   })
 };
 
-exports.down = function(knex, Promise) {
+exports.down = function (knex, Promise) {
   return knex.schema.dropTableIfExists('user');
 };
+
+// SELECT 'user' WHERE 'id' = 'id' INSERT 'subtopicID'
