@@ -1,12 +1,11 @@
-const { genUsers } = require('../utils/')
+const { genUsers } = require('../utils/');
 
-exports.seed = function (knex, Promise) {
+exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
-  return knex('user').del()
-    .then(function () {
+  return knex('user')
+    .del()
+    .then(function() {
       // Inserts seed entries
-      return knex('user').insert(
-        genUsers
-      );
+      return knex('user').insert(genUsers);
     });
 };
