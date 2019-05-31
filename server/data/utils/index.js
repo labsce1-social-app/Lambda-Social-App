@@ -1,6 +1,52 @@
 const faker = require('faker');
 
-const subtopic_ids = [1, 2, 3, 4];
+const fakeIds = [
+  1,
+  '',
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  '',
+  '',
+  '',
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  '',
+  18,
+  '',
+  19,
+  '',
+  '',
+  20,
+  21,
+  22,
+  '',
+  '',
+  '',
+  '',
+  23,
+  24,
+  25,
+  '',
+  '',
+  26,
+  27,
+  '',
+  28,
+  29,
+  30
+];
 function getRandomArbitrary(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
@@ -27,6 +73,28 @@ function generateSubtopics() {
   };
 }
 
+function generateDiscussions() {
+  return {
+    subtopic_id: getRandomArbitrary(1, 20),
+    title: faker.lorem.text(10),
+    image: faker.image.imageUrl()
+  };
+}
+
+function generateComments() {
+  return {
+    comment_post: faker.lorem.text(30),
+    comment_id: pickOne(fakeIds)
+  };
+}
+
+function generateUpvotes() {
+  return {
+    discussion_id: getRandomArbitrary(1, 20),
+    user_id: getRandomArbitrary(1, 10)
+  };
+}
+
 // helper to generate a specified amount of users
 //call back will be the users function, iterator will be how many we want to generate
 function accumulate(cb, iteration) {
@@ -41,5 +109,8 @@ function accumulate(cb, iteration) {
 module.exports = {
   genUsers: accumulate(generateUsers, 10),
   genSubtopics: accumulate(generateSubtopics, 20),
-  genSubtopicUsers: accumulate(generateSubtopic_users, 20)
+  genSubtopicUsers: accumulate(generateSubtopic_users, 20),
+  genDiscussions: accumulate(generateDiscussions, 20),
+  genComments: accumulate(generateComments, 50),
+  genUpvotes: accumulate(generateUpvotes, 89)
 };
