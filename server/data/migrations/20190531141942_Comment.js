@@ -15,9 +15,7 @@ exports.up = function (knex, Promise) {
 
     comment
       .text('comment_post')
-      .notNullable()
-      .onDelete('CASCADE')
-      .onUpdate('CASCADE');
+      .notNullable();
 
     comment
       .integer('comment_id')
