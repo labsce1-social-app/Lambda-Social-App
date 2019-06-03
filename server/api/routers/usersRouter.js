@@ -64,11 +64,13 @@ router.post('/users', (req, res) => {
       message:
         'username must not be blank and must contain up to 25 characters.'
     });
+  } else if (db('user').where('username' == user.username)) {
+    res.status(500).json({ message: 'user already exists' });
   } else {
     db('user')
       .insert(user)
       .then(user => {
-        res.status(201).json({ user: user });
+        res.status(201).json({ id: user, message: 'Succesfully created user' });
       })
       .catch(err => {
         res.status(500).json({ error: err });
