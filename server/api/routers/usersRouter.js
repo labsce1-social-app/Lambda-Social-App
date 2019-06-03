@@ -25,7 +25,7 @@ router.get('/users', (req, res) => {
 
 /*
 GET ROUTE get single user
-@PARAM = String! user id
+@PARAM = id
 ROUTE = '/api/users/:id
 returns = a single user object
 */
@@ -45,27 +45,50 @@ router.get('/users/:id', (req, res) => {
 
 /*
 POST ROUTE create a user
-@PARAM = {
-   user id: String!
+@BODY = {
    username: String!
 }
 ROUTE = '/api/users
 returns = returns created user
 */
 
+router.post('/users', (req, res) => {
+  const user = req.body;
+
+  if (
+    user.username.length === 0 ||
+    user.username.length > 25 ||
+    user.username === ''
+  ) {
+    res.status(400).json({
+      message:
+        'username must not be blank and must contain up to 25 characters.'
+    });
+  } else {
+    db('user')
+      .insert(user)
+      .then(user => {
+        res.status(201).json({ user: user });
+      })
+      .catch(err => {
+        res.status(500).json({ error: err });
+      });
+  }
+});
+
 /*
-PUT ROUTE delete a user
-@PARAM = {
-    id: String! user id
+PUT ROUTE update a user
+@BODY = {
     username: String!
 }
+@PARAM = id
 ROUTE = '/api/users/:id
 returns = returns new user info
 */
 
 /*
 DELETE ROUTE delete a user
-@PARAM = String! user id
+@PARAM = id
 ROUTE = '/api/users/:id
 returns = returns 1 for successful deletion
 */
