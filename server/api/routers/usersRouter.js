@@ -1,6 +1,11 @@
 const router = require('express').Router();
 const db = require('../../data/dbconfig.js');
 
+// Router test route
+router.get('/', (req, res) => {
+  res.status(200).send('working!');
+});
+
 /*
 GET ROUTE get all users
 @PARAM = NONE
@@ -8,8 +13,14 @@ ROUTE = '/api/users
 returns = [all users]
 */
 
-router.get('/', (req, res) => {
-  res.status(200).send('working!');
+router.get('/users', (req, res) => {
+  db('user')
+    .then(users => {
+      res.status(200).send(users);
+    })
+    .catch(err => {
+      res.status(404).json({ error: err });
+    });
 });
 
 /*
