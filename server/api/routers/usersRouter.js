@@ -19,7 +19,7 @@ router.get('/users', (req, res) => {
       res.status(200).send(users);
     })
     .catch(err => {
-      res.status(404).json({ error: err });
+      res.status(500).json({ error: err });
     });
 });
 
@@ -29,6 +29,19 @@ GET ROUTE get single user
 ROUTE = '/api/users/:id
 returns = a single user object
 */
+
+router.get('/users/:id', (req, res) => {
+  const id = req.params;
+
+  db('user')
+    .where(id)
+    .then(user => {
+      res.status(200).send(user);
+    })
+    .catch(err => {
+      res.status(500).json({ error: err });
+    });
+});
 
 /*
 POST ROUTE create a user
