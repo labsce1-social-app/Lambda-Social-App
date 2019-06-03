@@ -55,6 +55,7 @@ returns = returns created user
 router.post('/users', (req, res) => {
   const user = req.body;
 
+  // Username must not be empty, contains 0-25 characters
   if (
     user.username.length === 0 ||
     user.username.length > 25 ||
@@ -64,6 +65,7 @@ router.post('/users', (req, res) => {
       message:
         'username must not be blank and must contain up to 25 characters.'
     });
+    // Username will be rejected if name already exists
   } else if (db('user').where('username' == user.username)) {
     res.status(500).json({ message: 'user already exists' });
   } else {
