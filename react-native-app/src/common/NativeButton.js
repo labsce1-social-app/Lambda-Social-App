@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Header, Content, Button, Text } from 'native-base';
+import { Button, Text } from 'native-base';
 
 const NativeButton = (props) => {
     return (
@@ -21,9 +21,21 @@ const NativeButton = (props) => {
 export default NativeButton
 
 /*
-Usage
+options
 
-import NativeButton from './src/common/Button'
+colors {
+    primary: blue,
+    success: green
+    light: lightgrey,
+    info: lightblue,
+    warning: yellow,
+    danger: red
+    dark: darkgrey
+}
+
+block: extend the button to cover the page
+
+Usage
 
 for a small button
 <NativeButton success>Button</NativeButton>

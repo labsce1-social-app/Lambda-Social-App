@@ -3,9 +3,10 @@ import { StyleSheet, Text, View } from 'react-native';
 // custom font loader for native base
 import { Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
+import { Container, Content } from 'native-base'
 // components
-import NativeButton from './src/common/NativeButton'
-import IconButton from './src/common/IconButton'
+
+
 
 export default class App extends React.Component {
 
@@ -19,20 +20,13 @@ export default class App extends React.Component {
   }
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <NativeButton primary>Button</NativeButton>
-        <IconButton
-      </View>
-      );
-    }
+      <Container>
+        <Content>
+          {/* add content here */}
+        </Content>
+      </Container>
+    );
   }
-  
-const styles = StyleSheet.create({
-          container: {
-          flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-      },
-    });
+}
+
+
