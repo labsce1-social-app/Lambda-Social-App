@@ -136,4 +136,26 @@ ROUTE = '/api/users/:id
 returns = returns 1 for successful deletion
 */
 
+// this delete route is for dev purposes only
+// TODO: Protect delete route behind login middleware
+router.delete('/users/:id', (req, res) => {
+  const id = req.params;
+
+  db('user')
+    .where(id)
+    .del()
+    .then(count => {
+      if (count === 0) {
+        res.status(401).json({ message: 'user not found' });
+      } else {
+        res
+          .status(200)
+          .json({ message: `user id: ${id.id} successfuly deleted` });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ error: err });
+    });
+});
+
 module.exports = router;
