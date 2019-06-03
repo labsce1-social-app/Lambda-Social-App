@@ -1,12 +1,19 @@
+const router = require('express').Router();
+const db = require('../../data/dbconfig.js');
+
 /*
-GET ROUTE get a single user
+GET ROUTE get all users
 @PARAM = NONE
 ROUTE = '/api/users
 returns = [all users]
 */
 
+router.get('/', (req, res) => {
+  res.status(200).send('working!');
+});
+
 /*
-GET ROUTE get all users
+GET ROUTE get single user
 @PARAM = String! user id
 ROUTE = '/api/users/:id
 returns = a single user object
@@ -38,3 +45,5 @@ DELETE ROUTE delete a user
 ROUTE = '/api/users/:id
 returns = returns 1 for successful deletion
 */
+
+module.exports = router;
