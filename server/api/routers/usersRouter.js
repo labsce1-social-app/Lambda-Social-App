@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { usersHelper } = require('../helpers/index.js');
 const db = require('../../data/dbconfig.js');
 
 // Router test route
@@ -49,10 +50,10 @@ POST ROUTE create a user
    username: String!
 }
 ROUTE = '/api/users
-returns = returns created user
+returns = returns new user id
 */
 
-router.post('/users', (req, res) => {
+router.post('/users', async (req, res) => {
   const user = req.body;
 
   // Username must not be empty, contains 0-25 characters
@@ -66,17 +67,21 @@ router.post('/users', (req, res) => {
         'username must not be blank and must contain up to 25 characters.'
     });
     // Username will be rejected if name already exists
-  } else if (db('user').where('username' == user.username)) {
-    res.status(500).json({ message: 'user already exists' });
   } else {
-    db('user')
-      .insert(user)
-      .then(user => {
-        res.status(201).json({ id: user, message: 'Succesfully created user' });
-      })
-      .catch(err => {
-        res.status(500).json({ error: err });
-      });
+    if (await usersHelper.canInsertUser(user)) {
+      db('user')
+        .insert(user)
+        .then(user => {
+          res
+            .status(201)
+            .json({ id: user, message: 'Succesfully created user' });
+        })
+        .catch(err => {
+          res.status(500).json({ error: err });
+        });
+    } else {
+      res.status(500).json({ error: 'user already exists' });
+    }
   }
 });
 
@@ -89,6 +94,40 @@ PUT ROUTE update a user
 ROUTE = '/api/users/:id
 returns = returns new user info
 */
+
+router.put('/users/:id', async (req, res) => {
+  const id = req.params;
+  const user = req.body;
+
+  // Username must not be empty, contains 0-25 characters
+  if (
+    user.username.length === 0 ||
+    user.username.length > 25 ||
+    user.username === ''
+  ) {
+    res.status(400).json({
+      message:
+        'username must not be blank and must contain up to 25 characters.'
+    });
+    // Username will be rejected if name already exists
+  } else {
+    if (await usersHelper.canInsertUser(user)) {
+      db('user')
+        .where(id)
+        .update(user)
+        .then(user => {
+          res
+            .status(201)
+            .json({ id: user, message: 'Succesfully updated user' });
+        })
+        .catch(err => {
+          res.status(500).json({ error: err });
+        });
+    } else {
+      res.status(500).json({ error: 'user already exists' });
+    }
+  }
+});
 
 /*
 DELETE ROUTE delete a user
