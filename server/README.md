@@ -47,7 +47,7 @@ The endpoints link you to the functionality of the database and include:
 
 #### CREATE
 
-**create a note**
+**create a user**
 
 URI: `http://<server_address:port>`
 
@@ -55,7 +55,7 @@ ENDPOINT: `POST -> /api/users`
 
 URL: `URI/ENDPOINT`
 
-this endpoint takes in a json object as the body of the request that must contain a username (max 25 characters),and an id (automatically generated) :
+this endpoint takes in a json object as the body of the request that must contain a username (max 25 characters), and an id (automatically generated) :
 
 ```
 {
