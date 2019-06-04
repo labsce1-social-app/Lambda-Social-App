@@ -16,11 +16,11 @@ import HomePage from './src/views/LandingPage';
 const AppNavigator = createStackNavigator(
   {
     // RouteName: ComponentName,
-    Home: HomePage,
+    Home: { screen: HomePage },
   },
-  {
-    initialRouteName: 'Home'
-  }
+  // {
+  //   initialRouteName: 'Home'
+  // }
 );
 
 // place navigators inside createAppContainer

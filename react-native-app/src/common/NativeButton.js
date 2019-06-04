@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Text } from 'native-base';
+import { StyleSheet } from 'react-native';
 
 const NativeButton = (props) => {
     return (
@@ -13,10 +14,25 @@ const NativeButton = (props) => {
             warning={props.warning}
             danger={props.danger}
             dark={props.dark}
+            transparent={props.transparent}
+            style={styles.shadow}
+            bordered={props.bordered}
         ><Text>{props.children}</Text></Button>
-
     );
 }
+
+const styles = StyleSheet.create({
+    shadow: {
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 4
+        },
+        shadowOpacity: 0.15,
+        shadowRadius: 3.49,
+        elevation: 1
+    }
+})
 
 export default NativeButton
 
