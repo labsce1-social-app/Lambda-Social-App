@@ -1,69 +1,31 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Container } from 'native-base';
+import { Text, View, Image } from 'react-native';
+import { Container, Button } from 'native-base';
+import style from './Style';
 
 // Set up dummy image then redux method to get user image for post.
+let icon = require('./my-icon.png');
 
-export default class App extends React.Component {
-  render() {
-    return <Container style={styles.container}>
-      <Image style={style.icon} source={require('./my-icon.png')} />
-      <Text style={style.title}>Test</Text>
-    </Container>;
-  }
+const PostSummary = props => {
+    return (<View style={style.viewContainer}>
+        <Image style={style.icon} source={icon} />
+        <View style={style.textView}>
+          <View style={style.line1}>
+            <Text style={style.title}>{props.title}</Text>
+            <Text> </Text>
+            <Text>s/</Text>
+            <Text style={style.origin}>{props.subTopic}</Text>
+          </View>
+          <View style={style.line2}>
+            <Text style={style.name}>{props.name}</Text>
+            <Text> - </Text>
+            <Text style={style.date}>{props.date}</Text>
+          </View>
+          <View style={style.line3}>
+            <Text numberOfLines={1} ellipsizeMode='tail' style={style.comment}>{props.comment}</Text>
+          </View>
+        </View>
+      </View>)
 }
 
-const styles = StyleSheet.create({
-  // Post Summary Container
-  container: {
-    flex: 1,
-    borderWidth: 10 ,
-  },
-  // Post Summary Text Container for vertical stacking
-  textContainer: {
-
-  },
-  line1: {
-
-  },
-  line2: {
-
-  },
-  line3: {
-
-  },
-  // Post Summary Icon
-  icon: {
-    height: 25,
-    width: 25,
-    borderWidth: 1
-  },
-  // Post Summary Title
-  title: {
-
-  },
-  // Post Summary SubTopic Origin
-  origin: {
-
-  },
-  // Post Summary Username
-  username: {
-
-  },
-  // Post Summary Date
-  date: {
-
-  },
-  // Post Summary Truncated Text Comment
-  comment: {
-
-  },
-  // Post Summary Comment Count
-  commentCount: {
-
-  },
-  // Post Summary Upvotes
-  upvotes: {
-
-  }
-});
+export default PostSummary;
