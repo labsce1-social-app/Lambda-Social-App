@@ -25,4 +25,17 @@ ROUTE = '/api/subtopics/:id
 returns = [single subtopic]
 */
 
+router.get('/subtopics/:id', (req, res) => {
+  const id = req.params;
+
+  db('subtopic')
+    .where(id)
+    .then(subtopic => {
+      res.status(200).send(subtopic);
+    })
+    .catch(err => {
+      res.status(500).json({ error: err });
+    });
+});
+
 module.exports = router;
