@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   createDrawerNavigator,
   createAppContainer,
@@ -14,7 +16,7 @@ import HomePage from './src/views/LandingPage';
 const AppNavigator = createStackNavigator(
   {
     // RouteName: ComponentName,
-    Home: HomePage
+    Home: HomePage,
   },
   {
     initialRouteName: 'Home'
