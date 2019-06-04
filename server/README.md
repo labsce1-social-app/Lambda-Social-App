@@ -60,6 +60,47 @@ this endpoint takes in a json object as the body of the request that must contai
 ```
 {
   "id": "1",
-  "username": "some content",
+  "username": "some content"
 }
 ```
+
+(INSERT IMAGE HERE)
+
+### READ
+
+**get a list of all users**
+
+URI: `http://<server_address:port>`
+
+ENDPOINT: `GET -> /api/users`
+
+(INSERT IMAGE HERE)
+
+**read a single note by id**
+`GET -> /api/users/:id`
+
+(INSERT IMAGE HERE)
+
+### UPDATE
+
+**update a user by id**
+`PUT -> /api/users/:id`
+
+this endpoint takes in a json object as the body of the request that must contain a username :
+
+```
+{
+  "username": "some content"
+}
+```
+
+(INSERT IMAGE HERE)
+
+### DELETE
+
+**delete a user by id**
+`DELETE -> /api/users/:id`
+
+(INSERT IMAGE HERE)
+
+
