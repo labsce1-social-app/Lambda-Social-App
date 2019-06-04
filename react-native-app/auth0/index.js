@@ -67,16 +67,26 @@ export default class Login extends React.Component {
     const decoded = jwtDecode(jwtToken);
 
     const { name } = decoded;
-    this.setState({ name });
+    this.setState({ name, session: response.type });
+  };
+
+  handleLogout = () => {
+    AuthSession.dismiss();
+
+    this.setState({ name: null });
   };
 
   render() {
     const { name } = this.state;
+    console.log(name);
 
     return (
       <View style={styles.container}>
         {name ? (
-          <Text style={styles.title}>You are logged in, {name}!</Text>
+          <View>
+            <Text style={styles.title}>You are logged in, {name}!</Text>
+            <Button title="logout" onPress={() => this.handleLogout()} />
+          </View>
         ) : (
           <Button title="Log in with Auth0" onPress={this.login} />
         )}
