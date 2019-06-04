@@ -8,6 +8,16 @@ ROUTE = '/api/subtopics
 returns = [all subtopics]
 */
 
+router.get('/subtopics', (req, res) => {
+  db('subtopic')
+    .then(subtopics => {
+      res.status(200).send(subtopics);
+    })
+    .catch(err => {
+      res.status(500).json({ error: err });
+    });
+});
+
 /*
 GET ROUTE get single subtopic
 @PARAM = ID
