@@ -10,7 +10,7 @@
 
 #### Frontend Built Using:
 
-- [React Native] (https://facebook.github.io/react-native/docs/0.59/getting-started)
+- [React Native](https://facebook.github.io/react-native/docs/0.59/getting-started)
 - Dependencies:
     - [Expo](https://docs.expo.io/versions/latest/)
 
