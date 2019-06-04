@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   createDrawerNavigator,
   createAppContainer,
@@ -19,9 +21,9 @@ const AppNavigator = createStackNavigator(
     Home: HomePage,
     Login: Login
   },
-  {
-    initialRouteName: 'Home'
-  }
+  // {
+  //   initialRouteName: 'Home'
+  // }
 );
 
 // place navigators inside createAppContainer

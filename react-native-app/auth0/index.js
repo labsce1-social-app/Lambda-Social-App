@@ -3,10 +3,15 @@ import { StyleSheet, Text, View, Button, Alert } from 'react-native';
 import { AuthSession } from 'expo';
 import jwtDecode from 'jwt-decode';
 
+<<<<<<< HEAD
+const auth0ClientId = 'W423lgISfP90cWYg3qSbrv6KkqCAyU02';
+const auth0Domain = 'https://yasashisenshi.auth0.com';
+=======
 import { AUTH0_CLIENT, AUTH0_DOMAIN } from 'react-native-dotenv';
 
 const auth0ClientId = AUTH0_CLIENT;
 const auth0Domain = AUTH0_DOMAIN;
+>>>>>>> 27478aa25c1c739600ac24ad70ced9ae6e220ac8
 
 /**
  * Converts an object to a query string.
@@ -78,8 +83,8 @@ export default class Login extends React.Component {
         {name ? (
           <Text style={styles.title}>You are logged in, {name}!</Text>
         ) : (
-          <Button title="Log in with Auth0" onPress={this.login} />
-        )}
+            <Button title="Log in with Auth0" onPress={this.login} />
+          )}
       </View>
     );
   }
