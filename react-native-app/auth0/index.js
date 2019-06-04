@@ -3,8 +3,10 @@ import { StyleSheet, Text, View, Button, Alert } from 'react-native';
 import { AuthSession } from 'expo';
 import jwtDecode from 'jwt-decode';
 
-const auth0ClientId = 'W423lgISfP90cWYg3qSbrv6KkqCAyU02';
-const auth0Domain = 'https://yasashisenshi.auth0.com';
+import { AUTH0_CLIENT, AUTH0_DOMAIN } from 'react-native-dotenv';
+
+const auth0ClientId = AUTH0_CLIENT;
+const auth0Domain = AUTH0_DOMAIN;
 
 /**
  * Converts an object to a query string.

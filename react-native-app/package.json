@@ -19,7 +19,9 @@
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
-    "babel-preset-expo": "^5.0.0"
+    "babel-preset-expo": "^5.0.0",
+    "metro-react-native-babel-preset": "^0.54.1",
+    "react-native-dotenv": "^0.2.0"
   },
   "private": true
 }
