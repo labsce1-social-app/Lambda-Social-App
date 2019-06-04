@@ -46,7 +46,7 @@ POST ROUTE create a subtopic
     creater_id: !INT
 }
 ROUTE = '/api/subtopics/create
-returns = [single subtopic]
+returns = [id of created subtopic]
 */
 
 router.post('/subtopics/create', async (req, res) => {
@@ -81,5 +81,17 @@ router.post('/subtopics/create', async (req, res) => {
     }
   }
 });
+
+/*
+DELETE ROUTE delete a subtopic
+@BODY = {
+    creater_id: !INT
+}
+@PARAMS = {
+    id: !INT
+}
+ROUTE = '/api/subtopics/:id
+returns = success if valid
+*/
 
 module.exports = router;
