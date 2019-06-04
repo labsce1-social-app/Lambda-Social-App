@@ -4,8 +4,7 @@ const cors = require('cors');
 
 // import all middleware here then export it to server.js
 module.exports = server => {
-    server.use(helmet());
-    server.use(cors());
-    server.use(morgan('dev'));
-}
-
+  server.use(helmet());
+  server.use(cors());
+  server.use(morgan('dev'));
+};
