@@ -76,7 +76,7 @@ ENDPOINT: `GET -> /api/users`
 
 (INSERT IMAGE HERE)
 
-**read a single note by id**
+**read a single users by id**
 `GET -> /api/users/:id`
 
 (INSERT IMAGE HERE)
