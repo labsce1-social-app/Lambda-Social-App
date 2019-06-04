@@ -8,13 +8,16 @@ import {
 // import ComponentName from './.'
 import HomePage from './src/views/LandingPage';
 
+import Login from './auth0/index';
+
 /** default stack navigation **
  * Drawer and tab Navigator need custom components
  */
 const AppNavigator = createStackNavigator(
   {
     // RouteName: ComponentName,
-    Home: HomePage
+    Home: HomePage,
+    Login: Login
   },
   {
     initialRouteName: 'Home'
