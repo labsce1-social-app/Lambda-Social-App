@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const db = require('../../data/dbconfig.js');
-const { checkValidUser } = require('../helpers/subtopicHelper.js');
+const { subtopicHelper } = require('../helpers/index.js');
 
 /*
 GET ROUTE get all subtopics
@@ -60,12 +60,25 @@ router.post('/subtopics/create', async (req, res) => {
   ) {
     res.status(400).json({
       message:
-        'title must be between 0 and 50 charecters,creater_id must be valid'
+        'title must be between 0 and 50 charecters, creater_id must be valid'
     });
-  } else if ((await checkValidUser(body.creater_id)) === false) {
+  } else if ((await subtopicHelper.checkValidUser(body.creater_id)) === false) {
     res.status(500).json({ error: 'no valid user found' });
   } else {
-    res.status(200).send('ok');
+    if (await subtopicHelper.canInsertSubtopic(body.title)) {
+      db('subtopic')
+        .insert(body)
+        .then(subtopic => {
+          res
+            .status(201)
+            .json({ id: subtopic, message: 'Succesfully created subtopic' });
+        })
+        .catch(err => {
+          res.status(500).json({ error: err });
+        });
+    } else {
+      res.status(500).json({ message: 'subtopic already exists' });
+    }
   }
 });
 

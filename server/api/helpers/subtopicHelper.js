@@ -18,6 +18,26 @@ const checkValidUser = async creater_id => {
   return isValid;
 };
 
+const canInsertSubtopic = async title => {
+  let canInsert = false;
+
+  await db('subtopic')
+    .where('title', title)
+    .then(rows => {
+      if (rows.length === 0) {
+        canInsert = true;
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+  console.log(canInsert);
+
+  return canInsert;
+};
+
 module.exports = {
-  checkValidUser
+  checkValidUser,
+  canInsertSubtopic
 };
