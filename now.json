@@ -1,0 +1,12 @@
+{
+    "name": "Lambda-Social-App",
+    "version": 2,
+    "alias": "Lambda-Social-App",
+    "github": {
+        "enabled": true,
+        "autoAlias": true
+    },
+    "builds": [
+        { "src": "server/index.js", "use": "@now/node", "config": { "maxLambdaSize": "10mb" } }
+    ]
+}
