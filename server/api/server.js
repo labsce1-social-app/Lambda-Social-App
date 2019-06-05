@@ -1,6 +1,6 @@
 const express = require('express');
 const middleware = require('./config/middleware');
-const { userRouter, subtopicRouter } = require('../api/routers/index.js');
+const { userRouter, subtopicRouter } = require('./routers/');
 
 const server = express();
 
