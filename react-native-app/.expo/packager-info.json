@@ -1,10 +1,9 @@
 {
-  "expoServerPort": 19000,
-  "expoServerNgrokUrl": "https://dk-5xs.sociallambda.react-native-app.exp.direct",
-  "packagerNgrokUrl": "https://packager.dk-5xs.sociallambda.react-native-app.exp.direct",
-  "ngrokPid": 10332,
   "devToolsPort": 19002,
-  "packagerPort": 19001,
-  "packagerPid": 3420,
-  "webpackServerPort": null
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }

@@ -1,15 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+// import { StyleSheet, Text, View } from 'react-native';
 // custom font loader for native base
 import { Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-import { Container, Content } from 'native-base';
-
 import AppNavigator from './AppNavigator';
 
 // memory usage optimize for screen changing
 import { useScreens } from 'react-native-screens';
-useScreens();
+import Wrapper from './src/components/Wrapper'
+import NativeHeader from './src/common/NativeHeader';
+// useScreens();
 
 export default class App extends React.Component {
   async componentDidMount() {
@@ -21,6 +21,11 @@ export default class App extends React.Component {
     });
   }
   render() {
-    return <AppNavigator />;
+    return (
+      <Wrapper>
+        <NativeHeader />
+        {/* <AppNavigator /> */}
+      </Wrapper>
+    );
   }
 }

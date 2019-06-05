@@ -1,8 +1,7 @@
-/** EXAMPLE HOME PAGE **/
-
 import React from 'react';
-
 import { Text, View } from 'react-native';
+import { Content } from 'native-base';
+
 
 const HomePage = props => {
   return (
