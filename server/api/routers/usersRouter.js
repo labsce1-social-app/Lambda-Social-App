@@ -32,10 +32,11 @@ returns = a single user object
 */
 
 router.get('/users/:id', (req, res) => {
-  const id = req.params;
+  const { id } = req.params;
 
   db('user')
-    .where(id)
+    .where({ id })
+    .first()
     .then(user => {
       res.status(200).json(user);
     })
