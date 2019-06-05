@@ -1,16 +1,25 @@
 /** EXAMPLE HOME PAGE **/
 
-import React from 'react';
+import React, { Component } from 'react';
 
 import { Text, View } from 'react-native';
+import Auth from '../../auth0';
+import { Header } from 'native-base';
 
-const HomePage = props => {
-  return (
-    <View>
-      <Text>Home</Text>
-      <Text onPress={() => props.navigation.navigate('Login')}>login</Text>
-    </View>
-  );
-};
+class HomePage extends Component {
+  // static navigationOptions = {
+  //   header: null
+  // };
+  render() {
+    return (
+      <View>
+        <Text onPress={() => this.props.navigation.navigate('Login')}>
+          login
+        </Text>
+        <Text> HOme </Text>
+      </View>
+    );
+  }
+}
 
 export default HomePage;
