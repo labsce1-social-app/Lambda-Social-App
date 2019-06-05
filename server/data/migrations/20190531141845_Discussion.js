@@ -19,7 +19,6 @@ exports.up = function (knex, Promise) {
       .integer('subtopic_id')
       .references('id')
       .inTable('subtopic')
-      .notNullable()
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
 
