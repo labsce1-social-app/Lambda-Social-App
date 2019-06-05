@@ -10,7 +10,7 @@ import React from 'react';
 
 // import ComponentName from './.'
 import HomePage from './src/views/LandingPage';
-import Login from './auth0/index';
+import Landing from './auth0/index';
 
 /** default stack navigation **
  * Drawer and tab Navigator need custom components
@@ -20,7 +20,7 @@ const AppNavigator = createBottomTabNavigator(
   {
     // RouteName: ComponentName,
     Posts: {
-      screen: Login, // name needs to change
+      screen: Landing, // name needs to change
       navigationOptions: {
         tabBarIcon: <Icon name="paper-plane" />
       }
@@ -40,7 +40,7 @@ const AppNavigator = createBottomTabNavigator(
     }
   },
   {
-    initialRouteName: 'Login'
+    initialRouteName: 'Posts'
   }
 );
 
