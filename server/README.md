@@ -74,6 +74,8 @@ URI: `http://<server_address:port>`
 
 ENDPOINT: `GET -> /api/users`
 
+URL: `URI/ENDPOINT`
+
 ![alt text](./readme_files/GET.png "READ")
 
 **read a single users by id**
@@ -84,7 +86,13 @@ ENDPOINT: `GET -> /api/users`
 ### UPDATE
 
 **update a user by id**
-`PUT -> /api/users/:id`
+
+URI: `http://<server_address:port>`
+
+ENDPOINT: `PUT -> /api/users/:id`
+
+URL: `URI/ENDPOINT`
+
 
 this endpoint takes in a json object as the body of the request that must contain a username :
 
@@ -99,7 +107,12 @@ this endpoint takes in a json object as the body of the request that must contai
 ### DELETE
 
 **delete a user by id**
-`DELETE -> /api/users/:id`
+
+URI: `http://<server_address:port>`
+
+ENDPOINT: `DELETE -> /api/users/:id`
+
+URL: `URI/ENDPOINT`
 
 ![alt text](./readme_files/DELETE.png "READ")
 
