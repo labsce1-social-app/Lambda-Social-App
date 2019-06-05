@@ -11,7 +11,7 @@ The API can be run in a few different ways the simplest to get it up and running
 - [git](https://www.linode.com/docs/development/version-control/how-to-install-git-on-linux-mac-and-windows/)
 - [nodejs](https://nodejs.org/en/download/)
 - [npm](https://docs.npmjs.com/getting-started/installing-node)
-- [yarn](https://yarnpkg.com/lang/en/docs/install/#windows-stable) (optional but reccomended)
+- [yarn](https://yarnpkg.com/lang/en/docs/install/#windows-stable) (optional but reccommended)
 
 FORK
 `to fork see the link below`
@@ -47,7 +47,7 @@ The endpoints link you to the functionality of the database and include:
 
 #### CREATE
 
-**create a note**
+**create a user**
 
 URI: `http://<server_address:port>`
 
@@ -55,11 +55,65 @@ ENDPOINT: `POST -> /api/users`
 
 URL: `URI/ENDPOINT`
 
-this endpoint takes in a json object as the body of the request that must contain a username (max 25 characters),and an id (automatically generated) :
+this endpoint takes in a json object as the body of the request that must contain a username (max 25 characters), and an id (automatically generated) :
 
 ```
 {
   "id": "1",
-  "username": "some content",
+  "username": "some content"
 }
 ```
+
+![alt text](./readme_files/POST.png "READ")
+
+### READ
+
+**get a list of all users**
+
+URI: `http://<server_address:port>`
+
+ENDPOINT: `GET -> /api/users`
+
+URL: `URI/ENDPOINT`
+
+![alt text](./readme_files/GET.png "READ")
+
+**read a single users by id**
+`GET -> /api/users/:id`
+
+![alt text](./readme_files/READ.png "READ")
+
+### UPDATE
+
+**update a user by id**
+
+URI: `http://<server_address:port>`
+
+ENDPOINT: `PUT -> /api/users/:id`
+
+URL: `URI/ENDPOINT`
+
+
+this endpoint takes in a json object as the body of the request that must contain a username :
+
+```
+{
+  "username": "some content"
+}
+```
+
+![alt text](./readme_files/PUT.png "READ")
+
+### DELETE
+
+**delete a user by id**
+
+URI: `http://<server_address:port>`
+
+ENDPOINT: `DELETE -> /api/users/:id`
+
+URL: `URI/ENDPOINT`
+
+![alt text](./readme_files/DELETE.png "READ")
+
+
