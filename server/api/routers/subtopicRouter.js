@@ -6,7 +6,10 @@ const { subtopicHelper } = require('../helpers/index.js');
 GET ROUTE get all subtopics
 @PARAM = NONE
 ROUTE = '/api/subtopics
-returns = [all subtopics]
+returns = all subtopics
+TESTS: {
+    1) RETURNS LIST OF SUBTOPICS > 1 
+}
 */
 
 router.get('/subtopics', (req, res) => {
@@ -23,7 +26,10 @@ router.get('/subtopics', (req, res) => {
 GET ROUTE get single subtopic
 @PARAM = ID
 ROUTE = '/api/subtopics/:id
-returns = [single subtopic]
+returns = single subtopic
+TESTS: {
+    1) RETURNS A SINGLE SUBTOPIC
+}
 */
 
 router.get('/subtopics/:id', (req, res) => {
@@ -41,13 +47,19 @@ router.get('/subtopics/:id', (req, res) => {
 
 /*
 POST ROUTE create a subtopic
-TODO: Add middleware to ensure user is logged in
+TODO: Add middleware to ensure user is logged in, link to subtopic_users table
 @BODY = {
     title: !STRING >= 50 characters
     creater_id: !INT
 }
 ROUTE = '/api/subtopics/create
-returns = [id of created subtopic]
+returns = id of created subtopic
+TESTS: {
+    1) SHOULD RETURN ERROR IF TITLE OR CREATER_ID IS NOT PRESENT
+    2) SHOULD RETURN ERROR IF CREATER_ID IS NOT VALID
+    3) SHOULD RETURN ERROR IF TITLE HAS ALREADY BEEN USED
+    4) SHOULD RETURN ERROR IF TITLE IS EMPTY OR 0 CHARACTERS OR GREATER THAN 50 CHARECTERS
+}
 */
 
 router.post('/subtopics/create', async (req, res) => {
@@ -63,7 +75,7 @@ router.post('/subtopics/create', async (req, res) => {
     body.creater_id == undefined
   ) {
     res.status(400).json({
-      message:
+      error:
         'title must be between 0 and 50 charecters, creater_id must be valid'
     });
   } else if ((await subtopicHelper.checkValidUser(body.creater_id)) === false) {
@@ -81,7 +93,7 @@ router.post('/subtopics/create', async (req, res) => {
           res.status(500).json({ error: err });
         });
     } else {
-      res.status(500).json({ message: 'subtopic already exists' });
+      res.status(500).json({ error: 'subtopic already exists' });
     }
   }
 });
@@ -97,6 +109,10 @@ TODO: Add middleware to ensure user is logged in
 }
 ROUTE = '/api/subtopics/:id
 returns = success if valid
+TESTS: {
+    1) SHOULD RETURN ERROR IF SUBTOPIC_ID AND USER_ID AREN'T VALID PAIRS IN SUBTOPIC_USERS TABLE
+    2) SHOULD RETURN ERROR IF CREATER_ID IS NOT VALID
+}
 */
 
 module.exports = router;
