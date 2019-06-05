@@ -12,7 +12,7 @@ returns = [all subtopics]
 router.get('/subtopics', (req, res) => {
   db('subtopic')
     .then(subtopics => {
-      res.status(200).send(subtopics);
+      res.status(200).json(subtopics);
     })
     .catch(err => {
       res.status(500).json({ error: err });
@@ -32,7 +32,7 @@ router.get('/subtopics/:id', (req, res) => {
   db('subtopic')
     .where(id)
     .then(subtopic => {
-      res.status(200).send(subtopic);
+      res.status(200).json(subtopic);
     })
     .catch(err => {
       res.status(500).json({ error: err });
@@ -41,6 +41,7 @@ router.get('/subtopics/:id', (req, res) => {
 
 /*
 POST ROUTE create a subtopic
+TODO: Add middleware to ensure user is logged in
 @BODY = {
     title: !STRING >= 50 characters
     creater_id: !INT
@@ -56,7 +57,10 @@ router.post('/subtopics/create', async (req, res) => {
     body.title.length === 0 ||
     body.title.length > 50 ||
     body.title === '' ||
-    body.creater_id === null
+    body.title == null ||
+    body.title == undefined ||
+    body.creater_id == null ||
+    body.creater_id == undefined
   ) {
     res.status(400).json({
       message:
@@ -84,6 +88,7 @@ router.post('/subtopics/create', async (req, res) => {
 
 /*
 DELETE ROUTE delete a subtopic
+TODO: Add middleware to ensure user is logged in
 @BODY = {
     creater_id: !INT
 }

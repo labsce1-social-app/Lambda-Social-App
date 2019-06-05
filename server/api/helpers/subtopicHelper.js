@@ -32,8 +32,6 @@ const canInsertSubtopic = async title => {
       console.log(err);
     });
 
-  console.log(canInsert);
-
   return canInsert;
 };
 
