@@ -2,12 +2,11 @@ import React from 'react';
 import { Text, View, Image } from 'react-native';
 import style from './Style';
 import PropTypes from 'prop-types';
-import ErrorIcon from './_ionicons_svg_md-alert.svg';
 
 
 const PostSummary = props => {
     return (<View style={style.viewContainer}>
-        <Image style={style.icon} source={ErrorIcon} />
+        <Image style={style.icon} source={props.icon} />
         <View style={style.textView}>
           <View style={style.line1}>
             <Text style={style.title}>{props.title}</Text>
@@ -28,7 +27,7 @@ const PostSummary = props => {
 }
 
 PostSummary.defaultProps = {
-  icon: ErrorIcon,
+  icon: 'No Icon Provided',
   title: 'No Title Provided',
   subTopic: 'No SubTopic Provided',
   name: 'No Name Provided',
