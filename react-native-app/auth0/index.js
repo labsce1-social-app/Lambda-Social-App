@@ -1,5 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Alert } from 'react-native';
+import { StyleSheet, Text, View, Alert, StatusBar } from 'react-native';
+import { Header, Container, Body, Right, Button } from 'native-base';
+
 import { AuthSession } from 'expo';
 import jwtDecode from 'jwt-decode';
 
@@ -76,21 +78,51 @@ export default class Login extends React.Component {
     this.setState({ name: null });
   };
 
+  static navigationOptions = {
+    header: null
+  };
+
   render() {
     const { name } = this.state;
     console.log(name);
 
     return (
-      <View style={styles.container}>
+      <Container>
+        <Header transparent>
+          {name ? (
+            <Right>
+              <Button
+                style={styles.AuthButton}
+                title="logout"
+                onPress={() => this.handleLogout()}
+              >
+                <Text style={styles.buText}>Log out</Text>
+              </Button>
+            </Right>
+          ) : (
+            // </Header>
+            // <Header>
+            <Right>
+              <Button
+                style={styles.AuthButton}
+                title="login"
+                onPress={this.login}
+              >
+                <Text style={styles.buText}>Login</Text>
+              </Button>
+            </Right>
+            // <Text>No one is logged in</Text>
+          )}
+        </Header>
+
+        {/* <StatusBar backgroundColor="#ffffff" /> */}
+
         {name ? (
-          <View>
-            <Text style={styles.title}>You are logged in, {name}!</Text>
-            <Button title="logout" onPress={() => this.handleLogout()} />
-          </View>
+          <Text style={styles.title}>You are logged in, {name}!</Text>
         ) : (
-          <Button title="Log in with Auth0" onPress={this.login} />
+          <Text>No one is logged in</Text>
         )}
-      </View>
+      </Container>
     );
   }
 }
@@ -106,5 +138,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     marginTop: 40
+  },
+  AuthButton: {
+    backgroundColor: '#990000'
+  },
+  buText: {
+    color: '#ffffff',
+    paddingRight: 5,
+    paddingLeft: 5
   }
 });
