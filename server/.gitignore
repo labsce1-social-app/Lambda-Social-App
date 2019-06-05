@@ -1,5 +1,11 @@
-
 # See https://help.github.com/ignore-files/ for more about ignoring files.
+# adding expo file to bring down conflicts
+node_modules/**/*
+.expo/*
+expo/
+npm-debug.*
+.watchmanconfig
+*.log
 
 # dependencies
 node_modules/
