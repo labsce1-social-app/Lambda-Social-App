@@ -133,7 +133,7 @@ router.put('/users/:id', async (req, res) => {
 DELETE ROUTE delete a user
 @PARAM = id
 ROUTE = '/api/users/:id
-returns = returns 1 for successful deletion
+returns = returns success if valid
 */
 
 // this delete route is for dev purposes only
