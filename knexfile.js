@@ -39,10 +39,10 @@ module.exports = {
       max: 10
     },
     migrations: {
-      directory: __dirname + './server/data/migrations'
+      directory: __dirname + '/server/data/migrations'
     },
     seeds: {
-      directory: __dirname + './server/data/seeds'
+      directory: __dirname + '/server/data/seeds'
     }
   }
 };
