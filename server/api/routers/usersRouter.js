@@ -17,7 +17,7 @@ returns = [all users]
 router.get('/users', (req, res) => {
   db('user')
     .then(users => {
-      res.status(200).send(users);
+      res.status(200).json(users);
     })
     .catch(err => {
       res.status(500).json({ error: err });
@@ -37,7 +37,7 @@ router.get('/users/:id', (req, res) => {
   db('user')
     .where(id)
     .then(user => {
-      res.status(200).send(user);
+      res.status(200).json(user);
     })
     .catch(err => {
       res.status(500).json({ error: err });
