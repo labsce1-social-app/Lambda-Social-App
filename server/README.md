@@ -11,7 +11,7 @@ The API can be run in a few different ways the simplest to get it up and running
 - [git](https://www.linode.com/docs/development/version-control/how-to-install-git-on-linux-mac-and-windows/)
 - [nodejs](https://nodejs.org/en/download/)
 - [npm](https://docs.npmjs.com/getting-started/installing-node)
-- [yarn](https://yarnpkg.com/lang/en/docs/install/#windows-stable) (optional but reccomended)
+- [yarn](https://yarnpkg.com/lang/en/docs/install/#windows-stable) (optional but reccommended)
 
 FORK
 `to fork see the link below`
@@ -64,7 +64,7 @@ this endpoint takes in a json object as the body of the request that must contai
 }
 ```
 
-(INSERT IMAGE HERE)
+![alt text](./readme_files/POST.PNG "READ")
 
 ### READ
 
@@ -74,12 +74,12 @@ URI: `http://<server_address:port>`
 
 ENDPOINT: `GET -> /api/users`
 
-(INSERT IMAGE HERE)
+![alt text](./readme_files/GET.PNG "READ")
 
 **read a single users by id**
 `GET -> /api/users/:id`
 
-(INSERT IMAGE HERE)
+![alt text](./readme_files/READ.PNG "READ")
 
 ### UPDATE
 
@@ -94,13 +94,13 @@ this endpoint takes in a json object as the body of the request that must contai
 }
 ```
 
-(INSERT IMAGE HERE)
+![alt text](./readme_files/PUT.PNG "READ")
 
 ### DELETE
 
 **delete a user by id**
 `DELETE -> /api/users/:id`
 
-(INSERT IMAGE HERE)
+![alt text](./readme_files/DELETE.PNG "READ")
 
 
