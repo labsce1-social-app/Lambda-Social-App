@@ -19,14 +19,14 @@ import Login from './auth0/index';
 const AppNavigator = createBottomTabNavigator(
   {
     // RouteName: ComponentName,
-    Home: {
-      screen: HomePage
-    },
     Posts: {
       screen: Login, // name needs to change
       navigationOptions: {
         tabBarIcon: <Icon name="paper-plane" />
       }
+    },
+    Home: {
+      screen: HomePage
     }
   },
   {
