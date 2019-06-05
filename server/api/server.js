@@ -8,7 +8,8 @@ const server = express();
 server.use(express.json());
 middleware(server);
 
-server.use('/api', userRouter, subtopicRouter);
+server.use('/users', userRouter);
+server.use('/subtopics', subtopicRouter);
 
 // configure sanity check
 server.get('/', (req, res) =>
