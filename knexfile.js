@@ -32,17 +32,13 @@ module.exports = {
 
   production: {
     client: 'pg',
+    // The next line is where the application will read that environment variable to connect to the database
     connection: process.env.DATABASE_URL,
-    useNullAsDefault: true,
-    pool: {
-      min: 2,
-      max: 10
-    },
     migrations: {
-      directory: './server/data/migrations'
+      directory: __dirname + '/db/migrations',
     },
     seeds: {
-      directory: './server/data/seeds'
-    }
-  }
+      directory: __dirname + '/db/seeds/production',
+    },
+  },
 };
