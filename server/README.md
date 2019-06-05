@@ -64,7 +64,7 @@ this endpoint takes in a json object as the body of the request that must contai
 }
 ```
 
-![alt text](./readme_files/POST.PNG "READ")
+![alt text](./readme_files/POST.png "READ")
 
 ### READ
 
@@ -74,12 +74,12 @@ URI: `http://<server_address:port>`
 
 ENDPOINT: `GET -> /api/users`
 
-![alt text](./readme_files/GET.PNG "READ")
+![alt text](./readme_files/GET.png "READ")
 
 **read a single users by id**
 `GET -> /api/users/:id`
 
-![alt text](./readme_files/READ.PNG "READ")
+![alt text](./readme_files/READ.png "READ")
 
 ### UPDATE
 
@@ -94,13 +94,13 @@ this endpoint takes in a json object as the body of the request that must contai
 }
 ```
 
-![alt text](./readme_files/PUT.PNG "READ")
+![alt text](./readme_files/PUT.png "READ")
 
 ### DELETE
 
 **delete a user by id**
 `DELETE -> /api/users/:id`
 
-![alt text](./readme_files/DELETE.PNG "READ")
+![alt text](./readme_files/DELETE.png "READ")
 
 
