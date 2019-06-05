@@ -12,7 +12,8 @@
 exports.up = function (knex, Promise) {
   return knex.schema.createTable('discussion', discussion => {
     discussion
-      .increments('id');
+      .increments('id')
+      .primary();
 
     discussion
       .integer('subtopic_id')

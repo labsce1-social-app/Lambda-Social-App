@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "server": "nodemon",
-    "test": "jest"
+    "test": "jest",
+    "local": "yarn && yarn --cwd \"./react-native-app\" && npx knex migrate:rollback && knex migrate:latest && npx knex seed:run"
   },
   "license": "MIT",
   "private": false,
