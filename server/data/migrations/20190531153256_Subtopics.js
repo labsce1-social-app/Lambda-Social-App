@@ -18,6 +18,20 @@ exports.up = function (knex, Promise) {
             .notNullable();
 
         subtopic
+            .text('content')
+
+        subtopic
+            .string('image');
+
+        subtopic
+            .timestamp('created_at')
+            .defaultTo(knex.fn.now());
+
+        subtopic
+            .timestamp('updated_at')
+            .defaultTo(knex.fn.now());
+
+        subtopic
             .integer('creater_id')
             .references('id')
             .inTable('user')

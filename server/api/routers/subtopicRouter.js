@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const db = require('../../data/dbconfig.js');
-const { subtopicHelper } = require('../helpers/index.js');
+const { subtopicHelper, joinUsersAndSubtopic } = require('../helpers/index.js');
 
 /*
 GET ROUTE get all subtopics
@@ -13,8 +13,9 @@ TESTS: {
 */
 
 router.get('/', (req, res) => {
-  db('subtopic')
+  subtopicHelper.joinUsersAndSubtopic()
     .then(subtopics => {
+      console.log(subtopics)
       res.status(200).json(subtopics);
     })
     .catch(err => {
@@ -33,10 +34,10 @@ TESTS: {
 */
 
 router.get('/:id', (req, res) => {
-  const id = req.params;
+  const { id } = req.params;
 
   db('subtopic')
-    .where(id)
+    .where({ id })
     .then(subtopic => {
       res.status(200).json(subtopic);
     })
@@ -44,6 +45,7 @@ router.get('/:id', (req, res) => {
       res.status(500).json({ error: err });
     });
 });
+
 
 /*
 POST ROUTE create a subtopic

@@ -35,7 +35,15 @@ const canInsertSubtopic = async title => {
   return canInsert;
 };
 
+const joinUsersAndSubtopic = () => {
+  return db.raw(`SELECT creater_id, username, title, content, image, created_at, updated_at
+FROM subtopic_users
+JOIN user, subtopic WHERE subtopic_users.subtopic_id = subtopic_users.user_id`)
+}
+
+
 module.exports = {
   checkValidUser,
-  canInsertSubtopic
+  canInsertSubtopic,
+  joinUsersAndSubtopic
 };

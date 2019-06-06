@@ -16,9 +16,6 @@ const NativeHeader = (props) => {
             </Left>
             <Right>
                 <Button transparent>
-                    <Icon name='search' style={style.icon} />
-                </Button>
-                <Button transparent>
                     <NativePicker />
                 </Button>
 

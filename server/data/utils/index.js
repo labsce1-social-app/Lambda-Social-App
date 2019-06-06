@@ -27,8 +27,10 @@ function generateSubtopic_users() {
 // create a subtopics object
 function generateSubtopics() {
     return {
-        title: faker.lorem.text(10),
-        creater_id: getRandomArbitrary(1, 10)
+        title: faker.lorem.words(4),
+        creater_id: getRandomArbitrary(1, 10),
+        content: faker.lorem.text(20, 100),
+        image: faker.image.imageUrl()
     };
 }
 

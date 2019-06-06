@@ -12,8 +12,7 @@ const NativeCard = (props) => {
                     <Body>
                         <Text>
                             {props.body}
-                        </Text>
-                    </Body>
+                        </Text>                    </Body>
                 </CardItem>
                 <CardItem footer>
                     <Text>{props.footer}</Text>
