@@ -11,7 +11,8 @@
 exports.up = function (knex, Promise) {
   return knex.schema.createTable('upvote', upvote => {
     upvote
-      .increments('id');
+      .increments('id')
+      .primary();
 
     upvote
       .integer('discussion_id')

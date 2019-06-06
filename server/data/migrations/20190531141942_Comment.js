@@ -11,7 +11,8 @@
 exports.up = function (knex, Promise) {
   return knex.schema.createTable('comment', comment => {
     comment
-      .increments('id');
+      .increments('id')
+      .primary();
 
     comment
       .text('comment_post')

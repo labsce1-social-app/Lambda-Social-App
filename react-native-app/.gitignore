@@ -3,7 +3,6 @@
 # adding expo file to bring down conflicts
 node_modules/**/*
 .expo/*
-expo/
 npm-debug.*
 .watchmanconfig
 *.log
@@ -33,4 +32,4 @@ yarn-error.log*
 .vscode
 firebaseConfig.json
 
-# **/*.sqlite3
+**/*.sqlite3

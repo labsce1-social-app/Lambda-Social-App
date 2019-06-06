@@ -1,7 +1,8 @@
 import React from 'react';
-
+// import { StyleSheet, Text, View } from 'react-native';
 // custom font loader for native base
-import { AppLoading } from 'expo';
+import { Font } from 'expo';
+import { Ionicons } from '@expo/vector-icons';
 import AppNavigator from './AppNavigator';
 import * as Font from 'expo-font';
 

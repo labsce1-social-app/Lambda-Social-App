@@ -2,10 +2,7 @@ const router = require('express').Router();
 const { usersHelper } = require('../helpers/index.js');
 const db = require('../../data/dbconfig.js');
 
-// Router test route
-router.get('/', (req, res) => {
-  res.status(200).send('working!');
-});
+
 
 /*
 GET ROUTE get all users
@@ -14,10 +11,10 @@ ROUTE = '/api/users
 returns = [all users]
 */
 
-router.get('/users', (req, res) => {
+router.get('/', (req, res) => {
   db('user')
     .then(users => {
-      res.status(200).send(users);
+      res.status(200).json(users);
     })
     .catch(err => {
       res.status(500).json({ error: err });
@@ -31,13 +28,14 @@ ROUTE = '/api/users/:id
 returns = a single user object
 */
 
-router.get('/users/:id', (req, res) => {
-  const id = req.params;
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
 
   db('user')
-    .where(id)
+    .where({ id })
+    .first()
     .then(user => {
-      res.status(200).send(user);
+      res.status(200).json(user);
     })
     .catch(err => {
       res.status(500).json({ error: err });
@@ -53,7 +51,7 @@ ROUTE = '/api/users
 returns = returns new user id
 */
 
-router.post('/users', async (req, res) => {
+router.post('/', async (req, res) => {
   const user = req.body;
 
   // Username must not be empty, contains 0-25 characters
@@ -95,7 +93,7 @@ ROUTE = '/api/users/:id
 returns = returns new user info
 */
 
-router.put('/users/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
   const id = req.params;
   const user = req.body;
 
@@ -133,12 +131,12 @@ router.put('/users/:id', async (req, res) => {
 DELETE ROUTE delete a user
 @PARAM = id
 ROUTE = '/api/users/:id
-returns = returns 1 for successful deletion
+returns = returns success if valid
 */
 
 // this delete route is for dev purposes only
 // TODO: Protect delete route behind login middleware
-router.delete('/users/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
   const id = req.params;
 
   db('user')

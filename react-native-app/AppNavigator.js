@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   createDrawerNavigator,
   createAppContainer,
@@ -42,6 +44,7 @@ const AppNavigator = createBottomTabNavigator(
   {
     initialRouteName: 'Posts'
   }
+
 );
 
 // place navigators inside createAppContainer

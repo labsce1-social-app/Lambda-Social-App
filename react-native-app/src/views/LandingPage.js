@@ -1,10 +1,6 @@
-/** EXAMPLE HOME PAGE **/
-
-import React, { Component } from 'react';
-
+import React from 'react';
 import { Text, View } from 'react-native';
-import Auth from '../../auth0';
-import { Header } from 'native-base';
+import { Content } from 'native-base';
 
 class HomePage extends Component {
   // static navigationOptions = {

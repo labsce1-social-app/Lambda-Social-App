@@ -1,0 +1,1 @@
+web: npx knex migrate:latest && npx knex seed:run && node server/index.js
