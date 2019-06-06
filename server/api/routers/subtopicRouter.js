@@ -100,7 +100,7 @@ router.post('/subtopics/create', async (req, res) => {
 
 /*
 DELETE ROUTE delete a subtopic
-TODO: Add middleware to ensure user is logged in
+TODO: Add middleware to ensure user is logged in, check if user is valid subtopic_users pair
 @BODY = {
     creater_id: !INT
 }
@@ -112,7 +112,40 @@ returns = success if valid
 TESTS: {
     1) SHOULD RETURN ERROR IF SUBTOPIC_ID AND USER_ID AREN'T VALID PAIRS IN SUBTOPIC_USERS TABLE
     2) SHOULD RETURN ERROR IF CREATER_ID IS NOT VALID
+    3) SHOULD RETURN ERROR IF CREATER_ID IS NOT VALID MATCH TO ID IN SUBTOPIC TABLE
 }
 */
+router.delete('/subtopics/:id', async (req, res) => {
+  const id = req.params;
+  const creater_id = req.body.creater_id;
+
+  if ((await subtopicHelper.checkValidUser(creater_id)) === false) {
+    res.status(500).json({ message: 'valid user not found, check creater_id' });
+  } else if ((await subtopicHelper.checkValidSubtopic(id)) === false) {
+    res.status(500).json({ message: 'subtopic not found' });
+  } else if (
+    (await subtopicHelper.userCanDeleteSubtopic(id, creater_id)) === false
+  ) {
+    res
+      .status(500)
+      .json({ message: 'user not authorized to delete this subtopic' });
+  } else {
+    db('subtopic')
+      .where(id)
+      .del()
+      .then(count => {
+        if (count === 0) {
+          res.status(401).json({ message: 'subtopic not found' });
+        } else {
+          res
+            .status(200)
+            .json({ message: `subtopic id: ${id.id} succesfully deleted` });
+        }
+      })
+      .catch(err => {
+        res.status(500).json({ error: err });
+      });
+  }
+});
 
 module.exports = router;

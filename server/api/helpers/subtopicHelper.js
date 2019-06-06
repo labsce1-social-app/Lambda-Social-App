@@ -35,7 +35,43 @@ const canInsertSubtopic = async title => {
   return canInsert;
 };
 
+const userCanDeleteSubtopic = async (id, creater_id) => {
+  let canDelete = false;
+
+  await db('subtopic')
+    .where(id)
+    .then(row => {
+      if (row[0].creater_id === creater_id && row[0].id == id.id) {
+        canDelete = true;
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+  return canDelete;
+};
+
+const checkValidSubtopic = async id => {
+  let isValid = false;
+
+  await db('subtopic')
+    .where(id)
+    .then(row => {
+      if (row.length > 0) {
+        isValid = true;
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+  return isValid;
+};
+
 module.exports = {
   checkValidUser,
-  canInsertSubtopic
+  canInsertSubtopic,
+  userCanDeleteSubtopic,
+  checkValidSubtopic
 };
