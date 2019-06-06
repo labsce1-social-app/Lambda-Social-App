@@ -36,9 +36,9 @@ const canInsertSubtopic = async title => {
 };
 
 const joinUsersAndSubtopic = () => {
-  return db.raw(`SELECT creater_id, username, title, content, image, created_at, updated_at
-FROM subtopic_users
-JOIN user, subtopic WHERE subtopic_users.subtopic_id = subtopic_users.user_id`)
+  return db.raw(`SELECT discussion.content, discussion.title, discussion.image, discussion.created_at, discussion.updated_at, user.username, discussion.id
+FROM discussion
+JOIN user, subtopic WHERE discussion.subtopic_id = subtopic.id`)
 }
 
 

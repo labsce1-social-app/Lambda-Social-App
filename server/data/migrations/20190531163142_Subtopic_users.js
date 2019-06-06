@@ -30,6 +30,7 @@ exports.up = function (knex, Promise) {
             .inTable('subtopic')
             .onDelete('CASCADE')
             .onUpdate('CASCADE');
+
     });
 };
 

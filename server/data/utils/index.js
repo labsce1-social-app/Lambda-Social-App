@@ -20,7 +20,7 @@ function generateUsers() {
 function generateSubtopic_users() {
     return {
         user_id: getRandomArbitrary(1, 10),
-        subtopic_id: getRandomArbitrary(1, 20)
+        subtopic_id: getRandomArbitrary(1, 20),
     };
 }
 
