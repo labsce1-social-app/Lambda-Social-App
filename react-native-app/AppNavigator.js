@@ -8,11 +8,10 @@ import {
 import { createBottomTabNavigator, BottomTabBar } from 'react-navigation-tabs';
 import { Icon } from 'native-base';
 
-import React from 'react';
-
 // import ComponentName from './.'
-import HomePage from './src/views/LandingPage';
+import HomePage from './src/views/HomePage';
 import Login from './auth0/index';
+import TopPosts from './src/components/postsummary/TopPosts'
 
 /** default stack navigation **
  * Drawer and tab Navigator need custom components
@@ -22,7 +21,7 @@ const AppNavigator = createBottomTabNavigator(
   {
     // RouteName: ComponentName,
     Posts: {
-      screen: Login, // name needs to change
+      screen: HomePage, // name needs to change
       navigationOptions: {
         tabBarIcon: <Icon name="paper-plane" />
       }

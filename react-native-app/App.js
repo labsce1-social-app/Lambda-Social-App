@@ -12,19 +12,19 @@ import NativeHeader from './src/common/NativeHeader';
 // useScreens();
 
 export default class App extends React.Component {
-  async componentDidMount() {
-    // mount custom fonts for native base components
-    await Font.loadAsync({
-      Roboto: require('native-base/Fonts/Roboto.ttf'),
-      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
-      ...Ionicons.font
-    });
-  }
+  // async componentDidMount() {
+  //   // mount custom fonts for native base components
+  //   await Font.loadAsync({
+  //     Roboto: require('native-base/Fonts/Roboto.ttf'),
+  //     Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
+  //     ...Ionicons.font
+  //   });
+  // }
   render() {
     return (
       <Wrapper>
         <NativeHeader />
-        {/* <AppNavigator /> */}
+        <AppNavigator />
       </Wrapper>
     );
   }
