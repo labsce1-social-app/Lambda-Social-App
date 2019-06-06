@@ -2,7 +2,7 @@
   "name": "social-app-server",
   "version": "1.0.0",
   "description": "A social media application for Lambda Students",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",
     "server": "nodemon",
