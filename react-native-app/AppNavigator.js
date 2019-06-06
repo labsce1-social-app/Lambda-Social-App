@@ -8,8 +8,6 @@ import {
 import { createBottomTabNavigator, BottomTabBar } from 'react-navigation-tabs';
 import { Icon } from 'native-base';
 
-import React from 'react';
-
 // import ComponentName from './.'
 import HomePage from './src/views/LandingPage';
 import Landing from './auth0/index';
@@ -44,7 +42,6 @@ const AppNavigator = createBottomTabNavigator(
   {
     initialRouteName: 'Posts'
   }
-
 );
 
 // place navigators inside createAppContainer
