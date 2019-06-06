@@ -11,7 +11,7 @@ import { Icon } from 'native-base';
 // import ComponentName from './.'
 import HomePage from './src/views/HomePage';
 import Login from './auth0/index';
-import TopPosts from './src/components/postsummary/TopPosts'
+import TopPosts from './src/components/postsummary/TopPosts';
 
 /** default stack navigation **
  * Drawer and tab Navigator need custom components
@@ -41,9 +41,8 @@ const AppNavigator = createBottomTabNavigator(
     }
   },
   {
-    initialRouteName: 'Login'
+    initialRouteName: 'Posts'
   }
-
 );
 
 // place navigators inside createAppContainer

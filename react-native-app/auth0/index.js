@@ -34,7 +34,6 @@ export default class Login extends React.Component {
     // Retrieve the redirect URL, add this to the callback URL list
     // of your Auth0 application.
     const redirectUrl = AuthSession.getRedirectUrl();
-    console.log(`Redirect URL: ${redirectUrl}`);
 
     // Structure the auth parameters and URL
     const queryParams = toQueryString({
@@ -48,7 +47,7 @@ export default class Login extends React.Component {
 
     // Perform the authentication
     const response = await AuthSession.startAsync({ authUrl });
-    console.log('Authentication response', response);
+    console.log('Authentication response: ', response);
 
     if (response.type === 'success') {
       this.handleResponse(response.params);
@@ -84,7 +83,7 @@ export default class Login extends React.Component {
 
   render() {
     const { name } = this.state;
-    console.log(name);
+    console.log('Logged in as:', name);
 
     return (
       <Container>
@@ -100,8 +99,6 @@ export default class Login extends React.Component {
               </Button>
             </Right>
           ) : (
-            // </Header>
-            // <Header>
             <Right>
               <Button
                 style={styles.AuthButton}
@@ -111,7 +108,6 @@ export default class Login extends React.Component {
                 <Text style={styles.buText}>Login</Text>
               </Button>
             </Right>
-            // <Text>No one is logged in</Text>
           )}
         </Header>
 
