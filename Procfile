@@ -1,1 +1,1 @@
-web: npx knex migrate:latest && npx knex seed:run && node server/index.js
+web: npmx knex migrate:rollback && npx knex migrate:latest && npx knex seed:run && node server/index.js

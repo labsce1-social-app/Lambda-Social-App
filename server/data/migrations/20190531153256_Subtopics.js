@@ -17,6 +17,15 @@ exports.up = function (knex, Promise) {
             .unique()
             .notNullable();
 
+
+        subtopic
+            .timestamp('created_at')
+            .defaultTo(knex.fn.now());
+
+        subtopic
+            .timestamp('updated_at')
+            .defaultTo(knex.fn.now());
+
         subtopic
             .integer('creater_id')
             .references('id')
