@@ -8,11 +8,11 @@ GET ROUTE get all subtopics
 ROUTE = '/api/subtopics
 returns = all subtopics
 TESTS: {
-    1) RETURNS LIST OF SUBTOPICS > 1 
+    1) RETURNS LIST OF SUBTOPICS > 1
 }
 */
 
-router.get('/subtopics', (req, res) => {
+router.get('/', (req, res) => {
   db('subtopic')
     .then(subtopics => {
       res.status(200).json(subtopics);
@@ -32,7 +32,7 @@ TESTS: {
 }
 */
 
-router.get('/subtopics/:id', (req, res) => {
+router.get('/:id', (req, res) => {
   const id = req.params;
 
   db('subtopic')
@@ -62,7 +62,7 @@ TESTS: {
 }
 */
 
-router.post('/subtopics/create', async (req, res) => {
+router.post('/create', async (req, res) => {
   const body = req.body;
 
   if (

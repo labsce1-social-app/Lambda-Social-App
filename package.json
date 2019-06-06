@@ -2,11 +2,12 @@
   "name": "social-app-server",
   "version": "1.0.0",
   "description": "A social media application for Lambda Students",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node server/index.js",
     "server": "nodemon",
-    "test": "jest"
+    "test": "jest",
+    "local": "yarn && yarn --cwd \"./react-native-app\" && npx knex migrate:rollback && knex migrate:latest && npx knex seed:run"
   },
   "license": "MIT",
   "private": false,
@@ -25,5 +26,8 @@
     "jest": "^24.8.0",
     "nodemon": "^1.19.1",
     "prettier": "1.17.1"
+  },
+  "engines": {
+    "node": "10.x"
   }
 }

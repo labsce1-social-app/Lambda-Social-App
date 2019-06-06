@@ -9,7 +9,8 @@
 exports.up = function (knex, Promise) {
     return knex.schema.createTable('subtopic', subtopic => {
         subtopic
-            .increments('id');
+            .increments('id')
+            .primary();
 
         subtopic
             .string('title', 50)
