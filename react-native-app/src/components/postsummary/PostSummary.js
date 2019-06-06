@@ -2,7 +2,8 @@ import React from 'react';
 import { View, Image } from 'react-native';
 import style from './Style';
 import PropTypes from 'prop-types';
-import { Content, Card, CardItem, Text, Body, Left, Right, Thumbnail, Icon } from 'native-base';
+import { Content, Card, CardItem, Text, Body, Left, Icon } from 'native-base';
+import moment from 'moment'
 
 
 
@@ -12,15 +13,17 @@ const PostSummary = props => {
       <Card style={{ flex: 0 }}>
         <CardItem>
           <Left>
-            <Thumbnail style={style.icon} source={{ url: props.image }} />
+            <Image style={style.icon} source={{ url: props.image }} />
             <Body>
-              <Text style={style.date}>{props.date}</Text>
+              <Text style={style.date}>{moment(props.date).fromNow()}</Text>
               <Text style={style.title}>{props.title}</Text>
-              <Text >{props.name}</Text>
+              <Text style={style.username}>{props.name}</Text>
               <Body>
                 <Text numberOfLines={1}>{props.subTopic}</Text>
               </Body>
-              <Text style={style.comment}><Icon name="chatbubbles" /> {props.comment}</Text>
+              <Text style={style.comment}><Icon name="chatbubbles" /> {props.comment} {' '}
+                < Icon
+                  name="heart-empty" style={style.chat} /> {props.comment}</Text>
             </Body>
           </Left>
 
