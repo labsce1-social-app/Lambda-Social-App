@@ -23,7 +23,6 @@ class TopPosts extends React.Component {
         try {
             let response = await fetch(url);
             let responseJson = await response.json();
-            console.log(responseJson[0])
             //TODO: get this off of top 10 upvoted later, for now just render 10
             return this.setState({ posts: responseJson.slice(0, 10) });
         } catch (error) {
