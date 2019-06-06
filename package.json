@@ -4,7 +4,7 @@
   "description": "A social media application for Lambda Students",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node server/index.js",
     "server": "nodemon",
     "test": "jest",
     "local": "yarn && yarn --cwd \"./react-native-app\" && npx knex migrate:rollback && knex migrate:latest && npx knex seed:run"
