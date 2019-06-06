@@ -29,8 +29,6 @@ function generateSubtopics() {
     return {
         title: faker.lorem.words(4),
         creater_id: getRandomArbitrary(1, 10),
-        content: faker.lorem.text(20, 100),
-        image: faker.image.imageUrl()
     };
 }
 
@@ -38,7 +36,8 @@ function generateSubtopics() {
 function generateDiscussions() {
     return {
         subtopic_id: getRandomArbitrary(1, 20),
-        title: faker.lorem.text(10),
+        title: faker.lorem.words(4),
+        content: faker.lorem.text(20, 100),
         image: faker.image.imageUrl()
     };
 }

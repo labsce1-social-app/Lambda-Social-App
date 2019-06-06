@@ -27,6 +27,9 @@ exports.up = function (knex, Promise) {
             .notNullable();
 
         discussion
+            .text('content');
+
+        discussion
             .string('image');
 
         discussion

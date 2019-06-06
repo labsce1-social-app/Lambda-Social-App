@@ -17,11 +17,6 @@ exports.up = function (knex, Promise) {
             .unique()
             .notNullable();
 
-        subtopic
-            .text('content')
-
-        subtopic
-            .string('image');
 
         subtopic
             .timestamp('created_at')
