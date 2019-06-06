@@ -15,7 +15,6 @@ TESTS: {
 router.get('/', (req, res) => {
   subtopicHelper.joinUsersAndSubtopic()
     .then(subtopics => {
-      console.log(subtopics)
       res.status(200).json(subtopics);
     })
     .catch(err => {

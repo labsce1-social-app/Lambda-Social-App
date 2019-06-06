@@ -37,7 +37,7 @@ function generateDiscussions() {
     return {
         subtopic_id: getRandomArbitrary(1, 20),
         title: faker.lorem.words(4),
-        content: faker.lorem.text(20, 100),
+        content: faker.lorem.text(40, 100),
         image: faker.image.imageUrl()
     };
 }
