@@ -14,16 +14,15 @@ const PostSummary = props => {
           <Left>
             <Thumbnail style={style.icon} source={{ url: props.image }} />
             <Body>
-              <Text>{props.title}</Text>
+              <Text style={style.date}>{props.date}</Text>
+              <Text style={style.title}>{props.title}</Text>
               <Text >{props.name}</Text>
-              <Text >{props.date}</Text>
-
-              <Text numberOfLines={1} ellipsizeMode='tail' style={style.comment}><Icon name="contacts" /> {props.comment}</Text>
+              <Body>
+                <Text numberOfLines={1}>{props.subTopic}</Text>
+              </Body>
+              <Text style={style.comment}><Icon name="chatbubbles" /> {props.comment}</Text>
             </Body>
           </Left>
-          {/* <Body>
-            <Text>{props.subTopic}</Text>
-          </Body> */}
 
         </CardItem>
       </Card >
