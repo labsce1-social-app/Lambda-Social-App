@@ -1,9 +1,8 @@
 import React from 'react';
 // import { StyleSheet, Text, View } from 'react-native';
-// custom font loader for native base
-import { Font } from 'expo';
-import { Ionicons } from '@expo/vector-icons';
+import { AppLoading } from 'expo';
 import AppNavigator from './AppNavigator';
+// custom font loader for native base
 import * as Font from 'expo-font';
 
 // memory usage optimize for screen changing

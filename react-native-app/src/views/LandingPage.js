@@ -1,11 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { Content } from 'native-base';
 
 class HomePage extends Component {
-  // static navigationOptions = {
-  //   header: null
-  // };
   render() {
     return (
       <View>
