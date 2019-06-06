@@ -9,7 +9,7 @@ import { createBottomTabNavigator, BottomTabBar } from 'react-navigation-tabs';
 import { Icon } from 'native-base';
 
 // import ComponentName from './.'
-import HomePage from './src/views/LandingPage';
+import HomePage from './src/views/HomePage';
 import Login from './auth0/index';
 import TopPosts from './src/components/postsummary/TopPosts'
 
@@ -21,7 +21,7 @@ const AppNavigator = createBottomTabNavigator(
   {
     // RouteName: ComponentName,
     Posts: {
-      screen: TopPosts, // name needs to change
+      screen: HomePage, // name needs to change
       navigationOptions: {
         tabBarIcon: <Icon name="paper-plane" />
       }

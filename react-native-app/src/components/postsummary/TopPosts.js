@@ -34,26 +34,22 @@ class TopPosts extends React.Component {
 
     render() {
         return (
-            <Container>
-                <Content>
-                    {this.state.posts && <FlatList
-                        data={this.state.posts}
-                        renderItem={({ item }) => (
-                            <PostSummary
-                                image={item.image}
-                                title={item.title}
-                                subTopic={item.content}
-                                name={item.username}
-                                date={item.created_at}
-                                comment={'2'}
-                            />
-                        )}
-                        keyExtractor={this._keyExtractor}
-                        refreshing={this.state.refresh}
-                        onRefresh={() => this.toRefresh}
-                    />}
-                </Content>
-            </Container>
+            this.state.posts && <FlatList
+                data={this.state.posts}
+                renderItem={({ item }) => (
+                    <PostSummary
+                        image={item.image}
+                        title={item.title}
+                        discussion={item.content}
+                        name={item.username}
+                        date={item.created_at}
+                        comment={'2'}
+                    />
+                )}
+                keyExtractor={this._keyExtractor}
+                refreshing={this.state.refresh}
+                onRefresh={() => this.toRefresh}
+            />
         )
     }
 }

@@ -18,9 +18,7 @@ const PostSummary = props => {
               <Text style={style.date}>{moment(props.date).fromNow()}</Text>
               <Text style={style.title}>{props.title}</Text>
               <Text style={style.username}>{props.name}</Text>
-              <Body>
-                <Text numberOfLines={1}>{props.subTopic}</Text>
-              </Body>
+              <Text numberOfLines={1}>{props.discussion}</Text>
               <Text style={style.comment}><Icon name="chatbubbles" /> {props.comment} {' '}
                 < Icon
                   name="heart-empty" style={style.chat} /> {props.comment}</Text>
