@@ -1,1 +1,1 @@
-web: knex migrate:rollback && knex migrate:latest && knex seed:run && node server/index.js
+web: npx knex migrate:latest && npx knex seed:run && node --max_old_space_size=920 --gcinterval=100 server/index.js

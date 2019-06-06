@@ -26,5 +26,8 @@
     "jest": "^24.8.0",
     "nodemon": "^1.19.1",
     "prettier": "1.17.1"
+  },
+  "engines": {
+    "node": "10.x"
   }
 }
