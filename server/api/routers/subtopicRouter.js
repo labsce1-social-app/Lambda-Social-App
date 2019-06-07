@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const db = require('../../data/dbconfig.js');
-const { subtopicHelper, joinUsersAndSubtopic } = require('../helpers/index.js');
+const { subtopicHelper } = require('../helpers/index.js');
 
 /*
 GET ROUTE get all subtopics
@@ -115,7 +115,7 @@ TESTS: {
     3) SHOULD RETURN ERROR IF CREATER_ID IS NOT VALID MATCH TO ID IN SUBTOPIC TABLE
 }
 */
-router.delete('/subtopics/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   const id = req.params;
   const creater_id = req.body.creater_id;
 
@@ -170,7 +170,7 @@ TESTS: {
 }
 */
 
-router.put('/subtopics/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
   const body = req.body;
   const id = req.params;
 
