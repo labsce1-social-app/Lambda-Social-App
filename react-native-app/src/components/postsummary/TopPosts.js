@@ -1,6 +1,5 @@
 import React from 'react';
-import { Content, Container } from 'native-base';
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList, Text } from 'react-native-gesture-handler';
 import { BASE_URL } from 'react-native-dotenv';
 import PostSummary from './PostSummary';
 
@@ -8,17 +7,18 @@ class TopPosts extends React.Component {
     constructor() {
         super();
         this.state = {
-            posts: []
+            posts: [],
+            loading: true
         }
         fetchPost = this.fetchPost.bind(this);
     }
 
     componentDidMount() {
         this.fetchPost()
-    }
+    };
 
     async fetchPost() {
-        const url = BASE_URL + '/subtopics';
+        const url = `${BASE_URL}/subtopics`;
         // const url = 'http://localhost:3000/subtopics/'
         try {
             let response = await fetch(url);
@@ -28,28 +28,31 @@ class TopPosts extends React.Component {
         } catch (error) {
             console.log(error)
         }
-
-    }
+    };
 
     render() {
-        return (
-            this.state.posts && <FlatList
-                data={this.state.posts}
-                renderItem={({ item }) => (
-                    <PostSummary
-                        image={item.image}
-                        title={item.title}
-                        discussion={item.content}
-                        name={item.username}
-                        date={item.created_at}
-                        comment={'2'}
-                    />
-                )}
-                keyExtractor={this._keyExtractor}
-                refreshing={this.state.refresh}
-                onRefresh={() => this.toRefresh}
-            />
-        )
+        if (!this.state.posts) {
+            return <Text>Loading...</Text>
+        } else {
+            return (
+                <FlatList
+                    data={this.state.posts}
+                    keyExtractor={(item, index) => item.id}
+                    renderItem={({ item }) => (
+                        <PostSummary
+                            image={item.image}
+                            title={item.title}
+                            discussion={item.content}
+                            name={item.username}
+                            date={item.created_at}
+                            comment={'2'}
+                        />
+                    )}
+                    refreshing={this.state.refresh}
+                    onRefresh={() => this.toRefresh}
+                />
+            )
+        }
     }
 }
 
