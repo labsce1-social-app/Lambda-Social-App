@@ -18,8 +18,8 @@ class TopPosts extends React.Component {
     }
 
     async fetchPost() {
-        // const url = BASE_URL + '/subtopics';
-        const url = 'http://localhost:3000/subtopics/'
+        const url = BASE_URL + '/subtopics';
+        // const url = 'http://localhost:3000/subtopics/'
         try {
             let response = await fetch(url);
             let responseJson = await response.json();
