@@ -28,6 +28,9 @@ const AppNavigator = createBottomTabNavigator(
     },
     Home: {
       screen: HomePage
+    },
+    Login: {
+      screen: Login
     }
   },
   {
