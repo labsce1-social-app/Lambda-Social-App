@@ -5,7 +5,7 @@ const { subtopicHelper } = require('../helpers/index.js');
 /*
 GET ROUTE get all subtopics
 @PARAM = NONE
-ROUTE = '/api/subtopics
+ROUTE = '/subtopics
 returns = all subtopics
 TESTS: {
     1) RETURNS LIST OF SUBTOPICS > 1
@@ -25,7 +25,7 @@ router.get('/', (req, res) => {
 /*
 GET ROUTE get single subtopic
 @PARAM = ID
-ROUTE = '/api/subtopics/:id
+ROUTE = '/subtopics/:id
 returns = single subtopic
 TESTS: {
     1) RETURNS A SINGLE SUBTOPIC
@@ -52,7 +52,7 @@ TODO: Add middleware to ensure user is logged in, link to subtopic_users table
     title: !STRING >= 50 characters
     creater_id: !INT
 }
-ROUTE = '/api/subtopics/create
+ROUTE = '/subtopics/create
 returns = id of created subtopic
 TESTS: {
     1) SHOULD RETURN ERROR IF TITLE OR CREATER_ID IS NOT PRESENT
@@ -107,7 +107,7 @@ TODO: Add middleware to ensure user is logged in, check if user is valid subtopi
 @PARAMS = {
     id: !INT
 }
-ROUTE = '/api/subtopics/:id
+ROUTE = '/subtopics/:id
 returns = success if valid
 TESTS: {
     1) SHOULD RETURN ERROR IF SUBTOPIC_ID AND USER_ID AREN'T VALID PAIRS IN SUBTOPIC_USERS TABLE
@@ -159,7 +159,7 @@ TODO: Add middleware to ensure user is logged in, check if user is valid subtopi
 @PARAMS = {
     id: !INT
 }
-ROUTE = '/api/subtopics/:id
+ROUTE = '/subtopics/:id
 returns = success if valid
 TESTS: {
     1) SHOULD RETURN ERROR IF SUBTOPIC_ID AND USER_ID AREN'T VALID PAIRS IN SUBTOPIC_USERS TABLE

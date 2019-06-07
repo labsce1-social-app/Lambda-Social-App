@@ -5,7 +5,7 @@ const { discussionHelper } = require('../helpers/index.js');
 /*
 GET ROUTE get all discussions
 @PARAM = NONE
-ROUTE = '/api/discussions
+ROUTE = '/discussions
 returns = all discussions
 TESTS: {
     1) RETURNS LIST OF discussions > 1
@@ -22,5 +22,17 @@ router.get('/', (req, res) => {
       res.status(500).json({ error: err });
     });
 });
+
+/*
+GET ROUTE get single discussion
+@PARAM = {
+    id: !INT
+}
+ROUTE = '/discussions/:id
+returns = single discussion
+TESTS: {
+    1) RETURNS SINGLE SPECIFIED DISCUSSION
+}
+*/
 
 module.exports = router;

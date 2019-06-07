@@ -2,12 +2,10 @@ const router = require('express').Router();
 const { usersHelper } = require('../helpers/index.js');
 const db = require('../../data/dbconfig.js');
 
-
-
 /*
 GET ROUTE get all users
 @PARAM = NONE
-ROUTE = '/api/users
+ROUTE = '/users
 returns = [all users]
 */
 
@@ -24,7 +22,7 @@ router.get('/', (req, res) => {
 /*
 GET ROUTE get single user
 @PARAM = id
-ROUTE = '/api/users/:id
+ROUTE = '/users/:id
 returns = a single user object
 */
 
@@ -47,7 +45,7 @@ POST ROUTE create a user
 @BODY = {
    username: String!
 }
-ROUTE = '/api/users
+ROUTE = '/users
 returns = returns new user id
 */
 
@@ -89,7 +87,7 @@ PUT ROUTE update a user
     username: String!
 }
 @PARAM = id
-ROUTE = '/api/users/:id
+ROUTE = '/users/:id
 returns = returns new user info
 */
 
@@ -130,7 +128,7 @@ router.put('/:id', async (req, res) => {
 /*
 DELETE ROUTE delete a user
 @PARAM = id
-ROUTE = '/api/users/:id
+ROUTE = '/users/:id
 returns = returns success if valid
 */
 
