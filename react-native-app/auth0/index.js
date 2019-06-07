@@ -27,7 +27,10 @@ function toQueryString(params) {
 
 export default class Login extends React.Component {
   state = {
-    name: null
+    name: null,
+    nickname: '',
+    picture: '',
+    sub: '' // sub is user_id
   };
 
   login = async () => {
@@ -67,8 +70,8 @@ export default class Login extends React.Component {
     const jwtToken = response.id_token;
     const decoded = jwtDecode(jwtToken);
 
-    const { name } = decoded;
-    this.setState({ name, session: response.type });
+    const { name, nickname, picture, sub } = decoded;
+    this.setState({ name, nickname, picture, sub, session: response.type });
   };
 
   handleLogout = () => {
