@@ -1,5 +1,6 @@
 import React from 'react';
 import { FlatList, Text } from 'react-native-gesture-handler';
+import { Spinner } from 'native-base';
 import { BASE_URL } from 'react-native-dotenv';
 import PostSummary from './PostSummary';
 
@@ -32,7 +33,7 @@ class TopPosts extends React.Component {
 
     render() {
         if (!this.state.posts) {
-            return <Text>Loading...</Text>
+            return <Spinner />
         } else {
             return (
                 <FlatList
