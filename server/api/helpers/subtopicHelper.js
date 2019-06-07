@@ -18,6 +18,7 @@ const checkValidUser = async creater_id => {
   return isValid;
 };
 
+// checks to see if subtopic title has been used
 const canInsertSubtopic = async title => {
   let canInsert = false;
 
@@ -35,7 +36,8 @@ const canInsertSubtopic = async title => {
   return canInsert;
 };
 
-const userCanDeleteSubtopic = async (id, creater_id) => {
+// checks to see if the creater_id and subtopic id match so they can delete
+const userCanDeleteAndEditSubtopic = async (id, creater_id) => {
   let canDelete = false;
 
   await db('subtopic')
@@ -52,6 +54,7 @@ const userCanDeleteSubtopic = async (id, creater_id) => {
   return canDelete;
 };
 
+// checks to see if subtopic exists
 const checkValidSubtopic = async id => {
   let isValid = false;
 
@@ -72,6 +75,6 @@ const checkValidSubtopic = async id => {
 module.exports = {
   checkValidUser,
   canInsertSubtopic,
-  userCanDeleteSubtopic,
+  userCanDeleteAndEditSubtopic,
   checkValidSubtopic
 };

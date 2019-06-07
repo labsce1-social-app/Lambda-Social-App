@@ -79,7 +79,7 @@ router.post('/subtopics/create', async (req, res) => {
         'title must be between 0 and 50 charecters, creater_id must be valid'
     });
   } else if ((await subtopicHelper.checkValidUser(body.creater_id)) === false) {
-    res.status(500).json({ error: 'no valid user found' });
+    res.status(500).json({ error: 'valid user not found, check creater_id' });
   } else {
     if (await subtopicHelper.canInsertSubtopic(body.title)) {
       db('subtopic')
@@ -124,7 +124,8 @@ router.delete('/subtopics/:id', async (req, res) => {
   } else if ((await subtopicHelper.checkValidSubtopic(id)) === false) {
     res.status(500).json({ message: 'subtopic not found' });
   } else if (
-    (await subtopicHelper.userCanDeleteSubtopic(id, creater_id)) === false
+    (await subtopicHelper.userCanDeleteAndEditSubtopic(id, creater_id)) ===
+    false
   ) {
     res
       .status(500)
@@ -145,6 +146,74 @@ router.delete('/subtopics/:id', async (req, res) => {
       .catch(err => {
         res.status(500).json({ error: err });
       });
+  }
+});
+
+/*
+PUT ROUTE update a subtopic
+TODO: Add middleware to ensure user is logged in, check if user is valid subtopic_users pair
+@BODY = {
+    creater_id: !INT
+    title: !STRING >= 50 characters
+}
+@PARAMS = {
+    id: !INT
+}
+ROUTE = '/api/subtopics/:id
+returns = success if valid
+TESTS: {
+    1) SHOULD RETURN ERROR IF SUBTOPIC_ID AND USER_ID AREN'T VALID PAIRS IN SUBTOPIC_USERS TABLE
+    2) SHOULD RETURN ERROR IF CREATER_ID IS NOT VALID
+    3) SHOULD RETURN ERROR IF CREATER_ID IS NOT VALID MATCH TO ID IN SUBTOPIC TABLE
+    4) SHOULD RETURN ERROR IF TITLE IS EMPTY, TITLE IS 0 CHARECTERS, TITLE IS GREATER THAN 50 CHARECTERS, CREATER_ID IS UNDEFINED OR NOT PRESENT
+    5) SHOULD RETURN ERROR IF SUBTOPIC ALREADY EXISTS
+}
+*/
+
+router.put('/subtopics/:id', async (req, res) => {
+  const body = req.body;
+  const id = req.params;
+
+  if (
+    body.title.length === 0 ||
+    body.title.length > 50 ||
+    body.title === '' ||
+    body.title == null ||
+    body.title == undefined ||
+    body.creater_id == null ||
+    body.creater_id == undefined
+  ) {
+    res.status(400).json({
+      error:
+        'title must be between 0 and 50 charecters, creater_id must be valid'
+    });
+  } else if ((await subtopicHelper.checkValidUser(body.creater_id)) === false) {
+    res.status(500).json({ error: 'valid user not found, check creater_id' });
+  } else if ((await subtopicHelper.checkValidSubtopic(id)) === false) {
+    res.status(500).json({ message: 'subtopic not found' });
+  } else if (
+    (await subtopicHelper.userCanDeleteAndEditSubtopic(id, body.creater_id)) ===
+    false
+  ) {
+    res
+      .status(500)
+      .json({ message: 'user not authorized to edit this subtopic' });
+  } else {
+    if (await subtopicHelper.canInsertSubtopic(body.title)) {
+      db('subtopic')
+        .where(id)
+        .insert(body)
+        .then(subtopic => {
+          res
+            .status(201)
+            .json({ id: subtopic, message: 'Succesfully updated subtopic' });
+        })
+        .catch(err => {
+          res.status(500).json({ error: err });
+        });
+    } else {
+      res.status(500).json({ error: 'subtopic already exists' });
+    }
   }
 });
 
