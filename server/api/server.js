@@ -1,6 +1,6 @@
 const express = require('express');
 const middleware = require('./config/middleware');
-const { userRouter, subtopicRouter } = require('../api/routers/index.js');
+const { userRouter, subtopicRouter } = require('./routers/');
 
 const server = express();
 
@@ -8,7 +8,8 @@ const server = express();
 server.use(express.json());
 middleware(server);
 
-server.use('/api', userRouter, subtopicRouter);
+server.use('/users', userRouter);
+server.use('/subtopics', subtopicRouter);
 
 // configure sanity check
 server.get('/', (req, res) =>

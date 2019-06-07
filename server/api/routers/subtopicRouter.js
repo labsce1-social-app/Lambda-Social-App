@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const db = require('../../data/dbconfig.js');
-const { subtopicHelper } = require('../helpers/index.js');
+const { subtopicHelper, joinUsersAndSubtopic } = require('../helpers/index.js');
 
 /*
 GET ROUTE get all subtopics
@@ -8,12 +8,12 @@ GET ROUTE get all subtopics
 ROUTE = '/api/subtopics
 returns = all subtopics
 TESTS: {
-    1) RETURNS LIST OF SUBTOPICS > 1 
+    1) RETURNS LIST OF SUBTOPICS > 1
 }
 */
 
-router.get('/subtopics', (req, res) => {
-  db('subtopic')
+router.get('/', (req, res) => {
+  subtopicHelper.joinUsersAndSubtopic()
     .then(subtopics => {
       res.status(200).json(subtopics);
     })
@@ -32,11 +32,11 @@ TESTS: {
 }
 */
 
-router.get('/subtopics/:id', (req, res) => {
-  const id = req.params;
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
 
   db('subtopic')
-    .where(id)
+    .where({ id })
     .then(subtopic => {
       res.status(200).json(subtopic);
     })
@@ -44,6 +44,7 @@ router.get('/subtopics/:id', (req, res) => {
       res.status(500).json({ error: err });
     });
 });
+
 
 /*
 POST ROUTE create a subtopic
@@ -62,7 +63,7 @@ TESTS: {
 }
 */
 
-router.post('/subtopics/create', async (req, res) => {
+router.post('/create', async (req, res) => {
   const body = req.body;
 
   if (

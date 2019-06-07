@@ -20,15 +20,15 @@ function generateUsers() {
 function generateSubtopic_users() {
     return {
         user_id: getRandomArbitrary(1, 10),
-        subtopic_id: getRandomArbitrary(1, 20)
+        subtopic_id: getRandomArbitrary(1, 20),
     };
 }
 
 // create a subtopics object
 function generateSubtopics() {
     return {
-        title: faker.lorem.text(10),
-        creater_id: getRandomArbitrary(1, 10)
+        title: faker.lorem.words(4),
+        creater_id: getRandomArbitrary(1, 10),
     };
 }
 
@@ -36,7 +36,8 @@ function generateSubtopics() {
 function generateDiscussions() {
     return {
         subtopic_id: getRandomArbitrary(1, 20),
-        title: faker.lorem.text(10),
+        title: faker.lorem.words(4),
+        content: faker.lorem.text(40, 100),
         image: faker.image.imageUrl()
     };
 }
