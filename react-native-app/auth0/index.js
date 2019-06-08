@@ -102,25 +102,25 @@ export default class Login extends React.Component {
               </Button>
             </Right>
           ) : (
-            <Right>
-              <Button
-                style={styles.AuthButton}
-                title="login"
-                onPress={this.login}
-              >
-                <Text style={styles.buText}>Login</Text>
-              </Button>
-            </Right>
-          )}
+              <Right>
+                <Button
+                  style={styles.AuthButton}
+                  title="login"
+                  onPress={this.login}
+                >
+                  <Text style={styles.buText}>Login</Text>
+                </Button>
+              </Right>
+            )}
         </Header>
 
-        {/* <StatusBar backgroundColor="#ffffff" /> */}
+        <StatusBar backgroundColor="#ffffff" />
 
         {name ? (
           <Text style={styles.title}>You are logged in, {name}!</Text>
         ) : (
-          <Text>No one is logged in</Text>
-        )}
+            <Text>No one is logged in</Text>
+          )}
       </Container>
     );
   }

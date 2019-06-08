@@ -16,7 +16,7 @@ const PostSummary = props => {
             <Image style={style.icon} source={{ url: props.image }} />
             <Body>
               <Text style={style.date}>{moment(props.date).fromNow()}</Text>
-              <Text style={style.title}>{props.title}</Text>
+              <Text style={style.title}>s/{props.title}</Text>
               <Text style={style.username}>{props.name}</Text>
               <Text numberOfLines={1}>{props.discussion}</Text>
               <Text style={style.comment}><Icon name="chatbubbles" /> {props.comment} {' '}

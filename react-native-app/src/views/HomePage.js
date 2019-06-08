@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text } from 'native-base';
 import Wrapper from '../components/Wrapper'
 import TopPosts from '../components/postsummary/TopPosts'
 
@@ -7,9 +7,7 @@ import TopPosts from '../components/postsummary/TopPosts'
 const HomePage = props => {
   return (
     <Wrapper>
-
-      <Text>Top 10 Discussions</Text>
-      {/* <Text onPress={() => props.navigation.navigate('Login')}>login</Text> */}
+      <Text style={{ textAlign: 'center', fontSize: 22 }}>Most Popular Discussions</Text>
       <TopPosts />
     </Wrapper>
   );
