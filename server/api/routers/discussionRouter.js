@@ -35,4 +35,17 @@ TESTS: {
 }
 */
 
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+
+  discussionHelper
+    .joinUsersAndSubtopicAtId(id)
+    .then(disucssion => {
+      res.status(200).json(disucssion);
+    })
+    .catch(err => {
+      res.status(500).json({ error: err });
+    });
+});
+
 module.exports = router;
