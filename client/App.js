@@ -4,7 +4,6 @@ import { useScreens } from 'react-native-screens';
 import Wrapper from './src/components/Wrapper';
 import NativeHeader from './src/common/NativeHeader';
 import AppNavigator from './AppNavigator';
-import { Text } from 'native-base';
 
 useScreens();
 
