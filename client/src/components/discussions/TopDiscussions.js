@@ -1,6 +1,5 @@
 import React from 'react';
 import { FlatList } from 'react-native-gesture-handler';
-import { BASE_URL } from 'react-native-dotenv';
 import Discussion from './Discussion';
 
 //TODO: refactor to hooks
@@ -18,7 +17,7 @@ class TopDiscussions extends React.Component {
     }
 
     async fetchPost() {
-        const url = `${BASE_URL}/subtopics`;
+        const url = `${process.env.BASE_URL}/subtopics`;
         try {
             let response = await fetch(url);
             let responseJson = await response.json();
@@ -34,7 +33,7 @@ class TopDiscussions extends React.Component {
             this.state.posts && <FlatList
                 data={this.state.posts}
                 renderItem={({ item }) => (
-                    <PostSummary
+                    <Discussion
                         image={item.image}
                         title={item.title.split(' ').join('-')}
                         discussion={item.content}

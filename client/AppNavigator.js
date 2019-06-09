@@ -1,16 +1,12 @@
 import React from 'react';
 
-import {
-    createDrawerNavigator,
-    createAppContainer,
-    createStackNavigator
-} from 'react-navigation';
+import { createDrawerNavigator, createAppContainer, createStackNavigator } from 'react-navigation';
 import { createBottomTabNavigator, BottomTabBar } from 'react-navigation-tabs';
-import { Icon, Text } from 'native-base';
+import { Icon } from 'native-base';
 
 // import ComponentName from './.'
 import HomePage from './src/views/HomePage';
-import Login from './auth0/index';
+import Login from './src/components/auth';
 
 /** default stack navigation **
  * Drawer and tab Navigator need custom components
@@ -35,12 +31,12 @@ const AppNavigator = createBottomTabNavigator({
             tabBarIcon: <Icon name="home" />
         }
     },
-    Login: {
-        screen: Login,
-        navigationOptions: {
-            tabBarIcon: <Icon name="finger-print" />
-        }
-    }
+    // Login: {
+    //     screen: Login,
+    //     navigationOptions: {
+    //         tabBarIcon: <Icon name="finger-print" />
+    //     }
+    // }
 },
     {
         tabBarOptions: {

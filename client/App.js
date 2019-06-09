@@ -1,18 +1,10 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
 // memory usage optimize for screen changing
 import { useScreens } from 'react-native-screens';
 import Wrapper from './src/components/Wrapper';
 import NativeHeader from './src/common/NativeHeader';
 import AppNavigator from './AppNavigator';
+import { Text } from 'native-base';
 
 useScreens();
 
@@ -45,10 +37,10 @@ export default class App extends Component {
   // }
 
   render() {
-    const { loading } = this.state;
-    if (!loading) {
-      return <AppLoading />;
-    }
+    // const { loading } = this.state;
+    // if (!loading) {
+    //   return <Text>Loading...</Text>;
+    // }
     return (
       <Wrapper>
         <NativeHeader />
