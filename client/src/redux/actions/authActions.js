@@ -11,7 +11,6 @@ import { BASE_URL } from 'react-native-dotenv';
 
 // need to add this in, then add to deployment as a variable
 // this might change depending on how android store does it
-const baseURL = BASE_URL;
 
 // this will put token on headers for backend
 export const authenticate = () => async dispatch => {

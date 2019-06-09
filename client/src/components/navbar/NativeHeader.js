@@ -1,8 +1,6 @@
 import React from 'react';
-import { Header, Left, Body, Right, Button, Icon, Title } from 'native-base';
-import { Text } from 'react-native'
+import { Header, Left, Right, Button, Title } from 'native-base';
 import { StyleSheet } from 'react-native'
-import NativeButton from './NativeButton'
 import NativePicker from './NativePicker';
 
 

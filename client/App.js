@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // memory usage optimize for screen changing
 import { useScreens } from 'react-native-screens';
 import Wrapper from './src/components/Wrapper';
-import NativeHeader from './src/common/NativeHeader';
+import NativeHeader from './src/components/navbar/NativeHeader';
 import AppNavigator from './AppNavigator';
 
 useScreens();
