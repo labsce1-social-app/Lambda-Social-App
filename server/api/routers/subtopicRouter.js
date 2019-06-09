@@ -66,11 +66,11 @@ router.post('/create', async (req, res) => {
   const body = req.body;
 
   if (
+    body.title == null ||
+    body.title == undefined ||
     body.title.length === 0 ||
     body.title.length > 50 ||
     body.title === '' ||
-    body.title == null ||
-    body.title == undefined ||
     body.creater_id == null ||
     body.creater_id == undefined
   ) {
@@ -175,11 +175,11 @@ router.put('/:id', async (req, res) => {
   const id = req.params;
 
   if (
+    body.title == null ||
+    body.title == undefined ||
     body.title.length === 0 ||
     body.title.length > 50 ||
     body.title === '' ||
-    body.title == null ||
-    body.title == undefined ||
     body.creater_id == null ||
     body.creater_id == undefined
   ) {

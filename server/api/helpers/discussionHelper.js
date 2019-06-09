@@ -16,7 +16,26 @@ const joinUsersAndSubtopicAtId = id => {
     JOIN user, subtopic WHERE discussion.subtopic_id = subtopic.id AND discussion.id = ${id}`);
 };
 
+// checks to see if discussion title has been used
+const canInsertDisuccsion = async title => {
+  let canInsert = false;
+
+  await db('discussion')
+    .where('title', title)
+    .then(rows => {
+      if (rows.length === 0) {
+        canInsert = true;
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+  return canInsert;
+};
+
 module.exports = {
   joinUsersAndSubtopic,
-  joinUsersAndSubtopicAtId
+  joinUsersAndSubtopicAtId,
+  canInsertDisuccsion
 };
