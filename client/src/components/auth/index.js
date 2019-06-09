@@ -1,149 +1,108 @@
 import React from 'react';
 import { StyleSheet, Text, Alert, StatusBar } from 'react-native';
-import { Header, Container, Right, Button } from 'native-base';
+import { Header, Container, Right, Button, Left } from 'native-base';
 
 // import { AuthSession } from 'expo';
 import jwtDecode from 'jwt-decode';
 
-// import { AUTH0_CLIENT, AUTH0_DOMAIN } from 'react-native-dotenv';
+import { AUTH0_CLIENT, AUTH0_DOMAIN } from 'react-native-dotenv';
 
-const auth0ClientId = process.env.AUTH0_CLIENT;
-const auth0Domain = process.env.AUTH0_DOMAIN;
+const auth0ClientId = AUTH0_CLIENT;
+const auth0Domain = AUTH0_DOMAIN;
 
-/**
- * Converts an object to a query string.
- */
-function toQueryString(params) {
-    return (
-        '?' +
-        Object.entries(params)
-            .map(
-                ([key, value]) =>
-                    `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
-            )
-            .join('&')
-    );
-}
+import Auth0 from 'react-native-auth0';
+const auth0 = new Auth0({ domain: auth0Domain, clientId: auth0ClientId });
 
 export default class Login extends React.Component {
-    state = {
-        name: null,
-        nickname: '',
-        picture: '',
-        sub: '' // sub is user_id
-    };
+  state = {
+    name: '',
+    accessToken: null,
+    nickname: '',
+    picture: '',
+    sub: '' // sub is user_id
+  };
 
-    login = async () => {
-        // Retrieve the redirect URL, add this to the callback URL list
-        // of your Auth0 application.
-        const redirectUrl = AuthSession.getRedirectUrl();
+  static navigationOptions = {
+    header: null
+  };
 
-        // Structure the auth parameters and URL
-        const queryParams = toQueryString({
-            client_id: auth0ClientId,
-            redirect_uri: redirectUrl,
-            response_type: 'id_token', // id_token will return a JWT token
-            scope: 'openid profile', // retrieve the user's profile
-            nonce: 'nonce' // ideally, this will be a random value
+  handleLogin() {
+    auth0.webAuth
+      .authorize({
+        scope: 'openid profile email offline_access',
+        audience: 'https://lambdasocial.auth0.com/userinfo',
+        prompt: 'login'
+        // responseType: 'token id_token' <- may not need
+      })
+      .then(credentials => {
+        console.log('creds', credentials);
+
+        this.setState({
+          accessToken: credentials.accessToken,
+          name: credentials.name
         });
-        const authUrl = `${auth0Domain}/authorize` + queryParams;
+      })
+      .catch(error => console.log('error in login', error));
+  }
 
-        // Perform the authentication
-        const response = await AuthSession.startAsync({ authUrl });
-        console.log('Authentication response: ', response);
+  handleLogout() {
+    // only works for iOS
+    auth0.webAuth
+      .clearSession({})
+      .then(success => {
+        this.setState({ accessToken: null });
+      })
+      .catch(error => console.log(error));
+  }
 
-        if (response.type === 'success') {
-            this.handleResponse(response.params);
-        }
-    };
+  render() {
+    const { name, accessToken } = this.state;
+    console.log('Logged in:', name, accessToken);
 
-    handleResponse = response => {
-        if (response.error) {
-            Alert(
-                'Authentication error',
-                response.error_description || 'something went wrong'
-            );
-            return;
-        }
+    return (
+      <Container>
+        <Header transparent>
+          <Right>
+            <Button
+              style={styles.AuthButton}
+              title="login"
+              onPress={() => this.handleLogin()}
+            >
+              <Text style={styles.buText}>Login</Text>
+            </Button>
+          </Right>
+        </Header>
 
-        // Retrieve the JWT token and decode it
-        const jwtToken = response.id_token;
-        const decoded = jwtDecode(jwtToken);
+        <StatusBar backgroundColor="#ffffff" />
 
-        const { name, nickname, picture, sub } = decoded;
-        this.setState({ name, nickname, picture, sub, session: response.type });
-    };
-
-    handleLogout = () => {
-        AuthSession.dismiss();
-
-        this.setState({ name: null });
-    };
-
-    static navigationOptions = {
-        header: null
-    };
-
-    render() {
-        const { name } = this.state;
-        console.log('Logged in as:', name);
-
-        return (
-            <Container>
-                <Header transparent>
-                    {name ? (
-                        <Right>
-                            <Button
-                                style={styles.AuthButton}
-                                title="logout"
-                                onPress={() => this.handleLogout()}
-                            >
-                                <Text style={styles.buText}>Log out</Text>
-                            </Button>
-                        </Right>
-                    ) : (
-                            <Right>
-                                <Button
-                                    style={styles.AuthButton}
-                                    title="login"
-                                    onPress={this.login}
-                                >
-                                    <Text style={styles.buText}>Login</Text>
-                                </Button>
-                            </Right>
-                        )}
-                </Header>
-
-                <StatusBar backgroundColor="#ffffff" />
-
-                {name ? (
-                    <Text style={styles.title}>You are logged in, {name}!</Text>
-                ) : (
-                        <Text>No one is logged in</Text>
-                    )}
-            </Container>
-        );
-    }
+        {accessToken ? (
+          <Text style={styles.title}>You are logged in, {name}!</Text>
+        ) : (
+          <Text>No one is logged in</Text>
+        )}
+      </Container>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    title: {
-        fontSize: 20,
-        textAlign: 'center',
-        marginTop: 40
-    },
-    AuthButton: {
-        backgroundColor: '#990000'
-    },
-    buText: {
-        color: '#ffffff',
-        paddingRight: 5,
-        paddingLeft: 5
-    }
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  title: {
+    fontSize: 20,
+    textAlign: 'center',
+    marginTop: 40
+  },
+  AuthButton: {
+    backgroundColor: '#990000'
+  },
+  buText: {
+    color: '#ffffff',
+    paddingRight: 5,
+    paddingLeft: 5
+  }
 });
