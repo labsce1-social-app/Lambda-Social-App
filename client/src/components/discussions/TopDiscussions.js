@@ -1,53 +1,54 @@
 import React, { useContext, useEffect } from 'react';
-import { Store } from '../../context/';
 import { FlatList } from 'react-native-gesture-handler';
+import { Store } from '../../context'
 import Discussion from './Discussion';
-import { BASE_URL } from 'react-native-dotenv';
 import { Text } from 'native-base';
+import { BASE_URL } from 'react-native-dotenv';
 
-const url = `${BASE_URL}/subtopics`;
 
 //TODO: refactor to hooks
 const TopDiscussions = () => {
     const { state, dispatch } = useContext(Store);
-    const { discussions, loading, error } = state;
 
     useEffect(() => {
-        fetchData()
-    }, () => fetchData());
+        getDiscussions()
+    }, () => getDiscussions());
 
-    const fetchData = async () => {
+    const getDiscussions = async () => {
         // handle loading state
         dispatch({ type: "FETCHING_DISCUSSIONS" });
         try {
             // fetch the data
-            let response = await fetch(url);
+            let response = await fetch(`${BASE_URL}/subtopics`);
             let responseJson = await response.json();
+            console.log(responseJson);
             // set the data to global state
-            return dispatch({ type: "DISCUSSIONS_FETCHED", payload: responseJson });
+            dispatch({ type: "DISCUSSIONS_FETCHED", payload: responseJson });
         } catch (error) {
             // set the error to global state
-            return dispatch({ type: DISCUSSIONS_FAILED, payload: error });
+            dispatch({ type: "DISCUSSIONS_FAILED", payload: error });
         }
     }
 
     return (
-        <FlatList
-            data={discussions}
-            renderItem={({ item }) => (
-                <Discussion
-                    image={item.image}
-                    title={item.title.split(' ').join('-')}
-                    discussion={item.content}
-                    name={item.username}
-                    date={item.created_at}
-                    comment={'2'}
-                />
-            )}
-            keyExtractor={this._keyExtractor}
-        // refreshing={refresh}
-        // onRefresh={() => toRefresh}
-        />
+        state.loading === true ? <Text>Loading...</Text> : (
+            <FlatList
+                data={state.discussions}
+                renderItem={({ item }) => (
+                    <Discussion
+                        image={item.image}
+                        title={item.title.split(' ').join('-')}
+                        discussion={item.content}
+                        name={item.username}
+                        date={item.created_at}
+                        comment={'2'}
+                    />
+                )}
+                keyExtractor={this._keyExtractor}
+            // refreshing={refresh}
+            // onRefresh={() => toRefresh}
+            />
+        )
     )
 }
 

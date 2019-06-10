@@ -1,33 +1,34 @@
+// import { FETCHING_DISCUSSIONS, DISCUSSIONS_FETCHED, DISCUSSIONS_FAILED } from './constants';
 
-const initialState = {
+export const initialState = {
     discussions: [],
     loading: false,
     error: ''
 };
 
-export const discussionReducer = (state = initialState, action) => {
+export const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case FETCHING_DISCUSSIONS:
+        case "FETCHING_DISCUSSIONS":
             return {
                 ...state,
                 loading: true,
                 error: ''
             };
-        case DISCUSSIONS_FETCHED:
+        case "DISCUSSIONS_FETCHED":
             return {
                 ...state,
                 loading: false,
-                discussion: action.payload,
+                discussions: action.payload,
                 error: ''
             };
-        case DISCUSSIONS_FAILED:
+        case "DISCUSSIONS_FAILED":
             return {
                 ...state,
                 loading: false,
                 error: action.payload
             };
-        case LOGOUT:
-            return initialState
+        case "LOGOUT":
+            return initialState;
         default:
             return state;
     }
