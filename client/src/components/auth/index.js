@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+
+import { Store } from '../../context/index';
+
 import { StyleSheet, Text, Alert, StatusBar } from 'react-native';
 import { Header, Container, Right, Button, Left } from 'native-base';
 
@@ -7,8 +10,8 @@ import jwtDecode from 'jwt-decode';
 
 import { AUTH0_CLIENT, AUTH0_DOMAIN } from 'react-native-dotenv';
 
-import { sendToken } from '../../redux/actions/autActions';
-import { connect } from 'react-redux';
+// import { sendToken } from '../../redux/actions/autActions';
+// import { connect } from 'react-redux';
 
 const auth0ClientId = AUTH0_CLIENT;
 const auth0Domain = AUTH0_DOMAIN;
@@ -16,21 +19,10 @@ const auth0Domain = AUTH0_DOMAIN;
 import Auth0 from 'react-native-auth0';
 const auth0 = new Auth0({ domain: auth0Domain, clientId: auth0ClientId });
 
-class Login extends React.Component {
-  state = {
-    name: '',
-    accessToken: null,
-    nickname: '',
-    picture: '',
-    sub: '', // sub is user_id
-    profile: {}
-  };
+const Login = () => {
+  const { state, dispatch } = useContext(Store);
 
-  static navigationOptions = {
-    header: null
-  };
-
-  handleLogin() {
+  const handleLogin = () => {
     auth0.webAuth
       .authorize({
         scope: 'openid profile email offline_access',
@@ -39,65 +31,47 @@ class Login extends React.Component {
         // responseType: 'token id_token' <- may not need
       })
       .then(credentials => {
-        console.log('creds', credentials);
+        // console.log('creds', credentials);
+        const { accessToken } = credentials;
 
         const decoded = jwtDecode(credentials.idToken);
+        dispatch({ type: 'LOGIN', payload: { decoded, accessToken } });
         console.log(decoded); // object of all user data
       })
 
       .catch(error => console.log('error in login', error));
-  }
-
-  handleLogout() {
-    // only works for iOS
-    auth0.webAuth
-      .clearSession({})
-      .then(success => {
-        this.setState({ accessToken: null });
-      })
-      .catch(error => console.log(error));
-  }
-
-  render() {
-    const { name, accessToken, profile } = this.state;
-    console.log('Logged in:', profile);
-
-    return (
-      <Container>
-        <Header transparent>
-          <Right>
-            <Button
-              style={styles.AuthButton}
-              title="login"
-              onPress={() => this.handleLogin()}
-            >
-              <Text style={styles.buText}>Login</Text>
-            </Button>
-          </Right>
-        </Header>
-
-        <StatusBar backgroundColor="#ffffff" />
-
-        {accessToken ? (
-          <Text style={styles.title}>You are logged in, {name}!</Text>
-        ) : (
-          <Text>No one is logged in</Text>
-        )}
-      </Container>
-    );
-  }
-}
-const mapDispatchToProps = dispatch => {
-  return {
-    // dispatching plain actions
-    sendToken: sendToken
   };
+
+  // handleLogout() {
+  //   // only works for iOS
+  //   auth0.webAuth
+  //     .clearSession({})
+  //     .then(success => {
+  //       this.setState({ accessToken: null });
+  //     })
+  //     .catch(error => console.log(error));
+  // }
+
+  return (
+    <Container>
+      <Header transparent>
+        <Right>
+          <Button
+            style={styles.AuthButton}
+            title="login"
+            onPress={() => handleLogin()}
+          >
+            <Text style={styles.buText}>Login</Text>
+          </Button>
+        </Right>
+      </Header>
+
+      <StatusBar backgroundColor="#ffffff" />
+    </Container>
+  );
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(Login);
+export default Login;
 
 const styles = StyleSheet.create({
   container: {
