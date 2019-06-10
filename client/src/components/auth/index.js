@@ -7,19 +7,23 @@ import jwtDecode from 'jwt-decode';
 
 import { AUTH0_CLIENT, AUTH0_DOMAIN } from 'react-native-dotenv';
 
+import { sendToken } from '../../redux/actions/autActions';
+import { connect } from 'react-redux';
+
 const auth0ClientId = AUTH0_CLIENT;
 const auth0Domain = AUTH0_DOMAIN;
 
 import Auth0 from 'react-native-auth0';
 const auth0 = new Auth0({ domain: auth0Domain, clientId: auth0ClientId });
 
-export default class Login extends React.Component {
+class Login extends React.Component {
   state = {
     name: '',
     accessToken: null,
     nickname: '',
     picture: '',
-    sub: '' // sub is user_id
+    sub: '', // sub is user_id
+    profile: {}
   };
 
   static navigationOptions = {
@@ -37,11 +41,10 @@ export default class Login extends React.Component {
       .then(credentials => {
         console.log('creds', credentials);
 
-        this.setState({
-          accessToken: credentials.accessToken,
-          name: credentials.name
-        });
+        const decoded = jwtDecode(credentials.idToken);
+        console.log(decoded); // object of all user data
       })
+
       .catch(error => console.log('error in login', error));
   }
 
@@ -56,8 +59,8 @@ export default class Login extends React.Component {
   }
 
   render() {
-    const { name, accessToken } = this.state;
-    console.log('Logged in:', name, accessToken);
+    const { name, accessToken, profile } = this.state;
+    console.log('Logged in:', profile);
 
     return (
       <Container>
@@ -84,6 +87,17 @@ export default class Login extends React.Component {
     );
   }
 }
+const mapDispatchToProps = dispatch => {
+  return {
+    // dispatching plain actions
+    sendToken: sendToken
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Login);
 
 const styles = StyleSheet.create({
   container: {
