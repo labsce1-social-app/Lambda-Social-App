@@ -72,9 +72,23 @@ const checkValidSubtopic = async id => {
   return isValid;
 };
 const joinUsersAndSubtopic = () => {
-  return db.raw(`SELECT discussion.content, discussion.title, discussion.image, discussion.created_at, discussion.updated_at, user.username, discussion.id
+  return db.raw(`SELECT
+user.username,
+discussion.id as id,
+discussion.content,
+discussion.title,
+discussion.image,
+discussion.created_at,
+discussion.updated_at,
+SUM(upvote.user_id = user.id) as upvotes
 FROM discussion
-JOIN user, subtopic WHERE discussion.subtopic_id = subtopic.id`);
+JOIN user, subtopic, upvote
+WHERE discussion.subtopic_id = subtopic.id
+AND user.id = upvote.user_id
+AND upvote.discussion_id == discussion.id
+GROUP BY discussion.id
+ORDER BY upvotes DESC
+LIMIT 10`);
 };
 
 module.exports = {
