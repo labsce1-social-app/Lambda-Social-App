@@ -17,7 +17,7 @@ const joinUsersAndSubtopicAtId = id => {
 };
 
 // checks to see if discussion title has been used
-const canInsertDisuccsion = async title => {
+const canInsertDisucssion = async title => {
   let canInsert = false;
 
   await db('discussion')
@@ -37,5 +37,5 @@ const canInsertDisuccsion = async title => {
 module.exports = {
   joinUsersAndSubtopic,
   joinUsersAndSubtopicAtId,
-  canInsertDisuccsion
+  canInsertDisucssion
 };

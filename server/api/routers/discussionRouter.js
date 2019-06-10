@@ -62,14 +62,14 @@ NOTE: content or image must be present
     image: !STRING - OPTIONAL
     content: !STRING - OPTIONAL
 }
-ROUTE = '/discussion/create
+ROUTE = '/discussions/create
 returns = id of created discussion
 TESTS: {
     1) SHOULD RETURN ERROR IF TITLE OR SUBTOPIC_ID IS NOT PRESENT
     2) SHOULD RETURN ERROR IF SUBTOPIC_ID IS NOT VALID
-    3) SHOULD RETURN ERROR IF TITLE HAS ALREADY BEEN USED
-    4) SHOULD RETURN ERROR IF TITLE IS EMPTY OR 0 CHARACTERS OR GREATER THAN 50 CHARECTERS
-    5) SHOULD RETURN ERROR IF BOTH IMAGE AND CONTENT ARE MISSING
+    3) SHOULD RETURN ERROR IF TITLE HAS ALREADY BEEN USED - done
+    4) SHOULD RETURN ERROR IF TITLE IS EMPTY OR 0 CHARACTERS OR GREATER THAN 50 CHARECTERS - done
+    5) SHOULD RETURN ERROR IF BOTH IMAGE AND CONTENT ARE MISSING - done
 }
 */
 
@@ -90,13 +90,13 @@ router.post('/create', async (req, res) => {
         'title must be between 0 and 50 charecters, subtopic_id must be valid'
     });
   } else if (
-    (image && content) === null ||
+    (image === null && content === null) ||
     (image === undefined && content === undefined) ||
-    (image && content) === ''
+    (image === '' && content === '')
   ) {
     res.status(400).json({ error: 'must contain either an image or content' });
-  } else {
-    console.log(await discussionHelper.canInsertDisuccsion(title));
+  } else if ((await discussionHelper.canInsertDisucssion(title)) === false) {
+    res.status(500).json({ error: 'subtopic already exists' });
   }
 });
 
