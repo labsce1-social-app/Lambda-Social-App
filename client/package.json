@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "dev": "react-native run-android && react-native run-ios"
+    "dev": "react-native run-android && react-native run-ios",
+    "android": "react-native run-android"
   },
   "dependencies": {
     "@babel/plugin-external-helpers": "^7.2.0",

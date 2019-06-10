@@ -42,16 +42,6 @@ const Login = () => {
       .catch(error => console.log('error in login', error));
   };
 
-  // handleLogout() {
-  //   // only works for iOS
-  //   auth0.webAuth
-  //     .clearSession({})
-  //     .then(success => {
-  //       this.setState({ accessToken: null });
-  //     })
-  //     .catch(error => console.log(error));
-  // }
-
   return (
     <Container>
       <Header transparent>
