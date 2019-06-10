@@ -1,37 +1,39 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
+import { Store } from '../../context'
 import Discussion from './Discussion';
+import { Text } from 'native-base';
+import { BASE_URL } from 'react-native-dotenv';
+
 
 //TODO: refactor to hooks
-class TopDiscussions extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            posts: []
-        }
-        fetchPost = this.fetchPost.bind(this);
-    }
+const TopDiscussions = () => {
+    const { state, dispatch } = useContext(Store);
 
-    componentDidMount() {
-        this.fetchPost()
-    }
+    useEffect(() => {
+        getDiscussions()
+    }, () => getDiscussions());
 
-    async fetchPost() {
-        const url = `${process.env.BASE_URL}/subtopics`;
+    const getDiscussions = async () => {
+        // handle loading state
+        dispatch({ type: "FETCHING_DISCUSSIONS" });
         try {
-            let response = await fetch(url);
+            // fetch the data
+            let response = await fetch(`${BASE_URL}/subtopics`);
             let responseJson = await response.json();
-            //TODO: get this off of top 10 upvoted later, for now just render 10
-            return this.setState({ posts: responseJson.slice(0, 10) });
+            console.log(responseJson);
+            // set the data to global state
+            dispatch({ type: "DISCUSSIONS_FETCHED", payload: responseJson.splice(0, 10) });
         } catch (error) {
-            console.log(error)
+            // set the error to global state
+            dispatch({ type: "DISCUSSIONS_FAILED", payload: error });
         }
     }
 
-    render() {
-        return (
-            this.state.posts && <FlatList
-                data={this.state.posts}
+    return (
+        state.loading === true ? <Text>Loading...</Text> : (
+            <FlatList
+                data={state.discussions}
                 renderItem={({ item }) => (
                     <Discussion
                         image={item.image}
@@ -43,11 +45,12 @@ class TopDiscussions extends React.Component {
                     />
                 )}
                 keyExtractor={this._keyExtractor}
-                refreshing={this.state.refresh}
+                refreshing={this.refresh}
                 onRefresh={() => this.toRefresh}
             />
         )
-    }
+    )
 }
+
 
 export default TopDiscussions
