@@ -1,55 +1,55 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import { Store } from '../../context/';
 import { FlatList } from 'react-native-gesture-handler';
 import Discussion from './Discussion';
 import { BASE_URL } from 'react-native-dotenv';
+import { Text } from 'native-base';
 
+const url = `${BASE_URL}/subtopics`;
 
 //TODO: refactor to hooks
-class TopDiscussions extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            posts: []
-        }
-        fetchPost = this.fetchPost.bind(this);
-    }
+const TopDiscussions = () => {
+    const { state, dispatch } = useContext(Store);
+    const { discussions, loading, error } = state;
 
-    componentDidMount() {
-        this.fetchPost()
-    }
+    useEffect(() => {
+        fetchData()
+    }, () => fetchData());
 
-    async fetchPost() {
-        const url = `${BASE_URL}/subtopics`;
+    const fetchData = async () => {
+        // handle loading state
+        dispatch({ type: "FETCHING_DISCUSSIONS" });
         try {
+            // fetch the data
             let response = await fetch(url);
             let responseJson = await response.json();
-            //TODO: get this off of top 10 upvoted later, for now just render 10
-            return this.setState({ posts: responseJson.slice(0, 10) });
+            // set the data to global state
+            return dispatch({ type: "DISCUSSIONS_FETCHED", payload: responseJson });
         } catch (error) {
-            console.log(error)
+            // set the error to global state
+            return dispatch({ type: DISCUSSIONS_FAILED, payload: error });
         }
     }
 
-    render() {
-        return (
-            this.state.posts && <FlatList
-                data={this.state.posts}
-                renderItem={({ item }) => (
-                    <Discussion
-                        image={item.image}
-                        title={item.title.split(' ').join('-')}
-                        discussion={item.content}
-                        name={item.username}
-                        date={item.created_at}
-                        comment={'2'}
-                    />
-                )}
-                keyExtractor={this._keyExtractor}
-                refreshing={this.state.refresh}
-                onRefresh={() => this.toRefresh}
-            />
-        )
-    }
+    return (
+        <FlatList
+            data={discussions}
+            renderItem={({ item }) => (
+                <Discussion
+                    image={item.image}
+                    title={item.title.split(' ').join('-')}
+                    discussion={item.content}
+                    name={item.username}
+                    date={item.created_at}
+                    comment={'2'}
+                />
+            )}
+            keyExtractor={this._keyExtractor}
+        // refreshing={refresh}
+        // onRefresh={() => toRefresh}
+        />
+    )
 }
+
 
 export default TopDiscussions

@@ -4,7 +4,8 @@ import { useScreens } from 'react-native-screens';
 import Wrapper from './src/components/Wrapper';
 import NativeHeader from './src/components/navbar/NativeHeader';
 import AppNavigator from './AppNavigator';
-
+// import { Text } from 'native-base';
+import { StoreProvider } from './src/context/';
 useScreens();
 
 
@@ -17,23 +18,6 @@ useScreens();
 
 // type Props = {};
 export default class App extends Component {
-  state = {
-    loading: false
-  };
-
-  // async componentWillMount() {
-  //   // mount custom fonts for native base components
-  //   try {
-  //     await Font.loadAsync({
-  //       Roboto: require('native-base/Fonts/Roboto.ttf'),
-  //       Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf')
-  //     });
-
-  //     this.setState({ loading: true });
-  //   } catch (error) {
-  //     console.log('error loading fonts: ', error);
-  //   }
-  // }
 
   render() {
     // const { loading } = this.state;
@@ -41,10 +25,13 @@ export default class App extends Component {
     //   return <Text>Loading...</Text>;
     // }
     return (
-      <Wrapper>
-        <NativeHeader />
-        <AppNavigator />
-      </Wrapper>
+      <StoreProvider>
+
+        <Wrapper>
+          <NativeHeader />
+          <AppNavigator />
+        </Wrapper>
+      </StoreProvider>
     );
   }
 };

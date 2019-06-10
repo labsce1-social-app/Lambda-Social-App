@@ -1,4 +1,3 @@
-import { FETCHING_DISCUSSIONS, DISCUSSIONS_FETCHED, DISCUSSIONS_FAILED, LOGOUT } from '../actions';
 
 const initialState = {
     discussions: [],
