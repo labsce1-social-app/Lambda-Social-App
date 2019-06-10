@@ -16,6 +16,10 @@ exports.up = function (knex, Promise) {
       .string('username', 25)
       .unique()
       .notNullable();
+
+    user
+      .string('avatar')
+      .notNullable();
   });
 };
 

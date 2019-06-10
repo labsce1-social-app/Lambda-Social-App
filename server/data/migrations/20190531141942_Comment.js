@@ -26,6 +26,13 @@ exports.up = function (knex, Promise) {
       .onUpdate('CASCADE');
 
     comment
+      .integer('user_id')
+      .references('id')
+      .inTable('user')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE');
+
+    comment
       .timestamp('created_at')
       .defaultTo(knex.fn.now());
 

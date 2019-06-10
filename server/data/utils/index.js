@@ -12,7 +12,8 @@ const pickOne = item => item[Math.floor(Math.random() * item.length)];
 // create a user object
 function generateUsers() {
     return {
-        username: faker.internet.userName()
+        username: faker.internet.userName(),
+        avatar: faker.image.avatar()
     };
 }
 
@@ -46,7 +47,8 @@ function generateDiscussions() {
 function generateComments() {
     return {
         comment_post: faker.lorem.text(30),
-        comment_id: pickOne(fakeIds)
+        comment_id: pickOne(fakeIds),
+        user_id: getRandomArbitrary(1, 20)
     };
 }
 
