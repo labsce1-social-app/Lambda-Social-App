@@ -23,7 +23,7 @@ const TopDiscussions = () => {
             let responseJson = await response.json();
             console.log(responseJson);
             // set the data to global state
-            dispatch({ type: "DISCUSSIONS_FETCHED", payload: responseJson });
+            dispatch({ type: "DISCUSSIONS_FETCHED", payload: responseJson.splice(0, 10) });
         } catch (error) {
             // set the error to global state
             dispatch({ type: "DISCUSSIONS_FAILED", payload: error });
@@ -45,8 +45,8 @@ const TopDiscussions = () => {
                     />
                 )}
                 keyExtractor={this._keyExtractor}
-            // refreshing={refresh}
-            // onRefresh={() => toRefresh}
+                refreshing={this.refresh}
+                onRefresh={() => this.toRefresh}
             />
         )
     )
