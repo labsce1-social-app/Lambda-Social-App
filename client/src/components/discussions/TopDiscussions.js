@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 import { Store } from '../../context'
 import Discussion from './Discussion';
@@ -21,7 +21,6 @@ const TopDiscussions = () => {
             // fetch the data
             let response = await fetch(`${BASE_URL}/subtopics`);
             let responseJson = await response.json();
-            console.log(responseJson);
             // set the data to global state
             dispatch({ type: "DISCUSSIONS_FETCHED", payload: responseJson.splice(0, 10) });
         } catch (error) {

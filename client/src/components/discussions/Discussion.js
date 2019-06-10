@@ -23,7 +23,6 @@ const Discussion = props => {
                                     name="heart-empty" style={style.chat} /> {props.comment}</Text>
                         </Body>
                     </Left>
-
                 </CardItem>
             </Card >
         </Content >
