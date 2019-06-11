@@ -38,8 +38,19 @@ export const reducer = (state = initialState, action) => {
 
       return {
         ...state,
-        profile: action.payload.decoded,
-        access: action.payload.accessToken
+        access: action.payload
+      };
+    case 'USER_INFO':
+      console.log(action.payload);
+
+      return {
+        ...state,
+        profile: action.payload // for now set it all into a profile object
+      };
+    case 'AUTH_FAIL':
+      return {
+        ...state,
+        error: action.payload
       };
     case 'LOGOUT':
       return initialState;
