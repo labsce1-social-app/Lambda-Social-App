@@ -10,8 +10,8 @@ const HomePage = props => {
     return (
         <Wrapper>
             <Text style={{ textAlign: 'center', fontSize: 22 }}>Most Popular Discussions</Text>
-            {/* <TopDiscussions /> */}
-            <Post />
+            <TopDiscussions />
+            {/* <Post /> */}
         </Wrapper>
     );
 };

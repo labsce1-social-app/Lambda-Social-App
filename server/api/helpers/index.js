@@ -5,9 +5,9 @@ const subtopicHelper = require('./subtopicHelper.js');
 const usersHelper = require('./usersHelper.js');
 
 module.exports = {
-  commentHelper,
+  ...commentHelper,
   //   discussionHelper,
-  subtopicHelper,
+  ...subtopicHelper,
   //   upvoteHelper,
-  usersHelper
+  ...usersHelper
 };
