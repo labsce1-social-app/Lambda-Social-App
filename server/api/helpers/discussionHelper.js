@@ -70,8 +70,8 @@ const checkValidUser = async creater_id => {
   return isValid;
 };
 
-// checks to see if the creater_id and discussion id match so they can delete
-const userCanDeleteAndEditDiscussion = async (id, creater_id, subtopic_id) => {
+// checks to see if the creater_id, discussion id, subtopic_id match so they can edit
+const userCanEditDiscussion = async (id, creater_id, subtopic_id) => {
   let canDelete = false;
 
   await db('discussion')
@@ -92,11 +92,49 @@ const userCanDeleteAndEditDiscussion = async (id, creater_id, subtopic_id) => {
   return canDelete;
 };
 
+// checks to see if discussion exists
+const checkValidDiscussion = async id => {
+  let isValid = false;
+
+  await db('discussion')
+    .where('id', id.id)
+    .then(row => {
+      if (row.length > 0) {
+        isValid = true;
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+  return isValid;
+};
+
+// checks to see if the creater_id and discussion id match so they can delete
+const userCanDeleteDiscussion = async (id, creater_id) => {
+  let canDelete = false;
+
+  await db('discussion')
+    .where(id)
+    .then(row => {
+      if (row[0].creater_id === creater_id && row[0].id == id.id) {
+        canDelete = true;
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+  return canDelete;
+};
+
 module.exports = {
   joinUsersAndSubtopic,
   joinUsersAndSubtopicAtId,
   canInsertDisucssion,
   checkValidSubtopic,
   checkValidUser,
-  userCanDeleteAndEditDiscussion
+  userCanEditDiscussion,
+  checkValidDiscussion,
+  userCanDeleteDiscussion
 };

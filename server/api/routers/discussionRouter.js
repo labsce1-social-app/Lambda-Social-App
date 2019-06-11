@@ -187,7 +187,7 @@ router.put('/:id', async (req, res) => {
   } else if ((await discussionHelper.checkValidUser(creater_id)) === false) {
     res.status(500).json({ error: 'valid user not found, check creater_id' });
   } else if (
-    (await discussionHelper.userCanDeleteAndEditDiscussion(
+    (await discussionHelper.userCanEditDiscussion(
       id,
       creater_id,
       subtopic_id
@@ -211,6 +211,57 @@ router.put('/:id', async (req, res) => {
         res
           .status(201)
           .json({ id: discussion, message: 'Succesfully updated discussion' });
+      })
+      .catch(err => {
+        res.status(500).json({ error: err });
+      });
+  }
+});
+
+/*
+DELETE ROUTE delete a discussion
+TODO: Add middleware to ensure user is logged in
+@BODY = {
+    creater_id: !INT
+}
+@PARAMS = {
+    id: !INT
+}
+ROUTE = '/discussions/:id
+returns = success if valid
+TESTS: {
+    1) SHOULD RETURN ERROR IF SUBTOPIC_ID, ID, AND CREATER_ID AREN'T VALID MATCHES IN DISCUSSION TABLE
+    2) SHOULD RETURN ERROR IF CREATER_ID IS NOT VALID
+    3) SHOULD RETURN ERROR IF ID IS NOT VALID MATCH TO ID IN DISCUSSION TABLE
+}
+*/
+
+router.delete('/:id', async (req, res) => {
+  const id = req.params;
+  const { creater_id } = req.body;
+
+  if ((await discussionHelper.checkValidUser(creater_id)) === false) {
+    res.status(500).json({ message: 'valid user not found, check creater_id' });
+  } else if ((await discussionHelper.checkValidDiscussion(id)) === false) {
+    res.status(500).json({ message: 'discussion not found, check id' });
+  } else if (
+    (await discussionHelper.userCanDeleteDiscussion(id, creater_id)) === false
+  ) {
+    res
+      .status(500)
+      .json({ message: 'user not authorized to delete this discussion' });
+  } else {
+    db('discussion')
+      .where(id)
+      .del()
+      .then(count => {
+        if (count === 0) {
+          res.status(401).json({ message: 'discussion not found' });
+        } else {
+          res
+            .status(200)
+            .json({ message: `discussion id: ${id.id} succesfully deleted` });
+        }
       })
       .catch(err => {
         res.status(500).json({ error: err });
