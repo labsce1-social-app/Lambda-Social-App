@@ -67,9 +67,9 @@ returns = id of created discussion
 TESTS: {
     1) SHOULD RETURN ERROR IF TITLE OR SUBTOPIC_ID IS NOT PRESENT
     2) SHOULD RETURN ERROR IF SUBTOPIC_ID IS NOT VALID
-    3) SHOULD RETURN ERROR IF TITLE HAS ALREADY BEEN USED - done
-    4) SHOULD RETURN ERROR IF TITLE IS EMPTY OR 0 CHARACTERS OR GREATER THAN 50 CHARECTERS - done
-    5) SHOULD RETURN ERROR IF BOTH IMAGE AND CONTENT ARE MISSING - done
+    3) SHOULD RETURN ERROR IF TITLE HAS ALREADY BEEN USED 
+    4) SHOULD RETURN ERROR IF TITLE IS EMPTY OR 0 CHARACTERS OR GREATER THAN 50 CHARECTERS
+    5) SHOULD RETURN ERROR IF BOTH IMAGE AND CONTENT ARE MISSING 
 }
 */
 
@@ -97,6 +97,26 @@ router.post('/create', async (req, res) => {
     res.status(400).json({ error: 'must contain either an image or content' });
   } else if ((await discussionHelper.canInsertDisucssion(title)) === false) {
     res.status(500).json({ error: 'subtopic already exists' });
+  } else if (
+    (await discussionHelper.checkValidSubtopic(subtopic_id)) === false
+  ) {
+    res.status(500).json({ error: 'valid subtopic not found' });
+  } else {
+    db('discussion')
+      .insert({
+        subtopic_id,
+        title,
+        image,
+        content
+      })
+      .then(discussion => {
+        res
+          .status(201)
+          .json({ id: discussion, message: 'Succesfully created discussion' });
+      })
+      .catch(err => {
+        res.status(500).json({ error: err });
+      });
   }
 });
 

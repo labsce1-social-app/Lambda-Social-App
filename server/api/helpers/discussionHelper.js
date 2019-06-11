@@ -34,8 +34,27 @@ const canInsertDisucssion = async title => {
   return canInsert;
 };
 
+// checks to see if subtopic exists
+const checkValidSubtopic = async id => {
+  let isValid = false;
+
+  await db('subtopic')
+    .where('id', id)
+    .then(row => {
+      if (row.length > 0) {
+        isValid = true;
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+  return isValid;
+};
+
 module.exports = {
   joinUsersAndSubtopic,
   joinUsersAndSubtopicAtId,
-  canInsertDisucssion
+  canInsertDisucssion,
+  checkValidSubtopic
 };
