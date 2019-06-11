@@ -120,4 +120,77 @@ router.post('/create', async (req, res) => {
   }
 });
 
+/*
+PUT ROUTE update a discussion
+TODO: Add middleware to ensure user is logged in
+@BODY = {
+    title: !STRING >= 50 characters - REQUIRED
+    subtopic_id: !INT - REQUIRED
+    image: !STRING - OPTIONAL
+    content: !STRING - OPTIONAL
+}
+@PARAMS = {
+  id: !INT
+}
+ROUTE = '/discussions/:id
+returns = success if valid
+TESTS: {
+    1) SHOULD RETURN ERROR IF TITLE OR SUBTOPIC_ID IS NOT PRESENT
+    2) SHOULD RETURN ERROR IF SUBTOPIC_ID IS NOT VALID
+    3) SHOULD RETURN ERROR IF TITLE HAS ALREADY BEEN USED 
+    4) SHOULD RETURN ERROR IF TITLE IS EMPTY OR 0 CHARACTERS OR GREATER THAN 50 CHARECTERS
+    5) SHOULD RETURN ERROR IF BOTH IMAGE AND CONTENT ARE MISSING 
+}
+*/
+
+router.put('/:id', async (req, res) => {
+  const id = req.params;
+  const { subtopic_id, title, image, content } = req.body;
+
+  if (
+    title == null ||
+    title == undefined ||
+    title.length === 0 ||
+    title.length > 50 ||
+    title === '' ||
+    subtopic_id == null ||
+    subtopic_id == undefined
+  ) {
+    res.status(400).json({
+      error:
+        'title must be between 0 and 50 charecters, subtopic_id must be valid'
+    });
+  } else if (
+    (image === null && content === null) ||
+    (image === undefined && content === undefined) ||
+    (image === '' && content === '')
+  ) {
+    res.status(400).json({ error: 'must contain either an image or content' });
+  } else if ((await discussionHelper.canInsertDisucssion(title)) === false) {
+    res.status(500).json({ error: 'subtopic already exists' });
+  } else if (
+    (await discussionHelper.checkValidSubtopic(subtopic_id)) === false
+  ) {
+    res.status(500).json({ error: 'valid subtopic not found' });
+  } else {
+    db('discussion')
+      .where(id)
+      .update({
+        subtopic_id,
+        title,
+        image,
+        content,
+        updated_at: timestamp
+      })
+      .then(discussion => {
+        res
+          .status(201)
+          .json({ id: discussion, message: 'Succesfully updated discussion' });
+      })
+      .catch(err => {
+        res.status(500).json({ error: err });
+      });
+  }
+});
+
 module.exports = router;
