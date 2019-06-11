@@ -100,7 +100,7 @@ router.post('/create', async (req, res) => {
 
 /*
 DELETE ROUTE delete a subtopic
-TODO: Add middleware to ensure user is logged in, check if user is valid subtopic_users pair
+TODO: Add middleware to ensure user is logged insubtopic_users pair
 @BODY = {
     creater_id: !INT
 }

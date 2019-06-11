@@ -149,6 +149,7 @@ TESTS: {
     4) SHOULD RETURN ERROR IF TITLE IS EMPTY OR 0 CHARACTERS OR GREATER THAN 50 CHARECTERS
     5) SHOULD RETURN ERROR IF BOTH IMAGE AND CONTENT ARE MISSING 
     6) SHOULD RETURN ERROR IF CREATER_ID IS NOT VALID
+    7) SHOULD RETURN ERROR IF SUBTOPIC_ID, ID, AND CREATER_ID AREN'T VALID MATCHES IN DISCUSSION TABLE
 }
 */
 
@@ -185,6 +186,16 @@ router.put('/:id', async (req, res) => {
     res.status(500).json({ error: 'valid subtopic not found' });
   } else if ((await discussionHelper.checkValidUser(creater_id)) === false) {
     res.status(500).json({ error: 'valid user not found, check creater_id' });
+  } else if (
+    (await discussionHelper.userCanDeleteAndEditDiscussion(
+      id,
+      creater_id,
+      subtopic_id
+    )) === false
+  ) {
+    res
+      .status(500)
+      .json({ message: 'user not authorized to edit this discussion' });
   } else {
     db('discussion')
       .where(id)
