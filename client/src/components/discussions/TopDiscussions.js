@@ -3,7 +3,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import { Store } from '../../context'
 import Discussion from './Discussion';
 import { Text } from 'native-base';
-import { BASE_URL } from 'react-native-dotenv';
+import { getDiscussions } from './helpers';
 
 
 //TODO: refactor to hooks
@@ -11,24 +11,9 @@ const TopDiscussions = () => {
     const { state, dispatch } = useContext(Store);
 
     useEffect(() => {
-        getDiscussions()
+        getDiscussions(state.sortBy, dispatch);
     }, () => getDiscussions());
 
-    const getDiscussions = async () => {
-        // handle loading state
-        dispatch({ type: "FETCHING_DISCUSSIONS" });
-        try {
-            // fetch the data
-            let response = await fetch(`${BASE_URL}/subtopics`);
-            let responseJson = await response.json();
-            console.log(responseJson);
-            // set the data to global state
-            dispatch({ type: "DISCUSSIONS_FETCHED", payload: responseJson.splice(0, 10) });
-        } catch (error) {
-            // set the error to global state
-            dispatch({ type: "DISCUSSIONS_FAILED", payload: error });
-        }
-    }
 
     return (
         state.loading === true ? <Text>Loading...</Text> : (
@@ -41,12 +26,12 @@ const TopDiscussions = () => {
                         discussion={item.content}
                         name={item.username}
                         date={item.created_at}
-                        comment={'2'}
+                        comment={item.comments}
+                        upvotes={item.upvotes}
                     />
                 )}
-                keyExtractor={this._keyExtractor}
-                refreshing={this.refresh}
-                onRefresh={() => this.toRefresh}
+                keyExtractor={(item, index) => `${index}-${item.id}`}
+                refreshing={state.loading}
             />
         )
     )
