@@ -59,22 +59,24 @@ NOTE: content or image must be present
 @BODY = {
     title: !STRING >= 50 characters - REQUIRED
     subtopic_id: !INT - REQUIRED
+    creater_id: !INT - REQUIRED
     image: !STRING - OPTIONAL
     content: !STRING - OPTIONAL
 }
 ROUTE = '/discussions/create
 returns = id of created discussion
 TESTS: {
-    1) SHOULD RETURN ERROR IF TITLE OR SUBTOPIC_ID IS NOT PRESENT
+    1) SHOULD RETURN ERROR IF TITLE OR SUBTOPIC_ID OR CREATER_ID IS NOT PRESENT
     2) SHOULD RETURN ERROR IF SUBTOPIC_ID IS NOT VALID
     3) SHOULD RETURN ERROR IF TITLE HAS ALREADY BEEN USED 
     4) SHOULD RETURN ERROR IF TITLE IS EMPTY OR 0 CHARACTERS OR GREATER THAN 50 CHARECTERS
     5) SHOULD RETURN ERROR IF BOTH IMAGE AND CONTENT ARE MISSING 
+    6) SHOULD RETURN ERROR IF CREATER_ID IS NOT VALID
 }
 */
 
 router.post('/create', async (req, res) => {
-  const { subtopic_id, title, image, content } = req.body;
+  const { subtopic_id, title, image, content, creater_id } = req.body;
 
   if (
     title == null ||
@@ -83,12 +85,16 @@ router.post('/create', async (req, res) => {
     title.length > 50 ||
     title === '' ||
     subtopic_id == null ||
-    subtopic_id == undefined
+    subtopic_id == undefined ||
+    creater_id == null ||
+    creater_id == undefined
   ) {
     res.status(400).json({
       error:
         'title must be between 0 and 50 charecters, subtopic_id must be valid'
     });
+  } else if ((await discussionHelper.checkValidUser(creater_id)) === false) {
+    res.status(500).json({ error: 'valid user not found, check creater_id' });
   } else if (
     (image === null && content === null) ||
     (image === undefined && content === undefined) ||
@@ -107,7 +113,8 @@ router.post('/create', async (req, res) => {
         subtopic_id,
         title,
         image,
-        content
+        content,
+        creater_id
       })
       .then(discussion => {
         res

@@ -52,9 +52,28 @@ const checkValidSubtopic = async id => {
   return isValid;
 };
 
+// checks to see if creater_id is a valid user id
+const checkValidUser = async creater_id => {
+  let isValid = false;
+
+  await db('user')
+    .where('id', creater_id)
+    .then(id => {
+      if (id.length > 0) {
+        isValid = true;
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+  return isValid;
+};
+
 module.exports = {
   joinUsersAndSubtopic,
   joinUsersAndSubtopicAtId,
   canInsertDisucssion,
-  checkValidSubtopic
+  checkValidSubtopic,
+  checkValidUser
 };
