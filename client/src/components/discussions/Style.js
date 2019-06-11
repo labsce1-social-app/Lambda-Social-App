@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
     // Post Summary Icon
-    icon: {
+    avatar: {
         width: 48,
         height: 48,
         marginBottom: 40
@@ -19,8 +19,19 @@ export default StyleSheet.create({
     },
     comment: {
         textAlign: 'right',
+        fontSize: 10
     },
     chat: {
         marginLeft: 20
+    },
+    icon: {
+        width: '8%',
+        height: '8%'
+    },
+    bubble: {
+        color: 'green'
+    },
+    heart: {
+        color: 'red'
     }
 });

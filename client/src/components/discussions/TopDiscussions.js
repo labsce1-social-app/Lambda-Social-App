@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 import { Store } from '../../context'
 import Discussion from './Discussion';
 import { Text } from 'native-base';
-import { BASE_URL } from 'react-native-dotenv';
 import { getDiscussions } from './helpers';
 
 
@@ -14,7 +13,6 @@ const TopDiscussions = () => {
     useEffect(() => {
         getDiscussions(state.sortBy, dispatch);
     }, () => getDiscussions());
-
 
 
     return (
@@ -28,12 +26,12 @@ const TopDiscussions = () => {
                         discussion={item.content}
                         name={item.username}
                         date={item.created_at}
-                        comment={'2'}
+                        comment={item.comments}
+                        upvotes={item.upvotes}
                     />
                 )}
-                keyExtractor={this._keyExtractor}
-                refreshing={this.refresh}
-                onRefresh={() => this.toRefresh}
+                keyExtractor={(item, index) => `${index}-${item.id}`}
+                refreshing={state.loading}
             />
         )
     )

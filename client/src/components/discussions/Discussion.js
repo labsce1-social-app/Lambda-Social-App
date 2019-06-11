@@ -12,15 +12,16 @@ const Discussion = props => {
             <Card style={{ flex: 0 }}>
                 <CardItem>
                     <Left>
-                        <Image style={style.icon} source={{ url: props.image }} />
+                        <Image style={style.avatar} source={{ url: props.image }} />
                         <Body>
                             <Text style={style.date}>{moment(props.date).fromNow()}</Text>
                             <Text style={style.title}>s/{props.title}</Text>
                             <Text style={style.username}>{props.name}</Text>
                             <Text numberOfLines={1}>{props.discussion}</Text>
-                            <Text style={style.comment}><Icon name="chatbubbles" /> {props.comment} {' '}
-                                < Icon
-                                    name="heart-empty" style={style.chat} /> {props.comment}</Text>
+                            <Text style={style.comment}>
+                                <Icon name="chatbubbles" style={[style.icon, style.bubble]} /> {props.comment} {' '}
+                                <Icon
+                                    name="heart" style={[style.chat, style.icon, style.heart]} /> {props.upvotes}</Text>
                         </Body>
                     </Left>
                 </CardItem>
@@ -28,14 +29,5 @@ const Discussion = props => {
         </Content >
     )
 }
-
-Discussion.defaultProps = {
-    icon: 'No Icon Provided',
-    title: 'No Title Provided',
-    subTopic: 'No SubTopic Provided',
-    name: 'No Name Provided',
-    date: 'No Date Provided',
-    comment: 'No Comment Provided'
-};
 
 export default Discussion;
