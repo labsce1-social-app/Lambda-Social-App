@@ -2,7 +2,8 @@
 export const initialState = {
     discussions: [],
     loading: false,
-    error: ''
+    error: '',
+    sortBy: 'upvotes'
 };
 
 export const reducer = (state = initialState, action) => {
@@ -26,6 +27,24 @@ export const reducer = (state = initialState, action) => {
                 loading: false,
                 error: action.payload
             };
+        case "SORT_CHANGE_STARTED":
+            return {
+                ...state,
+                loading: true,
+            }
+        case "SORT_CHANGE_SUCCESS":
+            return {
+                ...state,
+                loading: false,
+                sortBy: action.payload
+            }
+        case "SORT_CHANGE_FAILED":
+            return {
+                ...state,
+                loading: false,
+                softBy: initialState.sortBy,
+                error: action.payload
+            }
         case "LOGOUT":
             return initialState;
         default:

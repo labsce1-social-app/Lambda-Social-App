@@ -14,14 +14,15 @@ const TopDiscussions = () => {
         getDiscussions()
     }, () => getDiscussions());
 
-    const getDiscussions = async (query) => {
+    const getDiscussions = async (query = "upvotes") => {
         // handle loading state
-        const local = `http://localhost:3000/`
+        const local = `http://localhost:3000`
         const q = new URLSearchParams({ sort: query });
         dispatch({ type: "FETCHING_DISCUSSIONS" });
         try {
             // fetch the data
-            let response = await fetch(`${local}/subtopics/${q}`);
+            let response = await fetch(`${local}/subtopics?${q.toString()}`);
+            console.log(response);
             let responseJson = await response.json();
             // set the data to global state
             dispatch({ type: "DISCUSSIONS_FETCHED", payload: responseJson.splice(0, 10) });
