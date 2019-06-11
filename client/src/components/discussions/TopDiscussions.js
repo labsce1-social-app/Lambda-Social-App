@@ -1,7 +1,7 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, lazy, Suspense } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
-import { Store } from '../../context'
-import Discussion from './Discussion';
+import { Store } from '../../context';
+const Discussion = lazy(() => import('./Discussion'));
 import { Text } from 'native-base';
 import { getDiscussions } from './helpers';
 
@@ -20,6 +20,7 @@ const TopDiscussions = () => {
             <FlatList
                 data={state.discussions}
                 renderItem={({ item }) => (
+                    <Suspense fallback={<Text>Loading...</Text>}>
                     <Discussion
                         image={item.image}
                         title={item.title.split(' ').join('-')}
@@ -29,6 +30,7 @@ const TopDiscussions = () => {
                         comment={item.comments}
                         upvotes={item.upvotes}
                     />
+                    </Suspense>
                 )}
                 keyExtractor={(item, index) => `${index}-${item.id}`}
                 refreshing={state.loading}
