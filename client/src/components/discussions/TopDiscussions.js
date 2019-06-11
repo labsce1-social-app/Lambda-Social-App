@@ -4,6 +4,7 @@ import { Store } from '../../context'
 import Discussion from './Discussion';
 import { Text } from 'native-base';
 import { BASE_URL } from 'react-native-dotenv';
+import { getDiscussions } from './helpers';
 
 
 //TODO: refactor to hooks
@@ -11,26 +12,10 @@ const TopDiscussions = () => {
     const { state, dispatch } = useContext(Store);
 
     useEffect(() => {
-        getDiscussions()
+        getDiscussions(state.sortBy, dispatch);
     }, () => getDiscussions());
 
-    const getDiscussions = async (query = "upvotes") => {
-        // handle loading state
-        const local = `http://localhost:3000`
-        const q = new URLSearchParams({ sort: query });
-        dispatch({ type: "FETCHING_DISCUSSIONS" });
-        try {
-            // fetch the data
-            let response = await fetch(`${local}/subtopics?${q.toString()}`);
-            console.log(response);
-            let responseJson = await response.json();
-            // set the data to global state
-            dispatch({ type: "DISCUSSIONS_FETCHED", payload: responseJson.splice(0, 10) });
-        } catch (error) {
-            // set the error to global state
-            dispatch({ type: "DISCUSSIONS_FAILED", payload: error });
-        }
-    }
+
 
     return (
         state.loading === true ? <Text>Loading...</Text> : (
