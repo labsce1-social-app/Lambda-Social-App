@@ -16,24 +16,24 @@ const TopDiscussions = () => {
 
 
     return (
-        state.loading === true ? <Text>Loading...</Text> : (
+        state.top_discussions_loading === true ? <Text>Loading...</Text> : (
             <FlatList
-                data={state.discussions}
+                data={state.top_discussions}
                 renderItem={({ item }) => (
                     <Suspense fallback={<Text>Loading...</Text>}>
-                    <Discussion
-                        image={item.image}
-                        title={item.title.split(' ').join('-')}
-                        discussion={item.content}
-                        name={item.username}
-                        date={item.created_at}
-                        comment={item.comments}
-                        upvotes={item.upvotes}
-                    />
+                        <Discussion
+                            image={item.image}
+                            title={item.title.split(' ').join('-')}
+                            discussion={item.content}
+                            name={item.username}
+                            date={item.created_at}
+                            comment={item.comments}
+                            upvotes={item.upvotes}
+                        />
                     </Suspense>
                 )}
                 keyExtractor={(item, index) => `${index}-${item.id}`}
-                refreshing={state.loading}
+                refreshing={state.top_discussions_loading}
             />
         )
     )

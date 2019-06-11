@@ -5,14 +5,17 @@ import TopDiscussions from '../components/discussions/TopDiscussions';
 // TODO: remove this later and place into it's own route
 import Post from '../components/posts/Post';
 import Sort from '../components/discussions/Sort'
+import Subtopics from '../components/subtopics/Subtopics';
 
 
 const HomePage = props => {
     return (
         <Wrapper>
+
             <Text style={{ textAlign: 'center', fontSize: 22 }}>Most Popular Discussions</Text>
             <Sort />
-            <TopDiscussions />
+            {/* <TopDiscussions /> */}
+            <Subtopics />
             {/* <Post /> */}
         </Wrapper>
     );

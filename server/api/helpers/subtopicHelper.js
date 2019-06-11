@@ -72,35 +72,26 @@ const checkValidSubtopic = async id => {
   return isValid;
 };
 
-// defaults sort to upvotes, can also take comments
-const joinUsersAndSubtopic = (sortBy = 'upvotes') => {
+// return all subtopics with creators
+// ordered by created date descending
+const getAllSubtopicsWithCreator = () => {
   return db.raw(`
-  SELECT
-user.username,
-discussion.id as id,
-discussion.content,
-discussion.title,
-discussion.image,
-discussion.created_at,
-discussion.updated_at,
-SUM(comment.user_id = user.id) as comments,
-SUM(upvote.user_id = user.id) as upvotes
-FROM discussion
-JOIN user, subtopic, upvote, comment
-WHERE discussion.subtopic_id = subtopic.id
-AND user.id = upvote.user_id
-AND upvote.discussion_id ==discussion.id
-AND comment.user_id = user.id
-GROUP BY discussion.id
-ORDER BY ${sortBy} DESC
-LIMIT 10
-`);
-};
+    select
+subtopic.id as id,
+subtopic.created_at as date,
+subtopic.updated_at as updated,
+subtopic.title as title,
+user.username as username
+FROM subtopic
+JOIN user
+ON subtopic.creater_id = user.id
+order by date desc`)
+}
 
 module.exports = {
   checkValidUser,
   canInsertSubtopic,
   userCanDeleteAndEditSubtopic,
   checkValidSubtopic,
-  joinUsersAndSubtopic
+  getAllSubtopicsWithCreator
 };
