@@ -1,9 +1,0 @@
-{
-  "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19003,
-  "packagerPid": 65982,
-  "expoServerNgrokUrl": "https://kc-k6h.sociallambda.react-native-app.exp.direct",
-  "packagerNgrokUrl": "https://packager.kc-k6h.sociallambda.react-native-app.exp.direct",
-  "ngrokPid": 65998
-}
