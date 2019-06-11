@@ -54,7 +54,7 @@ router.get('/:id', (req, res) => {
 
 /*
 POST ROUTE create a discussion
-TODO: Add middleware to ensure user is logged in
+TODO: Add middleware to ensure user is logged in, add creater_id
 NOTE: content or image must be present
 @BODY = {
     title: !STRING >= 50 characters - REQUIRED
@@ -122,7 +122,7 @@ router.post('/create', async (req, res) => {
 
 /*
 PUT ROUTE update a discussion
-TODO: Add middleware to ensure user is logged in
+TODO: Add middleware to ensure user is logged in, check if creater_id is valid
 @BODY = {
     title: !STRING >= 50 characters - REQUIRED
     subtopic_id: !INT - REQUIRED
