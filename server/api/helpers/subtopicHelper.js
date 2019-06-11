@@ -73,7 +73,7 @@ const checkValidSubtopic = async id => {
 };
 
 // defaults sort to upvotes, can also take comments
-const joinUsersAndSubtopic = (sortBy = "upvotes") => {
+const joinUsersAndSubtopic = (sortBy = 'upvotes') => {
   return db.raw(`
   SELECT
 user.username,
