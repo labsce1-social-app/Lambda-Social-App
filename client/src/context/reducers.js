@@ -45,6 +45,12 @@ export const reducer = (state = initialState, action) => {
                 softBy: initialState.sortBy,
                 error: action.payload
             }
+         case 'LOGIN':
+            return {
+              ...state,
+              profile: action.payload.decoded,
+              access: action.payload.accessToken
+            };
         case "LOGOUT":
             return initialState;
         default:
