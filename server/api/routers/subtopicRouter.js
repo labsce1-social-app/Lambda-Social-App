@@ -1,6 +1,12 @@
 const router = require('express').Router();
 const db = require('../../data/dbconfig.js');
-const { subtopicHelper } = require('../helpers/index.js');
+const {
+  checkValidUser,
+  canInsertSubtopic,
+  userCanDeleteAndEditSubtopic,
+  joinUsersAndSubtopic,
+  checkValidSubtopic
+} = require('../helpers/index.js');
 
 /*
 GET ROUTE get all subtopics
@@ -13,7 +19,8 @@ TESTS: {
 */
 
 router.get('/', (req, res) => {
-  db('subtopic')
+  const { sort } = req.query;
+  joinUsersAndSubtopic(sort)
     .then(subtopics => {
       res.status(200).json(subtopics);
     })
@@ -78,10 +85,10 @@ router.post('/create', async (req, res) => {
       error:
         'title must be between 0 and 50 charecters, creater_id must be valid'
     });
-  } else if ((await subtopicHelper.checkValidUser(body.creater_id)) === false) {
+  } else if ((await checkValidUser(body.creater_id)) === false) {
     res.status(500).json({ error: 'valid user not found, check creater_id' });
   } else {
-    if (await subtopicHelper.canInsertSubtopic(body.title)) {
+    if (await canInsertSubtopic(body.title)) {
       db('subtopic')
         .insert(body)
         .then(subtopic => {
@@ -119,14 +126,11 @@ router.delete('/:id', async (req, res) => {
   const id = req.params;
   const creater_id = req.body.creater_id;
 
-  if ((await subtopicHelper.checkValidUser(creater_id)) === false) {
+  if ((await checkValidUser(creater_id)) === false) {
     res.status(500).json({ message: 'valid user not found, check creater_id' });
-  } else if ((await subtopicHelper.checkValidSubtopic(id)) === false) {
+  } else if ((await checkValidSubtopic(id)) === false) {
     res.status(500).json({ message: 'subtopic not found' });
-  } else if (
-    (await subtopicHelper.userCanDeleteAndEditSubtopic(id, creater_id)) ===
-    false
-  ) {
+  } else if ((await userCanDeleteAndEditSubtopic(id, creater_id)) === false) {
     res
       .status(500)
       .json({ message: 'user not authorized to delete this subtopic' });
@@ -187,19 +191,18 @@ router.put('/:id', async (req, res) => {
       error:
         'title must be between 0 and 50 charecters, creater_id must be valid'
     });
-  } else if ((await subtopicHelper.checkValidUser(body.creater_id)) === false) {
+  } else if ((await checkValidUser(body.creater_id)) === false) {
     res.status(500).json({ error: 'valid user not found, check creater_id' });
-  } else if ((await subtopicHelper.checkValidSubtopic(id)) === false) {
+  } else if ((await checkValidSubtopic(id)) === false) {
     res.status(500).json({ message: 'subtopic not found' });
   } else if (
-    (await subtopicHelper.userCanDeleteAndEditSubtopic(id, body.creater_id)) ===
-    false
+    (await userCanDeleteAndEditSubtopic(id, body.creater_id)) === false
   ) {
     res
       .status(500)
       .json({ message: 'user not authorized to edit this subtopic' });
   } else {
-    if (await subtopicHelper.canInsertSubtopic(body.title)) {
+    if (await canInsertSubtopic(body.title)) {
       db('subtopic')
         .where(id)
         .insert(body)

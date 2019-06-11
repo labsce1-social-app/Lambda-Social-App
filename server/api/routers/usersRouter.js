@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { usersHelper } = require('../helpers/index.js');
+const { canInsertUser } = require('../helpers/index.js');
 const db = require('../../data/dbconfig.js');
 
 /*
@@ -64,7 +64,7 @@ router.post('/', async (req, res) => {
     });
     // Username will be rejected if name already exists
   } else {
-    if (await usersHelper.canInsertUser(user)) {
+    if (await canInsertUser(user)) {
       db('user')
         .insert(user)
         .then(user => {
@@ -107,7 +107,7 @@ router.put('/:id', async (req, res) => {
     });
     // Username will be rejected if name already exists
   } else {
-    if (await usersHelper.canInsertUser(user)) {
+    if (await canInsertUser(user)) {
       db('user')
         .where(id)
         .update(user)
