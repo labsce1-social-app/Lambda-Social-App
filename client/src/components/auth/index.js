@@ -2,16 +2,28 @@ import React, { useContext, useEffect } from 'react';
 
 import { Store } from '../../context/index';
 
-import { StyleSheet, Text, Alert, StatusBar, AsyncStorage } from 'react-native';
-import { Header, Container, Right, Button, Left } from 'native-base';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Alert,
+  StatusBar,
+  AsyncStorage
+} from 'react-native';
 
-// import { AuthSession } from 'expo';
+import {
+  Header,
+  Container,
+  Right,
+  Button,
+  Left,
+  Body,
+  Spinner
+} from 'native-base';
+
 import jwtDecode from 'jwt-decode';
 
 import { AUTH0_CLIENT, AUTH0_DOMAIN, BASE_URL } from 'react-native-dotenv';
-
-// import { sendToken } from '../../redux/actions/autActions';
-// import { connect } from 'react-redux';
 
 const auth0ClientId = AUTH0_CLIENT;
 const auth0Domain = AUTH0_DOMAIN;
@@ -19,7 +31,7 @@ const auth0Domain = AUTH0_DOMAIN;
 import Auth0 from 'react-native-auth0';
 const auth0 = new Auth0({ domain: auth0Domain, clientId: auth0ClientId });
 
-const Login = () => {
+const Login = props => {
   const { state, dispatch } = useContext(Store);
 
   const handleAuth = () => {
@@ -60,21 +72,43 @@ const Login = () => {
     await AsyncStorage.setItem('accessToken', token);
   };
 
+  const handleLogout = async () => {
+    AsyncStorage.removeItem('accessToken');
+
+    dispatch({ type: 'LOGOUT', payload: 'You logged out' });
+  };
+
   return (
     <Container>
       <Header transparent>
-        <Right>
-          <Button
-            style={styles.AuthButton}
-            title="login"
-            onPress={() => handleAuth()}
-          >
-            <Text style={styles.buText}>Login</Text>
-          </Button>
-        </Right>
+        {state.access ? (
+          <View>
+            <Right>
+              <Button
+                style={styles.AuthButton}
+                title="logout"
+                onPress={() => handleLogout()}
+              >
+                <Text style={styles.buText}>Logout</Text>
+              </Button>
+            </Right>
+            <Body>
+              <Text>{state.profile.name}</Text>
+            </Body>
+          </View>
+        ) : (
+          <Right>
+            <Button
+              style={styles.AuthButton}
+              title="login"
+              onPress={() => handleAuth()}
+            >
+              <Text style={styles.buText}>Login</Text>
+            </Button>
+          </Right>
+        )}
       </Header>
 
-      <Text>{state.username}</Text>
       {/* <StatusBar backgroundColor="#ffffff" /> */}
 
       {/* {state.profile ? <Text>{state.profile.nickname}</Text> : <Text>foo</Text>} */}
