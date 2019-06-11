@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image } from 'react-native';
+import { Image, Platform } from 'react-native';
 import style from './Style';
 import { Content, Card, CardItem, Text, Body, Left, Icon } from 'native-base';
 import moment from 'moment'
@@ -12,7 +12,7 @@ const Discussion = props => {
             <Card style={{ flex: 0 }}>
                 <CardItem>
                     <Left>
-                        <Image style={style.avatar} source={{ url: props.image }} />
+                        <Image style={style.avatar} source={{ url: props.image.replace('http://', 'https://') }} />
                         <Body>
                             <Text style={style.date}>{moment(props.date).fromNow()}</Text>
                             <Text style={style.title}>s/{props.title}</Text>
