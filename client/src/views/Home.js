@@ -2,13 +2,15 @@ import React, { useEffect, useContext, useState } from 'react';
 import { Store } from '../context';
 import { StyleSheet, Image, View } from 'react-native';
 import { getDiscussions } from '../components/discussions/helpers';
-import { Text } from 'native-base';
-import { Container } from 'native-base';
+import { Container, Text, Content } from 'native-base';
 import TopDiscussions from '../components/discussions/TopDiscussions';
 // TODO: remove this later and place into it's own route
 import Post from '../components/posts/Post';
 import Sort from '../components/discussions/Sort'
 import Subtopics from '../components/subtopics/Subtopics';
+import NativeHeader from '../components/navbar/NativeHeader';
+import NativeFooter from '../components/navbar/NativeFooter';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const styles = StyleSheet.create({
     body: {
@@ -47,14 +49,20 @@ const Home = (props) => {
                 <Text style={styles.text}>Lambda Social</Text>
                 <Image source={require('../assets/LambdaStudent.png')} />
             </View>
-        ) :
-            <Container>
-                <Text style={{ textAlign: 'center', fontSize: 22 }}>Most Popular</Text>
-                <Sort />
-                {/* <TopDiscussions /> */}
-                {/* <Subtopics /> */}
-                <Post />
-            </Container>
+        ) : (
+                <Container>
+
+                    <NativeHeader loading={loading} />
+                    <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 22 }}>Most Popular</Text>
+                    <Sort />
+                    <ScrollView>
+                        <TopDiscussions />
+                        {/* <Subtopics /> */}
+                        {/* <Post /> */}
+                    </ScrollView>
+                    <NativeFooter loading={loading} />
+                </Container>
+            )
     );
 };
 

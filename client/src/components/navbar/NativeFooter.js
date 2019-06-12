@@ -1,22 +1,31 @@
 import React from 'react';
-import { View, Icon, StyleSheet } from 'react-native';
+import { Footer, FooterTab, Button, Icon, Text } from 'native-base';
+import { Link } from 'react-router-native';
 
-const style = StyleSheet = ({
-    container: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center'
-    }
-})
+const NativeFooter = ({ loading }) => {
+    return loading === false ? (
+        <Footer>
+            <FooterTab>
 
-const NativeFooter = () => {
-    return (
-        <View style={style.container}>
-            <Icon name="paper-plane" />
-            <Icon name="home" />
-            <Icon name="paper-plane" />
-        </View>
-    )
+                <Button vertical>
+                    <Link to="/">
+                        <Icon name="home" />
+                    </Link>
+                </Button>
+
+                <Button vertical>
+                    <Icon name="brush" />
+                </Button>
+
+                <Button vertical active>
+                    <Link to='/login'>
+                        <Icon active name="key" style={{ transform: [{ rotate: '-90deg' }] }} />
+                    </Link>
+                </Button>
+
+            </FooterTab>
+        </Footer>
+    ) : null
 }
 
 export default NativeFooter;
