@@ -6,7 +6,8 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "dev": "react-native run-android && react-native run-ios",
-    "android": "react-native run-android"
+    "android": "react-native run-android",
+    "port": "yarn run start PORT=8081"
   },
   "dependencies": {
     "@babel/plugin-external-helpers": "^7.2.0",
