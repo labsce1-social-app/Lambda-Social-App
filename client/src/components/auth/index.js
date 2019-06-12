@@ -42,7 +42,7 @@ const Login = props => {
         prompt: 'login'
       })
       .then(credentials => {
-        // console.log('creds', credentials);
+        console.log('creds', credentials);
         const { accessToken, idToken } = credentials;
 
         getUser(accessToken); // send access_token
@@ -71,7 +71,7 @@ const Login = props => {
   const makeUser = async (token, info) => {
     await AsyncStorage.setItem('accessToken', token);
 
-    const body = JSON.stringify({ username: info.name }); // send namea as a 'username'
+    const body = JSON.stringify({ username: info.nickname }); // send  nickname as a 'username'
 
     await fetch(`${BASE_URL}/users`, { method: 'POST', body }).catch(error => {
       console.log('error in sending user', error);
@@ -99,7 +99,7 @@ const Login = props => {
               </Button>
             </Right>
             <Body>
-              <Text>{state.profile.name}</Text>
+              <Text>{state.profile.nickname}</Text>
             </Body>
           </View>
         ) : (
