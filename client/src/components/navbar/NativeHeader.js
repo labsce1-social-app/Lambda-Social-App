@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native'
 import NativePicker from './NativePicker';
 
 
-const NativeHeader = (props) => {
+const NativeHeader = () => {
     return (
         <Header style={style.header}>
             <Left>
