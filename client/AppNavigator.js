@@ -1,6 +1,10 @@
 import React from 'react';
 
-import { createDrawerNavigator, createAppContainer, createStackNavigator } from 'react-navigation';
+import {
+  createDrawerNavigator,
+  createAppContainer,
+  createStackNavigator
+} from 'react-navigation';
 import { createBottomTabNavigator, BottomTabBar } from 'react-navigation-tabs';
 import { Icon } from 'native-base';
 
@@ -14,39 +18,41 @@ import Login from './src/components/auth';
 
 // render the home comopnent items
 const HomeStack = createStackNavigator({
-    Home: HomePage,
-})
+  Home: HomePage
+});
 
-const AppNavigator = createBottomTabNavigator({
+const AppNavigator = createBottomTabNavigator(
+  {
     // RouteName: ComponentName,
     Posts: {
-        screen: HomePage, // name needs to change
-        navigationOptions: {
-            tabBarIcon: <Icon name="paper-plane" />
-        }
+      screen: HomePage, // name needs to change
+      navigationOptions: {
+        tabBarIcon: <Icon name="paper-plane" />
+      }
     },
     Home: {
-        screen: HomeStack,
-        navigationOptions: {
-            tabBarIcon: <Icon name="home" />
-        }
+      screen: HomeStack,
+      navigationOptions: {
+        tabBarIcon: <Icon name="home" />
+      }
     },
-    // Login: {
-    //     screen: Login,
-    //     navigationOptions: {
-    //         tabBarIcon: <Icon name="finger-print" />
-    //     }
-    // }
-},
-    {
-        tabBarOptions: {
-            activeTintColor: '#990000',
-            inactiveTintColor: '#586589',
-        }
-    },
-    {
-        initialRouteName: 'Posts'
-    });
+    Login: {
+      screen: Login,
+      navigationOptions: {
+        tabBarIcon: <Icon name="finger-print" />
+      }
+    }
+  },
+  {
+    tabBarOptions: {
+      activeTintColor: '#990000',
+      inactiveTintColor: '#586589'
+    }
+  },
+  {
+    initialRouteName: 'Posts'
+  }
+);
 
 // place navigators inside createAppContainer
 export default createAppContainer(AppNavigator);

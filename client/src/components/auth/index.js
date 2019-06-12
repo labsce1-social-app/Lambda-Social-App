@@ -62,14 +62,20 @@ const Login = props => {
 
         dispatch({ type: 'USER_INFO', payload: userInfo });
 
-        makeUser(token);
+        makeUser(token, userInfo);
       })
       .catch(console.error);
   };
 
   // save that access_token similar to localstorage
-  const makeUser = async token => {
+  const makeUser = async (token, info) => {
     await AsyncStorage.setItem('accessToken', token);
+
+    const body = JSON.stringify({ username: info.name }); // send namea as a 'username'
+
+    await fetch(`${BASE_URL}/users`, { method: 'POST', body }).catch(error => {
+      console.log('error in sending user', error);
+    });
   };
 
   const handleLogout = async () => {
