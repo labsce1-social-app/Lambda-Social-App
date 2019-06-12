@@ -71,16 +71,27 @@ const checkValidSubtopic = async id => {
 
   return isValid;
 };
-const joinUsersAndSubtopic = () => {
-  return db.raw(`SELECT discussion.content, discussion.title, discussion.image, discussion.created_at, discussion.updated_at, user.username, discussion.id
-FROM discussion
-JOIN user, subtopic WHERE discussion.subtopic_id = subtopic.id`);
-};
+
+// return all subtopics with creators
+// ordered by created date descending
+const getAllSubtopicsWithCreator = () => {
+  return db.raw(`
+    select
+subtopic.id as id,
+subtopic.created_at as date,
+subtopic.updated_at as updated,
+subtopic.title as title,
+user.username as username
+FROM subtopic
+JOIN user
+ON subtopic.creater_id = user.id
+order by date desc`)
+}
 
 module.exports = {
   checkValidUser,
   canInsertSubtopic,
   userCanDeleteAndEditSubtopic,
   checkValidSubtopic,
-  joinUsersAndSubtopic
+  getAllSubtopicsWithCreator
 };

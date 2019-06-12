@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Platform } from 'react-native';
 import { Icon, Picker } from "native-base";
 
 class NativePicker extends Component {
@@ -23,7 +24,7 @@ class NativePicker extends Component {
                 placeholder=""
                 placeholderStyle={{ color: "#bfc6ea" }}
                 placeholderIconColor="#007aff"
-                style={{ width: undefined }}
+                style={{ width: (Platform.OS === 'ios') ? undefined : 120 }}
                 selectedValue={this.state.selected}
                 onValueChange={this.onValueChange}
             >

@@ -1,38 +1,60 @@
-// import {
-//   FETCHING_DISCUSSIONS,
-//   DISCUSSIONS_FETCHED,
-//   DISCUSSIONS_FAILED
-// } from './constants';
-
 export const initialState = {
-  discussions: [],
-  loading: false,
-  error: '',
-  profile: {},
-  access: ''
+  top_discussions: [],
+  top_discussions_loading: false,
+  top_discussions_error: '',
+  sortBy: 'upvotes',
+  subtopics: [],
+  subtopics_loading: false,
+  subtopics_error: '',
+  access: '',
+  profile: null,
 };
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'FETCHING_DISCUSSIONS':
+    case "TOP_DISCUSSIONS_FETCHING":
       return {
         ...state,
-        loading: true,
+        top_discussons_loading: true,
+        top_discussions_error: ''
+      };
+    case "TOP_DISCUSSIONS_FETCHED":
+      return {
+        ...state,
+        top_discussons_loading: false,
+        top_discussions: action.payload,
         error: ''
       };
-    case 'DISCUSSIONS_FETCHED':
+    case "TOP_DISCUSSIONS_FAILED":
       return {
         ...state,
-        loading: false,
-        discussions: action.payload,
-        error: ''
+        top_discussons_loading: false,
+        top_discussions_error: action.payload
       };
-    case 'DISCUSSIONS_FAILED':
+    case "SORT_CHANGE_SUCCESS":
       return {
         ...state,
-        loading: false,
-        error: action.payload
-      };
+        top_discussions_loading: false,
+        sortBy: action.payload
+      }
+    case "SUBTOPICS_FETCHING":
+      return {
+        ...state,
+        subtopics_loading: true,
+        subtopics_error: ''
+      }
+    case "SUBTOPICS_FETCHED":
+      return {
+        ...state,
+        subtopics: action.payload,
+        subtopics_loading: false,
+      }
+    case "SUBTOPICS_FAILED":
+      return {
+        ...state,
+        subtopics_loading: false,
+        subtopics_error: action.payload
+      }
     case 'LOGIN':
       console.log(action.payload);
 
@@ -57,4 +79,4 @@ export const reducer = (state = initialState, action) => {
     default:
       return state;
   }
-};
+}
