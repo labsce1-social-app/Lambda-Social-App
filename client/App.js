@@ -1,13 +1,15 @@
-import React, { Component } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { Store } from './src/context/';
 // memory usage optimize for screen changing
 import { useScreens } from 'react-native-screens';
 import Wrapper from './src/components/Wrapper';
 import NativeHeader from './src/components/navbar/NativeHeader';
 import AppNavigator from './AppNavigator';
-// import { Text } from 'native-base';
+import Splash from './src/common/Splash';
 import { StoreProvider } from './src/context/';
-useScreens();
+import { getDiscussions } from './src/components/discussions/helpers';
 
+useScreens();
 
 // const instructions = Platform.select({
 //   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -16,21 +18,39 @@ useScreens();
 //     'Shake or press menu button for dev menu',
 // });
 
-// type Props = {};
-export default class App extends Component {
+const SubApp = () => {
+  const { state, dispatch } = useContext(Store)
+  const [loading, setLoading] = useState(true);
 
-  render() {
-    // const { loading } = this.state;
-    // if (!loading) {
-    //   return <Text>Loading...</Text>;
-    // }
-    return (
-      <StoreProvider>
+  useEffect(() => {
+    getDiscussions(state.sortBy, dispatch)
+  }, getDiscussions());
+
+  useEffect(() => {
+    closeSplash()
+  }, () => closeSplash());
+
+  const closeSplash = () => {
+    if (state.top_discussions !== undefined || state.top_discussions.length !== 0) {
+      setLoading(false);
+    }
+  };
+  console.log('state: ', state)
+  console.log('dispatch: ', dispatch)
+
+  return (
+    loading ? <Splash /> :
+      (
         <Wrapper>
           <NativeHeader />
           <AppNavigator />
         </Wrapper>
-      </StoreProvider>
-    );
-  }
+      )
+  );
 };
+
+export default App = () => (
+  <StoreProvider>
+    <SubApp />
+  </StoreProvider>
+)

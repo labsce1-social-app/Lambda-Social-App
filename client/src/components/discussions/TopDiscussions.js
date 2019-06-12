@@ -1,19 +1,11 @@
-import React, { useContext, useEffect, lazy, Suspense } from 'react';
+import React, { useContext, lazy, Suspense } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 import { Store } from '../../context';
 const Discussion = lazy(() => import('./Discussion'));
 import { Text } from 'native-base';
-import { getDiscussions } from './helpers';
 
-
-//TODO: refactor to hooks
 const TopDiscussions = () => {
-    const { state, dispatch } = useContext(Store);
-
-    useEffect(() => {
-        getDiscussions(state.sortBy, dispatch);
-    }, () => getDiscussions());
-
+    const { state } = useContext(Store);
 
     return (
         state.top_discussions_loading === true ? <Text>Loading...</Text> : (

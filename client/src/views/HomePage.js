@@ -10,14 +10,15 @@ import Subtopics from '../components/subtopics/Subtopics';
 
 const HomePage = props => {
     return (
-        <Wrapper>
-
-            <Text style={{ textAlign: 'center', fontSize: 22 }}>Most Popular Discussions</Text>
-            <Sort />
-            {/* <TopDiscussions /> */}
-            <Subtopics />
-            {/* <Post /> */}
-        </Wrapper>
+        (
+            <Wrapper>
+                <Text style={{ textAlign: 'center', fontSize: 22 }}>Most Popular</Text>
+                <Sort />
+                <TopDiscussions />
+                {/* <Subtopics /> */}
+                {/* <Post /> */}
+            </Wrapper>
+        )
     );
 };
 

@@ -33,12 +33,10 @@ const Login = () => {
       .then(credentials => {
         // console.log('creds', credentials);
         const { accessToken } = credentials;
-
         const decoded = jwtDecode(credentials.idToken);
         dispatch({ type: 'LOGIN', payload: { decoded, accessToken } });
-        console.log(decoded); // object of all user data
+        // console.log(decoded); // object of all user data
       })
-
       .catch(error => console.log('error in login', error));
   };
 
