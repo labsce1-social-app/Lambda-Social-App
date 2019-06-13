@@ -42,7 +42,7 @@ const Login = props => {
         prompt: 'login'
       })
       .then(credentials => {
-        // console.log('creds', credentials);
+        console.log('creds', credentials);
         const { accessToken, idToken } = credentials;
 
         getUser(accessToken); // send access_token
@@ -53,7 +53,9 @@ const Login = props => {
   };
 
   // Call auth0 for user info
-  getUser = token => {
+  getUser = async token => {
+    await AsyncStorage.setItem('accessToken', token);
+
     auth0.auth
       .userInfo({ token: token })
       .then(userInfo => {
@@ -68,11 +70,21 @@ const Login = props => {
 
   // save that access_token similar to localstorage
   const makeUser = async (token, info) => {
-    await AsyncStorage.setItem('accessToken', token);
+    const body = JSON.stringify({
+      username: info.nickname,
+      user_id: info.sub,
+      email: info.email,
+      avatar: info.picture
+    }); // send  nickname as a 'username'
 
-    const body = JSON.stringify({ username: info.name }); // send namea as a 'username'
-
-    await fetch(`${BASE_URL}/users`, { method: 'POST', body }).catch(error => {
+    await fetch(`${BASE_URL}/users`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body
+    }).catch(error => {
       console.log('error in sending user', error);
     });
   };
@@ -98,7 +110,11 @@ const Login = props => {
               </Button>
             </Right>
             <Body>
-              <Text>{state.profile.name}</Text>
+              {state.profile.nickname ? (
+                <Text>{state.profile.nickname}</Text>
+              ) : (
+                <Text>{state.profile.name}</Text>
+              )}
             </Body>
           </View>
         ) : (
