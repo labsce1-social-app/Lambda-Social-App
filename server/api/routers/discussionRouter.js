@@ -67,8 +67,8 @@ TESTS: {
 router.get('/s/:id', (req, res) => {
   const { id } = req.params;
 
-  db('discussion')
-    .where('subtopic_id', id)
+  discussionHelper
+    .joinUsersAtSubtopicId(id)
     .then(discussion => {
       res.status(200).json(discussion);
     })

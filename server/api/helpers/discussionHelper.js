@@ -16,6 +16,13 @@ const joinUsersAndSubtopicAtId = id => {
     JOIN user, subtopic WHERE discussion.subtopic_id = subtopic.id AND discussion.id = ${id}`);
 };
 
+const joinUsersAtSubtopicId = id => {
+  return db.raw(`SELECT discussion.id, discussion.subtopic_id, discussion.title, discussion.content, discussion.image, discussion.creater_id, user.username, discussion.created_at, discussion.updated_at
+  FROM discussion
+  JOIN user
+  WHERE discussion.subtopic_id = ${id} and discussion.creater_id = user.id`);
+};
+
 // checks to see if discussion title has been used
 const canInsertDisucssion = async title => {
   let canInsert = false;
@@ -136,5 +143,6 @@ module.exports = {
   checkValidUser,
   userCanEditDiscussion,
   checkValidDiscussion,
-  userCanDeleteDiscussion
+  userCanDeleteDiscussion,
+  joinUsersAtSubtopicId
 };
