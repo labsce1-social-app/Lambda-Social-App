@@ -1,37 +1,31 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, lazy, Suspense } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
-import { Store } from '../../context'
-import Discussion from './Discussion';
+import { Store } from '../../context';
+const Discussion = lazy(() => import('./Discussion'));
 import { Text } from 'native-base';
-import { getDiscussions } from './helpers';
 
-
-//TODO: refactor to hooks
 const TopDiscussions = () => {
-    const { state, dispatch } = useContext(Store);
-
-    useEffect(() => {
-        getDiscussions(state.sortBy, dispatch);
-    }, () => getDiscussions());
-
+    const { state } = useContext(Store);
 
     return (
-        state.loading === true ? <Text>Loading...</Text> : (
+        state.top_discussions_loading === true ? <Text>Loading...</Text> : (
             <FlatList
-                data={state.discussions}
+                data={state.top_discussions}
                 renderItem={({ item }) => (
-                    <Discussion
-                        image={item.image}
-                        title={item.title.split(' ').join('-')}
-                        discussion={item.content}
-                        name={item.username}
-                        date={item.created_at}
-                        comment={item.comments}
-                        upvotes={item.upvotes}
-                    />
+                    <Suspense fallback={<Text>Loading...</Text>}>
+                        <Discussion
+                            image={item.image}
+                            title={item.title.split(' ').join('-')}
+                            discussion={item.content}
+                            name={item.username}
+                            date={item.created_at}
+                            comment={item.comments}
+                            upvotes={item.upvotes}
+                        />
+                    </Suspense>
                 )}
                 keyExtractor={(item, index) => `${index}-${item.id}`}
-                refreshing={state.loading}
+                refreshing={state.top_discussions_loading}
             />
         )
     )

@@ -8,6 +8,31 @@ const joinUsersAndSubtopic = () => {
   JOIN user, subtopic WHERE discussion.subtopic_id = subtopic.id`);
 };
 
+// defaults sort to upvotes, can also take comments
+const topDiscussions = (sortBy = 'upvotes') => {
+  return db.raw(`
+  SELECT
+user.username,
+discussion.id as id,
+discussion.content,
+discussion.title,
+discussion.image,
+discussion.created_at,
+discussion.updated_at,
+SUM(comment.user_id = user.id) as comments,
+SUM(upvote.user_id = user.id) as upvotes
+FROM discussion
+JOIN user, subtopic, upvote, comment
+WHERE discussion.subtopic_id = subtopic.id
+AND user.id = upvote.user_id
+AND upvote.discussion_id ==discussion.id
+AND comment.user_id = user.id
+GROUP BY discussion.id
+ORDER BY ${sortBy} DESC
+LIMIT 10
+`);
+};
+
 // add's user column to discussion at id
 const joinUsersAndSubtopicAtId = id => {
   return db.raw(`
@@ -144,5 +169,6 @@ module.exports = {
   userCanEditDiscussion,
   checkValidDiscussion,
   userCanDeleteDiscussion,
-  joinUsersAtSubtopicId
+  joinUsersAtSubtopicId,
+  topDiscussions
 };

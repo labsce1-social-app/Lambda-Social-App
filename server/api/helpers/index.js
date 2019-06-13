@@ -6,7 +6,7 @@ const usersHelper = require('./usersHelper.js');
 
 module.exports = {
   ...commentHelper,
-  discussionHelper,
+  ...discussionHelper,
   ...subtopicHelper,
   //   upvoteHelper,
   ...usersHelper

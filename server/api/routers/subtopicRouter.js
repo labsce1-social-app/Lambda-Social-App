@@ -4,30 +4,9 @@ const {
   checkValidUser,
   canInsertSubtopic,
   userCanDeleteAndEditSubtopic,
-  joinUsersAndSubtopic,
-  checkValidSubtopic
+  checkValidSubtopic,
+  getAllSubtopicsWithCreator
 } = require('../helpers/index.js');
-
-/*
-GET ROUTE get all subtopics
-@PARAM = NONE
-ROUTE = '/subtopics
-returns = all subtopics
-TESTS: {
-    1) RETURNS LIST OF SUBTOPICS > 1
-}
-*/
-
-router.get('/', (req, res) => {
-  const { sort } = req.query;
-  joinUsersAndSubtopic(sort)
-    .then(subtopics => {
-      res.status(200).json(subtopics);
-    })
-    .catch(err => {
-      res.status(500).json({ error: err });
-    });
-});
 
 /*
 GET ROUTE get single subtopic
@@ -218,6 +197,16 @@ router.put('/:id', async (req, res) => {
       res.status(500).json({ error: 'subtopic already exists' });
     }
   }
+});
+
+router.get('/', (req, res) => {
+  getAllSubtopicsWithCreator()
+    .then(subtopics => {
+      res.status(200).json(subtopics)
+    })
+    .catch(err => {
+      res.status(500).json({ error: 'Server error' })
+    });
 });
 
 module.exports = router;
