@@ -51,7 +51,8 @@ function generateComments() {
   return {
     comment_post: faker.lorem.text(30),
     comment_id: pickOne(fakeIds),
-    user_id: getRandomArbitrary(1, 20)
+    user_id: getRandomArbitrary(1, 20),
+    discussion_id: getRandomArbitrary(1, 20)
   };
 }
 
