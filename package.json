@@ -7,7 +7,7 @@
     "start": "node server/index.js",
     "server": "nodemon",
     "test": "jest",
-    "local": "yarn && yarn --cwd \"./react-native-app\" && npx knex migrate:rollback && knex migrate:latest && npx knex seed:run"
+    "local": "yarn && yarn --cwd \"./client\" && npx knex migrate:rollback && knex migrate:latest && npx knex seed:run"
   },
   "license": "MIT",
   "private": false,
