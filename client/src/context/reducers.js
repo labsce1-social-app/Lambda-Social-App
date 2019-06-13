@@ -75,7 +75,7 @@ export const reducer = (state = initialState, action) => {
         error: action.payload
       };
     case 'LOGOUT':
-      return { ...state, access: null, profile: null };
+      return { ...state, access: null, profile: {} };
     default:
       return state;
   }
