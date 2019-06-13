@@ -49,7 +49,6 @@ const Login = props => {
 
         dispatch({ type: 'LOGIN', payload: accessToken });
       })
-
       .catch(error => console.log('error in login', error));
   };
 
@@ -103,16 +102,16 @@ const Login = props => {
             </Body>
           </View>
         ) : (
-          <Right>
-            <Button
-              style={styles.AuthButton}
-              title="login"
-              onPress={() => handleAuth()}
-            >
-              <Text style={styles.buText}>Login</Text>
-            </Button>
-          </Right>
-        )}
+            <Right>
+              <Button
+                style={styles.AuthButton}
+                title="login"
+                onPress={() => handleAuth()}
+              >
+                <Text style={styles.buText}>Login</Text>
+              </Button>
+            </Right>
+          )}
       </Header>
 
       {/* <StatusBar backgroundColor="#ffffff" /> */}
