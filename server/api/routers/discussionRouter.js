@@ -53,6 +53,31 @@ router.get('/:id', (req, res) => {
 });
 
 /*
+GET ALL DISCUSSION ROUTE BY SUBTOPIC_ID - gets all routes by subtopic_id
+@PARAM = {
+    id: !INT
+}
+ROUTE = '/discussions/s/:id
+returns = all discussions with subtopic_id
+TESTS: {
+    1) RETURNS DISCUSSIONS BY SUBTOPIC_ID
+}
+*/
+
+router.get('/s/:id', (req, res) => {
+  const { id } = req.params;
+
+  db('discussion')
+    .where('subtopic_id', id)
+    .then(discussion => {
+      res.status(200).json(discussion);
+    })
+    .catch(err => {
+      res.status(500).json({ error: err });
+    });
+});
+
+/*
 POST ROUTE create a discussion
 TODO: Add middleware to ensure user is logged in
 NOTE: content or image must be present
