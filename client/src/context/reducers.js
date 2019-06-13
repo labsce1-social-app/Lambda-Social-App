@@ -6,6 +6,9 @@ export const initialState = {
   subtopics: [],
   subtopics_loading: false,
   subtopics_error: '',
+  discussions: [],
+  discussions_loading: false,
+  discussions_error: '',
   access: '',
   profile: {}
 };
@@ -54,6 +57,24 @@ export const reducer = (state = initialState, action) => {
         ...state,
         subtopics_loading: false,
         subtopics_error: action.payload
+      };
+    case 'DISCUSSIONS_FETCHING':
+      return {
+        ...state,
+        discussions_loading: true,
+        discussions_error: ''
+      };
+    case 'DISCUSSIONS_FETCHED':
+      return {
+        ...state,
+        discussions: action.payload,
+        discussions_loading: false
+      };
+    case 'DISCUSSIONS_FAILED':
+      return {
+        ...state,
+        discussions_loading: false,
+        discussions_error: action.payload
       };
     case 'LOGIN':
       console.log(action.payload);
