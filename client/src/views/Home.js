@@ -24,7 +24,7 @@ const Home = props => (
     </Text>
     <Sort />
     <ScrollView>
-      <TopDiscussions />
+      {/* <TopDiscussions /> */}
       {/* <Subtopics /> */}
       <Discussions />
       {/* <Post /> */}
