@@ -4,8 +4,8 @@ import { StyleSheet } from 'react-native'
 import NativePicker from './NativePicker';
 
 
-const NativeHeader = ({ loading }) => {
-    return loading === false ? (
+const NativeHeader = (props) => {
+    return (
         <Header style={style.header}>
             <Left>
                 <Button transparent>
@@ -16,10 +16,9 @@ const NativeHeader = ({ loading }) => {
                 <Button transparent>
                     <NativePicker />
                 </Button>
-
             </Right>
         </Header>
-    ) : null
+    )
 }
 
 const style = StyleSheet.create({

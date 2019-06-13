@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Icon, Picker, Form } from "native-base";
 import { Platform } from 'react-native';
 import { Store } from '../../context';
-import { getDiscussions } from './helpers';
+import { getDiscussions } from '../../utils/Requests';
 
 const Sort = () => {
     const { _, dispatch } = useContext(Store)
