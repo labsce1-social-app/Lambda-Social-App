@@ -23,7 +23,7 @@ import {
 
 import jwtDecode from 'jwt-decode';
 
-import { AUTH0_CLIENT, AUTH0_DOMAIN, BASE_URL } from 'react-native-dotenv';
+import { AUTH0_CLIENT, AUTH0_DOMAIN, BASE_URL, LOCAL } from 'react-native-dotenv';
 
 const auth0ClientId = AUTH0_CLIENT;
 const auth0Domain = AUTH0_DOMAIN;
@@ -77,7 +77,7 @@ const Login = props => {
       avatar: info.picture
     }); // send  nickname as a 'username'
 
-    await fetch(`${BASE_URL}/users`, {
+    await fetch(`${LOCAL}/users`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -113,8 +113,8 @@ const Login = props => {
               {state.profile.nickname ? (
                 <Text>{state.profile.nickname}</Text>
               ) : (
-                <Text>{state.profile.name}</Text>
-              )}
+                  <Text>{state.profile.name}</Text>
+                )}
             </Body>
           </View>
         ) : (
