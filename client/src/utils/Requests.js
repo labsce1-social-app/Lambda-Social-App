@@ -1,10 +1,10 @@
 import { BASE_URL } from 'react-native-dotenv';
-
+const local = `http://localhost:3000`;
+// plase all HTTP requests in here
 
 export const getDiscussions = async (query, dispatch) => {
     // handle loading state
     dispatch({ type: "TOP_DISCUSSIONS_FETCHING" });
-    // const local = `http://localhost:3000`
     const q = new URLSearchParams({ sort: query });
     try {
         // fetch the data with query
@@ -16,5 +16,5 @@ export const getDiscussions = async (query, dispatch) => {
         // set the error to global state
         dispatch({ type: "TOP_DISCUSSIONS_FAILED", payload: error });
         throw new Error(error)
-    }
-}
+    };
+};
