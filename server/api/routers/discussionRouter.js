@@ -9,7 +9,8 @@ const {
   userCanEditDiscussion,
   checkValidDiscussion,
   userCanDeleteDiscussion,
-  topDiscussions
+  topDiscussions,
+  joinUsersAtSubtopicId
 } = require('../helpers/index.js');
 
 // used for updated timestamps
@@ -72,8 +73,12 @@ TESTS: {
 router.get('/:id', (req, res) => {
   const { id } = req.params;
   joinUsersAndSubtopicAtId(id)
-    .then(disucssion => {
-      res.status(200).json(disucssion);
+    .then(discussion => {
+      if (discussion.length > 0) {
+        res.status(200).json(discussion);
+      } else {
+        res.status(401).json({ error: 'discussion not found' });
+      }
     })
     .catch(err => {
       res.status(500).json({ error: err });
@@ -95,10 +100,13 @@ TESTS: {
 router.get('/s/:id', (req, res) => {
   const { id } = req.params;
 
-  discussionHelper
-    .joinUsersAtSubtopicId(id)
+  joinUsersAtSubtopicId(id)
     .then(discussion => {
-      res.status(200).json(discussion);
+      if (discussion.length > 0) {
+        res.status(200).json(discussion);
+      } else {
+        res.status(401).json({ error: 'discussion not found' });
+      }
     })
     .catch(err => {
       res.status(500).json({ error: err });
@@ -156,9 +164,7 @@ router.post('/create', async (req, res) => {
     res.status(400).json({ error: 'must contain either an image or content' });
   } else if ((await canInsertDisucssion(title)) === false) {
     res.status(500).json({ error: 'subtopic already exists' });
-  } else if (
-    (await checkValidSubtopic(subtopic_id)) === false
-  ) {
+  } else if ((await checkValidSubtopic(subtopic_id)) === false) {
     res.status(500).json({ error: 'valid subtopic not found' });
   } else {
     db('discussion')
@@ -233,18 +239,12 @@ router.put('/:id', async (req, res) => {
     res.status(400).json({ error: 'must contain either an image or content' });
   } else if ((await canInsertDisucssion(title)) === false) {
     res.status(500).json({ error: 'subtopic already exists' });
-  } else if (
-    (await checkValidSubtopic(subtopic_id)) === false
-  ) {
+  } else if ((await checkValidSubtopic(subtopic_id)) === false) {
     res.status(500).json({ error: 'valid subtopic not found' });
   } else if ((await checkValidUser(creater_id)) === false) {
     res.status(500).json({ error: 'valid user not found, check creater_id' });
   } else if (
-    (await userCanEditDiscussion(
-      id,
-      creater_id,
-      subtopic_id
-    )) === false
+    (await userCanEditDiscussion(id, creater_id, subtopic_id)) === false
   ) {
     res
       .status(500)
@@ -297,9 +297,7 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json({ message: 'valid user not found, check creater_id' });
   } else if ((await checkValidDiscussion(id)) === false) {
     res.status(500).json({ message: 'discussion not found, check id' });
-  } else if (
-    (await userCanDeleteDiscussion(id, creater_id)) === false
-  ) {
+  } else if ((await userCanDeleteDiscussion(id, creater_id)) === false) {
     res
       .status(500)
       .json({ message: 'user not authorized to delete this discussion' });

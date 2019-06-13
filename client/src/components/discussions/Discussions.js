@@ -19,7 +19,7 @@ const Discussions = () => {
     // const url = 'http://localhost:3000'
     dispatch({ type: 'DISCUSSIONS_FETCHING' });
     try {
-      const response = await fetch(`${BASE_URL}/discussions/s/1`);
+      const response = await fetch(`${BASE_URL}/discussions/s/4`);
       const resJson = await response.json();
       console.log(resJson);
       dispatch({ type: 'DISCUSSIONS_FETCHED', payload: resJson });
@@ -37,6 +37,7 @@ const Discussions = () => {
       data={state.discussions}
       renderItem={({ item }) => (
         <Suspense fallback={<Text>Loading...</Text>}>
+          <Text>Discussions By Subtopic</Text>
           <Discussion
             image={item.image}
             title={item.title.split(' ').join('-')}
