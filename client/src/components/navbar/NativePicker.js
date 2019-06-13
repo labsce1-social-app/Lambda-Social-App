@@ -20,7 +20,7 @@ const NativePicker = props => {
             onValueChange={() => onValueChange(value)}
         >
             <Picker.Item label="Sign Up" value="key0" />
-            <Picker.Item label="UpVotes" value="key1" />
+            <Picker.Item label="About Lambda Social" value="key1" />
             <Picker.Item label="Recent" value="key2" />
             <Picker.Item label="Popular" value="key3" />
             <Picker.Item label="Notifications" value="key4" />
