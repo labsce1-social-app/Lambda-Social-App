@@ -77,7 +77,7 @@ const Login = props => {
       avatar: info.picture
     }); // send  nickname as a 'username'
 
-    await fetch(`${LOCAL}/users`, {
+    await fetch(`${BASE_URL}/users`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
