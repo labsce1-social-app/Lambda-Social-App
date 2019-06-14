@@ -4,17 +4,17 @@ const local = `http://localhost:3000`;
 
 export const getDiscussions = async (query, dispatch) => {
     // handle loading state
-    dispatch({ type: "TOP_DISCUSSIONS_FETCHING" });
     const q = new URLSearchParams({ sort: query });
     try {
+        dispatch({ type: "TOP_DISCUSSIONS_FETCHING" });
         // fetch the data with query
         const response = await fetch(`${BASE_URL}/discussions/?${q.toString()}`);
         const responseJson = await response.json();
         // set the data to global state
-        dispatch({ type: "TOP_DISCUSSIONS_FETCHED", payload: responseJson });
+        return dispatch({ type: "TOP_DISCUSSIONS_FETCHED", payload: responseJson });
     } catch (error) {
         // set the error to global state
         dispatch({ type: "TOP_DISCUSSIONS_FAILED", payload: error });
-        throw new Error(error)
+        throw new Error(error);
     };
 };

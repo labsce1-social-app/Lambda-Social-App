@@ -17,12 +17,12 @@ const Discussions = () => {
 
   const getDiscussions = async () => {
     // const url = 'http://localhost:3000'
-    dispatch({ type: 'DISCUSSIONS_FETCHING' });
     try {
+      dispatch({ type: 'DISCUSSIONS_FETCHING' });
       const response = await fetch(`${BASE_URL}/discussions/s/4`);
       const resJson = await response.json();
       console.log(resJson);
-      dispatch({ type: 'DISCUSSIONS_FETCHED', payload: resJson });
+      return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: resJson });
     } catch (error) {
       dispatch({ type: 'DISCUSSIONS_FAILED', payload: error });
       throw new Error(error);
@@ -33,26 +33,26 @@ const Discussions = () => {
   return state.discussions_loading === true ? (
     <Text>Loading...</Text>
   ) : (
-    <FlatList
-      data={state.discussions}
-      renderItem={({ item }) => (
-        <Suspense fallback={<Text>Loading...</Text>}>
-          <Text>Discussions By Subtopic</Text>
-          <Discussion
-            image={item.image}
-            title={item.title.split(' ').join('-')}
-            discussion={item.content}
-            name={item.username}
-            date={item.created_at}
-            comment={item.comments}
-            upvotes={item.upvotes}
-          />
-        </Suspense>
-      )}
-      keyExtractor={item => `${item.id}`}
-      refreshing={state.discussions_loading}
-    />
-  );
+      <FlatList
+        data={state.discussions}
+        renderItem={({ item }) => (
+          <Suspense fallback={<Text>Loading...</Text>}>
+            <Text>Discussions By Subtopic</Text>
+            <Discussion
+              image={item.image}
+              title={item.title.split(' ').join('-')}
+              discussion={item.content}
+              name={item.username}
+              date={item.created_at}
+              comment={item.comments}
+              upvotes={item.upvotes}
+            />
+          </Suspense>
+        )}
+        keyExtractor={item => `${item.id}`}
+        refreshing={state.discussions_loading}
+      />
+    );
 };
 
 export default Discussions;
