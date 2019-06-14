@@ -1,11 +1,12 @@
 import React from 'react';
-import { Image } from 'react-native';
+import { Image, ScrollView } from 'react-native';
 import { Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body } from 'native-base';
+import { config } from '../../utils/dimensions';
 import Comment from './Comment';
 
 const Post = () => {
     return (
-        <Card style={{ flex: 0 }}>
+        <Card style={{ flex: 0, height: config.deviceHeight * 0.73 }}>
             <CardItem>
                 <Left>
                     <Thumbnail source={{ uri: 'Image URL' }} />
@@ -33,12 +34,15 @@ const Post = () => {
                 </Left>
             </CardItem>
             <Text>Comments</Text>
-            <Comment
-                image={"some image"}
-                date="2019-06-07 14:11:24"
-                name="Carlos Lantigua"
-                comment="I really like what you said there bud."
-            />
+            <ScrollView>
+
+                <Comment
+                    image={"some image"}
+                    date="2019-06-07 14:11:24"
+                    name="Carlos Lantigua"
+                    comment="I really like what you said there bud."
+                />
+            </ScrollView>
         </Card>
     );
 }
