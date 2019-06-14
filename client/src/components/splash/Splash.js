@@ -26,9 +26,7 @@ const styles = StyleSheet.create({
 const Splash = (props) => {
     const { state, dispatch } = useContext(Store)
     useEffect(() => {
-        console.log('getting data')
         getDiscussions(state.sortBy, dispatch);
-        console.log('got data')
         setTimeout(() => {
             return props.history.push('/home');
         }, 4000);
