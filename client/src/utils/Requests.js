@@ -18,3 +18,14 @@ export const getDiscussions = async (query, dispatch) => {
         throw new Error(error);
     };
 };
+
+export const getCommentsByDiscussionId = async (id, dispatch) => {
+    dispatch({ type: "COMMENTS_FETCHING" })
+    try {
+        const response = await fetch(`${local}/comments/d/${id}`);
+        const resJSON = await response.json();
+        return dispatch({ type: "COMMENTS_FETCHED_SUCCESS", payload: resJSON });
+    } catch (error) {
+        dispatch({ type: 'COMMENTS_FETCHED_FAILED', payload: error })
+    }
+}

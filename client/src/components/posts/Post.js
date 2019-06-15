@@ -1,10 +1,22 @@
-import React from 'react';
-import { Image, ScrollView } from 'react-native';
+import React, { useContext, useEffect } from 'react';
+import { Store } from '../../context/';
+import { Image, ScrollView, FlatList } from 'react-native';
 import { Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body } from 'native-base';
 import { config } from '../../utils/dimensions';
 import Comment from './Comment';
+import { getCommentsByDiscussionId } from '../../utils/Requests';
 
-const Post = () => {
+// get's discussion id from Route through match.params.id
+const Post = ({ match }) => {
+    // bring in state and dispatch
+    const { state, dispatch } = useContext(Store);
+    const { id } = match.params;
+
+    // handle life cycle for comments
+    useEffect(() => {
+        getCommentsByDiscussionId(id, dispatch)
+    }, getCommentsByDiscussionId(id, dispatch));
+
     return (
         <Card style={{ flex: 0, height: config.deviceHeight * 0.715 }}>
             <CardItem>
@@ -35,12 +47,17 @@ const Post = () => {
             </CardItem>
             <Text>Comments</Text>
             <ScrollView>
-
-                <Comment
-                    image={"some image"}
-                    date="2019-06-07 14:11:24"
-                    name="Carlos Lantigua"
-                    comment="I really like what you said there bud."
+                <FlatList
+                    data={state.comments}
+                    renderItem={({ item }) => {
+                        <Comment
+                            image={item.avatar}
+                            date={item.created_date}
+                            name={item.username}
+                            comment={item.post}
+                        />
+                    }}
+                    keyExtractor={(item, index) => `${item}-${item.comment_id}`}
                 />
             </ScrollView>
         </Card>

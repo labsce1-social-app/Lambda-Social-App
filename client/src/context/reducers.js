@@ -10,7 +10,10 @@ export const initialState = {
   discussions_loading: false,
   discussions_error: '',
   access: '',
-  profile: {}
+  profile: {},
+  comments: {},
+  comments_loading: false,
+  comments_error: ''
 };
 
 export const reducer = (state = initialState, action) => {
@@ -76,6 +79,26 @@ export const reducer = (state = initialState, action) => {
         discussions_loading: false,
         discussions_error: action.payload
       };
+    case 'COMMENTS_FETCHING':
+      return {
+        ...state,
+        comments_loading: true,
+        comments_error: ''
+      }
+    case 'COMMENTS_FETCHED_SUCCESS':
+      return {
+        ...state,
+        comments: action.payload,
+        comments_loading: false,
+        comments_error: ''
+      }
+    case 'COMMENTS_FETCHED_FAILED':
+      return {
+        ...state,
+        comments: null,
+        comments_loading: false,
+        comments_error: action.payload
+      }
     case 'LOGIN':
       console.log(action.payload);
 
