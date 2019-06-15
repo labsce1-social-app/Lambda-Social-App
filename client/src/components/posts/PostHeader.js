@@ -8,7 +8,7 @@ const PostHeader = (props) => {
     return (
         <>
             <CardItem>
-                <Left style={{ flex: 1, flexDirection: 'column', padding: 5 }}>
+                <Left style={{ flex: 1, flexDirection: 'column' }}>
                     <Text note>{props.discussion_date}</Text>
                     <Thumbnail source={{ url: props.creator_avatar }} style={style.avatar} />
                     <Body>
