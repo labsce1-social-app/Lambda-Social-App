@@ -11,7 +11,7 @@ export const initialState = {
   discussions_error: '',
   access: '',
   profile: {},
-  comments: [],
+  comments: null,
   comments_loading: false,
   comments_error: ''
 };

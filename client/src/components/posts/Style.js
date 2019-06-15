@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { StyleSheet } from 'react-native';
 import { config } from '../../utils/dimensions';
 
 
@@ -17,5 +16,25 @@ export default StyleSheet.create({
     avatar: {
         width: 50,
         height: 50
+    },
+    date: {
+        fontSize: 12,
+        color: 'rgb(120, 120, 120)'
+    },
+    username: {
+        fontStyle: 'italic'
+    },
+    comment: {
+        textAlign: 'right',
+        fontSize: 10
+    },
+    chat: {
+        marginLeft: 20
+    },
+    bubble: {
+        color: 'green'
+    },
+    heart: {
+        color: 'red'
     }
 });

@@ -1,35 +1,35 @@
 import React, { useContext, lazy, Suspense } from 'react';
 import { Store } from '../../context/';
-import { FlatList } from 'react-native';
+import { FlatList, Text } from 'react-native';
 import { Card } from 'native-base';
 import PostHeader from './PostHeader';
-import { style } from './Style';
+import style from './Style';
 const Comment = lazy(() => import('./Comment'));
 
 // get's discussion id from Route through match.params.id
 const Post = () => {
     // bring in state and dispatch
     const { state, _ } = useContext(Store);
-    console.log(state.comments.creator)
+    const { comments, comments_loading } = state;
 
     return state.comments_loading ? <Text style={style.container}>Loading... </Text> : (
         <Card style={style.container}>
-            {state.comments && state.comments_loading === false ? (
+            {comments && comments_loading === false ? (
                 <Suspense fallback={<Text>Loading... </Text>}>
                     <PostHeader
                         // creator_avatar={}
-                        creator={Object.keys(state.comments.creator)}
-                        discussion_image={Object.keys(state.comments.discussion_image)}
-                        discussion_content={Object.keys(state.comments.discussion_content)}
-                        discussion_date={Object.keys(state.comments.discussion_date)}
+                        creator={comments.creator[0].creator}
+                        discussion_image={comments.creator[0].discussion_image}
+                        discussion_content={comments.creator[0].discussion_content}
+                        discussion_date={comments.creator[0].discussion_date}
                     />
                 </Suspense>
             ) : <Text>Loading... </Text>}
             <Text>Comments</Text>
 
-            {state.comments && state.comments_loading === false ? (
+            {comments && comments_loading === false ? (
                 <FlatList
-                    data={state.comments.comments}
+                    data={comments.comments}
                     renderItem={({ item }) => (
                         <Suspense fallback={<Text>Loading... </Text>}>
 

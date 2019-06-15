@@ -1,13 +1,16 @@
 import React from 'react';
-import { CardItem, Left, Thumbnail, Body, Text, Button } from 'native-base';
-import { style } from './Style';
+import { CardItem, Left, Thumbnail, Body, Text, Button, Icon } from 'native-base';
+import { Image } from 'react-native';
+
+import style from './Style';
 
 const PostHeader = (props) => {
     return (
         <>
             <CardItem>
-                <Left>
-                    <Thumbnail source={{ uri: props.creator_avatar }} style={style.avatar} />
+                <Left style={{ flex: 1, flexDirection: 'column', padding: 5 }}>
+                    <Text note>{props.discussion_date}</Text>
+                    <Thumbnail source={{ url: props.creator_avatar }} style={style.avatar} />
                     <Body>
                         <Text>{props.creator}</Text>
                     </Body>
@@ -15,9 +18,8 @@ const PostHeader = (props) => {
             </CardItem>
             <CardItem>
                 <Body>
-                    <Image source={{ uri: `${props.discussion_image}` }} style={style.post_image} />
+                    <Image source={{ url: props.discussion_image }} style={style.post_image} />
                     <Text>{props.discussion_content}</Text>
-                    <Text note>{props.discussion_date}</Text>
                 </Body>
             </CardItem>
             <CardItem>
