@@ -1,23 +1,27 @@
-import React from 'react';
-import Sort from '../components/discussions/Sort';
+import React, { useEffect, useContext } from 'react';
+import { Store } from '../context';
 import NavWrapper from './NavWrapper';
 import Header from '../common/Header';
-import { ScrollView } from 'react-native-gesture-handler';
 import Post from '../components/posts/Post';
+import { getCommentsByDiscussionId } from '../utils/Requests';
 
-// this home is referring to TopDiscussions component ONLY
-// currently can be used for development
-const Home = props => (
-    <NavWrapper>
-        <Header
-        >
-            {props.location.path}
+const PostPage = ({ match }) => {
+    // handle life cycle for comments
+    const { _, dispatch } = useContext(Store);
+
+    const { id } = match.params;
+    useEffect(() => {
+        getCommentsByDiscussionId(id, dispatch)
+    }, getCommentsByDiscussionId());
+
+    return (
+        <NavWrapper>
+            <Header
+            >
+                Post
         </Header>
-        <Sort />
-        <ScrollView>
             <Post />
-        </ScrollView>
-    </NavWrapper>
-);
-
-export default Home;
+        </NavWrapper>
+    );
+}
+export default PostPage;

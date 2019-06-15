@@ -9,8 +9,7 @@ import moment from 'moment'
 
 const Discussion = props => {
     return (
-        <Link to={`/subtopics/discussions/${props.link}`}>
-
+        <Link to={`/post/${props.link}`}>
             <Card style={{ flex: 0 }}>
                 <CardItem>
                     <Left>

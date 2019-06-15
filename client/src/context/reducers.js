@@ -11,7 +11,7 @@ export const initialState = {
   discussions_error: '',
   access: '',
   profile: {},
-  comments: {},
+  comments: [],
   comments_loading: false,
   comments_error: ''
 };
@@ -95,7 +95,7 @@ export const reducer = (state = initialState, action) => {
     case 'COMMENTS_FETCHED_FAILED':
       return {
         ...state,
-        comments: null,
+        comments: initialState.comments,
         comments_loading: false,
         comments_error: action.payload
       }
