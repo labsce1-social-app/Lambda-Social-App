@@ -6,7 +6,6 @@ import NavWrapper from './NavWrapper';
 import Header from '../common/Header';
 
 // this home is referring to TopDiscussions component ONLY
-// currently can be used for development
 const Home = props => (
   <NavWrapper>
     <Header
