@@ -35,6 +35,7 @@ const Subtopics = () => {
                 renderItem={({ item }) => (
                     <Suspense fallback={<Text>Loading...</Text>}>
                         <Subtopic
+                            id={item.id}
                             title={item.title.split(' ').join('-')}
                             name={item.username}
                             date={item.date !== item.updated ? item.updated : item.date}

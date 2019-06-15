@@ -15,9 +15,9 @@ const Home = props => (
     >
       Most Popular
     </Header>
-    {/* <Sort /> */}
-    <Post />
-    {/* <TopDiscussions /> */}
+    <Sort />
+    {/* <Post /> */}
+    <TopDiscussions />
   </NavWrapper>
 );
 
