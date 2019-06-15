@@ -4,21 +4,18 @@ import Sort from '../components/discussions/Sort';
 import Discussions from '../components/discussions/Discussions';
 import NavWrapper from './NavWrapper';
 import Header from '../common/Header';
-import { ScrollView } from 'react-native-gesture-handler';
 
-// this home is referring to TopDiscussions component ONLY
-// currently can be used for development
-const Home = props => (
+// this DiscussionsPage is referring to all discussions inside of a chosen subtopic ONLY
+// TODO: we'll need to make the header dynamic
+const DiscussionsPage = props => (
     <NavWrapper>
         <Header
         >
-            s/{props.location.path}
+            s/discusssion
         </Header>
         <Sort />
-        <ScrollView>
-            <Discussions />
-        </ScrollView>
+        <Discussions />
     </NavWrapper>
 );
 
-export default Home;
+export default DiscussionsPage;

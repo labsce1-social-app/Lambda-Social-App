@@ -1,14 +1,21 @@
 import { StyleSheet } from 'react-native';
+import { config } from '../../utils/dimensions';
+
 
 export default StyleSheet.create({
-    // Post Summary Icon
-    icon: {
-        width: 48,
-        height: 48,
-        marginBottom: 40
+    container: {
+        flex: 0,
+        minHeight: config.deviceHeight * 0.75,
+        maxHeight: config.deviceHeight * 0.75
     },
-    title: {
-        fontWeight: 'bold'
+    post_image: {
+        height: 200,
+        width: 200,
+        flex: 1
+    },
+    avatar: {
+        width: 50,
+        height: 50
     },
     date: {
         fontSize: 12,
@@ -19,13 +26,15 @@ export default StyleSheet.create({
     },
     comment: {
         textAlign: 'right',
-    },
-    buttons: {
-        textAlign: 'right',
-        fontSize: 12,
-        marginTop: 25
+        fontSize: 10
     },
     chat: {
         marginLeft: 20
+    },
+    bubble: {
+        color: 'green'
+    },
+    heart: {
+        color: 'red'
     }
 });
