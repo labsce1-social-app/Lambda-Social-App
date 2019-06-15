@@ -6,7 +6,7 @@ import Comment from './Comment';
 
 const Post = () => {
     return (
-        <Card style={{ flex: 0, height: config.deviceHeight * 0.73 }}>
+        <Card style={{ flex: 0, height: config.deviceHeight * 0.715 }}>
             <CardItem>
                 <Left>
                     <Thumbnail source={{ uri: 'Image URL' }} />
