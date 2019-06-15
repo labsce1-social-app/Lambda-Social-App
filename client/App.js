@@ -13,6 +13,7 @@ useScreens();
 //     'Shake or press menu button for dev menu',
 // });
 
+// this is where the entire app gets exported from, the context store provider is wrapped around here to give everything access to the store
 export default App = () => (
   <StoreProvider>
     <AppNavigator />

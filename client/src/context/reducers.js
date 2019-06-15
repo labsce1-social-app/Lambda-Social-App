@@ -1,3 +1,4 @@
+// initial state for the entire app, normally this would be split but for simplicity sake and due to the small scale of this app, this should work fine.
 export const initialState = {
   top_discussions: [],
   top_discussions_loading: false,
@@ -10,9 +11,13 @@ export const initialState = {
   discussions_loading: false,
   discussions_error: '',
   access: '',
-  profile: {}
+  profile: {},
+  comments: null,
+  comments_loading: false,
+  comments_error: ''
 };
 
+// all of the reducer conditions, we can use the dispatch method to interact with this by simply passing in a type and sending the payload.
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'TOP_DISCUSSIONS_FETCHING':
@@ -76,6 +81,26 @@ export const reducer = (state = initialState, action) => {
         discussions_loading: false,
         discussions_error: action.payload
       };
+    case 'COMMENTS_FETCHING':
+      return {
+        ...state,
+        comments_loading: true,
+        comments_error: ''
+      }
+    case 'COMMENTS_FETCHED_SUCCESS':
+      return {
+        ...state,
+        comments: action.payload,
+        comments_loading: false,
+        comments_error: ''
+      }
+    case 'COMMENTS_FETCHED_FAILED':
+      return {
+        ...state,
+        comments: initialState.comments,
+        comments_loading: false,
+        comments_error: action.payload
+      }
     case 'LOGIN':
       console.log(action.payload);
 

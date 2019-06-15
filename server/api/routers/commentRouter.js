@@ -3,7 +3,8 @@ const db = require('../../data/dbconfig.js');
 const {
   getCommentsByDiscussionId,
   getCommentsAndJoinUser,
-  getCommentsAndJoinUserById
+  getCommentsAndJoinUserById,
+  getPostDetailByDiscussionId
 } = require('../helpers/index.js');
 
 // used for updated timestamps
@@ -15,7 +16,7 @@ GET ROUTE get all comments
 ROUTE = '/comments
 returns = array of all comments
 TESTS: {
-    1) RETURNS ALL COMMENTS 
+    1) RETURNS ALL COMMENTS
 }
 */
 
@@ -46,7 +47,13 @@ router.get('/d/:id', (req, res) => {
   getCommentsByDiscussionId(id)
     .then(comments => {
       if (comments.length > 0) {
-        res.status(200).json(comments);
+        getPostDetailByDiscussionId(id)
+          .then(creator => {
+            res.status(200).json({ creator, comments });
+          })
+          .catch(err => {
+            res.status(500).json({ message: 'no post creator', err })
+          })
       } else {
         res.status(404).json({ message: 'no comments yet' });
       }
@@ -64,7 +71,7 @@ GET ROUTE get comment by id
 ROUTE = '/comments/:id
 returns = a single comment by id
 TESTS: {
-    1) RETURNS A SINGLE COMMENT BY ID 
+    1) RETURNS A SINGLE COMMENT BY ID
 }
 */
 

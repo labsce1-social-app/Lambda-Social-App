@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Icon, Text } from 'native-base';
+import { StyleSheet } from 'react-native';
 
 
 const IconButton = (props) => {
@@ -7,7 +8,7 @@ const IconButton = (props) => {
         <Button
             iconLeft={props.iconLeft}
             iconRight={props.iconRight}
-            transparent={props.transparent}
+            block={props.block}
             light={props.light}
             primary={props.primary}
             success={props.success}
@@ -15,6 +16,9 @@ const IconButton = (props) => {
             warning={props.warning}
             danger={props.danger}
             dark={props.dark}
+            transparent={props.transparent}
+            style={styles.shadow}
+            bordered={props.bordered}
         >
             <Icon name={props.name} />
             <Text>{props.children}</Text>
@@ -22,6 +26,19 @@ const IconButton = (props) => {
 
     );
 }
+
+const styles = StyleSheet.create({
+    shadow: {
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 4
+        },
+        shadowOpacity: 0.15,
+        shadowRadius: 3.49,
+        elevation: 1
+    }
+})
 
 export default IconButton
 
