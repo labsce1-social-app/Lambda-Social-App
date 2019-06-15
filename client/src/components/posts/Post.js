@@ -1,52 +1,35 @@
 import React, { useContext, lazy, Suspense } from 'react';
 import { Store } from '../../context/';
-import { Image, FlatList } from 'react-native';
-import { Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body } from 'native-base';
-import { config } from '../../utils/dimensions';
-// import Comment from './Comment';
+import { FlatList } from 'react-native';
+import { Card } from 'native-base';
+import PostHeader from './PostHeader';
+import { style } from './Style';
 const Comment = lazy(() => import('./Comment'));
-// import { getCommentsByDiscussionId } from '../../utils/Requests';
 
 // get's discussion id from Route through match.params.id
 const Post = () => {
     // bring in state and dispatch
     const { state, _ } = useContext(Store);
-    const { creator, creator_avatar, discussion_content, discussion_date, discussion_image } = state.comments;
+    console.log(state.comments.creator)
 
-    console.log(state.comments)
-    return state.comments_loading ? <Text>Loading... </Text> : (
-        <Card style={{ flex: 0, minHeight: config.deviceHeight * 0.715 }}>
-            <CardItem>
-                <Left>
-                    <Thumbnail source={{ uri: `${creator_avatar}` }} />
-                    <Body>
-                        <Text>{creator}</Text>
-                        <Text>{discussion_content}</Text>
-                        <Text note>{discussion_date}</Text>
-                    </Body>
-                </Left>
-            </CardItem>
-            <CardItem>
-                <Body>
-                    <Image source={{ uri: `${discussion_image}` }} style={{ height: 200, width: 200, flex: 1 }} />
-                    <Text>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi autem atque iusto velit quis nemo, quibusdam excepturi cum non distinctio ad nostrum quidem vel reiciendis optio
-                    </Text>
-                </Body>
-            </CardItem>
-            <CardItem>
-                <Left>
-                    <Button transparent textStyle={{ color: '#87838B' }}>
-                        <Icon name="heart" />
-                        <Text>10+</Text>
-                    </Button>
-                </Left>
-            </CardItem>
+    return state.comments_loading ? <Text style={style.container}>Loading... </Text> : (
+        <Card style={style.container}>
+            {state.comments && state.comments_loading === false ? (
+                <Suspense fallback={<Text>Loading... </Text>}>
+                    <PostHeader
+                        // creator_avatar={}
+                        creator={Object.keys(state.comments.creator)}
+                        discussion_image={Object.keys(state.comments.discussion_image)}
+                        discussion_content={Object.keys(state.comments.discussion_content)}
+                        discussion_date={Object.keys(state.comments.discussion_date)}
+                    />
+                </Suspense>
+            ) : <Text>Loading... </Text>}
             <Text>Comments</Text>
 
             {state.comments && state.comments_loading === false ? (
                 <FlatList
-                    data={state.comments}
+                    data={state.comments.comments}
                     renderItem={({ item }) => (
                         <Suspense fallback={<Text>Loading... </Text>}>
 
