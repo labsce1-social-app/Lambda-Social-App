@@ -2,9 +2,14 @@ const db = require('../../data/dbconfig.js');
 
 const getCommentsByDiscussionId = discussion_id => {
   return db.raw(`
-    SELECT
+      SELECT
 comment.id as comment_id,
 comment.comment_post as post,
+	(select user.username
+	from user where user.id = discussion.creater_id) as creator,
+discussion.content as discussion_content,
+discussion.image as discussion_image,
+discussion.created_at as discussion_date,
 user.username as username,
 user.avatar as avatar,
 user.id as user_id,
