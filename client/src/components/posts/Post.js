@@ -11,6 +11,7 @@ const Post = ({ match }) => {
     // bring in state and dispatch
     const { state, dispatch } = useContext(Store);
     const { id } = match.params;
+    console.log(id)
 
     // handle life cycle for comments
     useEffect(() => {

@@ -18,7 +18,7 @@ const AppNavigator = (props) => {
                     <Route path="/home" component={Home} />
                     <Route exact path="/" component={Splash} />
                     <Route path="/login" component={Login} />
-                    <Route path="/:id" comonent={Subtopics} />
+                    <Route path="/subtopics" comonent={Subtopics} />
                     <Route path="/subtopics/:id" component={Discussions} />
                     <Route path="subtopics/discussions/:id" component={Posts} />
                 </Switch>

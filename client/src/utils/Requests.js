@@ -10,6 +10,7 @@ export const getDiscussions = async (query, dispatch) => {
         // fetch the data with query
         const response = await fetch(`${BASE_URL}/discussions/?${q.toString()}`);
         const responseJson = await response.json();
+        console.log(responseJson)
         // set the data to global state
         return dispatch({ type: "TOP_DISCUSSIONS_FETCHED", payload: responseJson });
     } catch (error) {
@@ -24,6 +25,7 @@ export const getCommentsByDiscussionId = async (id, dispatch) => {
     try {
         const response = await fetch(`${local}/comments/d/${id}`);
         const resJSON = await response.json();
+        console.log(resJSON)
         return dispatch({ type: "COMMENTS_FETCHED_SUCCESS", payload: resJSON });
     } catch (error) {
         dispatch({ type: 'COMMENTS_FETCHED_FAILED', payload: error })

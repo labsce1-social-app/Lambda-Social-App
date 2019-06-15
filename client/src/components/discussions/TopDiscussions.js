@@ -14,6 +14,7 @@ const TopDiscussions = () => {
                 renderItem={({ item }) => (
                     <Suspense fallback={<Text>Loading...</Text>}>
                         <Discussion
+                            link={item.id}
                             image={item.image}
                             title={item.title.split(' ').join('-')}
                             discussion={item.content}

@@ -39,7 +39,7 @@ const Discussions = () => {
           <Suspense fallback={<Text>Loading...</Text>}>
             <Text>Discussions By Subtopic</Text>
             <Discussion
-              id={item.id}
+              link={item.id}
               image={item.image}
               title={item.title.split(' ').join('-')}
               discussion={item.content}
