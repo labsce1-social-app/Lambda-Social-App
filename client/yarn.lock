@@ -5283,6 +5283,11 @@ react-proxy@^1.1.7:
     lodash "^4.6.1"
     react-deep-force-update "^1.0.0"
 
+react-router-native-stack@^0.0.15:
+  version "0.0.15"
+  resolved "https://registry.yarnpkg.com/react-router-native-stack/-/react-router-native-stack-0.0.15.tgz#d21591155857c24404aaf39ac9d954c9c96b1794"
+  integrity sha512-8i3dx/nv+ydasDQ/zkwKQF1yqgfqgxN4cdwWRvLZaSE5mHqPdQFoSI4+Ub+P48CyaJmUEl+UrwvLIqzWoq3lqg==
+
 react-router-native@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/react-router-native/-/react-router-native-5.0.1.tgz#4469f83d450bd494d1cc023a574136a6f1869010"

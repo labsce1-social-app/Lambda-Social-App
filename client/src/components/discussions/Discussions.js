@@ -21,15 +21,13 @@ const Discussions = () => {
       dispatch({ type: 'DISCUSSIONS_FETCHING' });
       const response = await fetch(`${BASE_URL}/discussions/s/4`);
       const resJson = await response.json();
-      console.log(resJson);
       return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: resJson });
     } catch (error) {
       dispatch({ type: 'DISCUSSIONS_FAILED', payload: error });
-      throw new Error(error);
+      console.log(error);
     }
   };
 
-  console.log(state.discussions);
   return state.discussions_loading === true ? (
     <Text>Loading...</Text>
   ) : (
@@ -39,7 +37,7 @@ const Discussions = () => {
           <Suspense fallback={<Text>Loading...</Text>}>
             <Text>Discussions By Subtopic</Text>
             <Discussion
-              link={item.id}
+              changeLink={() => history.push(`/post/${item.id}`)}
               image={item.image}
               title={item.title.split(' ').join('-')}
               discussion={item.content}
