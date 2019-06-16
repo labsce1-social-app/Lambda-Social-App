@@ -10,11 +10,13 @@ export const getDiscussions = async (query, dispatch) => {
     try {
         dispatch({ type: "TOP_DISCUSSIONS_FETCHING" });
         // fetch the data with query
-        const response = await fetch(`${base_url}/discussions/?${q.toString()}`);
+        const response = await fetch(`${local}/discussions/?${q.toString()}`);
         // convert the data to json format otherwise you will just get a promise back
         const responseJson = await response.json();
         // set the data to global state
-        return dispatch({ type: "TOP_DISCUSSIONS_FETCHED", payload: responseJson });
+        dispatch({ type: "TOP_DISCUSSIONS_FETCHED", payload: responseJson });
+        // set splash to false so that it never renders again
+        return dispatch({ type: 'SPLASH_TO_FALSE' });
     } catch (error) {
         // set the error to global state
         dispatch({ type: "TOP_DISCUSSIONS_FAILED", payload: error });
@@ -29,7 +31,7 @@ export const getCommentsByDiscussionId = async (id, dispatch) => {
     // read previous function, they're almost the same
     dispatch({ type: "COMMENTS_FETCHING" })
     try {
-        const response = await fetch(`${base_url}/comments/d/${id}`);
+        const response = await fetch(`${local}/comments/d/${id}`);
         const resJSON = await response.json();
         return dispatch({ type: "COMMENTS_FETCHED_SUCCESS", payload: resJSON });
     } catch (error) {
