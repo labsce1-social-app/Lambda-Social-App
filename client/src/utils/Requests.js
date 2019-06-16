@@ -1,3 +1,7 @@
+import { AUTH0_CLIENT, AUTH0_DOMAIN, BASE_URL, LOCAL } from 'react-native-dotenv';
+import Auth0 from 'react-native-auth0';
+const auth0ClientId = AUTH0_CLIENT;
+const auth0Domain = AUTH0_DOMAIN;
 const local = `http://localhost:3000`;
 const base_url = `https://social-app-test.herokuapp.com`;
 // place all HTTP requests in here
@@ -38,4 +42,69 @@ export const getCommentsByDiscussionId = async (id, dispatch) => {
         dispatch({ type: 'COMMENTS_FETCHED_FAILED', payload: error })
         console.log(error)
     }
+}
+
+const auth0 = new Auth0({ domain: auth0Domain, clientId: auth0ClientId });
+
+// send a user to auth
+export const handleAuth = (dispatch) => {
+    auth0.webAuth
+        .authorize({
+            scope: 'openid profile email offline_access',
+            audience: 'https://lambdasocial.auth0.com/userinfo',
+            prompt: 'login'
+        })
+        .then(credentials => {
+            // console.log('creds', credentials);
+            const { accessToken, idToken } = credentials;
+
+            getUser(accessToken); // send access_token
+
+            return dispatch({ type: 'SET_CURRENT_USER', payload: accessToken });
+        })
+        .catch(error => console.log('error in login', error));
+};
+
+// Call auth0 for user info
+const getUser = async (token, dispatch) => {
+    await AsyncStorage.setItem('accessToken', token);
+
+    auth0.auth
+        .userInfo({ token: token })
+        .then(userInfo => {
+            // console.log('userInfo func', userInfo);
+
+            dispatch({ type: 'USER_INFO', payload: userInfo });
+
+            makeUser(token, userInfo);
+        })
+        .catch(console.error);
+};
+
+// save that access_token similar to localstorage
+// and create a user in the database
+const makeUser = async (token, info) => {
+    const body = JSON.stringify({
+        username: info.nickname,
+        user_id: info.sub,
+        email: info.email,
+        avatar: info.picture
+    }); // send  nickname as a 'username'
+
+    await fetch(`${BASE_URL}/users`, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body
+    }).catch(error => {
+        console.log('error in sending user', error);
+    });
+};
+
+// logout a user through state
+export const handleLogout = async (dispatch) => {
+    AsyncStorage.removeItem('accessToken');
+    return dispatch({ type: 'LOGOUT', payload: 'You logged out' });
 }

@@ -1,4 +1,6 @@
 // initial state for the entire app, normally this would be split but for simplicity sake and due to the small scale of this app, this should work fine.
+import isEmpty from '../utils/isEmpty';
+
 export const initialState = {
   splash: true,
   top_discussions: [],
@@ -11,8 +13,8 @@ export const initialState = {
   discussions: [],
   discussions_loading: false,
   discussions_error: '',
-  access: '',
-  profile: {},
+  isAuthenticated: false,
+  user: {},
   comments: null,
   comments_loading: false,
   comments_error: ''
@@ -107,19 +109,11 @@ export const reducer = (state = initialState, action) => {
         comments_loading: false,
         comments_error: action.payload
       }
-    case 'LOGIN':
-      console.log(action.payload);
-
+    case 'SET_CURRENT_USER':
       return {
         ...state,
-        access: action.payload
-      };
-    case 'USER_INFO':
-      console.log(action.payload);
-
-      return {
-        ...state,
-        profile: action.payload // for now set it all into a profile object
+        isAuthenticated: !isEmpty(action.payload),
+        user: action.payload
       };
     case 'AUTH_FAIL':
       return {
@@ -127,7 +121,7 @@ export const reducer = (state = initialState, action) => {
         error: action.payload
       };
     case 'LOGOUT':
-      return { ...state, access: null, profile: {} };
+      return initialState;
     default:
       return state;
   }
