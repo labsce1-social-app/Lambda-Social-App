@@ -9,7 +9,7 @@ const Comment = lazy(() => import('./Comment'));
 // get's discussion id from Route through match.params.id
 const Post = () => {
     // bring in state and dispatch
-    const { state, _ } = useContext(Store);
+    const { state, dispatch } = useContext(Store);
     const { comments, comments_loading } = state;
 
     return state.comments_loading ? <Text style={style.container}>Loading... </Text> : (
@@ -24,7 +24,7 @@ const Post = () => {
                         discussion_date={comments.creator[0].discussion_date}
                     />
                 </Suspense>
-            ) : <Text>Loading... </Text>}
+            ) : null}
             <Text>Comments</Text>
 
             {comments && comments_loading === false ? (

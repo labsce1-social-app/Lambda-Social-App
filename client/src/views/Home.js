@@ -6,6 +6,7 @@ import NavWrapper from './NavWrapper';
 import Header from '../common/Header';
 
 // this home is referring to TopDiscussions component ONLY
+// history is being pushed to component for route pushing/popping purposes
 const Home = props => (
   <NavWrapper>
     <Header
@@ -13,7 +14,7 @@ const Home = props => (
       Most Popular
     </Header>
     <Sort />
-    <TopDiscussions />
+    <TopDiscussions history={props.history} />
   </NavWrapper>
 );
 

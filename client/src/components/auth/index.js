@@ -42,7 +42,7 @@ const Login = props => {
         prompt: 'login'
       })
       .then(credentials => {
-        console.log('creds', credentials);
+        // console.log('creds', credentials);
         const { accessToken, idToken } = credentials;
 
         getUser(accessToken); // send access_token
@@ -59,7 +59,7 @@ const Login = props => {
     auth0.auth
       .userInfo({ token: token })
       .then(userInfo => {
-        console.log('userInfo func', userInfo);
+        // console.log('userInfo func', userInfo);
 
         dispatch({ type: 'USER_INFO', payload: userInfo });
 

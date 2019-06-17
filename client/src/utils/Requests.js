@@ -19,7 +19,7 @@ export const getDiscussions = async (query, dispatch) => {
         // set the error to global state
         dispatch({ type: "TOP_DISCUSSIONS_FAILED", payload: error });
         // throw error
-        throw new Error(error);
+        console.log(error);
     };
 };
 
@@ -31,9 +31,9 @@ export const getCommentsByDiscussionId = async (id, dispatch) => {
     try {
         const response = await fetch(`${base_url}/comments/d/${id}`);
         const resJSON = await response.json();
-        console.log(resJSON)
         return dispatch({ type: "COMMENTS_FETCHED_SUCCESS", payload: resJSON });
     } catch (error) {
         dispatch({ type: 'COMMENTS_FETCHED_FAILED', payload: error })
+        console.log(error)
     }
 }
