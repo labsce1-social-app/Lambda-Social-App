@@ -5,6 +5,7 @@ import { Card } from 'native-base';
 import PostHeader from './PostHeader';
 import style from './Style';
 const Comment = lazy(() => import('./Comment'));
+import isEmpty from '../../utils/isEmpty';
 
 // get's discussion id from Route through match.params.id
 const Post = () => {
@@ -14,7 +15,7 @@ const Post = () => {
     console.log(comments)
     return state.comments_loading ? <Text style={style.container}>Loading... </Text> : (
         <Card style={style.container}>
-            {comments && comments_loading === false ? (
+            {!isEmpty(comments) && comments_loading === false ? (
                 <Suspense fallback={<Text>Loading... </Text>}>
                     <PostHeader
                         // creator_avatar={}
@@ -27,7 +28,7 @@ const Post = () => {
             ) : null}
             <Text>Comments</Text>
 
-            {comments !== null && comments_loading === false ? (
+            {!isEmpty(comments) && comments_loading === false ? (
                 <FlatList
                     data={comments.comments}
                     renderItem={({ item }) => (
@@ -43,7 +44,7 @@ const Post = () => {
                     )}
                     keyExtractor={(item, index) => `${index}-${item.comment_id}`}
                 />
-            ) : comments && comments.comments.length === 0 ? (
+            ) : !isEmpty(comments) && !isEmpty(comments.comments) ? (
                 <Comment
                     image="../../assets/lambdaschool.png"
                     date={new Date().now()}

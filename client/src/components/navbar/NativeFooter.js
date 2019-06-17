@@ -8,10 +8,11 @@ import isEmpty from '../../utils/isEmpty';
 const NativeFooter = ({ history }) => {
     const { state, dispatch } = useContext(Store);
     // this state will be used to tell nativefooter if the user is authenticated. It needs to go into useEffect so that it can recheck if changes like a logout has happened
-    const [rerender, setRerender] = useState(null);
+    const [rerender, setRerender] = useState(state.isAuthenticated);
+
     useEffect(() => {
         return setRerender(state.isAuthenticated)
-    }, () => setRerender(state.isAuthenticated));
+    }, () => setRerender());
 
     return (
 

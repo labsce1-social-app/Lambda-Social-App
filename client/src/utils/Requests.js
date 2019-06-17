@@ -1,3 +1,4 @@
+import React from 'react';
 import { AUTH0_CLIENT, AUTH0_DOMAIN, BASE_URL, LOCAL } from 'react-native-dotenv';
 import Auth0 from 'react-native-auth0';
 const auth0ClientId = AUTH0_CLIENT;
@@ -6,6 +7,7 @@ const local = `http://localhost:3000`;
 const base_url = `https://social-app-test.herokuapp.com`;
 // place all HTTP requests in here
 import AsyncStorage from '@react-native-community/async-storage';
+import { Redirect } from 'react-router-native';
 
 // getsDiscussions, can also take in a query string to sort the discussions, only good for top10 discussions on landing page.
 export const getDiscussions = async (query, dispatch) => {
@@ -68,18 +70,18 @@ export const handleAuth = (dispatch, history) => {
 
 // Call auth0 for user info
 const getUser = async (token, dispatch) => {
-    await AsyncStorage.setItem('accessToken', token);
+    AsyncStorage.setItem('accessToken', token)
+    try {
+        const getToken = await auth0.auth.userInfo({ token: token })
 
-    auth0.auth
-        .userInfo({ token: token })
-        .then(userInfo => {
-            // console.log('userInfo func', userInfo);
-
-            dispatch({ type: 'SET_CURRENT_USER', payload: userInfo });
-
-            makeUser(token, userInfo);
-        })
-        .catch(console.error);
+        const action = await dispatch({ type: 'SET_CURRENT_USER', payload: getToken });
+        const followup = await makeUser(token, getToken);
+        return {
+            action, followup
+        }
+    } catch (err) {
+        console.log(err)
+    }
 };
 
 // save that access_token similar to localstorage
@@ -105,8 +107,8 @@ const makeUser = async (token, info) => {
 };
 
 // logout a user through state
-export const handleLogout = async (dispatch, history) => {
+export const handleLogout = async (dispatch) => {
     AsyncStorage.removeItem('accessToken');
     dispatch({ type: 'LOGOUT' });
-    return history.push('/home');
+    return <Redirect to="/home" />;
 }

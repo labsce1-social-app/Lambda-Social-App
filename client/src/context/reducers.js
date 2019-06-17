@@ -1,5 +1,4 @@
 // initial state for the entire app, normally this would be split but for simplicity sake and due to the small scale of this app, this should work fine.
-import isEmpty from '../utils/isEmpty';
 
 export const initialState = {
   splash: true,
@@ -14,14 +13,14 @@ export const initialState = {
   discussions_loading: false,
   discussions_error: '',
   isAuthenticated: false,
-  user: {},
+  user: null,
   comments: null,
   comments_loading: false,
   comments_error: ''
 };
-
 // all of the reducer conditions, we can use the dispatch method to interact with this by simply passing in a type and sending the payload.
 export const reducer = (state = initialState, action) => {
+  console.log(state)
   switch (action.type) {
     case 'SPLASH_TO_FALSE':
       return {
@@ -112,7 +111,7 @@ export const reducer = (state = initialState, action) => {
     case 'SET_CURRENT_USER':
       return {
         ...state,
-        isAuthenticated: !isEmpty(action.payload),
+        isAuthenticated: true,
         user: action.payload
       };
     case 'AUTH_FAIL':

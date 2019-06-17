@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
 import { Store } from '../../context/';
 import { Platform } from 'react-native';
-import { Icon, Picker, Button } from "native-base";
-import { handleLogout, handleAuth } from '../../utils/Requests';
+import { Icon, Picker } from "native-base";
+import { handleLogout } from '../../utils/Requests';
 import { withRouter } from 'react-router-native';
 
 const NativePicker = ({ history }) => {
@@ -30,9 +30,9 @@ const NativePicker = ({ history }) => {
                 <Picker.Item label="Recent" value="key1" />
                 <Picker.Item label="Popular" value="key2" />
                 <Picker.Item label="Notifications" value="key3" />
-                <Picker.Item label="Suptopics" value="key4" />
+                <Picker.Item label="Suptopics" value="/subtopics" />
                 <Picker.Item label="Team" value="key5" />
-                <Picker.Item label="Logout" onPress={() => handleLogout(dispatch, history)} />
+                <Picker.Item label="Logout" onPress={() => handleLogout(dispatch)} />
             </Picker>
         ) : (
                 <Picker

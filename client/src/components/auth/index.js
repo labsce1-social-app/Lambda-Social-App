@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Text } from 'react-native';
 import { Store } from '../../context/index';
 import { handleAuth } from '../../utils/Requests';
