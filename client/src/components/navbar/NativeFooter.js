@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Store } from '../../context';
 import { Footer, FooterTab, Button, Icon } from 'native-base';
 import { handleAuth } from '../../utils/Requests';
@@ -7,6 +7,11 @@ import isEmpty from '../../utils/isEmpty';
 
 const NativeFooter = ({ history }) => {
     const { state, dispatch } = useContext(Store);
+    // this state will be used to tell nativefooter if the user is authenticated. It needs to go into useEffect so that it can recheck if changes like a logout has happened
+    const [rerender, setRerender] = useState(null);
+    useEffect(() => {
+        return setRerender(state.isAuthenticated)
+    }, () => setRerender(state.isAuthenticated));
 
     return (
 
@@ -20,7 +25,7 @@ const NativeFooter = ({ history }) => {
                 <Button vertical>
                     <Icon name="brush" />
                 </Button>
-                {state.isAuthenticated === false ? (
+                {rerender === false ? (
                     <Button vertical active onPress={() => handleAuth(dispatch, history)}>
                         <Icon active name="key" style={{ transform: [{ rotate: '-90deg' }] }} />
                     </Button>

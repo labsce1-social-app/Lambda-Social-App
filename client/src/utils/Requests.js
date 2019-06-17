@@ -5,7 +5,7 @@ const auth0Domain = AUTH0_DOMAIN;
 const local = `http://localhost:3000`;
 const base_url = `https://social-app-test.herokuapp.com`;
 // place all HTTP requests in here
-
+import AsyncStorage from '@react-native-community/async-storage';
 
 // getsDiscussions, can also take in a query string to sort the discussions, only good for top10 discussions on landing page.
 export const getDiscussions = async (query, dispatch) => {
@@ -58,9 +58,9 @@ export const handleAuth = (dispatch, history) => {
             // console.log('creds', credentials);
             const { accessToken, idToken } = credentials;
 
-            getUser(accessToken); // send access_token
+            return getUser(accessToken, dispatch); // send access_token
 
-            return dispatch({ type: 'SET_CURRENT_USER', payload: accessToken });
+            // return dispatch({ type: 'SET_CURRENT_USER', payload: accessToken });
             // return history.push('/subtopics')
         })
         .catch(error => console.log('error in login', error));
@@ -75,7 +75,7 @@ const getUser = async (token, dispatch) => {
         .then(userInfo => {
             // console.log('userInfo func', userInfo);
 
-            dispatch({ type: 'USER_INFO', payload: userInfo });
+            dispatch({ type: 'SET_CURRENT_USER', payload: userInfo });
 
             makeUser(token, userInfo);
         })
@@ -105,7 +105,8 @@ const makeUser = async (token, info) => {
 };
 
 // logout a user through state
-export const handleLogout = async (dispatch) => {
+export const handleLogout = async (dispatch, history) => {
     AsyncStorage.removeItem('accessToken');
-    return dispatch({ type: 'LOGOUT', payload: 'You logged out' });
+    dispatch({ type: 'LOGOUT' });
+    return history.push('/home');
 }

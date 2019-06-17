@@ -10,10 +10,11 @@ const NativePicker = ({ history }) => {
     const [selected, setSelected] = useState('');
 
     const onValueChange = (value) => {
-        console.log(value);
         setSelected(value)
         return history.push(value)
     }
+
+
     return (
         state.isAuthenticated === true ? (
             <Picker
@@ -31,7 +32,7 @@ const NativePicker = ({ history }) => {
                 <Picker.Item label="Notifications" value="key3" />
                 <Picker.Item label="Suptopics" value="key4" />
                 <Picker.Item label="Team" value="key5" />
-                <Picker.Item label="Logout" value="/logout" />
+                <Picker.Item label="Logout" onPress={() => handleLogout(dispatch, history)} />
             </Picker>
         ) : (
                 <Picker
