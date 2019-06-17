@@ -26,7 +26,7 @@ export const reducer = (state = initialState, action) => {
     case 'SPLASH_TO_FALSE':
       return {
         ...state,
-        splash: false
+        splash: action.payload
       }
     case 'TOP_DISCUSSIONS_FETCHING':
       return {

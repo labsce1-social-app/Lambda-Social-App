@@ -20,7 +20,7 @@ export const getDiscussions = async (query, dispatch) => {
         // set the data to global state
         dispatch({ type: "TOP_DISCUSSIONS_FETCHED", payload: responseJson });
         // set splash to false so that it never renders again
-        return dispatch({ type: 'SPLASH_TO_FALSE' });
+        return dispatch({ type: 'SPLASH_TO_FALSE', payload: false });
     } catch (error) {
         // set the error to global state
         dispatch({ type: "TOP_DISCUSSIONS_FAILED", payload: error });
@@ -47,7 +47,7 @@ export const getCommentsByDiscussionId = async (id, dispatch) => {
 const auth0 = new Auth0({ domain: auth0Domain, clientId: auth0ClientId });
 
 // send a user to auth
-export const handleAuth = (dispatch) => {
+export const handleAuth = (dispatch, history) => {
     auth0.webAuth
         .authorize({
             scope: 'openid profile email offline_access',
@@ -60,7 +60,8 @@ export const handleAuth = (dispatch) => {
 
             getUser(accessToken); // send access_token
 
-            return dispatch({ type: 'SET_CURRENT_USER', payload: accessToken });
+            dispatch({ type: 'SET_CURRENT_USER', payload: accessToken });
+            return history.push('/subtopics')
         })
         .catch(error => console.log('error in login', error));
 };

@@ -13,7 +13,7 @@ const NativeFooter = ({ history }) => {
         <Footer>
             <FooterTab>
 
-                <Button vertical onPress={() => handleAuth(dispatch)}>
+                <Button vertical onPress={() => history.push('/home')}>
                     <Icon name="home" />
                 </Button>
 
@@ -21,7 +21,7 @@ const NativeFooter = ({ history }) => {
                     <Icon name="brush" />
                 </Button>
                 {state.isAuthenticated === false ? (
-                    <Button vertical active onPress={() => handleAuth(dispatch)}>
+                    <Button vertical active onPress={() => handleAuth(dispatch, history)}>
                         <Icon active name="key" style={{ transform: [{ rotate: '-90deg' }] }} />
                     </Button>
                 ) : <Button vertical>
