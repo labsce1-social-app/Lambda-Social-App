@@ -49,7 +49,7 @@ export const getCommentsByDiscussionId = async (id, dispatch) => {
 const auth0 = new Auth0({ domain: auth0Domain, clientId: auth0ClientId });
 
 // send a user to auth
-export const handleAuth = (dispatch, history) => {
+export const handleAuth = (dispatch) => {
     auth0.webAuth
         .authorize({
             scope: 'openid profile email offline_access',

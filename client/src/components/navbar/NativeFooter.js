@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Store } from '../../context';
 import { Footer, FooterTab, Button, Icon } from 'native-base';
 import { handleAuth } from '../../utils/Requests';
-import { Link } from 'react-router-native';
 import isEmpty from '../../utils/isEmpty';
 
 const NativeFooter = ({ history }) => {
@@ -15,7 +14,6 @@ const NativeFooter = ({ history }) => {
     }, () => setRerender());
 
     return (
-
         <Footer>
             <FooterTab>
 

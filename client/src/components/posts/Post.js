@@ -5,7 +5,7 @@ import { Card } from 'native-base';
 import PostHeader from './PostHeader';
 import style from './Style';
 const Comment = lazy(() => import('./Comment'));
-import isEmpty from '../../utils/isEmpty';
+import isEmpty from '../../utils/isEmpty'
 
 // get's discussion id from Route through match.params.id
 const Post = () => {
@@ -44,7 +44,7 @@ const Post = () => {
                     )}
                     keyExtractor={(item, index) => `${index}-${item.comment_id}`}
                 />
-            ) : !isEmpty(comments) && !isEmpty(comments.comments) ? (
+            ) : !isEmpty(comments) && comments.comments.length === 0 ? (
                 <Comment
                     image="../../assets/lambdaschool.png"
                     date={new Date().now()}

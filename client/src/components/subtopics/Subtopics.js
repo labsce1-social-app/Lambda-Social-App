@@ -26,22 +26,25 @@ const Subtopics = ({ history }) => {
             throw new Error(error);
         }
     }
-
+    console.log("subtopics page clicked");
     return (
         state.subtopics_loading === true ? <Text>Loading...</Text> : (
             <FlatList
                 data={state.subtopics}
-                renderItem={({ item }) => (
-                    <Suspense fallback={<Text>Loading...</Text>}>
-                        <Subtopic
-                            linkChange={() => history.push(`/${props.id}`)}
-                            id={item.id}
-                            title={item.title.split(' ').join('-')}
-                            name={item.username}
-                            date={item.date !== item.updated ? item.updated : item.date}
-                        />
-                    </Suspense>
-                )}
+                renderItem={({ item }) => {
+                    console.log(item.id)
+                    return (
+                        <Suspense fallback={<Text>Loading...</Text>}>
+                            <Subtopic
+                                linkChange={() => history.push(`/${item.id}`)}
+                                id={item.id}
+                                title={item.title.split(' ').join('-')}
+                                name={item.username}
+                                date={item.date !== item.updated ? item.updated : item.date}
+                            />
+                        </Suspense>
+                    )
+                }}
                 keyExtractor={(item) => `${item.id}`}
                 refreshing={state.subtopics_loading}
             />
