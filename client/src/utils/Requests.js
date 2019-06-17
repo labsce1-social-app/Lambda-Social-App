@@ -14,7 +14,9 @@ export const getDiscussions = async (query, dispatch) => {
         // convert the data to json format otherwise you will just get a promise back
         const responseJson = await response.json();
         // set the data to global state
-        return dispatch({ type: "TOP_DISCUSSIONS_FETCHED", payload: responseJson });
+        dispatch({ type: "TOP_DISCUSSIONS_FETCHED", payload: responseJson });
+        // set splash to false so that it never renders again
+        return dispatch({ type: 'SPLASH_TO_FALSE' });
     } catch (error) {
         // set the error to global state
         dispatch({ type: "TOP_DISCUSSIONS_FAILED", payload: error });

@@ -11,7 +11,7 @@ const Post = () => {
     // bring in state and dispatch
     const { state, dispatch } = useContext(Store);
     const { comments, comments_loading } = state;
-
+    console.log(comments)
     return state.comments_loading ? <Text style={style.container}>Loading... </Text> : (
         <Card style={style.container}>
             {comments && comments_loading === false ? (
@@ -19,7 +19,7 @@ const Post = () => {
                     <PostHeader
                         // creator_avatar={}
                         creator={comments.creator[0].creator}
-                        discussion_image={comments.creator[0].discussion_image}
+                        discussion_image={comments.creator[0].discussion_image.replace('http://', 'https://')}
                         discussion_content={comments.creator[0].discussion_content}
                         discussion_date={comments.creator[0].discussion_date}
                     />
@@ -27,7 +27,7 @@ const Post = () => {
             ) : null}
             <Text>Comments</Text>
 
-            {comments && comments_loading === false ? (
+            {comments !== null && comments_loading === false ? (
                 <FlatList
                     data={comments.comments}
                     renderItem={({ item }) => (
@@ -43,8 +43,15 @@ const Post = () => {
                     )}
                     keyExtractor={(item, index) => `${index}-${item.comment_id}`}
                 />
-            ) : <Text>Loading...</Text>}
-        </Card>
+            ) : comments && comments.comments.length === 0 ? (
+                <Comment
+                    image="../../assets/lambdaschool.png"
+                    date={new Date().now()}
+                    name="LambdaBot"
+                    comment="No one has posted yet"
+                />
+            ) : <Text> Loading...</Text>}
+        </Card >
     );
 }
 

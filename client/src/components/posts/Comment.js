@@ -27,13 +27,4 @@ const Comment = props => {
     )
 }
 
-Comment.defaultProps = {
-    icon: 'No Icon Provided',
-    title: 'No Title Provided',
-    subTopic: 'No SubTopic Provided',
-    name: 'No Name Provided',
-    date: 'No Date Provided',
-    comment: 'No Comment Provided'
-};
-
 export default Comment;

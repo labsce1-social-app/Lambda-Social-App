@@ -9,7 +9,7 @@ const NativeFooter = ({ history }) => {
             <FooterTab>
 
                 <Button vertical>
-                    <Link to="/">
+                    <Link to="/home">
                         <Icon name="home" />
                     </Link>
                 </Button>
