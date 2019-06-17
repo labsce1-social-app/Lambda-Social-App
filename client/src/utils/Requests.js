@@ -60,8 +60,8 @@ export const handleAuth = (dispatch, history) => {
 
             getUser(accessToken); // send access_token
 
-            dispatch({ type: 'SET_CURRENT_USER', payload: accessToken });
-            return history.push('/subtopics')
+            return dispatch({ type: 'SET_CURRENT_USER', payload: accessToken });
+            // return history.push('/subtopics')
         })
         .catch(error => console.log('error in login', error));
 };

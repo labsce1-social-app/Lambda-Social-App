@@ -12,14 +12,15 @@ const Login = (props) => {
   useEffect(() => {
     if (state.isAuthenticated === false) {
       handleAuth(dispatch, props.history)
+    } else {
+      setRedirectToReferrer(true);
     }
-  }, handleAuth())
+  }, [])
 
-  login = () => {
-    setRedirectToReferrer(true)
-  }
-  if (redirectToReferrer === true) {
+  if (state.isAuthenticated === true) {
     return <Redirect to={from} />
+  } else {
+    return <Text>Authenticating...</Text>
   }
 }
 
