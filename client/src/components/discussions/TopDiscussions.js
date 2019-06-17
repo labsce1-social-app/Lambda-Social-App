@@ -1,12 +1,12 @@
 import React, { useContext, lazy, Suspense } from 'react';
+import { withRouter } from 'react-router-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { Store } from '../../context';
 const Discussion = lazy(() => import('./Discussion'));
 import { Text } from 'native-base';
 
-const TopDiscussions = () => {
+const TopDiscussions = ({ history }) => {
     const { state } = useContext(Store);
-
     return (
         state.top_discussions_loading === true ? <Text>Loading...</Text> : (
             <FlatList
@@ -14,7 +14,7 @@ const TopDiscussions = () => {
                 renderItem={({ item }) => (
                     <Suspense fallback={<Text>Loading...</Text>}>
                         <Discussion
-                            link={item.id}
+                            changeLink={() => history.push(`/post/${item.id}`)}
                             image={item.image}
                             title={item.title.split(' ').join('-')}
                             discussion={item.content}
@@ -33,4 +33,4 @@ const TopDiscussions = () => {
 }
 
 
-export default TopDiscussions
+export default withRouter(TopDiscussions)

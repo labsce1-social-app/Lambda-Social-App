@@ -1,4 +1,5 @@
 import React, { useEffect, useContext } from 'react';
+import { Redirect } from 'react-router-native';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { Store } from '../../context';
 import { getDiscussions } from '../../utils/Requests';
@@ -28,18 +29,15 @@ const Splash = (props) => {
     const { state, dispatch } = useContext(Store)
     useEffect(() => {
         getDiscussions(state.sortBy, dispatch);
-        setTimeout(() => {
-            return props.history.push('/home');
-        }, 4000);
     }, getDiscussions());
 
-    return (
+    return state.splash === true ? (
         <View style={styles.body}>
             <Image style={styles.img} source={require('../../assets/lambdaschool.png')} />
             <Text style={styles.text}>Lambda Social</Text>
             <Image source={require('../../assets/LambdaStudent.png')} />
         </View>
-    )
+    ) : <Redirect to="/home" />
 }
 
 export default Splash;

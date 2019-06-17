@@ -1,5 +1,6 @@
 // initial state for the entire app, normally this would be split but for simplicity sake and due to the small scale of this app, this should work fine.
 export const initialState = {
+  splash: true,
   top_discussions: [],
   top_discussions_loading: false,
   top_discussions_error: '',
@@ -20,6 +21,11 @@ export const initialState = {
 // all of the reducer conditions, we can use the dispatch method to interact with this by simply passing in a type and sending the payload.
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case 'SPLASH_TO_FALSE':
+      return {
+        ...state,
+        splash: false
+      }
     case 'TOP_DISCUSSIONS_FETCHING':
       return {
         ...state,

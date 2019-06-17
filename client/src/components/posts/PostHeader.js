@@ -8,16 +8,10 @@ const PostHeader = (props) => {
     return (
         <>
             <CardItem>
-                <Left style={{ flex: 1, flexDirection: 'column' }}>
+                <Body>
                     <Text note>{props.discussion_date}</Text>
                     <Thumbnail source={{ url: props.creator_avatar }} style={style.avatar} />
-                    <Body>
-                        <Text>{props.creator}</Text>
-                    </Body>
-                </Left>
-            </CardItem>
-            <CardItem>
-                <Body>
+                    <Text>{props.creator}</Text>
                     <Image source={{ url: props.discussion_image }} style={style.post_image} />
                     <Text>{props.discussion_content}</Text>
                 </Body>

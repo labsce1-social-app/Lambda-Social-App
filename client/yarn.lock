@@ -5283,18 +5283,10 @@ react-proxy@^1.1.7:
     lodash "^4.6.1"
     react-deep-force-update "^1.0.0"
 
-react-router-dom@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-5.0.1.tgz#ee66f4a5d18b6089c361958e443489d6bab714be"
-  integrity sha512-zaVHSy7NN0G91/Bz9GD4owex5+eop+KvgbxXsP/O+iW1/Ln+BrJ8QiIR5a6xNPtrdTvLkxqlDClx13QO1uB8CA==
-  dependencies:
-    "@babel/runtime" "^7.1.2"
-    history "^4.9.0"
-    loose-envify "^1.3.1"
-    prop-types "^15.6.2"
-    react-router "5.0.1"
-    tiny-invariant "^1.0.2"
-    tiny-warning "^1.0.0"
+react-router-native-stack@^0.0.15:
+  version "0.0.15"
+  resolved "https://registry.yarnpkg.com/react-router-native-stack/-/react-router-native-stack-0.0.15.tgz#d21591155857c24404aaf39ac9d954c9c96b1794"
+  integrity sha512-8i3dx/nv+ydasDQ/zkwKQF1yqgfqgxN4cdwWRvLZaSE5mHqPdQFoSI4+Ub+P48CyaJmUEl+UrwvLIqzWoq3lqg==
 
 react-router-native@^5.0.1:
   version "5.0.1"

@@ -14,7 +14,7 @@ const SubtopicsPage = props => (
     </Header>
         <Sort />
         <ScrollView>
-            <Subtopics />
+            <Subtopics history={props.history} />
         </ScrollView>
     </NavWrapper>
 );

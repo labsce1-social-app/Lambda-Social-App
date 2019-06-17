@@ -29,7 +29,7 @@ discussion.image as discussion_image,
 discussion.created_at as discussion_date
 from discussion
 inner join user
-WHERE discussion.id = 2
+WHERE discussion.id = ${discussion_id}
 LIMIT 1
   `)
 }

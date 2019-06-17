@@ -14,7 +14,7 @@ const DiscussionsPage = props => (
             s/discusssion
         </Header>
         <Sort />
-        <Discussions />
+        <Discussions history={props.history} />
     </NavWrapper>
 );
 

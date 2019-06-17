@@ -4,13 +4,12 @@ import { Store } from '../../context';
 import { Link } from 'react-router-native';
 import { handleAuth } from '../../utils/Requests';
 
-const NativeFooter = () => {
-  const { state, dispatch } = useContext(Store);
+const NativeFooter = ({ history }) => {
   return (
     <Footer>
       <FooterTab>
         <Button vertical>
-          <Link to="/">
+          <Link to="/home">
             <Icon name="home" />
           </Link>
         </Button>
@@ -19,26 +18,12 @@ const NativeFooter = () => {
           <Icon name="brush" />
         </Button>
 
-        <Button vertical>
-          <Link to="/subtopics">
-            <Icon name="paper" />
-          </Link>
-        </Button>
-
-        <Button vertical>
-          <Link to="/:subtopic_id/discussions">
-            <Icon name="chatbubbles" />
-          </Link>
-        </Button>
-
-        <Button vertical active onPress={() => handleAuth(dispatch)}>
-          {/* <Link to="/login"> */}
+        <Button vertical active onPress={() => history.push('/login')}>
           <Icon
             active
             name="key"
             style={{ transform: [{ rotate: '-90deg' }] }}
           />
-          {/* </Link> */}
         </Button>
       </FooterTab>
     </Footer>

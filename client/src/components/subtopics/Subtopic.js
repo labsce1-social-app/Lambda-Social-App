@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-native';
 import style from './Style';
 import { Content, Card, CardItem, Text, Body } from 'native-base';
 import moment from 'moment'
@@ -8,9 +7,8 @@ import moment from 'moment'
 
 const Subtopic = props => {
     return (
-        <Link to={`/${props.id}`}>
             <Content>
-                <Card style={{ flex: 0 }}>
+                <Card style={{ flex: 0 }} button onPress={props.linkChange}>
                     <CardItem>
                         <Body>
                             <Text style={style.date}>{moment(props.date).format('MMM DD YY')}</Text>
@@ -20,7 +18,6 @@ const Subtopic = props => {
                     </CardItem>
                 </Card >
             </Content >
-        </Link>
     )
 }
 

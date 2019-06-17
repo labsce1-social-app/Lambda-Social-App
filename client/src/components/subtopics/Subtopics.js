@@ -6,7 +6,7 @@ import { Text } from 'native-base';
 import { BASE_URL } from 'react-native-dotenv';
 
 //TODO: refactor to hooks
-const Subtopics = () => {
+const Subtopics = ({ history }) => {
     const { state, dispatch } = useContext(Store);
 
     useEffect(() => {
@@ -27,7 +27,6 @@ const Subtopics = () => {
         }
     }
 
-    console.log(state.subtopics)
     return (
         state.subtopics_loading === true ? <Text>Loading...</Text> : (
             <FlatList
@@ -35,6 +34,7 @@ const Subtopics = () => {
                 renderItem={({ item }) => (
                     <Suspense fallback={<Text>Loading...</Text>}>
                         <Subtopic
+                            linkChange={() => history.push(`/${props.id}`)}
                             id={item.id}
                             title={item.title.split(' ').join('-')}
                             name={item.username}

@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const db = require('../../data/dbconfig.js');
 const {
   getCommentsByDiscussionId,
   getCommentsAndJoinUser,
@@ -44,12 +43,21 @@ TESTS: {
 
 router.get('/d/:id', (req, res) => {
   const { id } = req.params;
-  getCommentsByDiscussionId(id)
-    .then(comments => {
-      if (comments.length > 0) {
-        getPostDetailByDiscussionId(id)
-          .then(creator => {
-            res.status(200).json({ creator, comments });
+  // get a single discussions details by it's id
+  getPostDetailByDiscussionId(id)
+    .then(creator => {
+      // check if the creator came back through promise
+      if (creator.length > 0) {
+        // attempt to get comments
+        getCommentsByDiscussionId(id)
+          .then(comments => {
+            // if comments came back, send them with creator detail
+            if (comments.length > 0) {
+              res.status(200).json({ creator, comments });
+            } else {
+              // else send just the creator
+              res.status(200).json({ creator })
+            }
           })
           .catch(err => {
             res.status(500).json({ message: 'no post creator', err })
