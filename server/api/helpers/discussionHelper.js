@@ -19,14 +19,16 @@ discussion.title,
 discussion.image,
 discussion.created_at,
 discussion.updated_at,
-SUM(comment.user_id = user.id) as comments,
-SUM(upvote.user_id = user.id) as upvotes
+(select COUNT(distinct comment.comment_post) from comment where comment.user_id = user.id) as comments,
+(select COUNT(distinct upvote.user_id) from upvote where upvote.user_id = user.id and upvote.discussion_id = discussion.id) as upvotes
 FROM discussion
-JOIN user, subtopic, upvote, comment
-WHERE discussion.subtopic_id = subtopic.id
-AND user.id = upvote.user_id
+inner join subtopic
+on discussion.subtopic_id = subtopic.id
+inner join user, upvote
+on user.id = upvote.user_id
+inner join comment
+on comment.user_id = user.id
 AND upvote.discussion_id ==discussion.id
-AND comment.user_id = user.id
 GROUP BY discussion.id
 ORDER BY ${sortBy} DESC
 LIMIT 10
