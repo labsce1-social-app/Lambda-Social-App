@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Footer, FooterTab, Button, Icon, Text } from 'native-base';
+import { Store } from '../../context';
 import { Link } from 'react-router-native';
+import { handleAuth } from '../../utils/Requests';
 
 const NativeFooter = () => {
+  const { state, dispatch } = useContext(Store);
   return (
     <Footer>
       <FooterTab>
@@ -28,14 +31,14 @@ const NativeFooter = () => {
           </Link>
         </Button>
 
-        <Button vertical active>
-          <Link to="/login">
-            <Icon
-              active
-              name="key"
-              style={{ transform: [{ rotate: '-90deg' }] }}
-            />
-          </Link>
+        <Button vertical active onPress={() => handleAuth(dispatch)}>
+          {/* <Link to="/login"> */}
+          <Icon
+            active
+            name="key"
+            style={{ transform: [{ rotate: '-90deg' }] }}
+          />
+          {/* </Link> */}
         </Button>
       </FooterTab>
     </Footer>
