@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-native';
 import { Store } from '../../context';
 
 const PrivateRoute = ({ component: Component, auth, ...rest }) => {
