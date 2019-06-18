@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container } from 'native-base';
-import { NativeRouter, Route } from 'react-router-native';
+import { NativeRouter, Route, Switch } from 'react-router-native';
 import Splash from './src/components/splash/Splash';
 import Home from './src/views/Home';
 import Login from './src/components/auth';
@@ -19,11 +19,20 @@ const AppNavigator = (props) => {
             <Container>
                 <Stack>
                     <Route exact path="/home" component={Home} />
+
                     <Route exact path="/" component={Splash} />
+
+
                     <Route exact path="/login" component={Login} />
-                    <PrivateRoute exact path="/subtopics" component={SubtopicsPage} />
-                    <PrivateRoute exact path="/discussions/:id" component={DiscussionsPage} />
-                    <PrivateRoute exact path="/post/:id" component={PostsPage} />
+
+
+                    <Route exact path="/subtopics" component={SubtopicsPage} />
+
+
+                    <Route exact path="/discussions/:id" component={DiscussionsPage} />
+
+
+                    <Route exact path="/post/:id" component={PostsPage} />
                 </Stack>
             </Container>
         </NativeRouter>
