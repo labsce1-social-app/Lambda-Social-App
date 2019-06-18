@@ -7,15 +7,17 @@ import Header from '../common/Header';
 
 // this home is referring to TopDiscussions component ONLY
 // history is being pushed to component for route pushing/popping purposes
-const Home = props => (
-  <NavWrapper>
-    <Header
-    >
-      Most Popular
+const Home = props => {
+  return (
+    <NavWrapper>
+      <Header
+      >
+        Most Popular
     </Header>
-    <Sort />
-    <TopDiscussions history={props.history} />
-  </NavWrapper>
-);
+      <Sort />
+      <TopDiscussions history={props.history} />
+    </NavWrapper>
+  )
+};
 
 export default Home;
