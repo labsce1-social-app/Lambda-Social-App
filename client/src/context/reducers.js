@@ -1,4 +1,5 @@
 // initial state for the entire app, normally this would be split but for simplicity sake and due to the small scale of this app, this should work fine.
+
 export const initialState = {
   splash: true,
   top_discussions: [],
@@ -11,20 +12,20 @@ export const initialState = {
   discussions: [],
   discussions_loading: false,
   discussions_error: '',
-  access: '',
-  profile: {},
+  isAuthenticated: false,
+  user: null,
   comments: null,
   comments_loading: false,
   comments_error: ''
 };
-
 // all of the reducer conditions, we can use the dispatch method to interact with this by simply passing in a type and sending the payload.
 export const reducer = (state = initialState, action) => {
+  console.log(state)
   switch (action.type) {
     case 'SPLASH_TO_FALSE':
       return {
         ...state,
-        splash: false
+        splash: action.payload
       }
     case 'TOP_DISCUSSIONS_FETCHING':
       return {
@@ -107,19 +108,12 @@ export const reducer = (state = initialState, action) => {
         comments_loading: false,
         comments_error: action.payload
       }
-    case 'LOGIN':
-      console.log(action.payload);
-
+    case 'SET_CURRENT_USER':
+      console.log(action.payload)
       return {
         ...state,
-        access: action.payload
-      };
-    case 'USER_INFO':
-      console.log(action.payload);
-
-      return {
-        ...state,
-        profile: action.payload // for now set it all into a profile object
+        isAuthenticated: true,
+        user: action.payload
       };
     case 'AUTH_FAIL':
       return {
@@ -127,7 +121,7 @@ export const reducer = (state = initialState, action) => {
         error: action.payload
       };
     case 'LOGOUT':
-      return { ...state, access: null, profile: {} };
+      return initialState;
     default:
       return state;
   }

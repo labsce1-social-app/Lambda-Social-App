@@ -9,33 +9,35 @@ import DiscussionsPage from './src/views/DiscussionsPage';
 import PostsPage from './src/views/PostPage';
 import SubtopicsPage from './src/views/SubtopicsPage';
 import Stack from 'react-router-native-stack';
+import PrivateRoute from './src/components/auth';
+
 
 // this component serves as a routing page, it will render everything based on the current url so it will be used to navigate the site.
 
-const AppNavigator = props => {
-  return (
-    <NativeRouter>
-      <Container>
-        <Stack>
-          <Route exact path="/home" component={Home} />
-          <Route exact path="/" component={Splash} />
-          <Route exact path="/login" component={Login} />
-          <PrivateRoute
-            strict
-            path="/subtopics"
-            auth={state.access}
-            component={SubtopicsPage}
-          />
-          <PrivateRoute
-            strict
-            path="/:subtopic_id/discussions"
-            component={DiscussionsPage}
-          />
-          <PrivateRoute strict path="/post/:id" component={PostsPage} />
-        </Stack>
-      </Container>
-    </NativeRouter>
-  );
-};
+const AppNavigator = (props) => {
+    return (
+        <NativeRouter>
+            <Container>
+                <Stack>
+                    <Route exact path="/home" component={Home} />
+
+                    <Route exact path="/" component={Splash} />
+
+
+                    <Route exact path="/login" component={Login} />
+
+
+                    <Route exact path="/subtopics" component={SubtopicsPage} />
+
+
+                    <Route exact path="/discussions/:id" component={DiscussionsPage} />
+
+
+                    <Route exact path="/post/:id" component={PostsPage} />
+                </Stack>
+            </Container>
+        </NativeRouter>
+    )
+}
 
 export default AppNavigator;
