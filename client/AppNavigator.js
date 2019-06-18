@@ -4,6 +4,7 @@ import { NativeRouter, Route, Switch } from 'react-router-native';
 import Splash from './src/components/splash/Splash';
 import Home from './src/views/Home';
 import Login from './src/components/auth';
+import PrivateRoute from './src/components/PrivateRoute';
 import DiscussionsPage from './src/views/DiscussionsPage';
 import PostsPage from './src/views/PostPage';
 import SubtopicsPage from './src/views/SubtopicsPage';
@@ -38,6 +39,5 @@ const AppNavigator = (props) => {
         </NativeRouter>
     )
 }
-
 
 export default AppNavigator;
