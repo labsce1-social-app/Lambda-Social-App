@@ -31,8 +31,8 @@ from discussion
 inner join user
 WHERE discussion.id = ${discussion_id}
 LIMIT 1
-  `)
-}
+  `);
+};
 
 const getCommentsAndJoinUser = () => {
   return db.raw(`
@@ -69,9 +69,54 @@ const getCommentsAndJoinUserById = id => {
       `);
 };
 
+const getCommentsTotal = () => {
+  return db.raw(`
+  select COUNT(*) from comment
+  `);
+};
+
+// checks to see if user_id is a valid user id
+const checkValidUserComments = async user_id => {
+  let isValid = false;
+
+  await db('user')
+    .where('user_id', user_id)
+    .then(id => {
+      if (id.length > 0) {
+        isValid = true;
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+  return isValid;
+};
+
+// checks to see if discussion exists
+const checkValidDiscussionComments = async id => {
+  let isValid = false;
+
+  await db('discussion')
+    .where('id', id)
+    .then(row => {
+      if (row.length > 0) {
+        isValid = true;
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+  return isValid;
+};
+
 module.exports = {
   getCommentsByDiscussionId,
   getCommentsAndJoinUser,
   getCommentsAndJoinUserById,
-  getPostDetailByDiscussionId
+  getPostDetailByDiscussionId,
+  getCommentsTotal,
+  checkValidUserComments,
+  checkValidDiscussionComments
 };
