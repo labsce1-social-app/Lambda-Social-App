@@ -18,20 +18,20 @@ const moment = require('moment');
 let timestamp = moment().format('YYYY-MM-DD HH:mm:ss');
 
 /*
-GET ROUTE get all subtopics
+GET ROUTE get top 10 discussions
 @PARAM = NONE
-ROUTE = '/subtopics
-returns = all subtopics
+ROUTE = '/discussions
+returns = top 10 discussions
 TESTS: {
-    1) RETURNS LIST OF SUBTOPICS > 1
+    1) RETURNS TOP 10 DISCUSSIONS BASED ON UPVOTES
 }
 */
 
 router.get('/?', (req, res) => {
   const { sort } = req.query;
   topDiscussions(sort)
-    .then(subtopics => {
-      res.status(200).json(subtopics);
+    .then(discussions => {
+      res.status(200).json(discussions);
     })
     .catch(err => {
       res.status(500).json({ error: err });
@@ -41,14 +41,14 @@ router.get('/?', (req, res) => {
 /*
 GET ROUTE get all discussions
 @PARAM = NONE
-ROUTE = '/discussions
+ROUTE = '/discussions/all
 returns = all discussions
 TESTS: {
     1) RETURNS LIST OF discussions > 1
 }
 */
 
-router.get('/', (req, res) => {
+router.get('/all', (req, res) => {
   joinUsersAndSubtopic()
     .then(discussions => {
       res.status(200).json(discussions);
