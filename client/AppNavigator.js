@@ -9,7 +9,6 @@ import PostsPage from './src/views/PostPage';
 import SubtopicsPage from './src/views/SubtopicsPage';
 import Stack from 'react-router-native-stack';
 
-
 // this component serves as a routing page, it will render everything based on the current url so it will be used to navigate the site.
 
 const AppNavigator = (props) => {
