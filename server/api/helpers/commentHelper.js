@@ -111,6 +111,23 @@ const checkValidDiscussionComments = async id => {
   return isValid;
 };
 
+const checkMatchInComments = async (id, user_id) => {
+  let isValid = false;
+
+  await db('comment')
+    .where({ user_id: user_id, id: id })
+    .then(row => {
+      if (row.length > 0) {
+        isValid = true;
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+  return isValid;
+};
+
 module.exports = {
   getCommentsByDiscussionId,
   getCommentsAndJoinUser,
@@ -118,5 +135,6 @@ module.exports = {
   getPostDetailByDiscussionId,
   getCommentsTotal,
   checkValidUserComments,
-  checkValidDiscussionComments
+  checkValidDiscussionComments,
+  checkMatchInComments
 };
