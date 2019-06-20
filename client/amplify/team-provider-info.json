@@ -1,0 +1,14 @@
+{
+    "yarn": {
+        "awscloudformation": {
+            "AuthRoleName": "lambdasocial-yarn-20190620180355-authRole",
+            "UnauthRoleArn": "arn:aws:iam::426282655827:role/lambdasocial-yarn-20190620180355-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::426282655827:role/lambdasocial-yarn-20190620180355-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "lambdasocial-yarn-20190620180355-deployment",
+            "UnauthRoleName": "lambdasocial-yarn-20190620180355-unauthRole",
+            "StackName": "lambdasocial-yarn-20190620180355",
+            "StackId": "arn:aws:cloudformation:us-east-1:426282655827:stack/lambdasocial-yarn-20190620180355/4cd7e6b0-93a7-11e9-a15c-120fc18a2440"
+        }
+    }
+}
