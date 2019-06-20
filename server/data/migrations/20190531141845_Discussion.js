@@ -28,7 +28,7 @@ exports.up = function(knex, Promise) {
 
     discussion
       .integer('creater_id')
-      .references('id')
+      .references('user_id')
       .inTable('user')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');

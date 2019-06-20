@@ -8,16 +8,13 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('user', user => {
     user
-      .increments('id') // Primary Key 'id'
+      .string('user_id') // user_id from auth0 sub
+      .unique()
+      .notNullable()
       .primary();
 
     user
       .string('username', 25) // username, limited up to 25 characters
-      .unique()
-      .notNullable();
-
-    user
-      .string('user_id') // user_id from auth0 sub
       .unique()
       .notNullable();
 

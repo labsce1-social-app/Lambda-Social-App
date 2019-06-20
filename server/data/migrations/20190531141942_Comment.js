@@ -30,7 +30,7 @@ exports.up = function(knex, Promise) {
 
     comment
       .integer('user_id')
-      .references('id')
+      .references('user_id')
       .inTable('user')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
