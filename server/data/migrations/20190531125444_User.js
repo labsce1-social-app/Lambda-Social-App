@@ -1,15 +1,16 @@
 /*
   Used to create a user
   user SCHEMA {
-    id: Int
+    id: String
     username: String! unique
+    email: String
+    avatar: String
   }
 */
-exports.up = function(knex, Promise) {
+exports.up = function (knex, Promise) {
   return knex.schema.createTable('user', user => {
     user
-      .string('user_id') // user_id from auth0 sub
-      .unique()
+      .string('id') // user_id from auth0 sub
       .notNullable()
       .primary();
 
@@ -29,7 +30,7 @@ exports.up = function(knex, Promise) {
   });
 };
 
-exports.down = function(knex, Promise) {
+exports.down = function (knex, Promise) {
   return knex.schema.dropTableIfExists('user');
 };
 

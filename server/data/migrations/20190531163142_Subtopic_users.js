@@ -11,13 +11,13 @@
   }
 */
 
-exports.up = function(knex, Promise) {
+exports.up = function (knex, Promise) {
   return knex.schema.createTable('subtopic_users', subtopic_users => {
     subtopic_users.increments('id').primary();
 
     subtopic_users
-      .integer('user_id')
-      .references('user_id')
+      .string('user_id')
+      .references('id')
       .inTable('user')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
@@ -31,6 +31,6 @@ exports.up = function(knex, Promise) {
   });
 };
 
-exports.down = function(knex, Promise) {
+exports.down = function (knex, Promise) {
   return knex.schema.dropTableIfExists('subtopic_users');
 };

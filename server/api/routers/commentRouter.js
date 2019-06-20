@@ -196,7 +196,7 @@ router.delete('/:id', async (req, res) => {
       .json({ error: 'user_id and comment primary id do not match' });
   } else {
     db('comment')
-      .where({ user_id, id })
+      .where({ id })
       .del()
       .then(count => {
         if (count === 0) {

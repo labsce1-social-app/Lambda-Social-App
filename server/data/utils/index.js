@@ -22,10 +22,10 @@ const pickOne = item => item[Math.floor(Math.random() * item.length)];
 // create a user object
 function generateUsers() {
   return {
+    id: rec_user_id(ids),
     username: faker.internet.userName(),
-    avatar: faker.image.avatar(),
-    user_id: rec_user_id(ids),
-    email: faker.internet.email()
+    email: faker.internet.email(),
+    avatar: faker.image.avatar()
   };
 }
 
