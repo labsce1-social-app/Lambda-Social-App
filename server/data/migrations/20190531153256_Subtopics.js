@@ -7,34 +7,27 @@
   }
 */
 exports.up = function (knex, Promise) {
-    return knex.schema.createTable('subtopic', subtopic => {
-        subtopic
-            .increments('id')
-            .primary();
+  return knex.schema.createTable('subtopic', subtopic => {
+    subtopic.increments('id').primary();
 
-        subtopic
-            .string('title', 50)
-            .unique()
-            .notNullable();
+    subtopic
+      .string('title', 50)
+      .unique()
+      .notNullable();
 
+    subtopic.timestamp('created_at').defaultTo(knex.fn.now());
 
-        subtopic
-            .timestamp('created_at')
-            .defaultTo(knex.fn.now());
+    subtopic.timestamp('updated_at').defaultTo(knex.fn.now());
 
-        subtopic
-            .timestamp('updated_at')
-            .defaultTo(knex.fn.now());
-
-        subtopic
-            .integer('creater_id')
-            .references('id')
-            .inTable('user')
-            .onDelete('CASCADE')
-            .onUpdate('CASCADE');
-    });
+    subtopic
+      .string('creater_id')
+      .references('id')
+      .inTable('user')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE');
+  });
 };
 
 exports.down = function (knex, Promise) {
-    return knex.schema.dropTableIfExists('subtopic');
+  return knex.schema.dropTableIfExists('subtopic');
 };

@@ -10,9 +10,7 @@
 */
 exports.up = function (knex, Promise) {
   return knex.schema.createTable('upvote', upvote => {
-    upvote
-      .increments('id')
-      .primary();
+    upvote.increments('id').primary();
 
     upvote
       .integer('discussion_id')
@@ -23,10 +21,9 @@ exports.up = function (knex, Promise) {
       .onUpdate('CASCADE');
 
     upvote
-      .integer('user_id')
+      .string('user_id')
       .references('id')
       .inTable('user')
-      .notNullable()
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
   });

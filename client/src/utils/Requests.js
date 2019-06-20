@@ -89,7 +89,7 @@ const getUser = async (token, dispatch) => {
 const makeUser = async (token, info) => {
   const body = JSON.stringify({
     username: info.nickname,
-    user_id: info.sub,
+    id: info.sub,
     email: info.email,
     avatar: info.picture
   }); // send  nickname as a 'username'

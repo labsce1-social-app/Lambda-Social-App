@@ -7,7 +7,8 @@ const {
   getPostDetailByDiscussionId,
   getCommentsTotal,
   checkValidUserComments,
-  checkValidDiscussionComments
+  checkValidDiscussionComments,
+  checkMatchInComments
 } = require('../helpers/index.js');
 
 // used for updated timestamps
@@ -163,6 +164,51 @@ router.post('/create', async (req, res) => {
       })
       .catch(err => {
         res.status(500).json({ error: 'server error' });
+      });
+  }
+});
+
+/*
+DELETE ROUTE delete a comment
+TODO: Add middleware to ensure user is logged in
+@BODY = {
+    user_id: !STRING - required
+}
+ROUTE = '/comments/:id
+returns = success on deletion
+TESTS: {
+    1) SHOULD RETURN ERROR IF USER_ID IS INVALID
+    2) SHOULD RETURN ERROR IF USER_ID DOESN'T MATCH COMMENT USER_ID
+}
+*/
+
+router.delete('/:id', async (req, res) => {
+  const { user_id } = req.body;
+  const { id } = req.params;
+
+  if (user_id === null || user_id === undefined) {
+    res.status(400).json({ error: 'user_id must be present' });
+  } else if ((await checkValidUserComments(user_id)) === false) {
+    res.status(500).json({ error: `user_id: ${user_id} is invalid` });
+  } else if ((await checkMatchInComments(id, user_id)) === false) {
+    res
+      .status(500)
+      .json({ error: 'user_id and comment primary id do not match' });
+  } else {
+    db('comment')
+      .where({ id })
+      .del()
+      .then(count => {
+        if (count === 0) {
+          res.status(401).json({ error: 'comment not found' });
+        } else {
+          res
+            .status(200)
+            .json({ message: `comment id: ${id} successfully deleted` });
+        }
+      })
+      .catch(err => {
+        res.status(500).json({ error: 'server error', err });
       });
   }
 });
