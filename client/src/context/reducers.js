@@ -126,6 +126,12 @@ export const reducer = (state = initialState, action) => {
         isAuthenticated: false,
         user: null
       };
+
+    case 'CREATE_SUBTOPIC':
+      return {
+        ...state,
+        subTopics: action.payload
+      };
     default:
       return state;
   }
