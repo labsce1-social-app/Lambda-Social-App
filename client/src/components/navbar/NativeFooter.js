@@ -7,6 +7,7 @@ import isEmpty from '../../utils/isEmpty';
 const NativeFooter = ({ history }) => {
   const { state, dispatch } = useContext(Store);
   let footerContent;
+
   if (state.isAuthenticated === false) {
     footerContent = (
       <Button vertical active onPress={() => handleAuth(dispatch, history)}>
@@ -20,12 +21,12 @@ const NativeFooter = ({ history }) => {
       </Button>
     )
   }
+
   return (
     <Footer>
       <FooterTab>
-
-        <Button vertical onPress={() =>
-          history.location === '/home' ? null : history.push('/home')}>
+{/* TODO: if user is home, make this do nothing */}
+        <Button vertical onPress={() => history.push('/home')}>
           <Icon name="home" />
         </Button>
 

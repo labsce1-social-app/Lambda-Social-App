@@ -37,7 +37,7 @@ const Splash = (props) => {
             <Text style={styles.text}>Lambda Social</Text>
             <Image source={require('../../assets/LambdaStudent.png')} />
         </View>
-    ) : <Redirect to="/home" />
+    ) : <Redirect exact from="/" to="/home" />
 }
 
 export default Splash;

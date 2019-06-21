@@ -5,12 +5,13 @@ const Discussion = lazy(() => import('./Discussion'));
 import { Text } from 'native-base';
 import { BASE_URL } from 'react-native-dotenv';
 
-const Discussions = () => {
+const Discussions = ({history }) => {
   const { state, dispatch } = useContext(Store);
-
+console.log(history)
   useEffect(
-    () => {
-      getDiscussions("", dispatch);
+    async () => {
+      const disc = await getDiscussions();
+      return disc;
     }, []);
 
   const getDiscussions = async () => {

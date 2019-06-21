@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container } from 'native-base';
-import { NativeRouter, Route, Switch } from 'react-router-native';
+import { Route, Switch, withRouter } from 'react-router-native';
 import Splash from './src/components/splash/Splash';
 import Home from './src/views/Home';
 import DiscussionsPage from './src/views/DiscussionsPage';
@@ -12,18 +12,14 @@ import Stack from 'react-router-native-stack';
 
 const AppNavigator = (props) => {
     return (
-        <NativeRouter>
-            <Container>
-                <Stack>
+                <Switch>
                     <Route exact path="/home" component={Home} />
                     <Route exact path="/" component={Splash} />
                     <Route exact path="/subtopics" component={SubtopicsPage} />
                     <Route exact path="/discussions/:id" component={DiscussionsPage} />
                     <Route exact path="/post/:id" component={PostsPage} />
-                </Stack>
-            </Container>
-        </NativeRouter>
+                </Switch>
     )
 }
 
-export default AppNavigator;
+export default withRouter(AppNavigator);

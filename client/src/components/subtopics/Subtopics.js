@@ -33,7 +33,7 @@ const Subtopics = ({ history }) => {
                     return (
                         <Suspense fallback={<Text>Loading...</Text>}>
                             <Subtopic
-                                linkChange={() => history.push(`/${item.id}`)}
+                                linkChange={() => history.push(`discussions/${item.id}`)}
                                 id={item.id}
                                 title={item.title.split(' ').join('-')}
                                 name={item.username}
