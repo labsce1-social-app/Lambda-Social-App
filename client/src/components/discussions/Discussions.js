@@ -10,10 +10,8 @@ const Discussions = () => {
 
   useEffect(
     () => {
-      getDiscussions();
-    },
-    () => getDiscussions()
-  );
+      getDiscussions("", dispatch);
+    }, []);
 
   const getDiscussions = async () => {
     // const url = 'http://localhost:3000'

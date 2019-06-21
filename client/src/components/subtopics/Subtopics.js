@@ -19,20 +19,17 @@ const Subtopics = ({ history }) => {
         try {
             const response = await fetch(`${BASE_URL}/subtopics`);
             const resJson = await response.json();
-            console.log(resJson);
             dispatch({ type: "SUBTOPICS_FETCHED", payload: resJson });
         } catch (error) {
             dispatch({ type: "SUBTOPICS_FAILED", payload: error });
             throw new Error(error);
         }
     }
-    console.log("subtopics page clicked");
     return (
         state.subtopics_loading === true ? <Text>Loading...</Text> : (
             <FlatList
                 data={state.subtopics}
                 renderItem={({ item }) => {
-                    console.log(item.id)
                     return (
                         <Suspense fallback={<Text>Loading...</Text>}>
                             <Subtopic

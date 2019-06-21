@@ -29,7 +29,7 @@ const Splash = (props) => {
     const { state, dispatch } = useContext(Store)
     useEffect(() => {
         getDiscussions(state.sortBy, dispatch);
-    }, getDiscussions());
+    }, []);
 
     return state.splash === true ? (
         <View style={styles.body}>

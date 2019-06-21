@@ -3,7 +3,6 @@ import { Container } from 'native-base';
 import { NativeRouter, Route, Switch } from 'react-router-native';
 import Splash from './src/components/splash/Splash';
 import Home from './src/views/Home';
-import Login from './src/components/auth';
 import DiscussionsPage from './src/views/DiscussionsPage';
 import PostsPage from './src/views/PostPage';
 import SubtopicsPage from './src/views/SubtopicsPage';
@@ -18,7 +17,6 @@ const AppNavigator = (props) => {
                 <Stack>
                     <Route exact path="/home" component={Home} />
                     <Route exact path="/" component={Splash} />
-                    <Route exact path="/login" component={Login} />
                     <Route exact path="/subtopics" component={SubtopicsPage} />
                     <Route exact path="/discussions/:id" component={DiscussionsPage} />
                     <Route exact path="/post/:id" component={PostsPage} />

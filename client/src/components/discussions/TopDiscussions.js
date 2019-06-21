@@ -7,7 +7,6 @@ import { Text } from 'native-base';
 
 const TopDiscussions = ({ history }) => {
     const { state } = useContext(Store);
-    console.log("inside of topDiscussions")
     return (
         state.top_discussions_loading === true ? <Text>Loading...</Text> : (
             <FlatList

@@ -15,7 +15,7 @@ const PostPage = ({ match }) => {
     // useEffect is treated as componentDidMount and componentWillUnmount
     useEffect(() => {
         getCommentsByDiscussionId(id, dispatch)
-    }, getCommentsByDiscussionId());
+    }, () => getCommentsByDiscussionId());
 
     return (
         <NavWrapper>

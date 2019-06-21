@@ -12,7 +12,6 @@ const Post = () => {
     // bring in state and dispatch
     const { state, dispatch } = useContext(Store);
     const { comments, comments_loading } = state;
-    console.log(comments)
     return state.comments_loading ? <Text style={style.container}>Loading... </Text> : (
         <Card style={style.container}>
             {!isEmpty(comments) && comments_loading === false ? (

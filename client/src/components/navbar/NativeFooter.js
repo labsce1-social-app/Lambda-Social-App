@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Store } from '../../context';
 import { Footer, FooterTab, Button, Icon } from 'native-base';
 import { handleAuth } from '../../utils/Requests';
@@ -24,7 +24,8 @@ const NativeFooter = ({ history }) => {
     <Footer>
       <FooterTab>
 
-        <Button vertical onPress={() => history.push('/home')}>
+        <Button vertical onPress={() =>
+          history.location === '/home' ? null : history.push('/home')}>
           <Icon name="home" />
         </Button>
 
