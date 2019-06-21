@@ -49,33 +49,30 @@ export const getCommentsByDiscussionId = async (id, dispatch) => {
 const auth0 = new Auth0({ domain: auth0Domain, clientId: auth0ClientId });
 
 // send a user to auth
-export const handleAuth = (dispatch) => {
-  auth0.webAuth
+export const handleAuth = async (dispatch) => {
+  try {
+
+    const getAuth = await auth0.webAuth
     .authorize({
       scope: 'openid profile email offline_access',
       audience: 'https://lambdasocial.auth0.com/userinfo',
       prompt: 'login'
     })
-    .then(credentials => {
-      // console.log('creds', credentials);
-      const { accessToken, idToken } = credentials;
-
-      return getUser(accessToken, dispatch); // send access_token
-
-      // return dispatch({ type: 'SET_CURRENT_USER', payload: accessToken });
-      // return history.push('/subtopics')
-    })
-    .catch(error => console.log('error in login', error));
+    const getUserWithAuth = await getUser(getAuth.accessToken, dispatch); // send access_token
+    return getUserWithAuth;
+  } catch(error) {
+    console.log('error in login', error);
+  }
 };
 
 // Call auth0 for user info
 const getUser = async (token, dispatch) => {
   AsyncStorage.setItem('accessToken', token)
   try {
-    const getToken = await auth0.auth.userInfo({ token: token })
+    const user = await auth0.auth.userInfo({ token: token })
 
-    const action = await dispatch({ type: 'SET_CURRENT_USER', payload: getToken });
-    const followup = await makeUser(token, getToken);
+    const action = await dispatch({ type: 'SET_CURRENT_USER', payload: user });
+    const followup = await makeUser(token, user);
     return {
       action, followup
     }
@@ -93,17 +90,19 @@ const makeUser = async (token, info) => {
     email: info.email,
     avatar: info.picture
   }); // send  nickname as a 'username'
-
-  await fetch(`${BASE_URL}/users`, {
+try {
+  const postUser = await fetch(`${BASE_URL}/users`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json'
     },
     body
-  }).catch(error => {
+  })
+  return postUser
+} catch(error) {
     console.log('error in sending user', error);
-  });
+  };
 };
 
 // logout a user through state

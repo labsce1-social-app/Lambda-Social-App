@@ -7,7 +7,7 @@ import { getCommentsByDiscussionId } from '../utils/Requests';
 
 const PostPage = ({ match }) => {
     // handle life cycle for comments
-    const { _, dispatch } = useContext(Store);
+    const { dispatch } = useContext(Store);
 
     // need to get the data here because it is where we have access to the id from react router.
     const { id } = match.params;
@@ -15,7 +15,7 @@ const PostPage = ({ match }) => {
     // useEffect is treated as componentDidMount and componentWillUnmount
     useEffect(() => {
         getCommentsByDiscussionId(id, dispatch)
-    }, getCommentsByDiscussionId());
+    }, () => getCommentsByDiscussionId());
 
     return (
         <NavWrapper>

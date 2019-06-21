@@ -3,7 +3,7 @@ import React from 'react';
 import { useScreens } from 'react-native-screens';
 import AppNavigator from './AppNavigator';
 import { StoreProvider } from './src/context/';
-
+import { NativeRouter } from 'react-router-native';
 useScreens();
 
 // const instructions = Platform.select({
@@ -15,7 +15,9 @@ useScreens();
 
 // this is where the entire app gets exported from, the context store provider is wrapped around here to give everything access to the store
 export default App = () => (
+  <NativeRouter>
   <StoreProvider>
     <AppNavigator />
   </StoreProvider>
+  </NativeRouter>
 )
