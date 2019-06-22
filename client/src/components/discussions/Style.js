@@ -18,7 +18,8 @@ export default StyleSheet.create({
         fontStyle: 'italic'
     },
     comment: {
-        textAlign: 'right',
+        flex: 1,
+        flexDirection: 'row',
         fontSize: 10
     },
     chat: {
@@ -31,7 +32,11 @@ export default StyleSheet.create({
     bubble: {
         color: 'green'
     },
-    heart: {
-        color: 'red'
+    stats: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        width: '50%'
     }
 });
