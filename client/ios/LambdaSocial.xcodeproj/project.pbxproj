@@ -292,7 +292,7 @@
 			remoteGlobalIDString = 2D2A28201D9B03D100D4039D;
 			remoteInfo = "RCTAnimation-tvOS";
 		};
-		65C3CBEC22BD93B40017E65E /* PBXContainerItemProxy */ = {
+		65914FFB22BE606500279876 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AD136598DE0B408B8E271FEF /* RNImagePicker.xcodeproj */;
 			proxyType = 2;
@@ -670,10 +670,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		65C3CBE922BD93B40017E65E /* Products */ = {
+		65914FCF22BE606500279876 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				65C3CBED22BD93B40017E65E /* libRNImagePicker.a */,
+				65914FFC22BE606500279876 /* libRNImagePicker.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -979,7 +979,8 @@
 					ProjectRef = B35D353724CB43F494C815BF /* RNGestureHandler.xcodeproj */;
 				},
 				{
-					ProductGroup = 65C3CBE922BD93B40017E65E /* Products */;
+					ProductGroup = 65914FCF22BE606500279876 /* Products */;
+
 					ProjectRef = AD136598DE0B408B8E271FEF /* RNImagePicker.xcodeproj */;
 				},
 				{
@@ -1208,11 +1209,11 @@
 			remoteRef = 5E9157341DD0AC6500FF2AA8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		65C3CBED22BD93B40017E65E /* libRNImagePicker.a */ = {
+		65914FFC22BE606500279876 /* libRNImagePicker.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libRNImagePicker.a;
-			remoteRef = 65C3CBEC22BD93B40017E65E /* PBXContainerItemProxy */;
+			remoteRef = 65914FFB22BE606500279876 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		65C939E622B34BC100B60555 /* libjsi.a */ = {

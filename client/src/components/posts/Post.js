@@ -22,6 +22,7 @@ const Post = () => {
                         discussion_image={comments.creator[0].discussion_image.replace('http://', 'https://')}
                         discussion_content={comments.creator[0].discussion_content}
                         discussion_date={comments.creator[0].discussion_date}
+                        upvotes={comments.creator[0].upvotes}
                     />
                 </Suspense>
             ) : null}

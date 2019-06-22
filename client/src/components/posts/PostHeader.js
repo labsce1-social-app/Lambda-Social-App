@@ -1,7 +1,7 @@
 import React from 'react';
-import { CardItem, Left, Thumbnail, Body, Text, Button, Icon } from 'native-base';
-import { Image } from 'react-native';
-
+import { CardItem, Thumbnail, Body, Text } from 'native-base';
+import { Image, View } from 'react-native';
+import Reaction from '../../common/Reaction';
 import style from './Style';
 
 const PostHeader = (props) => {
@@ -17,12 +17,20 @@ const PostHeader = (props) => {
                 </Body>
             </CardItem>
             <CardItem>
-                <Left>
-                    <Button transparent textStyle={{ color: '#87838B' }}>
-                        <Icon name="heart" />
-                        <Text>10+</Text>
-                    </Button>
-                </Left>
+                <View style={{
+                    flex: 1,
+                    alignItems: 'center',
+                    alignSelf: 'flex-end',
+                    justifyContent: 'space-between', flexDirection: 'column',
+                    width: 20,
+                    height: 40,
+                    padding: 10
+                }}>
+
+                    {/* <Icon name="heart" /> */}
+                    <Reaction count={props.upvotes} image={require('../../assets/like.png')} />
+                    {/* <Text>{props.upvotes}</Text> */}
+                </View>
             </CardItem>
         </>
     )

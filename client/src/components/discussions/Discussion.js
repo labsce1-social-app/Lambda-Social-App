@@ -2,8 +2,9 @@ import React from 'react';
 import { Image, Button } from 'react-native';
 import { withRouter } from 'react-router-native';
 import style from './Style';
-import { Card, CardItem, Text, Body, Left, Icon } from 'native-base';
+import { Card, CardItem, Text, Body, Left, Icon, View } from 'native-base';
 import moment from 'moment'
+import Reaction from '../../common/Reaction';
 
 
 
@@ -18,10 +19,12 @@ const Discussion = props => {
                         <Text style={style.title}>s/{props.title}</Text>
                         <Text style={style.username}>{props.name}</Text>
                         <Text numberOfLines={1}>{props.discussion}</Text>
-                        <Text style={style.comment}>
-                            <Icon name="chatbubbles" style={[style.icon, style.bubble]} /> {props.comment} {' '}
-                            <Icon
-                                name="heart" style={[style.chat, style.icon, style.heart]} /> {props.upvotes}</Text>
+                        <View style={style.stats}>
+                            <Text style={style.comment}>
+                                <Icon name="chatbubbles" style={[style.icon, style.bubble]} /> {props.comment} {' '}
+                            </Text>
+                            <Reaction image={require('../../assets/upvote-512.png')} count={props.upvotes} />
+                        </View>
                     </Body>
                 </Left>
             </CardItem>
