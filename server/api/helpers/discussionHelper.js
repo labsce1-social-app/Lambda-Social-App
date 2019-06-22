@@ -28,7 +28,7 @@ inner join user, upvote
 on user.id = upvote.user_id
 inner join comment
 on comment.user_id = user.id
-AND upvote.discussion_id ==discussion.id
+AND upvote.discussion_id = discussion.id
 GROUP BY discussion.id
 ORDER BY ${sortBy} DESC
 LIMIT 10

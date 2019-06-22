@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-native';
 import style from './Style';
 import { Card, CardItem, Text, Body, Left, Icon, View } from 'native-base';
 import moment from 'moment'
-import Reaction from '../reactions/Reaction';
+import Reaction from '../../common/Reaction';
 
 
 

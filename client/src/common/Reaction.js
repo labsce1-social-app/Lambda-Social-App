@@ -44,8 +44,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'space-around',
-        padding: 5,
         alignItems: 'center',
+        height: 25,
         flexDirection: 'row',
     },
     imageView: {

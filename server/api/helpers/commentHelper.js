@@ -21,16 +21,20 @@ WHERE discussion.id = ${discussion_id}
 
 const getPostDetailByDiscussionId = discussion_id => {
   return db.raw(`
-        SELECT
+  SELECT distinct
+discussion.id as id,
 	(select user.username
 	from user where user.id = discussion.creater_id) as creator,
 discussion.content as discussion_content,
 discussion.image as discussion_image,
-discussion.created_at as discussion_date
+discussion.created_at as discussion_date,
+(select count(upvote.user_id)
+	from upvote
+			where upvote.discussion_id = ${discussion_id}
+) as upvotes
 from discussion
 inner join user
-WHERE discussion.id = ${discussion_id}
-LIMIT 1
+on discussion.id = ${discussion_id}
   `);
 };
 

@@ -20,7 +20,7 @@ const PostHeader = (props) => {
                 <Left>
                     <Button transparent textStyle={{ color: '#87838B' }}>
                         <Icon name="heart" />
-                        <Text>10+</Text>
+                        <Text>{props.upvotes}</Text>
                     </Button>
                 </Left>
             </CardItem>

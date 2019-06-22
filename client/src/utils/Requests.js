@@ -16,7 +16,7 @@ export const getDiscussions = async (query, dispatch) => {
   try {
     dispatch({ type: "TOP_DISCUSSIONS_FETCHING" });
     // fetch the data with query
-    const response = await fetch(`${base_url}/discussions/?${q.toString()}`);
+    const response = await fetch(`${local}/discussions/?${q.toString()}`);
     // convert the data to json format otherwise you will just get a promise back
     const responseJson = await response.json();
     // set the data to global state
@@ -37,7 +37,7 @@ export const getCommentsByDiscussionId = async (id, dispatch) => {
   // read previous function, they're almost the same
   dispatch({ type: "COMMENTS_FETCHING" })
   try {
-    const response = await fetch(`${base_url}/comments/d/${id}`);
+    const response = await fetch(`${local}/comments/d/${id}`);
     const resJSON = await response.json();
     return dispatch({ type: "COMMENTS_FETCHED_SUCCESS", payload: resJSON });
   } catch (error) {
@@ -53,14 +53,14 @@ export const handleAuth = async (dispatch) => {
   try {
 
     const getAuth = await auth0.webAuth
-    .authorize({
-      scope: 'openid profile email offline_access',
-      audience: 'https://lambdasocial.auth0.com/userinfo',
-      prompt: 'login'
-    })
+      .authorize({
+        scope: 'openid profile email offline_access',
+        audience: 'https://lambdasocial.auth0.com/userinfo',
+        prompt: 'login'
+      })
     const getUserWithAuth = await getUser(getAuth.accessToken, dispatch); // send access_token
     return getUserWithAuth;
-  } catch(error) {
+  } catch (error) {
     console.log('error in login', error);
   }
 };
@@ -90,17 +90,17 @@ const makeUser = async (token, info) => {
     email: info.email,
     avatar: info.picture
   }); // send  nickname as a 'username'
-try {
-  const postUser = await fetch(`${BASE_URL}/users`, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body
-  })
-  return postUser
-} catch(error) {
+  try {
+    const postUser = await fetch(`${BASE_URL}/users`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body
+    })
+    return postUser
+  } catch (error) {
     console.log('error in sending user', error);
   };
 };

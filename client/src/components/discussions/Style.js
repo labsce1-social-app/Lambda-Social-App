@@ -37,6 +37,8 @@ export default StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        width: '50%'
+        width: '50%',
+        margin: 10,
+        alignSelf: 'flex-end'
     }
 });
