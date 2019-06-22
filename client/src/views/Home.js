@@ -4,7 +4,6 @@ import TopDiscussions from '../components/discussions/TopDiscussions';
 import Sort from '../components/discussions/Sort';
 import NavWrapper from './NavWrapper';
 import Header from '../common/Header';
-import Picker from '../components/imagepicker/Picker';
 
 // this home is referring to TopDiscussions component ONLY
 // history is being pushed to component for route pushing/popping purposes
@@ -16,7 +15,6 @@ const Home = props => {
         Most Popular
     </Header>
       <Sort />
-      <Picker />
       <TopDiscussions history={props.history} />
     </NavWrapper>
   )
