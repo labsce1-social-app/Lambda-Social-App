@@ -1,10 +1,7 @@
 import React from 'react';
-// memory usage optimize for screen changing
-import { useScreens } from 'react-native-screens';
 import AppNavigator from './AppNavigator';
 import { StoreProvider } from './src/context/';
 import { NativeRouter } from 'react-router-native';
-useScreens();
 
 // const instructions = Platform.select({
 //   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
