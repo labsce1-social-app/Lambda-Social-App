@@ -74,11 +74,7 @@ router.get('/:id', (req, res) => {
   const { id } = req.params;
   joinUsersAndSubtopicAtId(id)
     .then(discussion => {
-      if (discussion.length > 0) {
-        res.status(200).json(discussion);
-      } else {
-        res.status(401).json({ error: 'discussion not found' });
-      }
+      res.status(200).json(discussion);
     })
     .catch(err => {
       res.status(500).json({ error: err });
@@ -102,11 +98,7 @@ router.get('/s/:id', (req, res) => {
 
   joinUsersAtSubtopicId(id)
     .then(discussion => {
-      if (discussion.length > 0) {
-        res.status(200).json(discussion);
-      } else {
-        res.status(401).json({ error: 'discussion not found' });
-      }
+      res.status(200).json(discussion);
     })
     .catch(err => {
       res.status(500).json({ error: err });
