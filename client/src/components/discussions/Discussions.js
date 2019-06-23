@@ -2,9 +2,10 @@ import React, { useContext, useEffect, lazy, Suspense } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 import { Store } from '../../context';
 const Discussion = lazy(() => import('./Discussion'));
-import { Text } from 'native-base';
+import { Text, Card, CardItem } from 'native-base';
 import { BASE_URL } from 'react-native-dotenv';
 import { isEmpty } from '../../utils/isEmpty';
+import { config } from '../../utils/dimensions';
 
 const Discussions = ({ history }) => {
   const { state, dispatch } = useContext(Store);
@@ -54,7 +55,13 @@ const Discussions = ({ history }) => {
       keyExtractor={item => `${item.id}`}
       refreshing={state.discussions_loading}
     />
-  ) : <Text style={{ height: '60%' }}>Looks like no one has created a discussion in this subtopic yet...</Text>
+  ) : (
+        <Card>
+          <CardItem>
+            <Text style={{ padding: 15, height: config.deviceHeight * 0.65 }}>Looks like no one has created a discussion in this subtopic yet...</Text>
+          </CardItem>
+        </Card>
+      )
 };
 
 export default Discussions;
