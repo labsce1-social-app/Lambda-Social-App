@@ -19,11 +19,14 @@ const NativePicker = (props) => {
         // handles user clicked login button
         if (value === '/login') {
             return handleAuth(dispatch);
+        } else if (value === 'logout') {
+            return handleLogout(dispatch, props.history)
         }
         // direct them to whatever other page
         setSelected(value)
         return props.history.push(value)
     }
+
 
     let content;
 
@@ -38,7 +41,7 @@ const NativePicker = (props) => {
         content = (
             <Picker.Item
                 label="Logout"
-                onPress={() => handleLogout(dispatch)}
+                value='logout'
             />
         )
     }

@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { Redirect } from 'react-router-native';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { Store } from '../../context';
-import { getDiscussions } from '../../utils/Requests';
+import { getDiscussions, isAuthed } from '../../utils/Requests';
 
 const styles = StyleSheet.create({
     body: {
@@ -27,6 +27,11 @@ const styles = StyleSheet.create({
 // splash screen is used when the app first loads, I need to find a better way to render this so that it isn't an actual part of the app. Current way of doing this is hacky and presents bugs.
 const Splash = (props) => {
     const { state, dispatch } = useContext(Store)
+
+    useEffect(() => {
+        isAuthed(dispatch);
+    }, []);
+
     useEffect(() => {
         getDiscussions(state.sortBy, dispatch);
     }, []);

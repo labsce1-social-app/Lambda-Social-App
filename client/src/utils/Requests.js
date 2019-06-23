@@ -8,8 +8,26 @@ const auth0Domain = AUTH0_DOMAIN;
 const local = `http://localhost:3000`;
 const base_url = `https://social-app-test.herokuapp.com`;
 // place all HTTP requests in here
-import AsyncStorage from '@react-native-community/async-storage';
-import { Redirect } from 'react-router-native';
+// import AsyncStorage from '@react-native-community/async-storage';
+import { storeData, getData, deleteData } from './AsyncStorage';
+// import { Redirect } from 'react-router-native';
+// import AsyncStorage from '@react-native-community/async-storage';
+
+// check if a user is logged in
+export const isAuthed = async (dispatch) => {
+  try {
+    const value = getData('user').then((data) => {
+
+
+      if (data !== null && data !== undefined) {
+        return dispatch({ type: 'SET_CURRENT_USER', payload: data });
+      }
+    });
+    return value;
+  } catch (err) {
+    console.log(err)
+  }
+}
 
 // getsDiscussions, can also take in a query string to sort the discussions, only good for top10 discussions on landing page.
 export const getDiscussions = async (query, dispatch) => {
@@ -82,14 +100,16 @@ export const handleAuth = async (dispatch) => {
 
 // Call auth0 for user info
 const getUser = async (token, dispatch) => {
-  AsyncStorage.setItem('accessToken', token)
+  storeData('accessToken', token)
   try {
     const user = await auth0.auth.userInfo({ token: token })
 
     const action = await dispatch({ type: 'SET_CURRENT_USER', payload: user });
     const followup = await makeUser(token, user);
     return {
-      action, followup
+      action,
+      followup,
+      // setUser
     }
   } catch (err) {
     console.log(err)
@@ -121,10 +141,19 @@ const makeUser = async (token, info) => {
 };
 
 // logout a user through state
-export const handleLogout = async (dispatch) => {
-  AsyncStorage.removeItem('accessToken');
-  dispatch({ type: 'LOGOUT' });
-  return <Redirect to="/home" />;
+export const handleLogout = async (dispatch, history) => {
+  console.log('outside of handlelogout')
+  try {
+    console.log('inside of handlelogout')
+    const del = await deleteData()
+    const dis = await dispatch({ type: 'LOGOUT' });
+    return {
+      del, dis
+    }
+    // return history.push('/home');
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 // handles aws image uploading
