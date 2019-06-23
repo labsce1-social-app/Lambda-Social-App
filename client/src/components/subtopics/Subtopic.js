@@ -7,17 +7,15 @@ import moment from 'moment'
 
 const Subtopic = props => {
     return (
-            <Content>
-                <Card style={{ flex: 0 }} button onPress={props.linkChange}>
-                    <CardItem>
-                        <Body>
-                            <Text style={style.date}>{moment(props.date).format('MMM DD YY')}</Text>
-                            <Text style={style.title}>s/{props.title}</Text>
-                            <Text style={style.username}>{props.name}</Text>
-                        </Body>
-                    </CardItem>
-                </Card >
-            </Content >
+        <Card style={{ flex: 0 }}>
+            <CardItem button onPress={props.changeLink}>
+                <Body>
+                    <Text style={style.date}>{moment(props.date).format('MMM DD YY')}</Text>
+                    <Text style={style.title}>s/{props.title}</Text>
+                    <Text style={style.username}>{props.name}</Text>
+                </Body>
+            </CardItem>
+        </Card >
     )
 }
 

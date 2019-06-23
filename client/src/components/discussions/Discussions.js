@@ -5,20 +5,18 @@ const Discussion = lazy(() => import('./Discussion'));
 import { Text } from 'native-base';
 import { BASE_URL } from 'react-native-dotenv';
 
-const Discussions = ({history }) => {
+const Discussions = ({ history }) => {
   const { state, dispatch } = useContext(Store);
-console.log(history)
-  useEffect(
-    async () => {
-      const disc = await getDiscussions();
-      return disc;
-    }, []);
 
+  useEffect(() => {
+    getDiscussions();
+  }, () => getDiscussions());
+  console.log(state.discussions)
   const getDiscussions = async () => {
     // const url = 'http://localhost:3000'
     try {
       dispatch({ type: 'DISCUSSIONS_FETCHING' });
-      const response = await fetch(`${BASE_URL}/discussions/s/4`);
+      const response = await fetch(`${BASE_URL}/discussions/s/${history.location.state.id}`);
       const resJson = await response.json();
       return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: resJson });
     } catch (error) {
