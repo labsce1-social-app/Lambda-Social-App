@@ -33,6 +33,19 @@ export const getDiscussions = async (query, dispatch) => {
   };
 };
 
+export const getDiscussionsForSub = async (id, dispatch) => {
+  // const url = 'http://localhost:3000'
+  try {
+    dispatch({ type: 'DISCUSSIONS_FETCHING' });
+    const response = await fetch(`${BASE_URL}/discussions/s/${id}`);
+    const resJson = await response.json();
+    return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: resJson });
+  } catch (error) {
+    dispatch({ type: 'DISCUSSIONS_FAILED', payload: error });
+    console.log(error);
+  }
+};
+
 // used for the PostPage component
 // returns all comments and poster data for the comments page. Returns giant object with all post header data and arrays of comments.
 export const getCommentsByDiscussionId = async (id, dispatch) => {

@@ -3,34 +3,26 @@ import { FlatList } from 'react-native-gesture-handler';
 import { Store } from '../../context';
 const Discussion = lazy(() => import('./Discussion'));
 import { Text, Card, CardItem } from 'native-base';
-import { BASE_URL } from 'react-native-dotenv';
 import { isEmpty } from '../../utils/isEmpty';
 import { config } from '../../utils/dimensions';
+import { getDiscussionsForSub } from '../../utils/Requests';
 
 const Discussions = ({ history }) => {
   const { state, dispatch } = useContext(Store);
+  const { id } = history.location.state;
 
+  // aborController is a clean up function for fetch
   useEffect(() => {
+    // step one, setup the clean up function
     const abortController = new AbortController();
-    getDiscussions();
+    // step two, call the fetch
+    getDiscussionsForSub(id, dispatch);
+    // step three, call the clean up to replace the old
+    // values
     return function cleanup() {
       abortController.abort();
     }
   }, []);
-  console.log(state.discussions)
-  const getDiscussions = async () => {
-    const url = 'http://localhost:3000'
-    try {
-      dispatch({ type: 'DISCUSSIONS_FETCHING' });
-      const response = await fetch(`${url}/discussions/s/${history.location.state.id}`);
-      const resJson = await response.json();
-      return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: resJson });
-    } catch (error) {
-      dispatch({ type: 'DISCUSSIONS_FAILED', payload: error });
-      console.log(error);
-    }
-  };
-
 
   return state.discussions_loading === true ? (
     <Text>Loading...</Text>
