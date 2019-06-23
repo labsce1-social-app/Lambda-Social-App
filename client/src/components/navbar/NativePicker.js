@@ -3,15 +3,16 @@ import { Store } from '../../context/';
 import { Platform } from 'react-native';
 import { Icon, Picker, Button } from "native-base";
 import { handleLogout, handleAuth } from '../../utils/Requests';
+import { withRouter } from 'react-router-native';
 
-const NativePicker = ({ history }) => {
+const NativePicker = (props) => {
     const { state, dispatch } = useContext(Store);
     const [selected, setSelected] = useState('');
-    const [authed, setAuthed ] = useState(null);
+    const [authed, setAuthed] = useState(null);
 
     useEffect(() => {
         if (state.isAuthenticated === true)
-        return setAuthed(state.isAuthenticated)
+            return setAuthed(state.isAuthenticated)
     }, [])
 
     const onValueChange = (value) => {
@@ -21,7 +22,7 @@ const NativePicker = ({ history }) => {
         }
         // direct them to whatever other page
         setSelected(value)
-        return history.push(value)
+        return props.history.push(value)
     }
 
     let content;
@@ -29,56 +30,56 @@ const NativePicker = ({ history }) => {
     if (authed === false) {
         content = (
             <Picker.Item
-            label="login"
-            value="/login"
+                label="login"
+                value="/login"
             />
         )
     } else {
         content = (
-             <Picker.Item
+            <Picker.Item
                 label="Logout"
                 onPress={() => handleLogout(dispatch)}
-                />
+            />
         )
     }
 
     return (
-         <Picker
+        <Picker
             mode="dropdown"
             iosIcon={
                 <Icon
                     name="arrow-down" />
-                }
+            }
             placeholderStyle={{
                 color: "#bfc6ea"
             }}
             placeholderIconColor="#007aff"
             style={{
                 width: (Platform.OS === 'ios')
-                ? undefined : 120
+                    ? undefined : 120
             }}
             selectedValue={selected}
             onValueChange={(value) => onValueChange(value)}
-            >
-                <Picker.Item
+        >
+            <Picker.Item
                 label="About Lambda Social"
                 value="key0"
-                />
-                <Picker.Item
+            />
+            <Picker.Item
                 label="What's NEW"
                 value="/home"
-                />
-                <Picker.Item
+            />
+            <Picker.Item
                 label="Suptopics"
                 value="/subtopics"
-                />
-                <Picker.Item
+            />
+            <Picker.Item
                 label="Team"
                 value="key5"
-                />
-        {content}
+            />
+            {content}
         </Picker>
     );
 };
 
-export default NativePicker;
+export default withRouter(NativePicker);

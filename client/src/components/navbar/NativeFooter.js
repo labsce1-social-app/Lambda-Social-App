@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { Store } from '../../context';
 import { Footer, FooterTab, Button, Icon } from 'native-base';
 import { handleAuth } from '../../utils/Requests';
-import isEmpty from '../../utils/isEmpty';
 
 const NativeFooter = ({ history }) => {
   const { state, dispatch } = useContext(Store);
@@ -25,7 +24,7 @@ const NativeFooter = ({ history }) => {
   return (
     <Footer>
       <FooterTab>
-{/* TODO: if user is home, make this do nothing */}
+        {/* TODO: if user is home, make this do nothing */}
         <Button vertical onPress={() => history.push('/home')}>
           <Icon name="home" />
         </Button>
