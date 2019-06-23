@@ -120,8 +120,12 @@ export const reducer = (state = initialState, action) => {
         error: action.payload
       };
     case 'LOGOUT':
-      return initialState;
+      return {
+        ...state,
+        isAuthenticated: false,
+        user: null
+      };
     default:
-      return state;
+      throw new Error('not a valid action');
   }
 };
