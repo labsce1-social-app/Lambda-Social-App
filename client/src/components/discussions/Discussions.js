@@ -13,15 +13,7 @@ const Discussions = ({ history }) => {
 
   // aborController is a clean up function for fetch
   useEffect(() => {
-    // step one, setup the clean up function
-    const abortController = new AbortController();
-    // step two, call the fetch
     getDiscussionsForSub(id, dispatch);
-    // step three, call the clean up to replace the old
-    // values
-    return function cleanup() {
-      abortController.abort();
-    }
   }, []);
 
   return state.discussions_loading === true ? (
