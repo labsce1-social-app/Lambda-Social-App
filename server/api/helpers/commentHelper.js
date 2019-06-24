@@ -1,23 +1,65 @@
 const db = require('../../data/dbconfig.js');
 
 const getCommentsByDiscussionId = discussion_id => {
-  return db.raw(`
-      SELECT
-comment.id as comment_id,
-comment.comment_post as post,
+  // leave the first part commented out for now
+  return db.raw(
+    // `
+    //       SELECT
+    // comment.id as comment_id,
+    // comment.comment_post as post,
+    // user.username as username,
+    // user.avatar as avatar,
+    // user.id as user_id,
+    // comment.created_at as created_date,
+    // discussion.id as discussion_id
+    // from comment
+    // INNER JOIN user
+    // ON comment.user_id = user.id
+    // INNER JOIN discussion
+    // ON comment.discussion_id = discussion.id
+    // WHERE discussion.id = ${discussion_id}`
+    `
+    SELECT distinct
+d.id as discussion_id,
+c.id as 'original post_id',
+c.comment_post as 'original_post',
+u.id as 'original_commenter_id',
+u.username as 'original_commenter',
+u.avatar as 'orignal_commenter_avatar',
+c.created_at as 'original_created_date',
+reply.id  as 'reply_id',
+reply.post  as 'reply_post',
+reply.id   as 'reply_commenter_id',
+reply.username as 'reply_commenter',
+reply.avatar as 'reply_commenter_avatar',
+reply.created_date as 'reply_created_date'
+FROM comment c
+INNER JOIN user as u
+ON c.user_id = u.id
+INNER JOIN discussion d
+ON c.discussion_id = d.id
+LEFT OUTER JOIN (
+SELECT
+c.id   as id,
+c.comment_id as parent,
+c.comment_post as post,
 user.username as username,
 user.avatar as avatar,
-user.id as user_id,
-comment.created_at as created_date,
-discussion.id as discussion_id
-from comment
+user.id  as user_id,
+c.created_at as created_date,
+d.id  as discussion_id
+from comment c
 INNER JOIN user
-ON comment.user_id = user.id
-INNER JOIN discussion
-ON comment.discussion_id = discussion.id
-WHERE discussion.id = ${discussion_id}
-    `);
+ON c.user_id = user.id
+INNER JOIN discussion d
+ON c.discussion_id = d.id   where 'parent' is not null)reply
+on reply.'parent' = c.id
+WHERE d.id  = ${discussion_id}
+ORDER BY d.id ,reply.'parent'`
+  );
 };
+
+
 
 const getPostDetailByDiscussionId = discussion_id => {
   return db.raw(`

@@ -4,9 +4,9 @@ import { CardItem, Text, Body, Right, Thumbnail } from 'native-base';
 import { View } from 'react-native';
 import moment from 'moment';
 
-const Comment = ({ image, comment, name, date }) => {
+const Reply = ({ image, comment, name, date }) => {
     return (
-        <View style={{ flex: 0, padding: 2 }}>
+        <View style={{ flex: 0, padding: 2, marginLeft: 40 }}>
             <CardItem style={{ flex: 1, flexDirection: 'row', width: '100%', marginBottom: 0 }}>
                 <Thumbnail source={{ url: image }} style={{ width: 40, height: 40, alignSelf: 'flex-start', marginRight: 5 }} />
                 <Body style={{ flex: 1, flexDirection: 'column', marginBottom: 10, backgroundColor: '#E9E9E9', padding: 10, borderRadius: 10 }}>
@@ -22,4 +22,4 @@ const Comment = ({ image, comment, name, date }) => {
     )
 }
 
-export default Comment;
+export default Reply;
