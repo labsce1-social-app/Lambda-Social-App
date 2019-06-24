@@ -9,7 +9,7 @@ import { getDiscussionsForSub } from '../../utils/Requests';
 
 const Discussions = ({ history }) => {
   const { state, dispatch } = useContext(Store);
-  const { id } = history.location.state;
+  const { id } = history.location;
 
   // aborController is a clean up function for fetch
   useEffect(() => {

@@ -35,9 +35,8 @@ const Subtopics = ({ history }) => {
                             <Subtopic
                                 changeLink={() => history.push({
                                     pathname: `/discussions/${item.id}`,
-                                    state: { id: item.id }
-                                }
-                                )
+                                    id: item.id
+                                })
                                 }
                                 id={item.id}
                                 title={item.title.split(' ').join('-')}
