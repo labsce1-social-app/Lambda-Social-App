@@ -20,24 +20,25 @@ const SubtopicForm = ({ history }) => {
   const { state, dispatch } = useContext(Store);
   const [newTopic, setTopic] = useState('');
 
-  const onChange = e => {
-    console.log('INSIDE ONCHANGE', e);
-    setTopic(e);
-  };
+  // const onChange = e => {
+  //   // console.log('INSIDE ONCHANGE', e);
+  //   setTopic(e);
+  // };
 
   const handleSubmit = dispatch => {
     console.log(newTopic);
+
     createSubtopic(newTopic, state.user.sub, dispatch);
 
-    history.push('/subtopics');
+    history.push('/subtopics'); // change to new subtopic upon creation
   };
-  console.log('IN SUBTOPIC FORM OUR USER: ', state.user);
+  // console.log('IN SUBTOPIC FORM OUR USER: ', state.user);
 
   return (
     <Content>
       <Form>
         <Item floatingLabel>
-          <Input placeholder="Title" onChangeText={e => onChange(e)} />
+          <Input placeholder="Title" onChangeText={e => setTopic(e)} />
         </Item>
         {state.user ? (
           <Button
