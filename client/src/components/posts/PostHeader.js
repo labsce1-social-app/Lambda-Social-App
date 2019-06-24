@@ -1,20 +1,23 @@
 import React from 'react';
 import { CardItem, Thumbnail, Body, Text } from 'native-base';
-import { Image, View } from 'react-native';
+import { Image, View, ScrollView } from 'react-native';
 import Reaction from '../../common/Reaction';
 import style from './Style';
+import { config } from '../../utils/dimensions';
 
 const PostHeader = (props) => {
     return (
         <>
-            <CardItem>
-                <Body>
-                    <Text note>{props.discussion_date}</Text>
-                    <Thumbnail source={{ url: props.creator_avatar }} style={style.avatar} />
-                    <Text>{props.creator}</Text>
-                    <Image source={{ url: props.discussion_image }} style={style.post_image} />
-                    <Text>{props.discussion_content}</Text>
-                </Body>
+            <CardItem style={{ maxHeight: config.deviceHeight * 0.35, minHeight: config.deviceHeight * 0.35, overflow: 'scroll' }}>
+                <ScrollView>
+                    <Body>
+                        <Text note>{props.discussion_date}</Text>
+                        <Thumbnail source={{ url: props.creator_avatar }} style={style.avatar} />
+                        <Text>{props.creator}</Text>
+                        <Image source={{ url: props.discussion_image }} style={style.post_image} />
+                        <Text>{props.discussion_content}</Text>
+                    </Body>
+                </ScrollView>
             </CardItem>
             <CardItem>
                 <View style={{
