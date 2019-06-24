@@ -91,7 +91,7 @@ export const handleAuth = async dispatch => {
   try {
     const getAuth = await auth0.webAuth.authorize({
       scope: 'openid profile email offline_access',
-      audience: 'https://lambdasocial.auth0.com/userinfo',
+      audience: 'https://lambdasocial.auth0.com/api/v2/',
       prompt: 'login'
     });
     const getUserWithAuth = await getUser(getAuth.accessToken, dispatch); // send access_token
