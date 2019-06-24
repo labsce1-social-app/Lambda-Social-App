@@ -37,14 +37,18 @@ const SubtopicForm = () => {
         <Item floatingLabel>
           <Input placeholder="Title" onChangeText={e => onChange(e)} />
         </Item>
-        <Button
-          danger
-          onPress={() => {
-            handleSubmit(dispatch);
-          }}
-        >
-          <Text>Add Subtopic</Text>
-        </Button>
+        {state.user ? (
+          <Button
+            danger
+            onPress={() => {
+              handleSubmit(dispatch);
+            }}
+          >
+            <Text>Add Subtopic</Text>
+          </Button>
+        ) : (
+          <Text>Log in first</Text>
+        )}
       </Form>
     </Content>
   );

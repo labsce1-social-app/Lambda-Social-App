@@ -41,7 +41,7 @@ export const getDiscussions = async (query, dispatch) => {
   try {
     dispatch({ type: 'TOP_DISCUSSIONS_FETCHING' });
     // fetch the data with query
-    const response = await fetch(`${BASE_URL}/discussions/?${q.toString()}`);
+    const response = await fetch(`${LOCAL}/discussions/?${q.toString()}`);
     // convert the data to json format otherwise you will just get a promise back
     const responseJson = await response.json();
     // set the data to global state
@@ -60,7 +60,7 @@ export const getDiscussionsForSub = async (id, dispatch) => {
   // const url = 'http://localhost:3000'
   try {
     dispatch({ type: 'DISCUSSIONS_FETCHING' });
-    const response = await fetch(`${BASE_URL}/discussions/s/${id}`);
+    const response = await fetch(`${LOCAL}/discussions/s/${id}`);
     const resJson = await response.json();
     return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: resJson });
   } catch (error) {
@@ -75,7 +75,7 @@ export const getCommentsByDiscussionId = async (id, dispatch) => {
   // read previous function, they're almost the same
   dispatch({ type: 'COMMENTS_FETCHING' });
   try {
-    const response = await fetch(`${BASE_URL}/comments/d/${id}`);
+    const response = await fetch(`${LOCAL}/comments/d/${id}`);
     const resJSON = await response.json();
     return dispatch({ type: 'COMMENTS_FETCHED_SUCCESS', payload: resJSON });
   } catch (error) {
@@ -131,7 +131,7 @@ const makeUser = async (token, info) => {
     avatar: info.picture
   }); // send  nickname as a 'username'
   try {
-    const postUser = await fetch(`${BASE_URL}/users`, {
+    const postUser = await fetch(`${LOCAL}/users`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -206,4 +206,27 @@ export const uploadImage = () => {
         console.log(err);
       });
   });
+};
+
+export const createSubtopic = async (info, sub, dispatch) => {
+  console.log(sub);
+  const body = JSON.stringify({
+    title: info,
+    creater_id: sub
+  });
+
+  try {
+    const newCreate = await fetch(`${LOCAL}/subtopics/create`, {
+      method: 'POST',
+      body,
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
+    console.log(newCreate);
+
+    return dispatch({ type: 'CREATE_SUBTOPIC', payload: newCreate });
+  } catch (error) {
+    console.log(error);
+  }
 };

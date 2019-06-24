@@ -30,8 +30,11 @@ const NativeFooter = ({ history }) => {
           <Icon name="home" />
         </Button>
 
-        <Button vertical>
+        <Button vertical onPress={() => history.push('/createsubtopic')}>
           <Icon name="brush" />
+        </Button>
+        <Button vetical onPress={() => history.push('/subtopics')}>
+          <Icon name="book" />
         </Button>
         {footerContent}
       </FooterTab>
