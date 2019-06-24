@@ -4,11 +4,11 @@ import { Store } from '../../context';
 const Subtopic = lazy(() => import('./Subtopic'));
 import { Text } from 'native-base';
 import { BASE_URL } from 'react-native-dotenv';
+import { withRouter } from 'react-router-native';
 
-//TODO: refactor to hooks
+
 const Subtopics = ({ history }) => {
     const { state, dispatch } = useContext(Store);
-
     useEffect(() => {
         getSubtopics();
     }, () => getSubtopics());
@@ -33,7 +33,12 @@ const Subtopics = ({ history }) => {
                     return (
                         <Suspense fallback={<Text>Loading...</Text>}>
                             <Subtopic
-                                linkChange={() => history.push(`discussions/${item.id}`)}
+                                changeLink={() => history.push({
+                                    pathname: `/discussions/${item.id}`,
+                                    state: { id: item.id }
+                                }
+                                )
+                                }
                                 id={item.id}
                                 title={item.title.split(' ').join('-')}
                                 name={item.username}
@@ -50,4 +55,4 @@ const Subtopics = ({ history }) => {
 }
 
 
-export default Subtopics;
+export default withRouter(Subtopics);

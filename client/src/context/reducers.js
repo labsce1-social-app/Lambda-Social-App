@@ -109,7 +109,6 @@ export const reducer = (state = initialState, action) => {
         comments_error: action.payload
       };
     case 'SET_CURRENT_USER':
-      console.log(action.payload);
       return {
         ...state,
         isAuthenticated: true,
@@ -133,6 +132,6 @@ export const reducer = (state = initialState, action) => {
         subTopics: action.payload
       };
     default:
-      return state;
+      throw new Error('not a valid action');
   }
 };

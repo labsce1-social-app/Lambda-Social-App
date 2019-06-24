@@ -22,7 +22,8 @@ export default StyleSheet.create({
         color: 'rgb(120, 120, 120)'
     },
     username: {
-        fontStyle: 'italic'
+        fontWeight: 'bold',
+        marginBottom: 5
     },
     comment: {
         textAlign: 'right',

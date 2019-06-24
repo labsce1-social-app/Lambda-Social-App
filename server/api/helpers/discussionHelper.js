@@ -12,23 +12,24 @@ const joinUsersAndSubtopic = () => {
 const topDiscussions = (sortBy = 'upvotes') => {
   return db.raw(`
   SELECT
-user.username,
+(select user.username from user where user.id = discussion.creater_id) as username,
 discussion.id as id,
 discussion.content,
 discussion.title,
 discussion.image,
 discussion.created_at,
 discussion.updated_at,
-(select COUNT(distinct comment.comment_post) from comment where comment.user_id = user.id) as comments,
-(select COUNT(distinct upvote.user_id) from upvote where upvote.user_id = user.id and upvote.discussion_id = discussion.id) as upvotes
+(select count( comment.comment_post) from comment where discussion.id = comment.discussion_id) as comments,
+(select count( upvote.user_id) from upvote where upvote.discussion_id = discussion.id) as upvotes
 FROM discussion
 inner join subtopic
 on discussion.subtopic_id = subtopic.id
-inner join user, upvote
-on user.id = upvote.user_id
+inner join user
+on user.id = discussion.creater_id
 inner join comment
 on comment.user_id = user.id
-AND upvote.discussion_id ==discussion.id
+inner join upvote
+on upvote.discussion_id = discussion.id
 GROUP BY discussion.id
 ORDER BY ${sortBy} DESC
 LIMIT 10
