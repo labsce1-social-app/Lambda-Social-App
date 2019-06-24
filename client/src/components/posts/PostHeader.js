@@ -24,7 +24,8 @@ const PostHeader = (props) => {
                     flex: 1,
                     alignItems: 'center',
                     alignSelf: 'flex-end',
-                    justifyContent: 'space-between', flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    flexDirection: 'column',
                     width: 20,
                     height: 40,
                     padding: 10

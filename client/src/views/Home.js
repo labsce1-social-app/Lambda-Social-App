@@ -9,11 +9,7 @@ import Header from '../common/Header';
 // history is being pushed to component for route pushing/popping purposes
 const Home = props => {
   return (
-    <NavWrapper>
-      <Header
-      >
-        Most Popular
-    </Header>
+    <NavWrapper text={props.text}>
       <Sort />
       <TopDiscussions history={props.history} />
     </NavWrapper>
