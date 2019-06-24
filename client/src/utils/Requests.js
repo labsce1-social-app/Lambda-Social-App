@@ -216,16 +216,17 @@ export const createSubtopic = async (info, sub, dispatch) => {
   });
 
   try {
-    const newCreate = await fetch(`${BASE_URL}/subtopics/create`, {
+    const newSubtopic = await fetch(`${BASE_URL}/subtopics/create`, {
       method: 'POST',
       body,
       headers: new Headers({
         'Content-Type': 'application/json'
       })
     });
-    console.log(newCreate);
+    const subId = await newSubtopic.json();
+    // console.log(subId.id[0]);
 
-    return dispatch({ type: 'CREATE_SUBTOPIC', payload: newCreate });
+    return dispatch({ type: 'CREATE_SUBTOPIC', payload: subId[0] });
   } catch (error) {
     console.log(error);
   }
