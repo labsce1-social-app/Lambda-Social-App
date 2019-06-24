@@ -6,7 +6,6 @@ const {
   commentRouter,
   discussionRouter
 } = require('./routers/');
-
 const server = express();
 
 // middleware
