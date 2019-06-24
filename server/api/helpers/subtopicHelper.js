@@ -76,17 +76,17 @@ const checkValidSubtopic = async id => {
 // ordered by created date descending
 const getAllSubtopicsWithCreator = () => {
   return db.raw(`
-    select
+ select
 subtopic.id as id,
 subtopic.created_at as date,
 subtopic.updated_at as updated,
 subtopic.title as title,
 user.username as username
 FROM subtopic
-JOIN user
-ON subtopic.creater_id = user.id
-order by date desc`)
-}
+inner JOIN user
+WHERE subtopic.creater_id = user.id
+order by date desc`);
+};
 
 module.exports = {
   checkValidUser,
