@@ -16,7 +16,7 @@ import { createSubtopic } from '../../utils/Requests';
 import { Store } from '../../context';
 // import NavWrapper from '../../views/NavWrapper';
 
-const SubtopicForm = () => {
+const SubtopicForm = ({ history }) => {
   const { state, dispatch } = useContext(Store);
   const [newTopic, setTopic] = useState('');
 
@@ -28,6 +28,8 @@ const SubtopicForm = () => {
   const handleSubmit = dispatch => {
     console.log(newTopic);
     createSubtopic(newTopic, state.user.sub, dispatch);
+
+    history.push('/subtopics');
   };
   console.log('IN SUBTOPIC FORM OUR USER: ', state.user);
 
