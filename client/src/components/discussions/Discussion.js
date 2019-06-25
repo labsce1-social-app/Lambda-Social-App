@@ -10,7 +10,9 @@ import Reaction from '../../common/Reaction';
 
 const Discussion = props => {
     return (
-        <Card style={{ flex: 0 }} >
+        <Card style={{
+            flex: 0
+        }} >
             <CardItem button onPress={props.changeLink}>
                 <Left>
                     <Image style={style.avatar} source={{ url: props.image.replace('http://', 'https://') }} />

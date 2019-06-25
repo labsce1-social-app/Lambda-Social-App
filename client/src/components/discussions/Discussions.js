@@ -40,7 +40,7 @@ const Discussions = ({ history }) => {
       refreshing={state.discussions_loading}
     />
   ) : (
-        <Card>
+        <Card >
           <CardItem>
             <Text style={{ padding: 15, height: config.deviceHeight * 0.65 }}>Looks like no one has created a discussion in this subtopic yet...</Text>
           </CardItem>

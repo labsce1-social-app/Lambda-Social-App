@@ -4,6 +4,7 @@ import { Image, View, ScrollView } from 'react-native';
 import Reaction from '../../common/Reaction';
 import style from './Style';
 import { config } from '../../utils/dimensions';
+import moment from 'moment';
 
 const PostHeader = (props) => {
     return (
@@ -11,7 +12,7 @@ const PostHeader = (props) => {
             <CardItem style={{ maxHeight: config.deviceHeight * 0.35, minHeight: config.deviceHeight * 0.35, overflow: 'scroll' }}>
                 <ScrollView>
                     <Body>
-                        <Text note>{props.discussion_date}</Text>
+                        <Text note>{moment(props.discussion_date).format('DD MMM YY hh:mm am')}</Text>
                         <Thumbnail source={{ url: props.creator_avatar }} style={style.avatar} />
                         <Text>{props.creator}</Text>
                         <Image source={{ url: props.discussion_image }} style={style.post_image} />

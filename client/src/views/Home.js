@@ -3,7 +3,6 @@ import TopDiscussions from '../components/discussions/TopDiscussions';
 // TODO: remove this later and place into it's own route
 import Sort from '../components/discussions/Sort';
 import NavWrapper from './NavWrapper';
-import Header from '../common/Header';
 
 // this home is referring to TopDiscussions component ONLY
 // history is being pushed to component for route pushing/popping purposes
