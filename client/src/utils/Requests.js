@@ -86,6 +86,20 @@ export const getCommentsByDiscussionId = async (id, dispatch) => {
 
 const auth0 = new Auth0({ domain: auth0Domain, clientId: auth0ClientId });
 
+// get all subtopics
+export const getSubtopics = async (dispatch) => {
+  const url = 'http://localhost:3000'
+  dispatch({ type: 'SUBTOPICS_FETCHING' });
+  try {
+    const response = await fetch(`${url}/subtopics`);
+    const resJson = await response.json();
+    dispatch({ type: 'SUBTOPICS_FETCHED', payload: resJson });
+  } catch (error) {
+    dispatch({ type: 'SUBTOPICS_FAILED', payload: error });
+    throw new Error(error);
+  }
+}
+
 // send a user to auth
 export const handleAuth = async dispatch => {
   try {
