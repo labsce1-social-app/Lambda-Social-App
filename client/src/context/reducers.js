@@ -20,13 +20,13 @@ export const initialState = {
 };
 // all of the reducer conditions, we can use the dispatch method to interact with this by simply passing in a type and sending the payload.
 export const reducer = (state = initialState, action) => {
-  console.log(state)
+  console.log(state);
   switch (action.type) {
     case 'SPLASH_TO_FALSE':
       return {
         ...state,
         splash: action.payload
-      }
+      };
     case 'TOP_DISCUSSIONS_FETCHING':
       return {
         ...state,
@@ -93,21 +93,21 @@ export const reducer = (state = initialState, action) => {
         ...state,
         comments_loading: true,
         comments_error: ''
-      }
+      };
     case 'COMMENTS_FETCHED_SUCCESS':
       return {
         ...state,
         comments: action.payload,
         comments_loading: false,
         comments_error: ''
-      }
+      };
     case 'COMMENTS_FETCHED_FAILED':
       return {
         ...state,
         comments: initialState.comments,
         comments_loading: false,
         comments_error: action.payload
-      }
+      };
     case 'SET_CURRENT_USER':
       return {
         ...state,
@@ -124,6 +124,12 @@ export const reducer = (state = initialState, action) => {
         ...state,
         isAuthenticated: false,
         user: null
+      };
+
+    case 'CREATE_SUBTOPIC':
+      return {
+        ...state,
+        subTopics: action.payload
       };
     default:
       throw new Error('not a valid action');

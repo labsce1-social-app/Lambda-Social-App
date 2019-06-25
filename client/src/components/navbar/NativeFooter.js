@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import { Store } from '../../context';
 import { Footer, FooterTab, Button, Icon } from 'native-base';
-import { handleAuth } from '../../utils/Requests';
+import { handleAuth, handleLogout } from '../../utils/Requests';
+import isEmpty from '../../utils/isEmpty';
 
 const NativeFooter = ({ history }) => {
   const { state, dispatch } = useContext(Store);
@@ -12,13 +13,13 @@ const NativeFooter = ({ history }) => {
       <Button vertical active onPress={() => handleAuth(dispatch, history)}>
         <Icon active name="key" style={{ transform: [{ rotate: '-90deg' }] }} />
       </Button>
-    )
+    );
   } else {
     footerContent = (
       <Button vertical>
-        <Icon name="mail" />
+        <Icon name="mail" onPress={() => handleLogout(dispatch)} />
       </Button>
-    )
+    );
   }
 
   return (
@@ -29,14 +30,16 @@ const NativeFooter = ({ history }) => {
           <Icon name="home" />
         </Button>
 
-        <Button vertical>
+        <Button vertical onPress={() => history.push('/createsubtopic')}>
           <Icon name="brush" />
         </Button>
+        <Button vetical onPress={() => history.push('/subtopics')}>
+          <Icon name="book" />
+        </Button>
         {footerContent}
-
       </FooterTab>
     </Footer>
-  )
-}
+  );
+};
 
 export default NativeFooter;
