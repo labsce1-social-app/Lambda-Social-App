@@ -6,8 +6,9 @@ import { withRouter } from 'react-router-native';
 import Header from '../common/Header';
 
 // NavWrapper will be used to dynamically render the nav based on location
-const NavWrapper = ({ children, history, text }) => {
+const NavWrapper = ({ children, history }) => {
     // we might be able to use react router to render the header name.. not sure yet.
+    console.log(history)
     const [path, setPath] = useState('');
     // get all of the paths and connect them
     useEffect(() => {
@@ -36,7 +37,6 @@ const NavWrapper = ({ children, history, text }) => {
     return (
         <Container>
             <NativeHeader header={history} />
-            {/* <Header text={history.location.pathname} /> */}
             <Header text={path} />
             {children}
             <NativeFooter history={history} />
