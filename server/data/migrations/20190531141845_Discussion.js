@@ -9,7 +9,7 @@
     updated_at: String
   }
 */
-exports.up = function(knex, Promise) {
+exports.up = function (knex, Promise) {
   return knex.schema.createTable('discussion', discussion => {
     discussion.increments('id').primary();
 
@@ -39,6 +39,6 @@ exports.up = function(knex, Promise) {
   });
 };
 
-exports.down = function(knex, Promise) {
+exports.down = function (knex, Promise) {
   return knex.schema.dropTableIfExists('discussion');
 };
