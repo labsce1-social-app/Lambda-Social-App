@@ -87,18 +87,18 @@ export const getCommentsByDiscussionId = async (id, dispatch) => {
 const auth0 = new Auth0({ domain: auth0Domain, clientId: auth0ClientId });
 
 // get all subtopics
-export const getSubtopics = async (dispatch) => {
-  const url = 'http://localhost:3000'
+export const getSubtopics = async dispatch => {
+  const url = 'http://localhost:3000';
   dispatch({ type: 'SUBTOPICS_FETCHING' });
   try {
-    const response = await fetch(`${url}/subtopics`);
+    const response = await fetch(`${BASE_URL}/subtopics`);
     const resJson = await response.json();
     dispatch({ type: 'SUBTOPICS_FETCHED', payload: resJson });
   } catch (error) {
     dispatch({ type: 'SUBTOPICS_FAILED', payload: error });
     throw new Error(error);
   }
-}
+};
 
 // send a user to auth
 export const handleAuth = async dispatch => {
@@ -162,7 +162,7 @@ const makeUser = async (token, info) => {
 // logout a user through state
 export const handleLogout = async (dispatch, history) => {
   try {
-    const del = await deleteData()
+    const del = await deleteData();
     const dis = await dispatch({ type: 'LOGOUT' });
     return {
       del,
@@ -186,7 +186,7 @@ export const uploadImage = () => {
       uri: response.uri,
       name: response.fileName,
       type: 'image/png'
-    }
+    };
     // s3 configurations
     const config = {
       keyPrefix: 's3/',
