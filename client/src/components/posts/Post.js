@@ -33,7 +33,6 @@ const Post = () => {
                 <FlatList
                     data={comments.comments}
                     renderItem={({ item }) => {
-                        console.log(item)
                         return (
                             <Suspense fallback={<Text>Loading... </Text>}>
 

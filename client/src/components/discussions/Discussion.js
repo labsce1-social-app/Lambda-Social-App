@@ -10,7 +10,9 @@ import Reaction from '../../common/Reaction';
 
 const Discussion = props => {
     return (
-        <Card style={{ flex: 0 }} >
+        <Card style={{
+            flex: 0
+        }} >
             <CardItem button onPress={props.changeLink}>
                 <Left>
                     <Image style={style.avatar} source={{ url: props.image.replace('http://', 'https://') }} />
@@ -20,10 +22,8 @@ const Discussion = props => {
                         <Text style={style.username}>{props.name}</Text>
                         <Text numberOfLines={1}>{props.discussion}</Text>
                         <View style={style.stats}>
-                            <Text style={style.comment}>
-                                <Icon name="chatbubbles" style={[style.icon, style.bubble]} /> {props.comment} {' '}
-                            </Text>
-                            <Reaction image={require('../../assets/upvote-512.png')} count={props.upvotes} />
+                            <Reaction image={require('../../assets/comments.png')} count={props.comment} />
+                            <Reaction image={require('../../assets/like.png')} count={props.upvotes} />
                         </View>
                     </Body>
                 </Left>

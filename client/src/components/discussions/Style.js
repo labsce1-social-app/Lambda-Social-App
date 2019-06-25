@@ -20,24 +20,25 @@ export default StyleSheet.create({
     comment: {
         flex: 1,
         flexDirection: 'row',
-        fontSize: 10
+        width: '100%',
+        fontWeight: 'bold',
+        fontSize: 14
     },
     chat: {
         marginLeft: 20
     },
     icon: {
-        width: '8%',
-        height: '8%'
+        width: 8,
+        height: 8
     },
     bubble: {
-        color: 'green'
     },
     stats: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        width: '50%',
+        width: '70%',
         margin: 10,
         alignSelf: 'flex-end'
     }

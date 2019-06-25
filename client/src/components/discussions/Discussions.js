@@ -9,7 +9,7 @@ import { getDiscussionsForSub } from '../../utils/Requests';
 
 const Discussions = ({ history }) => {
   const { state, dispatch } = useContext(Store);
-  const { id } = history.location.state;
+  const { id } = history.location;
 
   // aborController is a clean up function for fetch
   useEffect(() => {
@@ -40,7 +40,7 @@ const Discussions = ({ history }) => {
       refreshing={state.discussions_loading}
     />
   ) : (
-        <Card>
+        <Card >
           <CardItem>
             <Text style={{ padding: 15, height: config.deviceHeight * 0.65 }}>Looks like no one has created a discussion in this subtopic yet...</Text>
           </CardItem>

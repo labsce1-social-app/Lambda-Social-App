@@ -26,26 +26,30 @@ const Subtopics = ({ history }) => {
       dispatch({ type: 'SUBTOPICS_FAILED', payload: error });
       throw new Error(error);
     }
-  };
-  return state.subtopics_loading === true ? (
-    <Text>Loading...</Text>
-  ) : (
-    <FlatList
-      data={state.subtopics}
-      renderItem={({ item }) => {
-        return (
-          <Suspense fallback={<Text>Loading...</Text>}>
-            <Subtopic
-              changeLink={() =>
-                history.push({
-                  pathname: `/discussions/${item.id}`,
-                  state: { id: item.id }
-                })
-              }
-              id={item.id}
-              title={item.title.split(' ').join('-')}
-              name={item.username}
-              date={item.date !== item.updated ? item.updated : item.date}
+    return (
+        state.subtopics_loading === true ? <Text>Loading...</Text> : (
+            <FlatList
+                data={state.subtopics}
+                renderItem={({ item }) => {
+                    return (
+                        <Suspense fallback={<Text>Loading...</Text>}>
+                            <Subtopic
+                                changeLink={() => history.push({
+                                    pathname: `/discussions/${item.id}`,
+                                    id: item.id
+                                })
+                                }
+                                id={item.id}
+                                title={item.title.split(' ').join('-')}
+                                name={item.username}
+                                date={item.date !== item.updated ? item.updated : item.date}
+                            />
+                        </Suspense>
+                    )
+                }}
+                keyExtractor={(item) => `${item.id}`}
+                refreshing={state.subtopics_loading}
+
             />
           </Suspense>
         );
