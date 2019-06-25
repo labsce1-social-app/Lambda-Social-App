@@ -8,29 +8,36 @@ import Header from '../common/Header';
 // NavWrapper will be used to dynamically render the nav based on location
 const NavWrapper = ({ children, history, text }) => {
     // we might be able to use react router to render the header name.. not sure yet.
-    // const [path, setPath] = useState('');
-    // // get all of the paths and connect them
-    // useEffect(() => {
-    //     return pathHandler();
-    // }, [history])
+    const [path, setPath] = useState('');
+    // get all of the paths and connect them
+    useEffect(() => {
+        return setPath(pathHandler());
+    }, [path]);
 
-    // const pathHandler = () => {
-    //     Object.keys(history.entries).map((item) => {
-    //         const pathnames = new Set()
-    //         if (history.entries[item].pathname !== '/home') {
-    //             pathnames.add(history.entries[item].pathname)
-    //         }
-    //         if ('id' === undefined) {
-    //             return setPath("fuck it")
-    //         }
-    //         return setPath([...pathnames].join('')) || ''
-    //     })
-    // }
+    const pathHandler = () => {
+        const pathnames = []
+        Object.keys(history.entries).map((item) => {
+            if (history.entries[item].pathname !== '/home') {
+                pathnames.push(history.entries[item].pathname)
+            }
+
+            while (pathnames.length > 2) {
+                pathnames.shift();
+            }
+            if (pathnames[0] !== '/subtopics' && pathnames[pathnames.length - 1] === '/subtopics') {
+                pathnames.shift()
+            }
+            if (pathnames[0] === '/subtopics') {
+                pathnames.unshift('l')
+            }
+        })
+        return pathnames.join('')
+    }
     return (
         <Container>
             <NativeHeader header={history} />
             {/* <Header text={history.location.pathname} /> */}
-            {/* <Header text={path} /> */}
+            <Header text={path} />
             {children}
             <NativeFooter history={history} />
         </Container>

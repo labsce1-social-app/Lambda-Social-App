@@ -142,9 +142,7 @@ const makeUser = async (token, info) => {
 
 // logout a user through state
 export const handleLogout = async (dispatch, history) => {
-  console.log('outside of handlelogout')
   try {
-    console.log('inside of handlelogout')
     const del = await deleteData()
     const dis = await dispatch({ type: 'LOGOUT' });
     return {
@@ -169,7 +167,6 @@ export const uploadImage = () => {
       name: response.fileName,
       type: 'image/png'
     }
-    console.log(file)
     // s3 configurations
     const config = {
       keyPrefix: 's3/',
