@@ -30,6 +30,9 @@ const NavWrapper = ({ children, history }) => {
             }
             if (pathnames[0] === '/subtopics') {
                 pathnames.unshift('l')
+                if (pathnames[2] === '/subtopics') {
+                    pathnames.pop();
+                }
             }
         })
         return pathnames.join('')
