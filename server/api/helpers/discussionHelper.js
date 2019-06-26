@@ -19,6 +19,7 @@ discussion.title,
 discussion.image,
 discussion.created_at,
 discussion.updated_at,
+hashtag.hashtag as hashtags,
 (select count( comment.comment_post) from comment where discussion.id = comment.discussion_id) as comments,
 (select count( upvote.user_id) from upvote where upvote.discussion_id = discussion.id) as upvotes
 FROM discussion
@@ -30,6 +31,8 @@ inner join comment
 on comment.user_id = user.id
 inner join upvote
 on upvote.discussion_id = discussion.id
+inner join hashtag
+on hashtag.discussion_id = discussion.id
 GROUP BY discussion.id
 ORDER BY ${sortBy} DESC
 LIMIT 10

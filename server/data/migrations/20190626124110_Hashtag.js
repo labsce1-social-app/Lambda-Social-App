@@ -11,21 +11,15 @@
 exports.up = function (knex, Promise) {
     return knex.schema.createTable('hashtag', hashtag => {
         hashtag.increments('id').primary();
+
         hashtag
-            .string(20)
-            .defaultTo('#all');
+            .string('hashtag', 100);
+
         hashtag
             .integer('discussion_id')
             .references('id')
             .inTable('discussion')
             .notNullable()
-            .onDelete('CASCADE')
-            .onUpdate('CASCADE');
-
-        hashtag
-            .string('user_id')
-            .references('id')
-            .inTable('user')
             .onDelete('CASCADE')
             .onUpdate('CASCADE');
     });
