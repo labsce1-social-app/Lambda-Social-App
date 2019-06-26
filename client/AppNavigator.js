@@ -6,7 +6,7 @@ import Stack from 'react-router-native-stack';
 import Splash from './src/components/splash/Splash';
 import Home from './src/views/Home';
 import DiscussionsPage from './src/views/DiscussionsPage';
-import PostsPage from './src/views/PostPage';
+import PostPage from './src/views/PostPage';
 import SubtopicsPage from './src/views/SubtopicsPage';
 import SubtopicForm from './src/components/subtopics/SubtopicForm';
 
@@ -21,12 +21,20 @@ import { createBottomTabNavigator, BottomTabBar } from 'react-navigation-tabs';
 import { Icon } from 'native-base';
 
 // this component serves as a routing page, it will render everything based on the current url so it will be used to navigate the site.
+
+const HomeStack = createStackNavigator({
+  Home: {
+    screen: Home
+  },
+  Post: {
+    screen: PostPage
+  }
+});
+
 const AppNavigator = createBottomTabNavigator(
   {
-    // Splash: Splash,
-
     Home: {
-      screen: Home,
+      screen: HomeStack,
       navigationOptions: {
         tabBarIcon: <Icon name="home" />
       }
