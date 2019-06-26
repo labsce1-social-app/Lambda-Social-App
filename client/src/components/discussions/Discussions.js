@@ -25,7 +25,8 @@ const Discussions = ({ history }) => {
         <Suspense fallback={<Text>Loading...</Text>}>
           <Text>Discussions By Subtopic</Text>
           <Discussion
-            changeLink={() => history.push(`/post/${item.id}`)}
+            // changeLink={() => history.push(`/post/${item.id}`)}
+            id={item.id}
             image={item.image}
             title={item.title}
             discussion={item.content}
@@ -40,12 +41,14 @@ const Discussions = ({ history }) => {
       refreshing={state.discussions_loading}
     />
   ) : (
-        <Card >
-          <CardItem>
-            <Text style={{ padding: 15, height: config.deviceHeight * 0.65 }}>Looks like no one has created a discussion in this subtopic yet...</Text>
-          </CardItem>
-        </Card>
-      )
+    <Card>
+      <CardItem>
+        <Text style={{ padding: 15, height: config.deviceHeight * 0.65 }}>
+          Looks like no one has created a discussion in this subtopic yet...
+        </Text>
+      </CardItem>
+    </Card>
+  );
 };
 
 export default Discussions;
