@@ -18,12 +18,12 @@ const Subtopics = props => {
         return (
           <Suspense fallback={<Text>Loading...</Text>}>
             <Subtopic
-              changeLink={() =>
-                history.push({
-                  pathname: `/discussions/${item.id}`,
-                  id: item.id
-                })
-              }
+              //   changeLink={() =>
+              //     history.push({
+              //       pathname: `/discussions/${item.id}`,
+              //       id: item.id
+              //     })
+              //   }
               id={item.id}
               title={item.title.split(' ').join('-')}
               name={item.username}

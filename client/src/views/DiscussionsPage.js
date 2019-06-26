@@ -11,7 +11,7 @@ import { Container } from 'native-base';
 const DiscussionsPage = props => (
   <Container>
     <Sort />
-    <Discussions history={props.history} />
+    <Discussions />
   </Container>
 );
 

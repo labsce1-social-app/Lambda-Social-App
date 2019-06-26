@@ -7,13 +7,16 @@ import { isEmpty } from '../../utils/isEmpty';
 import { config } from '../../utils/dimensions';
 import { getDiscussionsForSub } from '../../utils/Requests';
 
-const Discussions = ({ history }) => {
-  const { state, dispatch } = useContext(Store);
-  const { id } = history.location;
+import { withNavigation } from 'react-navigation';
 
+const Discussions = props => {
+  const { state, dispatch } = useContext(Store);
+  // const { id } = history.location;
+
+  const subId = props.navigation.getParam('subId');
   // aborController is a clean up function for fetch
   useEffect(() => {
-    getDiscussionsForSub(id, dispatch);
+    getDiscussionsForSub(subId, dispatch);
   }, []);
 
   return state.discussions_loading === true ? (
@@ -51,4 +54,4 @@ const Discussions = ({ history }) => {
   );
 };
 
-export default Discussions;
+export default withNavigation(Discussions);
