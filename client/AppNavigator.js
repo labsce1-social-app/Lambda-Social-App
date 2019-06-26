@@ -31,6 +31,15 @@ const HomeStack = createStackNavigator({
   }
 });
 
+const SubtopicsStack = createStackNavigator({
+  Subtopics: {
+    screen: SubtopicsPage
+  },
+  Discussions: {
+    screen: DiscussionsPage
+  }
+});
+
 const FooterNavigator = createBottomTabNavigator(
   {
     Home: {
@@ -39,8 +48,8 @@ const FooterNavigator = createBottomTabNavigator(
         tabBarIcon: <Icon name="home" />
       }
     },
-    Subtopics: {
-      screen: SubtopicsPage,
+    SubTopics: {
+      screen: SubtopicsStack,
       navigationOptions: {
         tabBarIcon: <Icon name="book" />
       }
