@@ -17,6 +17,7 @@ import {
   createAppContainer,
   createStackNavigator
 } from 'react-navigation';
+
 import { createBottomTabNavigator, BottomTabBar } from 'react-navigation-tabs';
 import { Icon } from 'native-base';
 
@@ -69,7 +70,13 @@ const FooterNavigator = createBottomTabNavigator(
   }
 );
 
-export default createAppContainer(FooterNavigator);
+const rootDrawer = createDrawerNavigator({
+  Top: {
+    screen: FooterNavigator
+  }
+});
+
+export default createAppContainer(rootDrawer);
 
 // return (
 //   <BackButton>
