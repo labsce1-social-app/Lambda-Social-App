@@ -12,9 +12,9 @@ import { NativeRouter } from 'react-router-native';
 
 // this is where the entire app gets exported from, the context store provider is wrapped around here to give everything access to the store
 export default (App = () => (
-  <NativeRouter>
-    <StoreProvider>
-      <AppNavigator />
-    </StoreProvider>
-  </NativeRouter>
+  <StoreProvider>
+    <AppNavigator />
+  </StoreProvider>
 ));
+// // <NativeRouter>
+// {/* </NativeRouter> */}
