@@ -69,9 +69,9 @@ export const getDiscussions = (query, dispatch) => {
 export const getDiscussionsForSub = async (id, dispatch) => {
   // const url = 'http://localhost:3000'
   try {
-    const idJson = await id.json();
+    // const idJson = await id.json();
     dispatch({ type: 'DISCUSSIONS_FETCHING' });
-    const response = await fetch(`${LOCAL}/discussions/s/${idJson}`);
+    const response = await fetch(`${LOCAL}/discussions/s/${id}`);
     const resJson = await response.json();
     return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: resJson });
   } catch (error) {
