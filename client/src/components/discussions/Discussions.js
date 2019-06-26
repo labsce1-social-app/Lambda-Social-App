@@ -3,7 +3,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import { Store } from '../../context';
 const Discussion = lazy(() => import('./Discussion'));
 import { Text, Card, CardItem } from 'native-base';
-import { isEmpty } from '../../utils/isEmpty';
+import { isEmpty } from '../../utils/utility';
 import { config } from '../../utils/dimensions';
 import { getDiscussionsForSub } from '../../utils/Requests';
 
