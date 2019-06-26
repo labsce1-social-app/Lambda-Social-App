@@ -31,12 +31,18 @@ const HomeStack = createStackNavigator({
   }
 });
 
-const AppNavigator = createBottomTabNavigator(
+const FooterNavigator = createBottomTabNavigator(
   {
     Home: {
       screen: HomeStack,
       navigationOptions: {
         tabBarIcon: <Icon name="home" />
+      }
+    },
+    Subtopics: {
+      screen: SubtopicsPage,
+      navigationOptions: {
+        tabBarIcon: <Icon name="book" />
       }
     }
   },
@@ -46,7 +52,7 @@ const AppNavigator = createBottomTabNavigator(
       headerStyle: {
         backgroundColor: '#f4511e'
       },
-      headerTintColor: '#fff',
+      headerTintColor: '#333333',
       headerTitleStyle: {
         fontWeight: 'bold'
       }
@@ -54,7 +60,7 @@ const AppNavigator = createBottomTabNavigator(
   }
 );
 
-export default createAppContainer(AppNavigator);
+export default createAppContainer(FooterNavigator);
 
 // return (
 //   <BackButton>
