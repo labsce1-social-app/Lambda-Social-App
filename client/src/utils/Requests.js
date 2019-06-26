@@ -17,8 +17,7 @@ const base_url = `https://social-app-test.herokuapp.com`;
 // place all HTTP requests in here
 // import AsyncStorage from '@react-native-community/async-storage';
 import { storeData, getData, deleteData } from './AsyncStorage';
-// import { Redirect } from 'react-router-native';
-// import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios';
 
 // check if a user is logged in
 export const isAuthed = async dispatch => {
@@ -35,32 +34,44 @@ export const isAuthed = async dispatch => {
 };
 
 // getsDiscussions, can also take in a query string to sort the discussions, only good for top10 discussions on landing page.
-export const getDiscussions = async (query, dispatch) => {
+export const getDiscussions = (query, dispatch) => {
   // handle loading state
+  dispatch({ type: 'TOP_DISCUSSIONS_FETCHING' });
+
   const q = new URLSearchParams({ sort: query });
-  try {
-    dispatch({ type: 'TOP_DISCUSSIONS_FETCHING' });
-    // fetch the data with query
-    const response = await fetch(`${BASE_URL}/discussions/?${q.toString()}`);
-    // convert the data to json format otherwise you will just get a promise back
-    const responseJson = await response.json();
-    // set the data to global state
-    dispatch({ type: 'TOP_DISCUSSIONS_FETCHED', payload: responseJson });
-    // set splash to false so that it never renders again
-    return dispatch({ type: 'SPLASH_TO_FALSE', payload: false });
-  } catch (error) {
-    // set the error to global state
-    dispatch({ type: 'TOP_DISCUSSIONS_FAILED', payload: error });
-    // throw error
-    console.log(error);
-  }
+
+  axios
+    .get(`${LOCAL}/discussions/?${q.toString()}`)
+    .then(res => {
+      console.log('AXIOS BB', res.data);
+      dispatch({ type: 'TOP_DISCUSSIONS_FETCHED', payload: res.data });
+    })
+    .catch(err => {
+      dispatch({ type: 'TOP_DISCUSSIONS_FAILED', payload: error });
+      console.log('FUUCK', err);
+    });
+
+  // try {
+  //   // fetch the data with query
+  //   // const response = await fetch(`${LOCAL}/discussions/?${q.toString()}`);
+  //   // convert the data to json format otherwise you will just get a promise back
+  //   const responseJson = await response.json();
+  //   // set the data to global state
+  //   // set splash to false so that it never renders again
+  //   return dispatch({ type: 'SPLASH_TO_FALSE', payload: false });
+  // } catch (error) {
+  //   // set the error to global state
+  //   // throw error
+  //   console.log(error);
+  // }
 };
 
 export const getDiscussionsForSub = async (id, dispatch) => {
   // const url = 'http://localhost:3000'
   try {
+    const idJson = await id.json();
     dispatch({ type: 'DISCUSSIONS_FETCHING' });
-    const response = await fetch(`${BASE_URL}/discussions/s/${id}`);
+    const response = await fetch(`${LOCAL}/discussions/s/${idJson}`);
     const resJson = await response.json();
     return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: resJson });
   } catch (error) {
@@ -75,7 +86,12 @@ export const getCommentsByDiscussionId = async (id, dispatch) => {
   // read previous function, they're almost the same
   dispatch({ type: 'COMMENTS_FETCHING' });
   try {
-    const response = await fetch(`${BASE_URL}/comments/d/${id}`);
+    const response = await fetch(`${LOCAL}/comments/d/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      }
+    });
     const resJSON = await response.json();
     return dispatch({ type: 'COMMENTS_FETCHED_SUCCESS', payload: resJSON });
   } catch (error) {
@@ -91,7 +107,7 @@ export const getSubtopics = async dispatch => {
   const url = 'http://localhost:3000';
   dispatch({ type: 'SUBTOPICS_FETCHING' });
   try {
-    const response = await fetch(`${BASE_URL}/subtopics`);
+    const response = await fetch(`${LOCAL}/subtopics`);
     const resJson = await response.json();
     dispatch({ type: 'SUBTOPICS_FETCHED', payload: resJson });
   } catch (error) {
@@ -145,7 +161,7 @@ const makeUser = async (token, info) => {
     avatar: info.picture
   }); // send  nickname as a 'username'
   try {
-    const postUser = await fetch(`${BASE_URL}/users`, {
+    const postUser = await fetch(`${LOCAL}/users`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -227,7 +243,7 @@ export const createSubtopic = async (info, sub, dispatch) => {
   });
 
   try {
-    const newSubtopic = await fetch(`${BASE_URL}/subtopics/create`, {
+    const newSubtopic = await fetch(`${LOCAL}/subtopics/create`, {
       method: 'POST',
       body,
       headers: new Headers({
