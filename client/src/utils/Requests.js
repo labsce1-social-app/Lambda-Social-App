@@ -41,7 +41,7 @@ export const getDiscussions = (query, dispatch) => {
   const q = new URLSearchParams({ sort: query });
 
   axios
-    .get(`${LOCAL}/discussions/?${q.toString()}`)
+    .get(`${BASE_URL}/discussions/?${q.toString()}`)
     .then(res => {
       console.log('AXIOS BB', res.data);
       dispatch({ type: 'TOP_DISCUSSIONS_FETCHED', payload: res.data });
@@ -53,7 +53,7 @@ export const getDiscussions = (query, dispatch) => {
 
   // try {
   //   // fetch the data with query
-  //   // const response = await fetch(`${LOCAL}/discussions/?${q.toString()}`);
+  //   // const response = await fetch(`${BASE_URL}/discussions/?${q.toString()}`);
   //   // convert the data to json format otherwise you will just get a promise back
   //   const responseJson = await response.json();
   //   // set the data to global state
@@ -71,7 +71,7 @@ export const getDiscussionsForSub = async (id, dispatch) => {
   try {
     // const idJson = await id.json();
     dispatch({ type: 'DISCUSSIONS_FETCHING' });
-    const response = await fetch(`${LOCAL}/discussions/s/${id}`);
+    const response = await fetch(`${BASE_URL}/discussions/s/${id}`);
     const resJson = await response.json();
     return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: resJson });
   } catch (error) {
@@ -86,7 +86,7 @@ export const getCommentsByDiscussionId = async (id, dispatch) => {
   // read previous function, they're almost the same
   dispatch({ type: 'COMMENTS_FETCHING' });
   try {
-    const response = await fetch(`${LOCAL}/comments/d/${id}`, {
+    const response = await fetch(`${BASE_URL}/comments/d/${id}`, {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json'
@@ -107,7 +107,7 @@ export const getSubtopics = async dispatch => {
   const url = 'http://localhost:3000';
   dispatch({ type: 'SUBTOPICS_FETCHING' });
   try {
-    const response = await fetch(`${LOCAL}/subtopics`);
+    const response = await fetch(`${BASE_URL}/subtopics`);
     const resJson = await response.json();
     dispatch({ type: 'SUBTOPICS_FETCHED', payload: resJson });
   } catch (error) {
@@ -161,7 +161,7 @@ const makeUser = async (token, info) => {
     avatar: info.picture
   }); // send  nickname as a 'username'
   try {
-    const postUser = await fetch(`${LOCAL}/users`, {
+    const postUser = await fetch(`${BASE_URL}/users`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -243,7 +243,7 @@ export const createSubtopic = async (info, sub, dispatch) => {
   });
 
   try {
-    const newSubtopic = await fetch(`${LOCAL}/subtopics/create`, {
+    const newSubtopic = await fetch(`${BASE_URL}/subtopics/create`, {
       method: 'POST',
       body,
       headers: new Headers({

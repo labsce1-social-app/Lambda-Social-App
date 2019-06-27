@@ -9,6 +9,7 @@ import DiscussionsPage from './src/views/DiscussionsPage';
 import PostPage from './src/views/PostPage';
 import SubtopicsPage from './src/views/SubtopicsPage';
 import SubtopicForm from './src/components/subtopics/SubtopicForm';
+import AddSModal from './src/components/subtopics/AddSModal';
 
 import TopDiscussions from './src/components/discussions/TopDiscussions';
 
@@ -51,31 +52,41 @@ const HomeStack = createStackNavigator({
   }
 });
 
-const SubtopicsStack = createStackNavigator({
-  Subtopics: {
-    screen: SubtopicsPage,
-    navigationOptions: ({ navigation }) => ({
-      title: `${navigation.state.routeName}`,
+const SubtopicsStack = createStackNavigator(
+  {
+    Subtopics: {
+      screen: SubtopicsPage,
+      navigationOptions: ({ navigation }) => ({
+        title: `${navigation.state.routeName}`,
 
-      headerStyle: {
-        elevation: 0 // removes shadow for android
-      },
+        headerStyle: {
+          elevation: 0 // removes shadow for android
+        },
 
-      headerLeft: (
-        <Text // toggles drawer
-          onPress={() => {
-            navigation.toggleDrawer();
-          }}
-        >
-          LAMBDA
-        </Text>
-      )
-    })
+        headerLeft: (
+          <Text // toggles drawer
+            onPress={() => {
+              navigation.toggleDrawer();
+            }}
+          >
+            LAMBDA
+          </Text>
+        )
+      })
+    },
+    Discussions: {
+      screen: DiscussionsPage
+    },
+
+    Modal: {
+      screen: AddSModal
+    }
   },
-  Discussions: {
-    screen: DiscussionsPage
+  {
+    mode: 'modal',
+    headerMode: 'none'
   }
-});
+);
 
 const FooterNavigator = createBottomTabNavigator({
   Home: {

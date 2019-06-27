@@ -20,9 +20,9 @@ const SubtopicsPage = props => {
   return (
     <Container>
       <Sort />
-      <ScrollView>
-        <Subtopics />
-      </ScrollView>
+      {/* <ScrollView> */}
+      <Subtopics />
+      {/* </ScrollView> */}
     </Container>
   );
 };
