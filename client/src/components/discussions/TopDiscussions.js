@@ -3,10 +3,12 @@ import { withRouter } from 'react-router-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { Store } from '../../context';
 const Discussion = lazy(() => import('./Discussion'));
-import { Text } from 'native-base';
+import { Text, Badge } from 'native-base';
+import style from './Style';
 
 const TopDiscussions = ({ history }) => {
     const { state } = useContext(Store);
+
     return (
         state.top_discussions_loading === true ? <Text>Loading...</Text> : (
             <FlatList
@@ -23,6 +25,9 @@ const TopDiscussions = ({ history }) => {
                                 date={item.created_at}
                                 comment={item.comments}
                                 upvotes={item.upvotes}
+                                hashtags={item.hashtags.map((hashtag) => (
+                                    <Badge style={style.badgeColors}><Text style={style.hashtagText}>{hashtag}</Text></Badge>
+                                ))}
                             />
                         </Suspense>
                     )

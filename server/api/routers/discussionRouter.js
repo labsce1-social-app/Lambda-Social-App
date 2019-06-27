@@ -31,21 +31,26 @@ TESTS: {
 router.get('/?', async (req, res) => {
   const { sort } = req.query;
   try {
+    // map through discussions to inject hashtags
     const top = await topDiscussions(sort)
       .map(async (item) => {
+        // use reduce to get the compare values
         return await getHashTagsByDiscussionId(item.id)
           .reduce(async (acc, { hashtag }) => {
-            console.log("accum: ", acc)
+            // flatten array of hashtags (they come in nested)
             const flattenDeep = (arr) => {
               return arr.reduce((acc, val) => Array.isArray(val) ? acc.concat(flattenDeep(val)) : acc.concat(val), [])
             }
+            // build an obj to send out
+            // spread items and add the hashtags
+            // filter to remove null and undefined hashtags
             let obj = {
-              ...item, hashtags: flattenDeep([acc.hashtags, hashtag])
+              ...item, hashtags: flattenDeep([acc.hashtags, hashtag]).filter(n => n)
             }
             return obj;
           }, [])
       })
-
+    // return the function
     return res.status(200).json(top)
   } catch (err) {
     return res.status(500).json(err)
@@ -107,16 +112,32 @@ TESTS: {
 }
 */
 
-router.get('/s/:id', (req, res) => {
+router.get('/s/:id', async (req, res) => {
   const { id } = req.params;
-
-  joinUsersAtSubtopicId(id)
-    .then(discussion => {
-      res.status(200).json(discussion);
-    })
-    .catch(err => {
-      res.status(500).json({ error: err });
-    });
+  try {
+    const top = await joinUsersAtSubtopicId(id)
+      .map(async (item) => {
+        // use reduce to get the compare values
+        return await getHashTagsByDiscussionId(item.id)
+          .reduce(async (acc, { hashtag }) => {
+            // flatten array of hashtags (they come in nested)
+            const flattenDeep = (arr) => {
+              return arr.reduce((acc, val) => Array.isArray(val) ? acc.concat(flattenDeep(val)) : acc.concat(val), [])
+            }
+            // build an obj to send out
+            // spread items and add the hashtags
+            // filter to remove null and undefined hashtags
+            let obj = {
+              ...item, hashtags: flattenDeep([acc.hashtags, hashtag]).filter(n => n)
+            }
+            return obj;
+          }, [])
+      })
+    // return the function
+    return res.status(200).json(top)
+  } catch (err) {
+    return res.status(500).json(err)
+  }
 });
 
 /*

@@ -9,6 +9,7 @@ import Reaction from '../../common/Reaction';
 
 
 const Discussion = props => {
+
     return (
         <Card style={{
             flex: 0
@@ -28,6 +29,9 @@ const Discussion = props => {
                     </Body>
                 </Left>
             </CardItem>
+            <View style={style.hashtags}>
+                {props.hashtags}
+            </View>
         </Card >
     )
 }

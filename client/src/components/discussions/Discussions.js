@@ -34,6 +34,9 @@ const Discussions = ({ history }) => {
             comment={item.comments}
             upvotes={item.upvotes}
           />
+          {item.hashtags.map((hashtag) => (
+            <Badge style={style.badgeColors}><Text style={style.hashtagText}>{hashtag}</Text></Badge>
+          ))}
         </Suspense>
       )}
       keyExtractor={item => `${item.id}`}
