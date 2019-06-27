@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from 'native-base';
+import { Container, Text } from 'native-base';
 import { Route, Switch, withRouter, BackButton } from 'react-router-native';
 import Stack from 'react-router-native-stack';
 
@@ -27,7 +27,21 @@ import DrawerContent from './src/components/navbar/DrawerContent';
 
 const HomeStack = createStackNavigator({
   Home: {
-    screen: Home
+    screen: Home,
+    navigationOptions: ({ navigation }) => ({
+      headerStyle: {
+        elevation: 0 // removes shadow for android
+      },
+      headerLeft: (
+        <Text // toggles drawer
+          onPress={() => {
+            navigation.toggleDrawer();
+          }}
+        >
+          LAMBDA
+        </Text>
+      )
+    })
   },
   Post: {
     screen: PostPage
@@ -62,7 +76,7 @@ const FooterNavigator = createBottomTabNavigator(
     // initialRouteName: 'Home',
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: '#f4511e'
+        backgroundColor: '#333333'
       },
       headerTintColor: '#333333',
       headerTitleStyle: {
