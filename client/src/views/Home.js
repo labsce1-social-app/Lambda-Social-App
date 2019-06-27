@@ -16,13 +16,11 @@ const Home = props => {
   const { state, dispatch } = useContext(Store);
 
   return (
-    // <NavWrapper text={props.text}>
     <Container>
       <Sort />
 
       <TopDiscussions />
     </Container>
-    // </NavWrapper>
   );
 };
 
