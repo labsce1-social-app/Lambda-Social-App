@@ -41,7 +41,7 @@ export const getDiscussions = async (query, dispatch) => {
   try {
     dispatch({ type: 'TOP_DISCUSSIONS_FETCHING' });
     // fetch the data with query
-    const response = await fetch(`${LOCAL}/discussions/?${q.toString()}`);
+    const response = await fetch(`${BASE_URL}/discussions/?${q.toString()}`);
     // convert the data to json format otherwise you will just get a promise back
     const responseJson = await response.json();
     // set the data to global state

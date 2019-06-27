@@ -2,10 +2,12 @@ import React, { useContext, useEffect, lazy, Suspense } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 import { Store } from '../../context';
 const Discussion = lazy(() => import('./Discussion'));
-import { Text, Card, CardItem } from 'native-base';
+import { Text, Card, CardItem, Badge } from 'native-base';
 import { isEmpty } from '../../utils/utility';
 import { config } from '../../utils/dimensions';
 import { getDiscussionsForSub } from '../../utils/Requests';
+import style from './Style';
+
 
 const Discussions = ({ history }) => {
   const { state, dispatch } = useContext(Store);
@@ -33,10 +35,10 @@ const Discussions = ({ history }) => {
             date={item.created_at}
             comment={item.comments}
             upvotes={item.upvotes}
+            hashtags={item.hashtags && item.hashtags.map((hashtag) => (
+              <Badge style={style.badgeColors}><Text style={style.hashtagText}>{hashtag}</Text></Badge>
+            ))}
           />
-          {item.hashtags.map((hashtag) => (
-            <Badge style={style.badgeColors}><Text style={style.hashtagText}>{hashtag}</Text></Badge>
-          ))}
         </Suspense>
       )}
       keyExtractor={item => `${item.id}`}

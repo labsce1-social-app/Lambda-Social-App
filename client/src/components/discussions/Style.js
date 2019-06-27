@@ -50,11 +50,11 @@ export default StyleSheet.create({
         flexWrap: 'wrap',
         width: '100%',
         marginBottom: 10,
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-evenly',
     },
     badgeColors: {
         backgroundColor: '#d9534f',
-        margin: 5
+        margin: 5,
     },
     hashtagText: {
         fontSize: 12,
