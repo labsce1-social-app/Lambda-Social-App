@@ -21,6 +21,8 @@ import {
 import { createBottomTabNavigator, BottomTabBar } from 'react-navigation-tabs';
 import { Icon } from 'native-base';
 
+import DrawerContent from './src/components/navbar/DrawerContent';
+
 // this component serves as a routing page, it will render everything based on the current url so it will be used to navigate the site.
 
 const HomeStack = createStackNavigator({
@@ -70,11 +72,17 @@ const FooterNavigator = createBottomTabNavigator(
   }
 );
 
-const rootDrawer = createDrawerNavigator({
-  Top: {
-    screen: FooterNavigator
+const rootDrawer = createDrawerNavigator(
+  {
+    Top: {
+      screen: FooterNavigator
+    }
+  },
+  {
+    initialRouteName: 'Top',
+    contentComponent: props => <DrawerContent {...props} />
   }
-});
+);
 
 export default createAppContainer(rootDrawer);
 
