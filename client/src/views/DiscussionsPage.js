@@ -4,13 +4,15 @@ import Sort from '../components/discussions/Sort';
 import Discussions from '../components/discussions/Discussions';
 import NavWrapper from './NavWrapper';
 
+import { Container } from 'native-base';
+
 // this DiscussionsPage is referring to all discussions inside of a chosen subtopic ONLY
 // TODO: we'll need to make the header dynamic
 const DiscussionsPage = props => (
-    <NavWrapper>
-        <Sort />
-        <Discussions history={props.history} />
-    </NavWrapper>
+  <Container>
+    <Sort />
+    <Discussions />
+  </Container>
 );
 
 export default DiscussionsPage;

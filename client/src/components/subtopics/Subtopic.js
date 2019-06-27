@@ -5,6 +5,8 @@ import { Alert } from 'react-native';
 import moment from 'moment';
 import Swipeout from 'react-native-swipeout';
 
+import { withNavigation } from 'react-navigation';
+
 const Subtopic = props => {
   const swipeSettings = {
     autoClose: true,
@@ -37,7 +39,12 @@ const Subtopic = props => {
   return (
     <Swipeout {...swipeSettings}>
       <Card style={{ flex: 0 }}>
-        <CardItem button onPress={props.changeLink}>
+        <CardItem
+          button
+          onPress={() =>
+            props.navigation.navigate('Discussions', { subId: props.id })
+          }
+        >
           <Body>
             <Text style={style.date}>
               {moment(props.date).format('MMM DD YY')}
@@ -51,4 +58,4 @@ const Subtopic = props => {
   );
 };
 
-export default Subtopic;
+export default withNavigation(Subtopic);

@@ -4,22 +4,25 @@ import NavWrapper from './NavWrapper';
 import Post from '../components/posts/Post';
 import { getCommentsByDiscussionId } from '../utils/Requests';
 
-const PostPage = ({ match }) => {
-    // handle life cycle for comments
-    const { dispatch } = useContext(Store);
+const PostPage = props => {
+  // handle life cycle for comments
+  const { dispatch } = useContext(Store);
 
-    // need to get the data here because it is where we have access to the id from react router.
-    const { id } = match.params;
+  const postId = props.navigation.getParam('postId', 'None');
 
-    // useEffect is treated as componentDidMount and componentWillUnmount
-    useEffect(() => {
-        getCommentsByDiscussionId(id, dispatch)
-    }, () => getCommentsByDiscussionId());
+  console.log(props.navigation);
 
-    return (
-        <NavWrapper>
-            <Post />
-        </NavWrapper>
-    );
-}
+  // need to get the data here because it is where we have access to the id from react router.
+  // const { id } = match.params;
+
+  // useEffect is treated as componentDidMount and componentWillUnmount
+  useEffect(
+    () => {
+      getCommentsByDiscussionId(JSON.stringify(postId), dispatch);
+    },
+    () => getCommentsByDiscussionId()
+  );
+
+  return <Post />;
+};
 export default PostPage;
