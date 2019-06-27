@@ -29,9 +29,12 @@ const HomeStack = createStackNavigator({
   Home: {
     screen: Home,
     navigationOptions: ({ navigation }) => ({
+      title: `${navigation.state.routeName}`,
+
       headerStyle: {
         elevation: 0 // removes shadow for android
       },
+
       headerLeft: (
         <Text // toggles drawer
           onPress={() => {
@@ -50,41 +53,44 @@ const HomeStack = createStackNavigator({
 
 const SubtopicsStack = createStackNavigator({
   Subtopics: {
-    screen: SubtopicsPage
+    screen: SubtopicsPage,
+    navigationOptions: ({ navigation }) => ({
+      title: `${navigation.state.routeName}`,
+
+      headerStyle: {
+        elevation: 0 // removes shadow for android
+      },
+
+      headerLeft: (
+        <Text // toggles drawer
+          onPress={() => {
+            navigation.toggleDrawer();
+          }}
+        >
+          LAMBDA
+        </Text>
+      )
+    })
   },
   Discussions: {
     screen: DiscussionsPage
   }
 });
 
-const FooterNavigator = createBottomTabNavigator(
-  {
-    Home: {
-      screen: HomeStack,
-      navigationOptions: {
-        tabBarIcon: <Icon name="home" />
-      }
-    },
-    SubTopics: {
-      screen: SubtopicsStack,
-      navigationOptions: {
-        tabBarIcon: <Icon name="book" />
-      }
+const FooterNavigator = createBottomTabNavigator({
+  Home: {
+    screen: HomeStack,
+    navigationOptions: {
+      tabBarIcon: <Icon name="home" />
     }
   },
-  {
-    // initialRouteName: 'Home',
-    defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: '#333333'
-      },
-      headerTintColor: '#333333',
-      headerTitleStyle: {
-        fontWeight: 'bold'
-      }
+  SubTopics: {
+    screen: SubtopicsStack,
+    navigationOptions: {
+      tabBarIcon: <Icon name="book" />
     }
   }
-);
+});
 
 const rootDrawer = createDrawerNavigator(
   {
