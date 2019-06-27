@@ -66,54 +66,85 @@ export const getDiscussions = (query, dispatch) => {
   // }
 };
 
-export const getDiscussionsForSub = async (id, dispatch) => {
+export const getDiscussionsForSub = (id, dispatch) => {
   // const url = 'http://localhost:3000'
-  try {
-    // const idJson = await id.json();
-    dispatch({ type: 'DISCUSSIONS_FETCHING' });
-    const response = await fetch(`${LOCAL}/discussions/s/${id}`);
-    const resJson = await response.json();
-    return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: resJson });
-  } catch (error) {
-    dispatch({ type: 'DISCUSSIONS_FAILED', payload: error });
-    console.log(error);
-  }
+  dispatch({ type: 'DISCUSSIONS_FETCHING' });
+
+  axios
+    .get(`${LOCAL}/discussions/s/${id}`)
+    .then(res => {
+      console.log(res.data);
+      dispatch({ type: 'DISCUSSIONS_FETCHED', payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+
+      dispatch({ type: 'DISCUSSIONS_FAILED', payload: err });
+    });
+
+  // try {
+  //   // const idJson = await id.json();
+  //   const response = await fetch(`${LOCAL}/discussions/s/${id}`);
+  //   const resJson = await response.json();
+  //   return
+  // } catch (error) {
+  // }
 };
 
 // used for the PostPage component
 // returns all comments and poster data for the comments page. Returns giant object with all post header data and arrays of comments.
-export const getCommentsByDiscussionId = async (id, dispatch) => {
+export const getCommentsByDiscussionId = (id, dispatch) => {
   // read previous function, they're almost the same
   dispatch({ type: 'COMMENTS_FETCHING' });
-  try {
-    const response = await fetch(`${LOCAL}/comments/d/${id}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
-      }
+
+  axios
+    .get(`${LOCAL}/comments/d/${id}`)
+    .then(res => {
+      console.log('get comments', res.data);
+      dispatch({ type: 'COMMENTS_FETCHED_SUCCESS', payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: 'COMMENTS_FETCHED_FAILED', payload: error });
     });
-    const resJSON = await response.json();
-    return dispatch({ type: 'COMMENTS_FETCHED_SUCCESS', payload: resJSON });
-  } catch (error) {
-    dispatch({ type: 'COMMENTS_FETCHED_FAILED', payload: error });
-    console.log(error);
-  }
+
+  // try {
+  //   const response = await fetch(`${LOCAL}/comments/d/${id}`, {
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Accept: 'application/json'
+  //     }
+  //   });
+  //   const resJSON = await response.json();
+  //   return
+  // } catch (error) {
+  //   console.log(error);
+  // }
 };
 
 const auth0 = new Auth0({ domain: auth0Domain, clientId: auth0ClientId });
 
 // get all subtopics
 export const getSubtopics = async dispatch => {
-  const url = 'http://localhost:3000';
   dispatch({ type: 'SUBTOPICS_FETCHING' });
-  try {
-    const response = await fetch(`${LOCAL}/subtopics`);
-    const resJson = await response.json();
-    dispatch({ type: 'SUBTOPICS_FETCHED', payload: resJson });
-  } catch (error) {
-    dispatch({ type: 'SUBTOPICS_FAILED', payload: error });
-    throw new Error(error);
-  }
+
+  axios
+    .get(`${LOCAL}/subtopics`)
+    .then(res => {
+      console.log('subtopics', res.data);
+      dispatch({ type: 'SUBTOPICS_FETCHED', payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: 'SUBTOPICS_FAILED', payload: error });
+    });
+
+  // try {
+  //   const response = await fetch(`${LOCAL}/subtopics`);
+  //   const resJson = await response.json();
+  // } catch (error) {
+  //   throw new Error(error);
+  // }
 };
 
 // send a user to auth
@@ -153,30 +184,41 @@ const getUser = async (token, dispatch) => {
 // save that access_token similar to localstorage
 // and create a user in the database
 const makeUser = async (token, info) => {
-  // await AsyncStorage.setItem('accessToken', getAuth.accesstoken);
-  const body = JSON.stringify({
+  console.log(info);
+
+  const body = {
     username: info.nickname,
     id: info.sub,
     email: info.email,
     avatar: info.picture
-  }); // send  nickname as a 'username'
-  try {
-    const postUser = await fetch(`${LOCAL}/users`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body
+  }; // send  nickname as a 'username'
+
+  axios
+    .post(`${LOCAL}/users`, body)
+    .then(res => {
+      console.log('post user', res.data);
+    })
+    .catch(err => {
+      console.log('error posting ', err);
     });
-    return postUser;
-  } catch (error) {
-    console.log('error in sending user', error);
-  }
+
+  // try {
+  //   const postUser = await fetch(`${LOCAL}/users`, {
+  //     method: 'POST',
+  //     headers: {
+  //       Accept: 'application/json',
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body
+  //   });
+  //   return postUser;
+  // } catch (error) {
+  //   console.log('error in sending user', error);
+  // }
 };
 
 // logout a user through state
-export const handleLogout = async (dispatch, history) => {
+export const handleLogout = async dispatch => {
   try {
     const del = await deleteData();
     const dis = await dispatch({ type: 'LOGOUT' });
@@ -235,6 +277,7 @@ export const uploadImage = () => {
   });
 };
 
+// TODO: Change this and all other 'posts' to seperate file
 export const createSubtopic = async (info, sub, dispatch) => {
   console.log(sub);
   const body = JSON.stringify({
