@@ -26,6 +26,3 @@ const PostPage = props => {
   return <Post />;
 };
 export default PostPage;
-
-// // <NavWrapper>
-// {/* </NavWrapper> */}
