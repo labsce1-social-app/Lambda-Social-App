@@ -42,7 +42,7 @@ export const getDiscussions = (query, dispatch) => {
   const q = new URLSearchParams({ sort: query });
 
   axios
-    .get(`${LOCAL}/discussions/?${q.toString()}`)
+    .get(`${base_url}/discussions/?${q.toString()}`)
     .then(res => {
       console.log('AXIOS BB', res.data);
       dispatch({ type: 'TOP_DISCUSSIONS_FETCHED', payload: res.data });
@@ -54,7 +54,7 @@ export const getDiscussions = (query, dispatch) => {
 
   // try {
   //   // fetch the data with query
-  //   // const response = await fetch(`${LOCAL}/discussions/?${q.toString()}`);
+  //   // const response = await fetch(`${base_url}/discussions/?${q.toString()}`);
   //   // convert the data to json format otherwise you will just get a promise back
   //   const responseJson = await response.json();
   //   // set the data to global state
@@ -72,7 +72,7 @@ export const getDiscussionsForSub = (id, dispatch) => {
   dispatch({ type: 'DISCUSSIONS_FETCHING' });
 
   axios
-    .get(`${LOCAL}/discussions/s/${id}`)
+    .get(`${base_url}/discussions/s/${id}`)
     .then(res => {
       console.log(res.data);
       dispatch({ type: 'DISCUSSIONS_FETCHED', payload: res.data });
@@ -85,7 +85,7 @@ export const getDiscussionsForSub = (id, dispatch) => {
 
   // try {
   //   // const idJson = await id.json();
-  //   const response = await fetch(`${LOCAL}/discussions/s/${id}`);
+  //   const response = await fetch(`${base_url}/discussions/s/${id}`);
   //   const resJson = await response.json();
   //   return
   // } catch (error) {
@@ -99,7 +99,7 @@ export const getCommentsByDiscussionId = (id, dispatch) => {
   dispatch({ type: 'COMMENTS_FETCHING' });
 
   axios
-    .get(`${LOCAL}/comments/d/${id}`)
+    .get(`${base_url}/comments/d/${id}`)
     .then(res => {
       console.log('get comments', res.data);
       dispatch({ type: 'COMMENTS_FETCHED_SUCCESS', payload: res.data });
@@ -110,7 +110,7 @@ export const getCommentsByDiscussionId = (id, dispatch) => {
     });
 
   // try {
-  //   const response = await fetch(`${LOCAL}/comments/d/${id}`, {
+  //   const response = await fetch(`${base_url}/comments/d/${id}`, {
   //     headers: {
   //       'Content-Type': 'application/json',
   //       Accept: 'application/json'
@@ -128,7 +128,7 @@ export const getSubtopics = async dispatch => {
   dispatch({ type: 'SUBTOPICS_FETCHING' });
 
   axios
-    .get(`${LOCAL}/subtopics`)
+    .get(`${base_url}/subtopics`)
     .then(res => {
       console.log('subtopics', res.data);
       dispatch({ type: 'SUBTOPICS_FETCHED', payload: res.data });
@@ -139,7 +139,7 @@ export const getSubtopics = async dispatch => {
     });
 
   // try {
-  //   const response = await fetch(`${LOCAL}/subtopics`);
+  //   const response = await fetch(`${base_url}/subtopics`);
   //   const resJson = await response.json();
   // } catch (error) {
   //   throw new Error(error);
@@ -175,7 +175,7 @@ export const handleAuth = async dispatch => {
 // get user from our db
 const getUser = async (user, dispatch) => {
   axios
-    .get(`${LOCAL}/users/${user.sub}`)
+    .get(`${base_url}/users/${user.sub}`)
     .then(res => {
       console.log('inside getuser axios res', res.data);
 
@@ -206,7 +206,7 @@ const makeUser = async (info, dispatch) => {
   }; // send  nickname as a 'username'
 
   axios
-    .post(`${LOCAL}/users`, body)
+    .post(`${base_url}/users`, body)
     .then(res => {
       // console.log('post user', res.data);
       // const user = await auth0.auth.userInfo({ token: token });
@@ -222,7 +222,7 @@ const makeUser = async (info, dispatch) => {
     });
 
   // try {
-  //   const postUser = await fetch(`${LOCAL}/users`, {
+  //   const postUser = await fetch(`${base_url}/users`, {
   //     method: 'POST',
   //     headers: {
   //       Accept: 'application/json',
@@ -305,7 +305,7 @@ export const createSubtopic = async (info, sub, dispatch) => {
   });
 
   try {
-    const newSubtopic = await fetch(`${LOCAL}/subtopics/create`, {
+    const newSubtopic = await fetch(`${base_url}/subtopics/create`, {
       method: 'POST',
       body,
       headers: new Headers({
