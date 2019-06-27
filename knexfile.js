@@ -19,14 +19,14 @@ module.exports = {
     seeds: { directory: './server/data/seeds' },
     useNullAsDefault: true
   },
-  production: {
-    client: 'postgresql',
-    connection: prodDbConnection,
-    useNullAsDefault: true,
-    migrations: {
-      directory: './server/data/migrations',
-      tableName: 'knex_migrations'
-    },
-    seeds: { directory: './server/data/seeds' }
-  }
+  // production: {
+  //   client: 'postgresql',
+  //   connection: prodDbConnection,
+  //   useNullAsDefault: true,
+  //   migrations: {
+  //     directory: './server/data/migrations',
+  //     tableName: 'knex_migrations'
+  //   },
+  //   seeds: { directory: './server/data/seeds' }
+  // }
 };
