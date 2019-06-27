@@ -48,7 +48,7 @@ export const getDiscussions = (query, dispatch) => {
     })
     .catch(err => {
       dispatch({ type: 'TOP_DISCUSSIONS_FAILED', payload: error });
-      console.log('FUUCK', err);
+      console.log(err);
     });
 
   // try {
