@@ -19,7 +19,7 @@ const DrawerContent = props => {
 
       {state.isAuthenticated === false ? (
         <Text
-          style={{ padding: 10, border: '2px solid blue' }}
+          style={{ padding: 10 }}
           title="login"
           onPress={() => {
             handleAuth(dispatch);
@@ -30,7 +30,7 @@ const DrawerContent = props => {
         </Text>
       ) : (
         <Text
-          style={{ padding: 10, border: '2px solid blue' }}
+          style={{ padding: 10 }}
           title="logout"
           onPress={() => {
             handleLogout(dispatch);
