@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Store } from '../../context';
 import { Footer, FooterTab, Button, Icon } from 'native-base';
 import { handleAuth, handleLogout } from '../../utils/Requests';
-import isEmpty from '../../utils/isEmpty';
+import isEmpty from '../../utils/utility';
 
 const NativeFooter = ({ history }) => {
   const { state, dispatch } = useContext(Store);

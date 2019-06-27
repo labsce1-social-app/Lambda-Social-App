@@ -3,8 +3,8 @@ import { withRouter } from 'react-router-native';
 import { FlatList } from 'react-native';
 import { Store } from '../../context';
 const Discussion = lazy(() => import('./Discussion'));
-import { Text } from 'native-base';
-
+import { Text, Badge } from 'native-base';
+import style from './Style';
 import { getDiscussions, isAuthed } from '../../utils/Requests';
 
 const TopDiscussions = props => {
@@ -14,7 +14,6 @@ const TopDiscussions = props => {
     getDiscussions(state.sortBy, dispatch);
   }, []);
 
-  //   console.log('logging inside top discussions', state.top_discussions);
 
   return state.top_discussions_loading === true ? (
     <Text>Loading...</Text>
@@ -34,6 +33,13 @@ const TopDiscussions = props => {
               date={item.created_at}
               comment={item.comments}
               upvotes={item.upvotes}
+              hashtags={item.hashtags && item.hashtags.map((hashtag) => (
+                 <Badge style={style.badgeColors}>
+                    <Text style={style.hashtagText}>
+                        {hashtag}
+                    </Text>
+                </Badge>   
+            ))}
             />
           </Suspense>
         );

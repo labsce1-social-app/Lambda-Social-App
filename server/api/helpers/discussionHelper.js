@@ -36,6 +36,12 @@ LIMIT 10
 `);
 };
 
+getHashTagsByDiscussionId = id => {
+  return db.raw(`
+  select hashtag.hashtag, hashtag.discussion_id from hashtag where hashtag.discussion_id = ${id}
+  `)
+}
+
 // add's user column to discussion at id
 const joinUsersAndSubtopicAtId = id => {
   return db.raw(`
@@ -173,5 +179,6 @@ module.exports = {
   checkValidDiscussion,
   userCanDeleteDiscussion,
   joinUsersAtSubtopicId,
-  topDiscussions
+  topDiscussions,
+  getHashTagsByDiscussionId
 };
