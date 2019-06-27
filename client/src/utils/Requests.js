@@ -7,17 +7,18 @@ import {
   AWS_ACCESS_KEY_ID,
   AWS_SECRET_ACCESS_KEY
 } from 'react-native-dotenv';
+import { storeData, getData, deleteData } from './AsyncStorage';
+
 import Auth0 from 'react-native-auth0';
 import ImagePicker from 'react-native-image-picker';
+import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 import { RNS3 } from 'react-native-aws3';
+
 const auth0ClientId = AUTH0_CLIENT;
 const auth0Domain = AUTH0_DOMAIN;
 const local = `http://localhost:3000`;
 const base_url = `https://social-app-test.herokuapp.com`;
-// place all HTTP requests in here
-// import AsyncStorage from '@react-native-community/async-storage';
-import { storeData, getData, deleteData } from './AsyncStorage';
-import axios from 'axios';
 
 // check if a user is logged in
 export const isAuthed = async dispatch => {
@@ -122,8 +123,6 @@ export const getCommentsByDiscussionId = (id, dispatch) => {
   // }
 };
 
-const auth0 = new Auth0({ domain: auth0Domain, clientId: auth0ClientId });
-
 // get all subtopics
 export const getSubtopics = async dispatch => {
   dispatch({ type: 'SUBTOPICS_FETCHING' });
@@ -147,7 +146,9 @@ export const getSubtopics = async dispatch => {
   // }
 };
 
-// send a user to auth
+// send a user to auth0
+const auth0 = new Auth0({ domain: auth0Domain, clientId: auth0ClientId });
+
 export const handleAuth = async dispatch => {
   try {
     const getAuth = await auth0.webAuth.authorize({
@@ -155,35 +156,46 @@ export const handleAuth = async dispatch => {
       audience: 'https://lambdasocial.auth0.com/api/v2/',
       prompt: 'login'
     });
-    const getUserWithAuth = await getUser(getAuth.accessToken, dispatch); // send access_token
 
-    return getUserWithAuth;
+    const { idToken, accessToken } = getAuth;
+
+    // rather than another call to auth0 decode idToken for info from auth0
+    const decUser = jwtDecode(idToken);
+
+    // console.log('handleAuth decoded', decUser);
+
+    await storeData('accessToken', accessToken);
+
+    await getUser(decUser, dispatch); // send access_token
   } catch (error) {
     console.log('error in login', error);
   }
 };
 
-// Call auth0 for user info
-const getUser = async (token, dispatch) => {
-  storeData('accessToken', token);
-  try {
-    const user = await auth0.auth.userInfo({ token: token });
+// get user from our db
+const getUser = async (user, dispatch) => {
+  axios
+    .get(`${LOCAL}/users/${user.sub}`)
+    .then(res => {
+      console.log('inside getuser axios res', res.data);
 
-    const action = await dispatch({ type: 'SET_CURRENT_USER', payload: user });
-    const followup = await makeUser(token, user);
-    return {
-      action,
-      followup
-      // setUser
-    };
-  } catch (err) {
-    console.log(err);
-  }
+      // checking if we got a user exists in our db and skips the post
+      if (res.data) {
+        dispatch({
+          type: 'SET_CURRENT_USER',
+          payload: res.data
+        });
+      } else {
+        makeUser(user, dispatch);
+      }
+    })
+    .catch(err => {
+      console.log('axios call error', err);
+    });
 };
 
-// save that access_token similar to localstorage
 // and create a user in the database
-const makeUser = async (token, info) => {
+const makeUser = async (info, dispatch) => {
   console.log(info);
 
   const body = {
@@ -196,7 +208,14 @@ const makeUser = async (token, info) => {
   axios
     .post(`${LOCAL}/users`, body)
     .then(res => {
-      console.log('post user', res.data);
+      // console.log('post user', res.data);
+      // const user = await auth0.auth.userInfo({ token: token });
+      // console.log(body);
+
+      dispatch({
+        type: 'SET_CURRENT_USER',
+        payload: body
+      });
     })
     .catch(err => {
       console.log('error posting ', err);
