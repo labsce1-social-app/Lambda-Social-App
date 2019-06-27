@@ -10,7 +10,8 @@ const {
   checkValidDiscussion,
   userCanDeleteDiscussion,
   topDiscussions,
-  joinUsersAtSubtopicId
+  joinUsersAtSubtopicId,
+  getHashTagsByDiscussionId
 } = require('../helpers/index.js');
 
 // used for updated timestamps
@@ -27,15 +28,28 @@ TESTS: {
 }
 */
 
-router.get('/?', (req, res) => {
+router.get('/?', async (req, res) => {
   const { sort } = req.query;
-  topDiscussions(sort)
-    .then(discussions => {
-      res.status(200).json(discussions);
-    })
-    .catch(err => {
-      res.status(500).json({ error: err });
-    });
+  try {
+    const top = await topDiscussions(sort)
+      .map(async (item) => {
+        return await getHashTagsByDiscussionId(item.id)
+          .reduce(async (acc, { hashtag }) => {
+            console.log("accum: ", acc)
+            const flattenDeep = (arr) => {
+              return arr.reduce((acc, val) => Array.isArray(val) ? acc.concat(flattenDeep(val)) : acc.concat(val), [])
+            }
+            let obj = {
+              ...item, hashtags: flattenDeep([acc.hashtags, hashtag])
+            }
+            return obj;
+          }, [])
+      })
+
+    return res.status(200).json(top)
+  } catch (err) {
+    return res.status(500).json(err)
+  }
 });
 
 /*

@@ -19,7 +19,6 @@ discussion.title,
 discussion.image,
 discussion.created_at,
 discussion.updated_at,
-hashtag.hashtag as hashtags,
 (select count( comment.comment_post) from comment where discussion.id = comment.discussion_id) as comments,
 (select count( upvote.user_id) from upvote where upvote.discussion_id = discussion.id) as upvotes
 FROM discussion
@@ -31,13 +30,17 @@ inner join comment
 on comment.user_id = user.id
 inner join upvote
 on upvote.discussion_id = discussion.id
-inner join hashtag
-on hashtag.discussion_id = discussion.id
 GROUP BY discussion.id
 ORDER BY ${sortBy} DESC
 LIMIT 10
 `);
 };
+
+getHashTagsByDiscussionId = id => {
+  return db.raw(`
+  select hashtag.hashtag, hashtag.discussion_id from hashtag where hashtag.discussion_id = ${id}
+  `)
+}
 
 // add's user column to discussion at id
 const joinUsersAndSubtopicAtId = id => {
@@ -176,5 +179,6 @@ module.exports = {
   checkValidDiscussion,
   userCanDeleteDiscussion,
   joinUsersAtSubtopicId,
-  topDiscussions
+  topDiscussions,
+  getHashTagsByDiscussionId
 };
