@@ -10,6 +10,8 @@ const PostPage = props => {
 
   const postId = props.navigation.getParam('postId', 'None');
 
+  console.log(props.navigation);
+
   // need to get the data here because it is where we have access to the id from react router.
   // const { id } = match.params;
 
@@ -24,6 +26,3 @@ const PostPage = props => {
   return <Post />;
 };
 export default PostPage;
-
-// // <NavWrapper>
-// {/* </NavWrapper> */}

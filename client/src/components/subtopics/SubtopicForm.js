@@ -30,7 +30,7 @@ const SubtopicForm = ({ history }) => {
 
     createSubtopic(newTopic, state.user.sub, dispatch);
 
-    history.push('/subtopics'); // change to new subtopic upon creation
+    // history.push('/subtopics'); // change to new subtopic upon creation
   };
   // console.log('IN SUBTOPIC FORM OUR USER: ', state.user);
 
