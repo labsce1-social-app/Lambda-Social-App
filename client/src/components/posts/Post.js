@@ -5,7 +5,7 @@ import { Card } from 'native-base';
 import PostHeader from './PostHeader';
 import style from './Style';
 const Comment = lazy(() => import('./Comment'));
-import { isEmpty } from '../../utils/isEmpty'
+import { isEmpty } from '../../utils/utility'
 import Reply from './Reply';
 
 // get's discussion id from Route through match.params.id

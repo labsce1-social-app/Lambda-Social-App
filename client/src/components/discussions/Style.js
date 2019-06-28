@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native';
 
+
+
 export default StyleSheet.create({
     // Post Summary Icon
     avatar: {
@@ -41,5 +43,21 @@ export default StyleSheet.create({
         width: '70%',
         margin: 10,
         alignSelf: 'flex-end'
+    },
+    hashtags: {
+        flex: 0,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        width: '100%',
+        marginBottom: 10,
+        justifyContent: 'space-evenly',
+    },
+    badgeColors: {
+        backgroundColor: '#d9534f',
+        margin: 5,
+    },
+    hashtagText: {
+        fontSize: 12,
+        fontWeight: 'bold'
     }
 });

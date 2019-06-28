@@ -3,6 +3,24 @@ const fakeIds = require('./fakedata.js');
 const ids = require('./user_id.js');
 const copy_ids = [...ids];
 
+const hashTags = ['#react', '#javascript', '#design', '#ux', '#redux', '#hooks', '#help', '#photoshop', '#graphql', '#node', '#database', '#sql', '#css', '#aspdotnet', '#games', '#editorflex', '#angular', '#hired', '#parttime', '#announcements']
+
+// pick multiple values from an array
+const pickMultiple = (arr) => {
+  // use a set to not get dups
+  let res = [];
+  // I only want 3
+  for (let i = 0; i < 3; i++) {
+    // randomize the indexes
+    let x = arr[Math.floor(Math.random() * (arr.length - 1))]
+    // if not
+    if (!res.includes(x)) {
+      res.push(x)
+    }
+  };
+  return res;
+}
+
 // picks a random number from n to k
 function getRandomArbitrary(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
@@ -75,6 +93,14 @@ function generateUpvotes() {
   };
 }
 
+// creates a table for hashtags
+function generateHashTags() {
+  return {
+    hashtag: pickOne(hashTags),
+    discussion_id: getRandomArbitrary(1, 20)
+  }
+}
+
 // helper to generate a specified amount of users
 //call back will be the users function, iterator will be how many we want to generate
 function accumulate(cb, iteration) {
@@ -94,5 +120,6 @@ module.exports = {
   genSubtopicUsers: accumulate(generateSubtopic_users, 20),
   genDiscussions: accumulate(generateDiscussions, 20),
   genComments: accumulate(generateComments, 50),
-  genUpvotes: accumulate(generateUpvotes, 89)
+  genUpvotes: accumulate(generateUpvotes, 89),
+  genHashtags: accumulate(generateHashTags, 100)
 };
