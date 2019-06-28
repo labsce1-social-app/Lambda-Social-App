@@ -8,10 +8,8 @@ import Home from './src/views/Home';
 import DiscussionsPage from './src/views/DiscussionsPage';
 import PostPage from './src/views/PostPage';
 import SubtopicsPage from './src/views/SubtopicsPage';
-import SubtopicForm from './src/components/subtopics/SubtopicForm';
+import SubtopicsLoading from './src/components/subtopics/SubtopicsLoading';
 import AddSModal from './src/components/subtopics/AddSModal';
-
-import TopDiscussions from './src/components/discussions/TopDiscussions';
 
 import {
   createDrawerNavigator,
@@ -81,6 +79,9 @@ const SubtopicsStack = createStackNavigator(
     },
     Discussions: {
       screen: DiscussionsPage
+    },
+    Load: {
+      screen: SubtopicsLoading
     },
 
     Modal: {

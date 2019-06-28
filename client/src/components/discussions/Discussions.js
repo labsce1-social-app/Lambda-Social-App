@@ -8,7 +8,6 @@ import { config } from '../../utils/dimensions';
 import { getDiscussionsForSub } from '../../utils/Requests';
 import style from './Style';
 
-
 import { withNavigation } from 'react-navigation';
 
 const Discussions = props => {
@@ -39,9 +38,14 @@ const Discussions = props => {
             date={item.created_at}
             comment={item.comments}
             upvotes={item.upvotes}
-            hashtags={item.hashtags && item.hashtags.map((hashtag) => (
-              <Badge style={style.badgeColors}><Text style={style.hashtagText}>{hashtag}</Text></Badge>
-            ))}
+            hashtags={
+              item.hashtags &&
+              item.hashtags.map((hashtag, i) => (
+                <Badge key={i} style={style.badgeColors}>
+                  <Text style={style.hashtagText}>{hashtag}</Text>
+                </Badge>
+              ))
+            }
           />
         </Suspense>
       )}

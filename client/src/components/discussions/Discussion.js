@@ -41,10 +41,8 @@ const Discussion = props => {
             </View>
           </Body>
         </Left>
- <View style={style.hashtags}>
-                {props.hashtags}
-            </View>
       </CardItem>
+      <CardItem style={style.hashtags}>{props.hashtags}</CardItem>
     </Card>
   );
 };

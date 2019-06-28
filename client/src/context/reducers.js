@@ -129,7 +129,7 @@ export const reducer = (state = initialState, action) => {
     case 'CREATE_SUBTOPIC':
       return {
         ...state,
-        subTopics: action.payload
+        subtopics_loading: false
       };
     default:
       throw new Error('not a valid action');

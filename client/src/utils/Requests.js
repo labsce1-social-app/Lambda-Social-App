@@ -162,10 +162,9 @@ export const handleAuth = async dispatch => {
     // rather than another call to auth0 decode idToken for info from auth0
     const decUser = jwtDecode(idToken);
 
-    // console.log('handleAuth decoded', decUser);
-
     await storeData('accessToken', accessToken);
 
+    console.log('handleAuth decoded', decUser);
     await getUser(decUser, dispatch); // send access_token
   } catch (error) {
     console.log('error in login', error);
@@ -183,7 +182,7 @@ const getUser = async (user, dispatch) => {
       if (res.data) {
         dispatch({
           type: 'SET_CURRENT_USER',
-          payload: res.data
+          payload: res.data // user's auth0 sub is being saved as id in state(state.user.id)
         });
       } else {
         makeUser(user, dispatch);
@@ -297,26 +296,37 @@ export const uploadImage = () => {
 };
 
 // TODO: Change this and all other 'posts' to seperate file
-export const createSubtopic = async (info, sub, dispatch) => {
-  console.log(sub);
-  const body = JSON.stringify({
+export const createSubtopic = (info, sub, dispatch) => {
+  // console.log('fetching in request');
+  dispatch({ type: 'SUBTOPICS_FETCHING' });
+
+  const body = {
     title: info,
     creater_id: sub
-  });
+  };
 
-  try {
-    const newSubtopic = await fetch(`${base_url}/subtopics/create`, {
-      method: 'POST',
-      body,
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      })
+  axios
+    .post(`${base_url}/subtopics/create`, body)
+    .then(res => {
+      console.log('res post subtopic', res.data);
+      dispatch({ type: 'CREATE_SUBTOPIC', payload: res.data.id[0] });
+    })
+    .catch(err => {
+      console.log(err);
     });
-    const subId = await newSubtopic.json();
-    // console.log(subId.id[0]);
 
-    return dispatch({ type: 'CREATE_SUBTOPIC', payload: subId[0] });
-  } catch (error) {
-    console.log(error);
-  }
+  // try {
+  //   const newSubtopic = await fetch(`${base_url}/subtopics/create`, {
+  //     method: 'POST',
+  //     body,
+  //     headers: new Headers({
+  //       'Content-Type': 'application/json'
+  //     })
+  //   });
+  //   const subId = await newSubtopic.json();
+  //   // console.log(subId.id[0]);
+
+  // } catch (error) {
+  //   console.log(error);
+  // }
 };
