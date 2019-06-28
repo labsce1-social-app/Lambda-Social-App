@@ -15,7 +15,7 @@ import { Store } from '../../context';
 
 import { getSubtopics } from '../../utils/Requests';
 
-const SubtopicForm = props => {
+const SubtopicsLoading = props => {
   const { state, dispatch } = useContext(Store);
 
   useEffect(() => {
@@ -35,4 +35,4 @@ const SubtopicForm = props => {
   );
 };
 
-export default SubtopicForm;
+export default SubtopicsLoading;

@@ -8,7 +8,7 @@ import Home from './src/views/Home';
 import DiscussionsPage from './src/views/DiscussionsPage';
 import PostPage from './src/views/PostPage';
 import SubtopicsPage from './src/views/SubtopicsPage';
-import SubtopicsLoading from './src/components/subtopics/SubtopicsLoadiing';
+import SubtopicsLoading from './src/components/subtopics/SubtopicsLoading';
 import AddSModal from './src/components/subtopics/AddSModal';
 
 import {
