@@ -26,15 +26,14 @@ const DrawerButton = props => {
 
   return (
     <TouchableOpacity
+      style={{ backgroundColor: '#BB1333', borderRadius: 100, marginBottom: 6 }}
       onPress={() => props.navigation.navigate('PostADiscussion')}
     >
       {/* <Icon name="paper-plane" /> */}
       <Image
         style={{
-          height: 40,
-          width: 40,
-
-          padding: 5
+          height: 50,
+          width: 50
         }}
         source={require('../../assets/add-icon.png')}
       />
