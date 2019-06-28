@@ -17,6 +17,9 @@ import {
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import DrawerContent from './src/components/navbar/DrawerContent';
+import DrawerButton from './src/components/navbar/DrawerButton';
+import CreateDiscussion from './src/components/discussions/CreateDiscussion';
+import CreateButton from './src/components/navbar/CreateButton';
 
 // this component serves as a routing page, it will render everything based on the current url so it will be used to navigate the site.
 
@@ -27,24 +30,10 @@ const HomeStack = createStackNavigator({
       title: `${navigation.state.routeName}`,
 
       headerStyle: {
-        elevation: 0 // removes shadow for android
+        elevation: 3 // removes shadow for android
       },
 
-      headerLeft: (
-        <Text // toggles drawer
-          onPress={() => {
-            navigation.toggleDrawer();
-          }}
-        >
-          LAMBDA
-        </Text>
-        // TODO: <Button transparent iconLeft onPress={() => navigation.toggleDrawer()}>
-        //   <Image // toggles drawer
-        //     style={{ width: 35, height: 35 }}
-        //     source={require('./src/assets/Lambda_Logo_Red.png')}
-        //   />
-        // </Button>
-      )
+      headerLeft: <DrawerButton navigation={navigation} />
     })
   },
   Post: {
@@ -60,18 +49,10 @@ const SubtopicsStack = createStackNavigator(
         title: `${navigation.state.routeName}`,
 
         headerStyle: {
-          elevation: 0 // removes shadow for android
+          elevation: 3 // removes shadow for android
         },
 
-        headerLeft: (
-          <Text // toggles drawer
-            onPress={() => {
-              navigation.toggleDrawer();
-            }}
-          >
-            LAMBDA
-          </Text>
-        )
+        headerLeft: <DrawerButton navigation={navigation} />
       })
     },
     Discussions: {
@@ -93,20 +74,45 @@ const SubtopicsStack = createStackNavigator(
   }
 );
 
-const FooterNavigator = createBottomTabNavigator({
-  Home: {
-    screen: HomeStack,
-    navigationOptions: {
-      tabBarIcon: <Icon name="home" />
+const FooterNavigator = createBottomTabNavigator(
+  {
+    Home: {
+      screen: HomeStack,
+      navigationOptions: {
+        tabBarIcon: <Icon name="home" />
+      }
+    },
+    PostADiscussion: {
+      screen: CreateDiscussion,
+
+      navigationOptions: ({ navigation }) => ({
+        tabBarIcon: <CreateButton navigation={navigation} />,
+        keyboardHidesTabBar: true
+      })
+    },
+    SubTopics: {
+      screen: SubtopicsStack,
+      navigationOptions: {
+        tabBarIcon: <Icon name="book" />
+      }
     }
   },
-  SubTopics: {
-    screen: SubtopicsStack,
-    navigationOptions: {
-      tabBarIcon: <Icon name="book" />
+  {
+    tabBarOptions: {
+      showLabel: false,
+      keyboardHidesTabBar: true,
+
+      style: {
+        shadowColor: 'rgba(58,55,55,0.1)',
+        shadowOpacity: 2,
+        shadowRadius: 20,
+        elevation: 3,
+        borderTopColor: 'transparent',
+        height: 52
+      }
     }
   }
-});
+);
 
 const rootDrawer = createDrawerNavigator(
   {
@@ -114,6 +120,7 @@ const rootDrawer = createDrawerNavigator(
       screen: FooterNavigator
     }
   },
+
   {
     initialRouteName: 'Top',
     contentComponent: props => <DrawerContent {...props} />
