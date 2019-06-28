@@ -296,8 +296,9 @@ export const uploadImage = () => {
 };
 
 // TODO: Change this and all other 'posts' to seperate file
-export const createSubtopic = async (info, sub, dispatch) => {
-  console.log(sub);
+export const createSubtopic = (info, sub, dispatch) => {
+  // console.log('fetching in request');
+  dispatch({ type: 'SUBTOPICS_FETCHING' });
 
   const body = {
     title: info,
