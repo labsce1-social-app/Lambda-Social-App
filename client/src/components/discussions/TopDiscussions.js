@@ -14,7 +14,6 @@ const TopDiscussions = props => {
     getDiscussions(state.sortBy, dispatch);
   }, []);
 
-
   return state.top_discussions_loading === true ? (
     <Text>Loading...</Text>
   ) : (
@@ -33,13 +32,14 @@ const TopDiscussions = props => {
               date={item.created_at}
               comment={item.comments}
               upvotes={item.upvotes}
-              hashtags={item.hashtags && item.hashtags.map((hashtag) => (
-                 <Badge style={style.badgeColors}>
-                    <Text style={style.hashtagText}>
-                        {hashtag}
-                    </Text>
-                </Badge>   
-            ))}
+              hashtags={
+                item.hashtags &&
+                item.hashtags.map((hashtag, i) => (
+                  <Badge key={i} style={style.badgeColors}>
+                    <Text style={style.hashtagText}>{hashtag}</Text>
+                  </Badge>
+                ))
+              }
             />
           </Suspense>
         );
