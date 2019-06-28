@@ -21,6 +21,8 @@ import { createBottomTabNavigator, BottomTabBar } from 'react-navigation-tabs';
 
 import DrawerContent from './src/components/navbar/DrawerContent';
 import DrawerButton from './src/components/navbar/DrawerButton';
+import CreateDiscussion from './src/components/discussions/CreateDiscussion';
+import CreateButton from './src/components/navbar/CreateButton';
 
 // this component serves as a routing page, it will render everything based on the current url so it will be used to navigate the site.
 
@@ -75,20 +77,36 @@ const SubtopicsStack = createStackNavigator(
   }
 );
 
-const FooterNavigator = createBottomTabNavigator({
-  Home: {
-    screen: HomeStack,
-    navigationOptions: {
-      tabBarIcon: <Icon name="home" />
+const FooterNavigator = createBottomTabNavigator(
+  {
+    Home: {
+      screen: HomeStack,
+      navigationOptions: {
+        tabBarIcon: <Icon name="home" />
+      }
+    },
+    PostADiscussion: {
+      screen: CreateDiscussion,
+
+      navigationOptions: ({ navigation }) => ({
+        tabBarIcon: <CreateButton navigation={navigation} />,
+        keyboardHidesTabBar: true
+      })
+    },
+    SubTopics: {
+      screen: SubtopicsStack,
+      navigationOptions: {
+        tabBarIcon: <Icon name="book" />
+      }
     }
   },
-  SubTopics: {
-    screen: SubtopicsStack,
-    navigationOptions: {
-      tabBarIcon: <Icon name="book" />
+  {
+    tabBarOptions: {
+      showLabel: false,
+      keyboardHidesTabBar: true
     }
   }
-});
+);
 
 const rootDrawer = createDrawerNavigator(
   {
