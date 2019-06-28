@@ -27,6 +27,7 @@ const SubtopicForm = props => {
     props.navigation.navigate('Subtopics');
   };
 
+  // TODO: Make this prettier
   return (
     <Container>
       <Text>I ndeed loading</Text>
