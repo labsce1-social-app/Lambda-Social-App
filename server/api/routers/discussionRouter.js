@@ -152,10 +152,12 @@ TESTS: {
     1) RETURNS DISCUSSIONS BY SUBTOPIC_ID
 }
 */
-get('/recent/:id', async (req, res) => {
+router.get('/recent/:id', async (req, res) => {
   const { id } = req.params;
+  console.log(id)
   try {
     const getData = await getCommentedDiscussionsbyUserId(id)
+    console.log(getData)
     return res.status(200).json(getData);
   } catch (error) {
     return res.status(500).json(error)

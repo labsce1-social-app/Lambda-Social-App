@@ -54,7 +54,7 @@ on discussion.subtopic_id = subtopic.id
 inner join user
 on user.id = discussion.creater_id
 inner join comment
-on comment.user_id =  ${id} or discussion.creater_id = ${id}
+on comment.user_id = '${id}'
 inner join upvote
 on upvote.discussion_id = discussion.id
 group by discussion.creater_id
