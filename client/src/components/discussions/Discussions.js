@@ -1,30 +1,18 @@
 import React, { useContext, useEffect, lazy, Suspense } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
-import { Store } from '../../context';
 const Discussion = lazy(() => import('./Discussion'));
 import { Text, Card, CardItem, Badge } from 'native-base';
 import { isEmpty } from '../../utils/utility';
 import { config } from '../../utils/dimensions';
-import { getDiscussionsForSub } from '../../utils/Requests';
 import style from './Style';
 
-import { withNavigation } from 'react-navigation';
 
-const Discussions = props => {
-  const { state, dispatch } = useContext(Store);
-  // const { id } = history.location;
-
-  const subId = props.navigation.getParam('subId');
-
-  useEffect(() => {
-    getDiscussionsForSub(subId, dispatch);
-  }, []);
-
-  return state.discussions_loading === true ? (
+const Discussions = ({ loading, discussions }) => {
+  return loading === true ? (
     <Text>Loading...</Text>
-  ) : state.discussions_loading === false && !isEmpty(state.discussions) ? (
+  ) : loading === false && !isEmpty(discussions) ? (
     <FlatList
-      data={state.discussions}
+      data={discussions}
       renderItem={({ item }) => (
         <Suspense fallback={<Text>Loading...</Text>}>
           <Text>Discussions By Subtopic</Text>
@@ -45,7 +33,7 @@ const Discussions = props => {
         </Suspense>
       )}
       keyExtractor={item => `${item.id}`}
-      refreshing={state.discussions_loading}
+      refreshing={loading}
     />
   ) : (
         <Card>
@@ -58,4 +46,4 @@ const Discussions = props => {
       );
 };
 
-export default withNavigation(Discussions);
+export default Discussions;

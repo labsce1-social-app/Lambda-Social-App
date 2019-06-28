@@ -1,18 +1,19 @@
-import TopDiscussions from '../components/discussions/TopDiscussions';
-// TODO: remove this later and place into it's own route
+import React, { useContext, useEffect } from 'react';
+import { withNavigation } from 'react-navigation';
+import Discussions from '../components/discussions/Discussions';
+
 import Sort from '../components/discussions/Sort';
 
 import { Container } from 'native-base';
 
-import React, { useContext, useEffect } from 'react';
 import { Store } from '../context/';
 import { getDiscussions, isAuthed } from '../utils/Requests';
-import { Text } from 'react-native';
 
 // this home is referring to TopDiscussions component ONLY
-// history is being pushed to component for route pushing/popping purposes
+
 const Home = props => {
   const { state, dispatch } = useContext(Store);
+
   useEffect(() => {
     isAuthed();
   }, () => isAuthed())
@@ -24,10 +25,12 @@ const Home = props => {
   return (
     <Container>
       <Sort />
-
-      <TopDiscussions />
+      <Discussions
+        loading={state.top_discussions_loading}
+        discussions={state.top_discussions}
+      />
     </Container>
   );
 };
 
-export default Home;
+export default withNavigation(Home);

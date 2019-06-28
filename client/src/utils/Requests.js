@@ -73,6 +73,17 @@ export const getDiscussionsForSub = async (id, dispatch) => {
   };
 };
 
+export const getRecentDiscussions = async (id, dispatch) => {
+  try {
+    await dispatch({ type: 'DISCUSSIONS_FETCHING', payload: true });
+    const res = await axios.get(`${base_url}/discussions/recent/${id}`)
+    return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: res.data });
+  } catch (err) {
+    console.log(err);
+    return dispatch({ type: 'DISCUSSIONS_FAILED', payload: err });
+  };
+};
+
 // used for the PostPage component
 // returns all comments and poster data for the comments page. Returns giant object with all post header data and arrays of comments.
 export const getCommentsByDiscussionId = (id, dispatch) => {
