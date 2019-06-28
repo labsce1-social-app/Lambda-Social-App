@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 
 import {
   Header,
@@ -19,14 +19,15 @@ import { Store } from '../../context';
 const AddSModal = props => {
   const { state, dispatch } = useContext(Store);
   const [newTopic, setTopic] = useState('');
-  // const addSModal = useRef();
+
+  // console.log('subs loading in modal', state.subtopics_loading);
 
   const handleSubmit = dispatch => {
-    console.log(newTopic);
+    // console.log(state.user.id);
 
-    createSubtopic(newTopic, state.user.sub, dispatch);
+    createSubtopic(newTopic, state.user.id, dispatch);
 
-    props.navigation.navigate('Subtopics'); // TODO: change to new subtopic upon creation
+    props.navigation.navigate('Load'); // TODO: change to new subtopic upon creation
   };
   // console.log('IN SUBTOPIC FORM OUR USER: ', state.user);
 

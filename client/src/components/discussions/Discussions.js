@@ -8,7 +8,6 @@ import { config } from '../../utils/dimensions';
 import { getDiscussionsForSub } from '../../utils/Requests';
 import style from './Style';
 
-
 import { withNavigation } from 'react-navigation';
 
 const Discussions = props => {

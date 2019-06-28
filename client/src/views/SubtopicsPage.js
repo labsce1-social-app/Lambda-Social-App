@@ -28,6 +28,3 @@ const SubtopicsPage = props => {
 };
 
 export default SubtopicsPage;
-
-//         <NavWrapper>
-// </NavWrapper>

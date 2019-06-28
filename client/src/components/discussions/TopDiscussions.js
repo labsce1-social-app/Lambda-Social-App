@@ -17,38 +17,40 @@ const TopDiscussions = props => {
     //     getDiscussions(state.sortBy, dispatch);
     // }, []);
 
-    return (
-        state.top_discussions &&
-        <FlatList
-            data={state.top_discussions}
-            renderItem={({ item }) => {
-                item.title
-                return (
-                    <Suspense fallback={<Text>Loading...</Text>}>
-                        <Discussion
-                            id={item.id}
-                            image={item.image}
-                            title={item.title.split(' ').join('-')}
-                            discussion={item.content}
-                            name={item.username}
-                            date={item.created_at}
-                            comment={item.comments}
-                            upvotes={item.upvotes}
-                            hashtags={item.hashtags && item.hashtags.map((hashtag, index) => (
-                                <Badge key={`hashtag-${hashtag[0]}-${index}`} style={style.badgeColors}>
-                                    <Text style={style.hashtagText}>
-                                        {hashtag}
-                                    </Text>
-                                </Badge>
-                            ))}
-                        />
-                    </Suspense>
-                );
-            }}
-            keyExtractor={(item, index) => `${index}-${item.id}`}
-            refreshing={state.top_discussions_loading}
-        />
-    );
+    return state.top_discussions_loading === true ? (
+        <Text>Loading...</Text>
+    ) : (
+            <FlatList
+                data={state.top_discussions}
+                renderItem={({ item }) => {
+                    return (
+                        <Suspense fallback={<Text>Loading...</Text>}>
+                            <Discussion
+                                // changeLink={() => history.push(`/post/${item.id}`)}
+                                id={item.id}
+                                image={item.image}
+                                title={item.title.split(' ').join('-')}
+                                discussion={item.content}
+                                name={item.username}
+                                date={item.created_at}
+                                comment={item.comments}
+                                upvotes={item.upvotes}
+                                hashtags={
+                                    item.hashtags &&
+                                    item.hashtags.map((hashtag, i) => (
+                                        <Badge key={i} style={style.badgeColors}>
+                                            <Text style={style.hashtagText}>{hashtag}</Text>
+                                        </Badge>
+                                    ))
+                                }
+                            />
+                        </Suspense>
+                    );
+                }}
+                keyExtractor={(item, index) => `${index}-${item.id}`}
+                refreshing={state.top_discussions_loading}
+            />
+        );
 };
 
 export default TopDiscussions;
