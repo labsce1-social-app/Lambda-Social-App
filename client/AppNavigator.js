@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Text } from 'native-base';
+import { Container, Text, Button, Icon, Image } from 'native-base';
 import { Route, Switch, withRouter, BackButton } from 'react-router-native';
 import Stack from 'react-router-native-stack';
 
@@ -20,7 +20,6 @@ import {
 } from 'react-navigation';
 
 import { createBottomTabNavigator, BottomTabBar } from 'react-navigation-tabs';
-import { Icon } from 'native-base';
 
 import DrawerContent from './src/components/navbar/DrawerContent';
 
@@ -44,6 +43,12 @@ const HomeStack = createStackNavigator({
         >
           LAMBDA
         </Text>
+        // TODO: <Button transparent iconLeft onPress={() => navigation.toggleDrawer()}>
+        //   <Image // toggles drawer
+        //     style={{ width: 35, height: 35 }}
+        //     source={require('./src/assets/Lambda_Logo_Red.png')}
+        //   />
+        // </Button>
       )
     })
   },
@@ -79,12 +84,14 @@ const SubtopicsStack = createStackNavigator(
     },
 
     Modal: {
-      screen: AddSModal
+      screen: AddSModal,
+      navigationOptions: ({ navigation }) => ({
+        title: 'Add Subtopic'
+      })
     }
   },
   {
-    mode: 'modal',
-    headerMode: 'none'
+    mode: 'modal'
   }
 );
 

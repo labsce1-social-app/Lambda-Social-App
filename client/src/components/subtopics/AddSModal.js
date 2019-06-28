@@ -21,30 +21,19 @@ const AddSModal = props => {
   const [newTopic, setTopic] = useState('');
   // const addSModal = useRef();
 
-  // const handleSubmit = dispatch => {
-  //   console.log(newTopic);
+  const handleSubmit = dispatch => {
+    console.log(newTopic);
 
-  //   createSubtopic(newTopic, state.user.sub, dispatch);
+    createSubtopic(newTopic, state.user.sub, dispatch);
 
-  //   history.push('/subtopics'); // change to new subtopic upon creation
-  // };
-  // // console.log('IN SUBTOPIC FORM OUR USER: ', state.user);
-
-  // showAddSModal = () => {
-  //   // STILL BROKEN: used to call ref in Modal SModal
-  //   this.refs.SModal.open();
-  // };
-  // const onOpen = () => {
-  //   console.log('modal is open');
-  // };
+    props.navigation.navigate('Subtopics'); // TODO: change to new subtopic upon creation
+  };
+  // console.log('IN SUBTOPIC FORM OUR USER: ', state.user);
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{ fontSize: 30 }}>This is a modal!</Text>
-      <Button onPress={() => props.navigation.goBack()} title="Dismiss">
-        <Text>Close Modal</Text>
-      </Button>
-      {/* <Form>
+      {/* <Text style={{ fontSize: 30 }}>This is a modal!</Text> */}
+      <Form>
         <Item floatingLabel>
           <Input placeholder="Title" onChangeText={e => setTopic(e)} />
         </Item>
@@ -60,7 +49,10 @@ const AddSModal = props => {
         ) : (
           <Text>Log in first</Text>
         )}
-      </Form> */}
+      </Form>
+      <Button onPress={() => props.navigation.goBack()} title="Dismiss">
+        <Text>Close Modal</Text>
+      </Button>
     </View>
   );
 };
