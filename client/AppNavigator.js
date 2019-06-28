@@ -109,7 +109,7 @@ const FooterNavigator = createBottomTabNavigator(
         shadowColor: 'rgba(58,55,55,0.1)',
         shadowOpacity: 2,
         shadowRadius: 20,
-        elevation: 7,
+        elevation: 3,
         borderTopColor: 'transparent',
         height: 52
       }
