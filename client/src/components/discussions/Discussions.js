@@ -30,7 +30,6 @@ const Discussions = props => {
         <Suspense fallback={<Text>Loading...</Text>}>
           <Text>Discussions By Subtopic</Text>
           <Discussion
-            // changeLink={() => history.push(`/post/${item.id}`)}
             id={item.id}
             image={item.image}
             title={item.title}
@@ -40,7 +39,8 @@ const Discussions = props => {
             comment={item.comments}
             upvotes={item.upvotes}
             hashtags={item.hashtags && item.hashtags.map((hashtag) => (
-              <Badge style={style.badgeColors}><Text style={style.hashtagText}>{hashtag}</Text></Badge>
+              <Badge key={`hashtag-${hashtag[0]}-${index}`}
+                style={style.badgeColors}><Text style={style.hashtagText}>{hashtag}</Text></Badge>
             ))}
           />
         </Suspense>
@@ -49,14 +49,14 @@ const Discussions = props => {
       refreshing={state.discussions_loading}
     />
   ) : (
-    <Card>
-      <CardItem>
-        <Text style={{ padding: 15, height: config.deviceHeight * 0.65 }}>
-          Looks like no one has created a discussion in this subtopic yet...
+        <Card>
+          <CardItem>
+            <Text style={{ padding: 15, height: config.deviceHeight * 0.65 }}>
+              Looks like no one has created a discussion in this subtopic yet...
         </Text>
-      </CardItem>
-    </Card>
-  );
+          </CardItem>
+        </Card>
+      );
 };
 
 export default withNavigation(Discussions);

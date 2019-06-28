@@ -32,8 +32,8 @@ const Splash = (props) => {
         isAuthed(dispatch);
     }, []);
 
-    useEffect(() => {
-        getDiscussions(state.sortBy, dispatch);
+    useEffect(async () => {
+        return getDiscussions(state.sortBy, dispatch);
     }, []);
 
     return state.splash === true ? (
