@@ -22,9 +22,9 @@ const AddSModal = props => {
   // const addSModal = useRef();
 
   const handleSubmit = dispatch => {
-    console.log(newTopic);
+    console.log(state.user.id);
 
-    createSubtopic(newTopic, state.user.sub, dispatch);
+    createSubtopic(newTopic, state.user.id, dispatch);
 
     props.navigation.navigate('Subtopics'); // TODO: change to new subtopic upon creation
   };
