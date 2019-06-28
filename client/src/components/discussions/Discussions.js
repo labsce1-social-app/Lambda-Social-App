@@ -37,7 +37,7 @@ const Discussions = props => {
             date={item.created_at}
             comment={item.comments}
             upvotes={item.upvotes}
-            hashtags={item.hashtags && item.hashtags.map((hashtag) => (
+            hashtags={item.hashtags && item.hashtags.map((hashtag, index) => (
               <Badge key={`hashtag-${hashtag[0]}-${index}`}
                 style={style.badgeColors}><Text style={style.hashtagText}>{hashtag}</Text></Badge>
             ))}

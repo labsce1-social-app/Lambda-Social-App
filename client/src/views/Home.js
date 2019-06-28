@@ -1,11 +1,10 @@
 import TopDiscussions from '../components/discussions/TopDiscussions';
 // TODO: remove this later and place into it's own route
 import Sort from '../components/discussions/Sort';
-import NavWrapper from './NavWrapper';
 
 import { Container } from 'native-base';
 
-import React, { useContext, lazy, Suspense, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Store } from '../context/';
 import { getDiscussions, isAuthed } from '../utils/Requests';
 import { Text } from 'react-native';
