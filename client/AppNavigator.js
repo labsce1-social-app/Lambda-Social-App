@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Text } from 'native-base';
+import { Container, Text, Button, Icon, Image } from 'native-base';
 import { Route, Switch, withRouter, BackButton } from 'react-router-native';
 import Stack from 'react-router-native-stack';
 
@@ -9,6 +9,7 @@ import DiscussionsPage from './src/views/DiscussionsPage';
 import PostPage from './src/views/PostPage';
 import SubtopicsPage from './src/views/SubtopicsPage';
 import SubtopicForm from './src/components/subtopics/SubtopicForm';
+import AddSModal from './src/components/subtopics/AddSModal';
 
 import TopDiscussions from './src/components/discussions/TopDiscussions';
 
@@ -19,7 +20,6 @@ import {
 } from 'react-navigation';
 
 import { createBottomTabNavigator, BottomTabBar } from 'react-navigation-tabs';
-import { Icon } from 'native-base';
 
 import DrawerContent from './src/components/navbar/DrawerContent';
 
@@ -43,6 +43,12 @@ const HomeStack = createStackNavigator({
         >
           LAMBDA
         </Text>
+        // TODO: <Button transparent iconLeft onPress={() => navigation.toggleDrawer()}>
+        //   <Image // toggles drawer
+        //     style={{ width: 35, height: 35 }}
+        //     source={require('./src/assets/Lambda_Logo_Red.png')}
+        //   />
+        // </Button>
       )
     })
   },
@@ -51,31 +57,43 @@ const HomeStack = createStackNavigator({
   }
 });
 
-const SubtopicsStack = createStackNavigator({
-  Subtopics: {
-    screen: SubtopicsPage,
-    navigationOptions: ({ navigation }) => ({
-      title: `${navigation.state.routeName}`,
+const SubtopicsStack = createStackNavigator(
+  {
+    Subtopics: {
+      screen: SubtopicsPage,
+      navigationOptions: ({ navigation }) => ({
+        title: `${navigation.state.routeName}`,
 
-      headerStyle: {
-        elevation: 0 // removes shadow for android
-      },
+        headerStyle: {
+          elevation: 0 // removes shadow for android
+        },
 
-      headerLeft: (
-        <Text // toggles drawer
-          onPress={() => {
-            navigation.toggleDrawer();
-          }}
-        >
-          LAMBDA
-        </Text>
-      )
-    })
+        headerLeft: (
+          <Text // toggles drawer
+            onPress={() => {
+              navigation.toggleDrawer();
+            }}
+          >
+            LAMBDA
+          </Text>
+        )
+      })
+    },
+    Discussions: {
+      screen: DiscussionsPage
+    },
+
+    Modal: {
+      screen: AddSModal,
+      navigationOptions: ({ navigation }) => ({
+        title: 'Add Subtopic'
+      })
+    }
   },
-  Discussions: {
-    screen: DiscussionsPage
+  {
+    mode: 'modal'
   }
-});
+);
 
 const FooterNavigator = createBottomTabNavigator({
   Home: {
