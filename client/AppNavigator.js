@@ -103,7 +103,16 @@ const FooterNavigator = createBottomTabNavigator(
   {
     tabBarOptions: {
       showLabel: false,
-      keyboardHidesTabBar: true
+      keyboardHidesTabBar: true,
+
+      style: {
+        shadowColor: 'rgba(58,55,55,0.1)',
+        shadowOpacity: 2,
+        shadowRadius: 20,
+        elevation: 7,
+        borderTopColor: 'transparent',
+        height: 52
+      }
     }
   }
 );
