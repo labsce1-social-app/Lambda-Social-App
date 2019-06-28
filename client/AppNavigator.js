@@ -20,6 +20,7 @@ import {
 import { createBottomTabNavigator, BottomTabBar } from 'react-navigation-tabs';
 
 import DrawerContent from './src/components/navbar/DrawerContent';
+import DrawerButton from './src/components/navbar/DrawerButton';
 
 // this component serves as a routing page, it will render everything based on the current url so it will be used to navigate the site.
 
@@ -30,24 +31,10 @@ const HomeStack = createStackNavigator({
       title: `${navigation.state.routeName}`,
 
       headerStyle: {
-        elevation: 0 // removes shadow for android
+        elevation: 3 // removes shadow for android
       },
 
-      headerLeft: (
-        <Text // toggles drawer
-          onPress={() => {
-            navigation.toggleDrawer();
-          }}
-        >
-          LAMBDA
-        </Text>
-        // TODO: <Button transparent iconLeft onPress={() => navigation.toggleDrawer()}>
-        //   <Image // toggles drawer
-        //     style={{ width: 35, height: 35 }}
-        //     source={require('./src/assets/Lambda_Logo_Red.png')}
-        //   />
-        // </Button>
-      )
+      headerLeft: <DrawerButton navigation={navigation} />
     })
   },
   Post: {
@@ -63,18 +50,10 @@ const SubtopicsStack = createStackNavigator(
         title: `${navigation.state.routeName}`,
 
         headerStyle: {
-          elevation: 0 // removes shadow for android
+          elevation: 3 // removes shadow for android
         },
 
-        headerLeft: (
-          <Text // toggles drawer
-            onPress={() => {
-              navigation.toggleDrawer();
-            }}
-          >
-            LAMBDA
-          </Text>
-        )
+        headerLeft: <DrawerButton navigation={navigation} />
       })
     },
     Discussions: {
@@ -117,6 +96,7 @@ const rootDrawer = createDrawerNavigator(
       screen: FooterNavigator
     }
   },
+
   {
     initialRouteName: 'Top',
     contentComponent: props => <DrawerContent {...props} />
