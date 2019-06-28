@@ -21,7 +21,9 @@ const NavLinks = ({ navigation, state, dispatch, text }) => {
                     <Icon name="arrow-forward" />
                 </Right>
             </CardItem>
-            <CardItem>
+            <CardItem button onPress={() => navigation.navigate('Discussions', {
+                subId: state.user.id
+            })}>
                 <Icon active name="md-pulse" />
                 <Text>Recent Posts</Text>
                 <Right>

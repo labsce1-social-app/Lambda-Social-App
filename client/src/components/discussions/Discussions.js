@@ -15,7 +15,7 @@ const Discussions = props => {
   // const { id } = history.location;
 
   const subId = props.navigation.getParam('subId');
-  // aborController is a clean up function for fetch
+
   useEffect(() => {
     getDiscussionsForSub(subId, dispatch);
   }, []);
