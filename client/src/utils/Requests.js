@@ -35,22 +35,17 @@ export const isAuthed = async dispatch => {
 };
 
 // getsDiscussions, can also take in a query string to sort the discussions, only good for top10 discussions on landing page.
-export const getDiscussions = (query, dispatch) => {
+export const getDiscussions = async (query, dispatch) => {
   // handle loading state
-  dispatch({ type: 'TOP_DISCUSSIONS_FETCHING' });
-
   const q = new URLSearchParams({ sort: query });
-
-  axios
-    .get(`${base_url}/discussions/?${q.toString()}`)
-    .then(res => {
-      console.log('AXIOS BB', res.data);
-      dispatch({ type: 'TOP_DISCUSSIONS_FETCHED', payload: res.data });
-    })
-    .catch(err => {
-      dispatch({ type: 'TOP_DISCUSSIONS_FAILED', payload: error });
-      console.log(err);
-    });
+  dispatch({ type: 'TOP_DISCUSSIONS_FETCHING', payload: true });
+  try {
+    const res = await axios.get(`${base_url}/discussions/?${q.toString()}`);
+    return dispatch({ type: 'TOP_DISCUSSIONS_FETCHED', payload: res.data });
+  } catch (err) {
+    console.log(err);
+    return dispatch({ type: 'TOP_DISCUSSIONS_FAILED', payload: err });
+  };
 
   // try {
   //   // fetch the data with query
@@ -67,29 +62,15 @@ export const getDiscussions = (query, dispatch) => {
   // }
 };
 
-export const getDiscussionsForSub = (id, dispatch) => {
-  // const url = 'http://localhost:3000'
-  dispatch({ type: 'DISCUSSIONS_FETCHING' });
-
-  axios
-    .get(`${base_url}/discussions/s/${id}`)
-    .then(res => {
-      console.log(res.data);
-      dispatch({ type: 'DISCUSSIONS_FETCHED', payload: res.data });
-    })
-    .catch(err => {
-      console.log(err);
-
-      dispatch({ type: 'DISCUSSIONS_FAILED', payload: err });
-    });
-
-  // try {
-  //   // const idJson = await id.json();
-  //   const response = await fetch(`${base_url}/discussions/s/${id}`);
-  //   const resJson = await response.json();
-  //   return
-  // } catch (error) {
-  // }
+export const getDiscussionsForSub = async (id, dispatch) => {
+  try {
+    await dispatch({ type: 'DISCUSSIONS_FETCHING', payload: true });
+    const res = await axios.get(`${base_url}/discussions/s/${id}`)
+    return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: res.data });
+  } catch (err) {
+    console.log(err);
+    return dispatch({ type: 'DISCUSSIONS_FAILED', payload: err });
+  };
 };
 
 // used for the PostPage component

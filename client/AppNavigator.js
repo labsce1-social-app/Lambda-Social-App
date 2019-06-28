@@ -1,9 +1,6 @@
 import React from 'react';
-import { Container, Text, Button, Icon, Image } from 'native-base';
-import { Route, Switch, withRouter, BackButton } from 'react-router-native';
-import Stack from 'react-router-native-stack';
+import { Text, Icon } from 'native-base';
 
-import Splash from './src/components/splash/Splash';
 import Home from './src/views/Home';
 import DiscussionsPage from './src/views/DiscussionsPage';
 import PostPage from './src/views/PostPage';
@@ -17,7 +14,7 @@ import {
   createStackNavigator
 } from 'react-navigation';
 
-import { createBottomTabNavigator, BottomTabBar } from 'react-navigation-tabs';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import DrawerContent from './src/components/navbar/DrawerContent';
 

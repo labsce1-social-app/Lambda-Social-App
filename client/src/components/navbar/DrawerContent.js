@@ -1,50 +1,32 @@
-import React, { useState, useContext } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-
-import { ScrollView } from 'react-native-gesture-handler';
-
-import { Container, Content, ListItem, Header, Button } from 'native-base';
-
+import React, { useContext } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
-import { handleAuth, handleLogout } from '../../utils/Requests';
 import { Store } from '../../context';
+import UserProfile from './UserProfile';
+import NavLinks from './NavLinks';
 
-const DrawerContent = props => {
+const DrawerContent = ({ navigation }) => {
   const { state, dispatch } = useContext(Store);
 
   return (
-    <ScrollView>
-      <Text>Drawer</Text>
-
-      {state.isAuthenticated === false ? (
-        <Text
-          style={{ padding: 10 }}
-          title="login"
-          onPress={() => {
-            handleAuth(dispatch);
-            props.navigation.closeDrawer();
-          }}
-        >
-          LOGIN
-        </Text>
-      ) : (
-        <Text
-          style={{ padding: 10 }}
-          title="logout"
-          onPress={() => {
-            handleLogout(dispatch);
-            props.navigation.closeDrawer();
-          }}
-        >
-          LOGOUT
-        </Text>
-      )}
-    </ScrollView>
+    <View style={styles.container}>
+      <UserProfile user={state.user} />
+      <NavLinks state={state} dispatch={dispatch} navigation={navigation}
+        text={state.isAuthenticated === false ? "Signin" : "Signout"} />
+    </View>
   );
 };
 
 export default withNavigation(DrawerContent);
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 15,
+    paddingTop: 50,
+    backgroundColor: '#F7F7F7'
+  }
+})
 
 /***Dynamic way of listing routes if we want to add routes to drawer */
 

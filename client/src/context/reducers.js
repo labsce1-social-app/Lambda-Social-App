@@ -1,7 +1,6 @@
 // initial state for the entire app, normally this would be split but for simplicity sake and due to the small scale of this app, this should work fine.
 
 export const initialState = {
-  splash: true,
   top_discussions: [],
   top_discussions_loading: false,
   top_discussions_error: '',
@@ -22,18 +21,14 @@ export const initialState = {
 export const reducer = (state = initialState, action) => {
   console.log(state);
   switch (action.type) {
-    case 'SPLASH_TO_FALSE':
-      return {
-        ...state,
-        splash: action.payload
-      };
     case 'TOP_DISCUSSIONS_FETCHING':
       return {
         ...state,
-        top_discussons_loading: true,
+        top_discussons_loading: action.payload,
         top_discussions_error: ''
       };
     case 'TOP_DISCUSSIONS_FETCHED':
+      console.log("top: ", action.payload)
       return {
         ...state,
         top_discussons_loading: false,

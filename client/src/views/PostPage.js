@@ -1,6 +1,5 @@
 import React, { useEffect, useContext } from 'react';
 import { Store } from '../context';
-import NavWrapper from './NavWrapper';
 import Post from '../components/posts/Post';
 import { getCommentsByDiscussionId } from '../utils/Requests';
 

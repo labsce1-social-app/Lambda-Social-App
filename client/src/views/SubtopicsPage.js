@@ -1,8 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import Sort from '../components/discussions/Sort';
 import Subtopics from '../components/subtopics/Subtopics';
-import NavWrapper from './NavWrapper';
-import { ScrollView } from 'react-native-gesture-handler';
 import { getSubtopics } from '../utils/Requests';
 import { Store } from '../context/';
 
@@ -20,9 +18,7 @@ const SubtopicsPage = props => {
   return (
     <Container>
       <Sort />
-      {/* <ScrollView> */}
       <Subtopics />
-      {/* </ScrollView> */}
     </Container>
   );
 };
