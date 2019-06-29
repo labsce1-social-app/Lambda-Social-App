@@ -15,7 +15,6 @@ const Discussions = ({ loading, discussions }) => {
       data={discussions}
       renderItem={({ item }) => (
         <Suspense fallback={<Text>Loading...</Text>}>
-          <Text>Discussions By Subtopic</Text>
           <Discussion
             id={item.id}
             image={item.image}
