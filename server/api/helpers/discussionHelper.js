@@ -36,6 +36,32 @@ LIMIT 10
 `);
 };
 
+const getCommentedDiscussionsbyUserId = id => {
+  return db.raw(`
+  SELECT distinct
+(select user.username from user where user.id = discussion.creater_id) as username,
+discussion.id as id,
+discussion.content,
+discussion.title,
+discussion.image,
+discussion.created_at,
+discussion.updated_at,
+(select count( comment.comment_post) from comment where discussion.id = comment.discussion_id) as comments,
+(select count( upvote.user_id) from upvote where upvote.discussion_id = discussion.id) as upvotes
+FROM discussion
+inner join subtopic
+on discussion.subtopic_id = subtopic.id
+inner join user
+on user.id = discussion.creater_id
+inner join comment
+on comment.user_id = '${id}'
+inner join upvote
+on upvote.discussion_id = discussion.id
+group by discussion.creater_id
+ORDER BY discussion.updated_at DESC
+`)
+}
+
 getHashTagsByDiscussionId = id => {
   return db.raw(`
   select hashtag.hashtag, hashtag.discussion_id from hashtag where hashtag.discussion_id = ${id}
@@ -180,5 +206,6 @@ module.exports = {
   userCanDeleteDiscussion,
   joinUsersAtSubtopicId,
   topDiscussions,
-  getHashTagsByDiscussionId
+  getHashTagsByDiscussionId,
+  getCommentedDiscussionsbyUserId
 };
