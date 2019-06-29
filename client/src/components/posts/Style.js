@@ -5,8 +5,8 @@ import { config } from '../../utils/dimensions';
 export default StyleSheet.create({
     container: {
         flex: 0,
-        minHeight: config.deviceHeight * 0.75,
-        maxHeight: config.deviceHeight * 0.75
+        minHeight: config.deviceHeight * 0.8,
+        maxHeight: config.deviceHeight * 0.8
     },
     post_image: {
         height: 200,
@@ -37,5 +37,48 @@ export default StyleSheet.create({
     },
     heart: {
         color: 'red'
+    },
+    reply_container: {
+        flex: 0,
+        padding: 2,
+        marginLeft: 40
+    },
+    reply_card: {
+        flex: 1,
+        flexDirection: 'row',
+        width: '100%', marginBottom: 0
+    },
+    reply_avatar: {
+        width: 40,
+        height: 40,
+        alignSelf: 'flex-start',
+        marginRight: 5
+    },
+    reply_body: {
+        flex: 1,
+        flexDirection: 'column',
+        marginBottom: 10,
+        backgroundColor: '#E9E9E9',
+        padding: 10,
+        borderRadius: 10
+    },
+    reply_buttons_container: {
+        flex: 1,
+        flexDirection: 'row',
+        textAlign: 'right',
+        alignSelf: 'flex-end',
+        paddingRight: 15,
+        marginBottom: 10
+    },
+    reply_date: {
+        color: '#606770',
+        fontWeight: 'bold',
+        fontSize: 14
+    },
+    reply_reply_button: {
+        marginLeft: 10,
+        color: '#606770',
+        fontWeight: 'bold',
+        fontSize: 14
     }
 });

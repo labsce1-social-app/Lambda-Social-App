@@ -7,7 +7,7 @@ import Sort from '../components/discussions/Sort';
 import { Container } from 'native-base';
 
 import { Store } from '../context/';
-import { getDiscussions, isAuthed } from '../utils/Requests';
+import { getDiscussions, isAuthed, getSubtopics } from '../utils/Requests';
 
 // this home is referring to TopDiscussions component ONLY
 
@@ -21,6 +21,13 @@ const Home = props => {
   useEffect(() => {
     getDiscussions(state.sortBy, dispatch);
   }, []);
+
+  useEffect(
+    () => {
+      getSubtopics(dispatch);
+    },
+    () => getSubtopics()
+  );
 
   return (
     <Container>

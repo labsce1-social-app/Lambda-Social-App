@@ -32,9 +32,7 @@ const PostHeader = (props) => {
                     padding: 10
                 }}>
 
-                    {/* <Icon name="heart" /> */}
                     <Reaction count={props.upvotes} image={require('../../assets/like.png')} />
-                    {/* <Text>{props.upvotes}</Text> */}
                 </View>
             </CardItem>
         </>

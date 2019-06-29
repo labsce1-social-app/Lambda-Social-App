@@ -27,7 +27,6 @@ const Post = () => {
                     />
                 </Suspense>
             ) : null}
-            <Text>Comments</Text>
 
             {!isEmpty(comments) && comments_loading === false ? (
                 <FlatList

@@ -3,6 +3,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+import { Toast } from 'native-base';
 
 import { Store } from '../../context';
 
@@ -10,10 +11,15 @@ const DrawerButton = ({ navigation }) => {
   const { state, dispatch } = useContext(Store);
 
   const handleModal = () => {
-    console.log(navigation.state.routeName)
-    // if (props.navigation.state.routeName === 'Subtopics') {
-    //   return props.navigation.navigate('Modal')
-    // }
+
+    if (state.isAuthenticated === false) {
+      Toast.show({
+        text: 'You must be logged in!',
+        buttonText: 'Okay',
+        type: 'danger',
+        duration: 5000
+      })
+    }
   }
 
   return (
