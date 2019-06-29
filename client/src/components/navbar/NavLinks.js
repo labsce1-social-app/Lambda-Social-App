@@ -28,6 +28,15 @@ const NavLinks = ({ navigation, state, dispatch, text }) => {
         }
     }
 
+    const handleFavorites = () => {
+        Toast.show({
+            text: 'Feature coming soon',
+            buttonText: 'Okay',
+            type: 'success',
+            duration: 5000
+        })
+    }
+
     return (
         <Card>
             <CardItem>
@@ -38,16 +47,19 @@ const NavLinks = ({ navigation, state, dispatch, text }) => {
                 </Right>
             </CardItem>
             <CardItem button onPress={() => handleRecent()}>
-                <Icon active name="md-pulse" />
-                <Text>Recent Posts</Text>
+                <Icon active name="md-pulse" style={{ color: state.isAuthenticated ? 'black' : 'gray' }} />
+                <Text style={{ color: state.isAuthenticated ? 'black' : 'gray' }}>Recent Posts</Text>
                 <Right>
                     <Icon name="arrow-forward" />
                 </Right>
             </CardItem>
-            <CardItem>
-                <Icon active name="md-star" />
-                <Text>Favorite Subs</Text>
-                <Right>
+            <CardItem button onPress={() => handleFavorites()}>
+                <Icon
+                    active
+                    name="md-star"
+                    style={{ color: state.isAuthenticated ? 'black' : 'gray' }} />
+                <Text style={{ color: state.isAuthenticated ? 'black' : 'gray' }}>Favorite Subs</Text>
+                <Right >
                     <Icon name="arrow-forward" />
                 </Right>
             </CardItem>
