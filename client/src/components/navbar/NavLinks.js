@@ -1,5 +1,5 @@
-import React from 'react';
-import { Card, CardItem, Icon, Text, Right } from 'native-base';
+import React, { useState } from 'react';
+import { Card, Toast, CardItem, Icon, Text, Right } from 'native-base';
 import { handleAuth, handleLogout } from '../../utils/Requests';
 
 const NavLinks = ({ navigation, state, dispatch, text }) => {
@@ -12,6 +12,22 @@ const NavLinks = ({ navigation, state, dispatch, text }) => {
             navigation.closeDrawer();
         }
     }
+
+    const handleRecent = () => {
+        if (state.isAuthenticated === true) {
+            navigation.navigate('Discussions', {
+                subId: state.user.id
+            })
+        } else {
+            Toast.show({
+                text: 'You must be logged in!',
+                buttonText: 'Okay',
+                type: 'danger',
+                duration: 5000
+            })
+        }
+    }
+
     return (
         <Card>
             <CardItem>
@@ -21,9 +37,7 @@ const NavLinks = ({ navigation, state, dispatch, text }) => {
                     <Icon name="arrow-forward" />
                 </Right>
             </CardItem>
-            <CardItem button onPress={() => navigation.navigate('Discussions', {
-                subId: state.user.id
-            })}>
+            <CardItem button onPress={() => handleRecent()}>
                 <Icon active name="md-pulse" />
                 <Text>Recent Posts</Text>
                 <Right>

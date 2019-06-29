@@ -121,16 +121,3 @@ const rootDrawer = createDrawerNavigator(
 );
 
 export default createAppContainer(rootDrawer);
-
-// return (
-//   <BackButton>
-//     <Stack>
-//       <Route exact path="/home" component={Home} />
-//       <Route exact path="/" component={Splash} />
-//       <Route exact path="/subtopics" component={SubtopicsPage} />
-//       <Route exact path="/discussions/:id" component={DiscussionsPage} />
-//       <Route exact path="/post/:id" component={PostsPage} />
-//       <Route exact path="/createsubtopic" component={SubtopicForm} />
-//     </Stack>
-//   </BackButton>
-// );
