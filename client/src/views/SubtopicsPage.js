@@ -1,5 +1,4 @@
 import React, { useEffect, useContext } from 'react';
-import Sort from '../components/discussions/Sort';
 import Subtopics from '../components/subtopics/Subtopics';
 import { getSubtopics } from '../utils/Requests';
 import { Store } from '../context/';
@@ -17,7 +16,6 @@ const SubtopicsPage = props => {
   );
   return (
     <Container>
-      <Sort />
       <Subtopics />
     </Container>
   );

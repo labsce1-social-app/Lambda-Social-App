@@ -10,8 +10,8 @@ import { withNavigation } from 'react-navigation';
 const Subtopic = props => {
   const swipeSettings = {
     autoClose: true,
-    onClose: (secId, rowId, direction) => {},
-    onOpen: (secId, rowId, direction) => {},
+    onClose: (secId, rowId, direction) => { },
+    onOpen: (secId, rowId, direction) => { },
     right: [
       {
         onPress: () => {
@@ -38,14 +38,14 @@ const Subtopic = props => {
   };
   return (
     <Swipeout {...swipeSettings}>
-      <Card style={{ flex: 0 }}>
+      <Card style={{ flex: 0, height: 150 }}>
         <CardItem
           button
           onPress={() =>
             props.navigation.navigate('Discussions', { subId: props.id })
           }
         >
-          <Body>
+          <Body style={style.container}>
             <Text style={style.date}>
               {moment(props.date).format('MMM DD YY')}
             </Text>

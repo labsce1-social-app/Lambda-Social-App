@@ -1,6 +1,6 @@
 import React from 'react';
 import { CardItem, Card, Text, Body, Thumbnail } from "native-base";
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { isEmpty } from '../../utils/utility';
 
 const UserProfile = ({ user }) => {

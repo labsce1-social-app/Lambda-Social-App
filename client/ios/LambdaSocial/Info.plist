@@ -44,6 +44,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
+	<true />
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
