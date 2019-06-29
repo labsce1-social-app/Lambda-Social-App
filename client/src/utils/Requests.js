@@ -46,20 +46,6 @@ export const getDiscussions = async (query, dispatch) => {
     console.log(err);
     return dispatch({ type: 'TOP_DISCUSSIONS_FAILED', payload: err });
   };
-
-  // try {
-  //   // fetch the data with query
-  //   // const response = await fetch(`${base_url}/discussions/?${q.toString()}`);
-  //   // convert the data to json format otherwise you will just get a promise back
-  //   const responseJson = await response.json();
-  //   // set the data to global state
-  //   // set splash to false so that it never renders again
-  //   return dispatch({ type: 'SPLASH_TO_FALSE', payload: false });
-  // } catch (error) {
-  //   // set the error to global state
-  //   // throw error
-  //   console.log(error);
-  // }
 };
 
 export const getDiscussionsForSub = async (id, dispatch) => {
@@ -77,7 +63,7 @@ export const getRecentDiscussions = async (id, dispatch) => {
   try {
     await dispatch({ type: 'DISCUSSIONS_FETCHING', payload: true });
     const res = await axios.get(`${base_url}/discussions/recent/${id}`)
-    return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: res.data });
+    return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: !isEmpty(res.data) ? res.data : null });
   } catch (err) {
     console.log(err);
     return dispatch({ type: 'DISCUSSIONS_FAILED', payload: err });
