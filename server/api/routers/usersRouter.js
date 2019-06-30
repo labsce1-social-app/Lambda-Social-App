@@ -10,7 +10,7 @@ returns = [all users]
 */
 
 router.get('/', (req, res) => {
-  db('user')
+  db('users')
     .then(users => {
       res.status(200).json(users);
     })
@@ -29,7 +29,7 @@ returns = a single user object
 router.get('/:id', (req, res) => {
   const { id } = req.params;
 
-  db('user')
+  db('users')
     .where({ id })
     .first()
     .then(user => {
@@ -65,7 +65,7 @@ router.post('/', async (req, res) => {
     // Username will be rejected if name already exists
   } else {
     if (await canInsertUser(user)) {
-      db('user')
+      db('users')
         .insert(user)
         .then(user => {
           res
@@ -108,7 +108,7 @@ router.put('/:id', async (req, res) => {
     // Username will be rejected if name already exists
   } else {
     if (await canInsertUser(user)) {
-      db('user')
+      db('users')
         .where(id)
         .update(user)
         .then(user => {
@@ -137,7 +137,7 @@ returns = returns success if valid
 router.delete('/:id', (req, res) => {
   const id = req.params;
 
-  db('user')
+  db('users')
     .where(id)
     .del()
     .then(count => {

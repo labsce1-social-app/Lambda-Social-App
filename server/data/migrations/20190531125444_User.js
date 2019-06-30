@@ -8,11 +8,12 @@
   }
 */
 exports.up = function (knex, Promise) {
-  return knex.schema.createTable('user', user => {
+  return knex.schema.createTable('users', user => {
     user
-      .string('id') // user_id from auth0 sub
-      .notNullable()
-      .primary();
+      .string('id', 80) // user_id from auth0 sub
+      .primary()
+      .unique()
+    // .notNullable();
 
     user
       .string('username', 25) // username, limited up to 25 characters
@@ -25,13 +26,13 @@ exports.up = function (knex, Promise) {
       .notNullable();
 
     user
-      .string('avatar') // avatar
+      .string('avatar', 100) // avatar
       .notNullable();
   });
 };
 
 exports.down = function (knex, Promise) {
-  return knex.schema.dropTableIfExists('user');
+  return knex.schema.dropTableIfExists('users');
 };
 
 // SELECT 'user' WHERE 'id' = 'id' INSERT 'subtopicID'

@@ -29,7 +29,7 @@ exports.up = function (knex, Promise) {
     discussion
       .string('creater_id')
       .references('id')
-      .inTable('user')
+      .inTable('users')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
 

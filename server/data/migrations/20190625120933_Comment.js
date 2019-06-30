@@ -8,7 +8,7 @@
     updated_at: String
   }
 */
-exports.up = function(knex, Promise) {
+exports.up = function (knex, Promise) {
   return knex.schema.createTable('comment', comment => {
     comment.increments('id').primary();
 
@@ -31,7 +31,7 @@ exports.up = function(knex, Promise) {
     comment
       .string('user_id')
       .references('id')
-      .inTable('user')
+      .inTable('users')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
 
@@ -41,6 +41,6 @@ exports.up = function(knex, Promise) {
   });
 };
 
-exports.down = function(knex, Promise) {
+exports.down = function (knex, Promise) {
   return knex.schema.dropTableIfExists('comment');
 };

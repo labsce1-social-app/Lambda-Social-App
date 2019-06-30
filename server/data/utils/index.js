@@ -38,67 +38,74 @@ const rec_user_id = arr => {
 const pickOne = item => item[Math.floor(Math.random() * item.length)];
 
 // create a user object
-function generateUsers() {
-  return {
+async function generateUsers() {
+  const user = await {
     id: rec_user_id(ids),
     username: faker.internet.userName(),
     email: faker.internet.email(),
     avatar: faker.image.avatar()
-  };
-}
-
-// create a subtopic_users object for joining tables
-function generateSubtopic_users() {
-  return {
-    user_id: pickOne(copy_ids),
-    subtopic_id: getRandomArbitrary(1, 20)
-  };
+  }
+  return user;
 }
 
 // create a subtopics object
-function generateSubtopics() {
-  return {
+async function generateSubtopics() {
+  const subs = await {
     title: faker.lorem.words(4),
     creater_id: pickOne(copy_ids)
   };
+  return subs;
+}
+
+// create a subtopic_users object for joining tables
+async function generateSubtopic_users() {
+  const subtopics_user = await {
+    user_id: pickOne(copy_ids),
+    subtopic_id: getRandomArbitrary(1, 20)
+  };
+  return subtopics_user;
 }
 
 // create a discussions object
-function generateDiscussions() {
-  return {
+async function generateDiscussions() {
+  const disc = await {
     subtopic_id: getRandomArbitrary(1, 20),
     title: faker.lorem.words(4),
     content: faker.lorem.text(40, 100),
     image: faker.image.imageUrl(),
     creater_id: pickOne(copy_ids)
   };
+  return disc;
 }
 
 // creates a comments object
-function generateComments() {
-  return {
+async function generateComments() {
+  const coms = await {
     comment_post: faker.lorem.text(30),
     comment_id: pickOne(fakeIds),
     user_id: pickOne(copy_ids),
     discussion_id: getRandomArbitrary(1, 20)
   };
+  return coms;
 }
 
 // creates an upvote object for keeping user and discussions id
 // this will help us see what users have voted on a discussion
-function generateUpvotes() {
-  return {
+async function generateUpvotes() {
+  const upvotes = await {
     discussion_id: getRandomArbitrary(1, 20),
     user_id: pickOne(copy_ids)
   };
+  return upvotes;
 }
 
 // creates a table for hashtags
-function generateHashTags() {
-  return {
+async function generateHashTags() {
+  const hash = await {
     hashtag: pickOne(hashTags),
     discussion_id: getRandomArbitrary(1, 20)
-  }
+  };
+  return hash;
 }
 
 // helper to generate a specified amount of users

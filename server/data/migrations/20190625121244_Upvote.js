@@ -8,7 +8,7 @@
     user_id: Int! (foreign key to a user id)
   }
 */
-exports.up = function(knex, Promise) {
+exports.up = function (knex, Promise) {
   return knex.schema.createTable('upvote', upvote => {
     upvote.increments('id').primary();
 
@@ -23,12 +23,12 @@ exports.up = function(knex, Promise) {
     upvote
       .string('user_id')
       .references('id')
-      .inTable('user')
+      .inTable('users')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
   });
 };
 
-exports.down = function(knex, Promise) {
+exports.down = function (knex, Promise) {
   return knex.schema.dropTableIfExists('upvote');
 };

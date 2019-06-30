@@ -4,7 +4,7 @@ const db = require('../../data/dbconfig.js');
 const checkValidUser = async creater_id => {
   let isValid = false;
 
-  await db('user')
+  await db('users')
     .where('id', creater_id)
     .then(id => {
       if (id.length > 0) {
@@ -81,10 +81,10 @@ subtopic.id as id,
 subtopic.created_at as date,
 subtopic.updated_at as updated,
 subtopic.title as title,
-user.username as username
+users.username as username
 FROM subtopic
 inner JOIN user
-WHERE subtopic.creater_id = user.id
+WHERE subtopic.creater_id = users.id
 order by date desc`);
 };
 

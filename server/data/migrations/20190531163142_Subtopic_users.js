@@ -17,13 +17,15 @@ exports.up = function (knex, Promise) {
 
     subtopic_users
       .string('user_id')
+      .notNullable()
       .references('id')
-      .inTable('user')
+      .inTable('users')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
 
     subtopic_users
       .integer('subtopic_id')
+      .notNullable()
       .references('id')
       .inTable('subtopic')
       .onDelete('CASCADE')

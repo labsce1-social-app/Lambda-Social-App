@@ -3,16 +3,16 @@ const db = require('../../data/dbconfig.js');
 // add's user column to discussion
 const joinUsersAndSubtopic = () => {
   return db.raw(`
-  SELECT discussion.title, discussion.image, discussion.created_at, discussion.updated_at, user.username, discussion.id
+  SELECT discussion.title, discussion.image, discussion.created_at, discussion.updated_at, users.username, discussion.id
   FROM discussion
-  JOIN user, subtopic WHERE discussion.subtopic_id = subtopic.id`);
+  JOIN users, subtopic WHERE discussion.subtopic_id = subtopic.id`);
 };
 
 // defaults sort to upvotes, can also take comments
 const topDiscussions = (sortBy = 'upvotes') => {
   return db.raw(`
   SELECT
-(select user.username from user where user.id = discussion.creater_id) as username,
+(select users.username from users where users.id = discussion.creater_id) as username,
 discussion.id as id,
 discussion.content,
 discussion.title,
@@ -24,10 +24,10 @@ discussion.updated_at,
 FROM discussion
 inner join subtopic
 on discussion.subtopic_id = subtopic.id
-inner join user
-on user.id = discussion.creater_id
+inner join users
+on users.id = discussion.creater_id
 inner join comment
-on comment.user_id = user.id
+on comment.user_id = users.id
 inner join upvote
 on upvote.discussion_id = discussion.id
 GROUP BY discussion.id
@@ -39,7 +39,7 @@ LIMIT 10
 const getCommentedDiscussionsbyUserId = id => {
   return db.raw(`
   SELECT distinct
-(select user.username from user where user.id = discussion.creater_id) as username,
+(select users.username from users where users.id = discussion.creater_id) as username,
 discussion.id as id,
 discussion.content,
 discussion.title,
@@ -51,8 +51,8 @@ discussion.updated_at,
 FROM discussion
 inner join subtopic
 on discussion.subtopic_id = subtopic.id
-inner join user
-on user.id = discussion.creater_id
+inner join users
+on users.id = discussion.creater_id
 inner join comment
 on comment.user_id = '${id}'
 inner join upvote
@@ -71,16 +71,16 @@ getHashTagsByDiscussionId = id => {
 // add's user column to discussion at id
 const joinUsersAndSubtopicAtId = id => {
   return db.raw(`
-    SELECT discussion.title, discussion.image, discussion.created_at, discussion.updated_at, user.username, discussion.id
+    SELECT discussion.title, discussion.image, discussion.created_at, discussion.updated_at, users.username, discussion.id
     FROM discussion
-    JOIN user, subtopic WHERE discussion.subtopic_id = subtopic.id AND discussion.id = ${id}`);
+    JOIN users, subtopic WHERE discussion.subtopic_id = subtopic.id AND discussion.id = ${id}`);
 };
 
 const joinUsersAtSubtopicId = id => {
-  return db.raw(`SELECT discussion.id, discussion.subtopic_id, discussion.title, discussion.content, discussion.image, discussion.creater_id, user.username, discussion.created_at, discussion.updated_at
+  return db.raw(`SELECT discussion.id, discussion.subtopic_id, discussion.title, discussion.content, discussion.image, discussion.creater_id, users.username, discussion.created_at, discussion.updated_at
   FROM discussion
-  JOIN user
-  WHERE discussion.subtopic_id = ${id} and discussion.creater_id = user.id`);
+  JOIN users
+  WHERE discussion.subtopic_id = ${id} and discussion.creater_id = users.id`);
 };
 
 // checks to see if discussion title has been used
@@ -123,7 +123,7 @@ const checkValidSubtopic = async id => {
 const checkValidUser = async creater_id => {
   let isValid = false;
 
-  await db('user')
+  await db('users')
     .where('id', creater_id)
     .then(id => {
       if (id.length > 0) {
