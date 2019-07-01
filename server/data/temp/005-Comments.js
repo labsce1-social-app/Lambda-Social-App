@@ -1,20 +1,6 @@
-// // const { genComments } = require('../utils');
-// const comments = require('../utils/json/comments.json');
 
-// exports.seed = function (knex, Promise) {
-//   // Deletes ALL existing entries
-//   return knex('comment')
-//     .del()
-//     .then(function () {
-//       // Inserts seed entries
-//       return knex('comment').insert(comments);
-//     });
-// };
 
-/*
-insert into comment (id, comment_post, discussion_id, comment_id, user_id)
-values
-('3', 'impedit','17','22','t3OvYbjaAzVyM7N'),
+module.exports = `insert into comment (id, comment_post, discussion_id, comment_id, user_id) values ('3', 'impedit','17','22','t3OvYbjaAzVyM7N'),
 ('47','Suscipit sed qui dignissimos sint qui. Consequatur ab modi quod veritatis. Nam minus omnis illum nostrum libero veritatis in. Ut officia sit.','3','20','vGxW2zMy4wet4Ig'),
 ('39', 'Nam dolores enim laborum. Non temporibus ea veritatis ea laborum eligendi. Commodi eveniet aut assumenda autem modi et distinctio fuga. Dolore quia dolorum est optio blanditiis. Quasi ut rerum nam repudiandae placeat eum quia a praesentium. Veniam ut est culpa. Voluptatem repellendus molestiae dignissimos maxime enim in rerum. Delectus delectus dolores neque. Ut molestiae optio assumenda aspernatur delectus omnis praesentium. Maxime est nihil aliquam labore. Error ipsum illum.','18','22','t3OvYbjaAzVyM7N'),
 ('46', 'Quia tempora non explicabo doloribus debitis possimus ut nam. Doloribus sunt voluptatem voluptas occaecati laborum quae ut ipsum. Est placeat voluptates illum maiores optio culpa laudantium.','16', null,'t3OvYbjaAzVyM7N'),
@@ -104,10 +90,4 @@ Aut consequatur asperiores a vel non. Culpa qui dolor. Rerum voluptatem aut iste
 Velit repudiandae voluptatem et doloribus dolores qui consequatur nulla. Alias similique omnis excepturi. Illum tenetur saepe aut. Saepe quisquam eius blanditiis iusto perspiciatis assumenda.
 Iure saepe magni dolorem laboriosam deserunt aspernatur quia necessitatibus. Corrupti vel vitae voluptatem quia mollitia. Perspiciatis aliquid repellendus dolor quis laborum enim quo.','14','2','11z_wT0BaB6Ddyy'),
 ('37','Adipisci laborum beatae quam quia pariatur. Deserunt vel sit. Dolor tempora et eum reiciendis.','13','2','11z_wT0BaB6Ddyy')
- */
-
-// user_id
-//vGxW2zMy4wet4Ig
-//vGxW2zMy4wet4Ig
-// comment_id
-// 22
+ `;

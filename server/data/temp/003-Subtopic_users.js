@@ -1,18 +1,6 @@
-// // const { genSubtopicUsers } = require('../utils');
-// const subtopic_users = require('../utils/json/subtopic_users.json');
 
-// exports.seed = function (knex, Promise) {
-//   // Deletes ALL existing entries
-//   return knex('subtopic_users')
-//     .del()
-//     .then(function () {
-//       // Inserts seed entries
-//       return knex('subtopic_users').insert(subtopic_users);
-//     });
-// };
 
-/*
-`insert into public.subtopic_users (user_id, subtopic_id)
+module.exports = `insert into public.subtopic_users (user_id, subtopic_id)
 values ('11z_wT0BaB6Ddyy', '17'),
 ('l05NsWsKxz1LyVH','3'),
 ('l05NsWsKxz1LyVH','8'),
@@ -32,5 +20,4 @@ values ('11z_wT0BaB6Ddyy', '17'),
 ('t3OvYbjaAzVyM7N','5'),
 ('TPxasdG7yIbvxL2nNo','11'),
 ('11z_wT0BaB6Ddyy','3'),
-('t3OvYbjaAzVyM7N',	'12')`
- */
+('t3OvYbjaAzVyM7N',	'12')`;

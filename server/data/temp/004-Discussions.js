@@ -1,20 +1,7 @@
-// // const { genDiscussions } = require('../utils');
-// const discussions = require('../utils/json/users.json');
 
-// exports.seed = function (knex, Promise) {
-//   // Deletes ALL existing entries
-//   return knex('discussion')
-//     .del()
-//     .then(function () {
-//       // Inserts seed entries
-//       return knex('discussion').insert(discussions);
-//     });
-// };
 
-/*
-insert into public.discussion (subtopic_id, title, content, image, creater_id)
-values
-('2',	'voluptatibus assumenda velit sed','Ducimus enim iure accusantium aspernatur doloribus ratione. Maiores quia et sed officiis qui. Animi ea exercitationem quia.', 'http://lorempixel.com/640/480','Sa7WiPT_zi5uit_'),
+module.exports = `insert into public.discussion (subtopic_id, title, content, image, creater_id)
+values ('2',	'voluptatibus assumenda velit sed','Ducimus enim iure accusantium aspernatur doloribus ratione. Maiores quia et sed officiis qui. Animi ea exercitationem quia.', 'http://lorempixel.com/640/480','Sa7WiPT_zi5uit_'),
 ('7','ratione facere sit adipisci','distinctio quo a','http://lorempixel.com/640/480','Sa7WiPT_zi5uit_'),
 ('10','et animi eius perferendis','et aut sit natus in atque. Et magni cumque voluptas magni. Quis dolorum tempora nulla in. Nihil odio nulla exercitationem cumque quidem ex.','http://lorempixel.com/640/480','TPxhG7yIFxL2nNo'),
 ('1','sapiente tempora voluptas a','delectus','http://lorempixel.com/640/480','l05NsWsKxz1LyVH'),
@@ -33,4 +20,4 @@ values
 ('4',	'sequi voluptatem veritatis officia','Est libero eum distinctio doloribus. Ipsam optio consectetur molestiae. Vel eligendi laborum non aspernatur expedita quas.','http://lorempixel.com/640/480','Gt4_wTFdwe6Ddyy'),
 ('15',	'unde ea recusandae ab','Dolorem quia recusandae occaecati omnis culpa.','http://lorempixel.com/640/480','l05NsWsKxz1LyVH'),
 ('11',	'dolorem omnis nam iusto','Ex ipsum sed nostrum eligendi fugiat in. Omnis eos debitis consequuntur quam sit voluptatibus. Voluptas expedita dolorum rerum est repellat quia in ea. Aut recusandae qui eius sed inventore iste.','http://lorempixel.com/640/480','Sa7WiPT_zi5uit_'),
-('17',	'repellendus sunt cum iste','dolorem','http://lorempixel.com/640/480','TPxasdG7yIbvxL2nNo') */
+('17',	'repellendus sunt cum iste','dolorem','http://lorempixel.com/640/480','TPxasdG7yIbvxL2nNo')`;

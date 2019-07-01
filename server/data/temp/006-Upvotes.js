@@ -1,20 +1,7 @@
-// // const { genUpvotes } = require('../utils');
-// const upvotes = require('../utils/json/upvotes.json');
 
-// exports.seed = function (knex, Promise) {
-//     // Deletes ALL existing entries
-//     return knex('upvote')
-//         .del()
-//         .then(function () {
-//             // Inserts seed entries
-//             return knex('upvote').insert(upvotes);
-//         });
-// };
 
-/*
-insert into public.upvote (discussion_id, user_id)
-values
-('8','t3OvYbjaAzVyM7N'),
+module.exports = `insert into public.upvote (discussion_id, user_id)
+values ('8','t3OvYbjaAzVyM7N'),
 ('10','t3OvYbjaAzVyM7N'),
 ('2','t3OvYbjaAzVyM7N'),
 ('5','t3OvYbjaAzVyM7N'),
@@ -93,4 +80,4 @@ values
 ('13','11z_wT0BaB6Ddyy'),
 ('11','11z_wT0BaB6Ddyy'),
 ('8','11z_wT0BaB6Ddyy'),
-('8','11z_wT0BaB6Ddyy') */
+('8','11z_wT0BaB6Ddyy')`;

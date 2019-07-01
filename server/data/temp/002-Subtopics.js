@@ -1,18 +1,5 @@
-// // const { genSubtopics } = require('../utils');
-// const subtopics = require('../utils/json/subtopics.json');
 
-// exports.seed = function (knex, Promise) {
-//   // Deletes ALL existing entries
-//   return knex('subtopic')
-//     .del()
-//     .then(function () {
-//       // Inserts seed entries
-//       return knex('subtopic').insert(subtopics);
-//     });
-// };
-
-/*
-`insert into public.subtopic (id, title, creater_id)
+module.exports = `insert into public.subtopic (id, title, creater_id)
 values
 ('1',	'necessitatibus voluptatem magnam ut',	'11z_wT0BaB6Ddyy'),
 ('2',	'enim eveniet velit cumque',	'11z_wT0BaB6Ddyy'),
@@ -34,4 +21,3 @@ values
 ('18',	'omnis ab eum quam',	't3OvYbjaAzVyM7N'),
 ('19',	'consequatur deleniti ratione in',	'Sa7WiPT_zi5uit_'),
 ('20',	'nihil molestiae in maxime',	'Sa7WiPT_zi5uit_')`
-*/
