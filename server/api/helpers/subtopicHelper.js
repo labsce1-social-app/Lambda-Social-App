@@ -83,8 +83,8 @@ subtopic.updated_at as updated,
 subtopic.title as title,
 users.username as username
 FROM subtopic
-inner JOIN user
-WHERE subtopic.creater_id = users.id
+inner JOIN users
+ON subtopic.creater_id = users.id
 order by date desc`);
 };
 
