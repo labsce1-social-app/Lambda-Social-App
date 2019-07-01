@@ -21,18 +21,18 @@ const getCommentsByDiscussionId = discussion_id => {
     `
     SELECT distinct
 d.id as discussion_id,
-c.id as 'original post_id',
-c.comment_post as 'original_post',
-u.id as 'original_commenter_id',
-u.username as 'original_commenter',
-u.avatar as 'orignal_commenter_avatar',
-c.created_at as 'original_created_date',
-reply.id  as 'reply_id',
-reply.post  as 'reply_post',
-reply.id   as 'reply_commenter_id',
-reply.username as 'reply_commenter',
-reply.avatar as 'reply_commenter_avatar',
-reply.created_date as 'reply_created_date'
+c.id as original_post_id,
+c.comment_post as original_post,
+u.id as original_commenter_id,
+u.username as original_commenter,
+u.avatar as orignal_commenter_avatar,
+c.created_at as original_created_date,
+reply.id  as reply_id,
+reply.post  as reply_post,
+reply.id   as reply_commenter_id,
+reply.username as reply_commenter,
+reply.avatar as reply_commenter_avatar,
+reply.created_date as reply_created_date
 FROM comment c
 INNER JOIN users as u
 ON c.user_id = u.id
@@ -52,10 +52,11 @@ from comment c
 INNER JOIN users
 ON c.user_id = users.id
 INNER JOIN discussion d
-ON c.discussion_id = d.id   where 'parent' is not null)reply
-on reply.'parent' = c.id
+ON c.discussion_id = d.id
+	where c.comment_id is not null)reply
+on reply.id = c.id
 WHERE d.id  = ${discussion_id}
-ORDER BY d.id ,reply.'parent'`
+ORDER BY d.id , reply.id`
   );
 };
 
@@ -63,14 +64,14 @@ ORDER BY d.id ,reply.'parent'`
 
 const getPostDetailByDiscussionId = discussion_id => {
   return db.raw(`
-  SELECT distinct
+   SELECT distinct
 discussion.id as id,
 	(select users.username
 	from users where users.id = discussion.creater_id) as creator,
 discussion.content as discussion_content,
 discussion.image as discussion_image,
 discussion.created_at as discussion_date,
-(select count(upvote.users_id)
+(select count(upvote.user_id)
 	from upvote
 			where upvote.discussion_id = ${discussion_id}
 ) as upvotes
@@ -110,7 +111,7 @@ const getCommentsAndJoinUserById = id => {
       comment.comment_id
       FROM comment
       JOIN users
-      WHERE comment.user_id = users.id
+      ON comment.user_id = users.id
       AND comment.id = ${id}
       `);
 };
