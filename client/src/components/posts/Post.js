@@ -6,7 +6,6 @@ import PostHeader from './PostHeader';
 import style from './Style';
 const Comment = lazy(() => import('./Comment'));
 import { isEmpty } from '../../utils/utility'
-import Reply from './Reply';
 
 // get's discussion id from Route through match.params.id
 const Post = () => {
@@ -40,14 +39,12 @@ const Post = () => {
                                     date={item.original_created_date}
                                     name={item.original_commenter}
                                     comment={item.original_post}
+                                    item={item}
                                 />
-                                {!isEmpty(item.reply_post) ?
+                                {/* {!isEmpty(item.reply_post) ?
                                     <Reply
-                                        image={item.reply_commenter_avatar}
-                                        date={item.reply_created_date}
-                                        name={item.reply_commenter}
-                                        comment={item.reply_post} />
-                                    : null}
+                                        item={item} />
+                                    : null} */}
                             </Suspense>
                         )
                     }}

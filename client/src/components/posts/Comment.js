@@ -1,23 +1,30 @@
 import React from 'react';
-import style from './Style';
-import { CardItem, Text, Body, Right, Thumbnail } from 'native-base';
-import { View } from 'react-native';
+import { CardItem, Text, Body, Right } from 'native-base';
+import { View, Image } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import moment from 'moment';
+import Reply from './Reply.js';
+import { isEmpty } from '../../utils/utility'
 
-const Comment = ({ image, comment, name, date }) => {
+const Comment = ({ image, comment, name, date, item }) => {
     return (
         <View style={{ flex: 0, padding: 2 }}>
-            <CardItem style={{ flex: 1, flexDirection: 'row', width: '100%', marginBottom: 0 }}>
-                <Thumbnail source={{ url: image }} style={{ width: 40, height: 40, alignSelf: 'flex-start', marginRight: 5 }} />
-                <Body style={{ flex: 1, flexDirection: 'column', marginBottom: 10, backgroundColor: '#E9E9E9', padding: 10, borderRadius: 10 }}>
-                    <Text style={style.username} >{name}</Text>
-                    <Text style={{ marginBottom: 0 }}>{comment}</Text>
+            <CardItem style={{ flex: 1, flexDirection: 'row', width: '100%' }}>
+                <Body style={{ flex: 1, flexDirection: 'column', padding: 0, borderRadius: 10 }}>
+                    <Text style={{ color: '#606770', fontWeight: 'bold', fontSize: 14 }}>{name} {moment(date).fromNow()}</Text>
+                    <Text>{comment}</Text>
+                    <Right style={{ width: '98%', borderColors: '#E9E9E9', borderLeftWidth: 0.5, paddingLeft: 1, lineHeight: 30 }}>
+                        <TouchableOpacity style={{ flex: 1, flexDirection: 'row', textAlign: 'right', alignSelf: 'flex-end', paddingRight: 15 }}>
+                            <Image style={{ width: 20, height: 20 }} source={require('../../assets/reply.png')} />
+                            <Text style={{ marginLeft: 10, color: '#606770', fontWeight: 'bold', fontSize: 14 }}>Reply</Text>
+                        </TouchableOpacity>
+                    </Right>
                 </Body>
             </CardItem>
-            <Right style={{ flex: 1, flexDirection: 'row', textAlign: 'right', alignSelf: 'flex-end', paddingRight: 15, marginBottom: 10 }}>
-                <Text style={{ color: '#606770', fontWeight: 'bold', fontSize: 14 }}>{moment(date).fromNow()}</Text>
-                <Text style={{ marginLeft: 10, color: '#606770', fontWeight: 'bold', fontSize: 14 }}>Reply</Text>
-            </Right>
+            {!isEmpty(item.reply_post) ?
+                <Reply
+                    item={item} />
+                : null}
         </View >
     )
 }

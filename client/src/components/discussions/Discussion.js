@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image } from 'react-native';
 import style from './Style';
-import { Card, CardItem, Text, Body, Left, Icon, View } from 'native-base';
+import { Card, CardItem, Text, Body, Left, View } from 'native-base';
 import moment from 'moment';
 import Reaction from '../../common/Reaction';
 

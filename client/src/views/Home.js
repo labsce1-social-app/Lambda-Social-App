@@ -30,7 +30,7 @@ const Home = props => {
   );
 
   return (
-    <Container>
+    <Container style={{ backgroundColor: '#F6F8FA', padding: 5 }}>
       <Sort />
       <Discussions
         loading={state.top_discussions_loading}

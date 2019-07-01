@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { Store } from '../context';
 import Post from '../components/posts/Post';
 import { getCommentsByDiscussionId } from '../utils/Requests';
-import Thread from '../components/posts/Thread';
+import { Container } from 'native-base';
 
 const PostPage = props => {
   // handle life cycle for comments
@@ -22,7 +22,10 @@ const PostPage = props => {
     () => getCommentsByDiscussionId()
   );
 
-  return <Post />;
+  return (
+    <Container style={{ backgroundColor: '#F6F8FA', padding: 5 }}>
+      <Post />
+    </Container>)
   // return <Thread />
 };
 export default PostPage;
