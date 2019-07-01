@@ -57,7 +57,7 @@ inner join comment
 on comment.user_id = '${id}'
 inner join upvote
 on upvote.discussion_id = discussion.id
-group by discussion.creater_id
+group by discussion.id
 ORDER BY discussion.updated_at DESC
 `)
 }
@@ -71,16 +71,24 @@ getHashTagsByDiscussionId = id => {
 // add's user column to discussion at id
 const joinUsersAndSubtopicAtId = id => {
   return db.raw(`
-    SELECT discussion.title, discussion.image, discussion.created_at, discussion.updated_at, users.username, discussion.id
-    FROM discussion
-    JOIN users, subtopic WHERE discussion.subtopic_id = subtopic.id AND discussion.id = ${id}`);
+    SELECT
+	discussion.title,
+	discussion.image,
+	discussion.created_at,
+	discussion.updated_at,
+	users.username,
+	discussion.id
+FROM
+	discussion
+INNER JOIN subtopic ON discussion.subtopic_id = subtopic.id AND discussion.id = ${id}
+INNER JOIN users ON discussion.creater_id = users.id`);
 };
 
 const joinUsersAtSubtopicId = id => {
   return db.raw(`SELECT discussion.id, discussion.subtopic_id, discussion.title, discussion.content, discussion.image, discussion.creater_id, users.username, discussion.created_at, discussion.updated_at
   FROM discussion
   JOIN users
-  WHERE discussion.subtopic_id = ${id} and discussion.creater_id = users.id`);
+  ON discussion.subtopic_id = ${id} and discussion.creater_id = users.id`);
 };
 
 // checks to see if discussion title has been used
