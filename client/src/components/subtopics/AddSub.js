@@ -8,7 +8,8 @@ const AddSub = () => {
     const [input, setInput] = useState('');
 
     const createSub = () => {
-        return createSubtopic(input, state.user.id, dispatch);
+        createSubtopic(input, state.user.id, dispatch);
+        setInput('');
     }
     return (
         <Form style={{ marginBottom: 15, marginTop: 10 }} onSubmitEditing={() => createSub()}>
