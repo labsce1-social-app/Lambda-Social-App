@@ -9,10 +9,10 @@ const Reply = ({ item }) => {
     return (
         <View style={style.reply_container}>
             <CardItem style={{ flex: 1, flexDirection: 'row', width: '100%' }}>
-                <Body style={{ flex: 1, flexDirection: 'column', padding: 3, borderRadius: 10 }}>
+                <Body style={{ flex: 1, flexDirection: 'column', borderColors: '#E9E9E9', borderLeftWidth: 0.5, lineHeight: 30, paddingLeft: 20, marginLeft: 3 }}>
                     <Text style={{ color: '#606770', fontWeight: 'bold', fontSize: 14 }}>{item.reply_commenter} {moment(item.reply_created_date).fromNow()}</Text>
                     <Text>{item.reply_post}</Text>
-                    <Right style={{ width: '98%', borderColors: '#E9E9E9', borderLeftWidth: 0.5, paddingLeft: 1, lineHeight: 30 }}>
+                    <Right style={{ width: '98%' }}>
                         <TouchableOpacity style={{ flex: 1, flexDirection: 'row', textAlign: 'right', alignSelf: 'flex-end', paddingRight: 15 }}>
                             <Image style={{ width: 20, height: 20 }} source={require('../../assets/reply.png')} />
                             <Text style={{ marginLeft: 10, color: '#606770', fontWeight: 'bold', fontSize: 14 }}>Reply</Text>

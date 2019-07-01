@@ -288,8 +288,7 @@ export const createSubtopic = (info, sub, dispatch) => {
   axios
     .post(`${postgres}/subtopics/create`, body)
     .then(res => {
-      console.log('res post subtopic', res.data);
-      dispatch({ type: 'CREATE_SUBTOPIC', payload: res.data.id[0] });
+      dispatch({ type: 'CREATE_SUBTOPIC', payload: body });
     })
     .catch(err => {
       console.log(err);

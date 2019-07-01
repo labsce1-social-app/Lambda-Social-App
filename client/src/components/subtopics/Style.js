@@ -3,7 +3,8 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
     // Post Summary Icon
     title: {
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontSize: 26
     },
     date: {
         fontSize: 12,

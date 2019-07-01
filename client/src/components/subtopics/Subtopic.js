@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './Style';
-import { Content, Card, CardItem, Text, Body } from 'native-base';
-import { Alert } from 'react-native';
+import { Card, CardItem, Text, Body } from 'native-base';
+import { Alert, View } from 'react-native';
 import moment from 'moment';
 import Swipeout from 'react-native-swipeout';
 
@@ -37,6 +37,7 @@ const Subtopic = props => {
     sectionId: 1
   };
   return (
+
     <Swipeout {...swipeSettings}>
       <Card style={{ flex: 0, height: 150 }}>
         <CardItem
@@ -46,11 +47,8 @@ const Subtopic = props => {
           }
         >
           <Body style={style.container}>
-            <Text style={style.date}>
-              {moment(props.date).format('MMM DD YY')}
-            </Text>
             <Text style={style.title}>s/{props.title}</Text>
-            <Text style={style.username}>{props.name}</Text>
+            <Text style={style.username}>{props.name} &#8226; {moment(props.date).format('MMM DD YY')}</Text>
           </Body>
         </CardItem>
       </Card>

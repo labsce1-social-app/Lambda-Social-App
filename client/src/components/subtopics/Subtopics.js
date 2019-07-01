@@ -1,22 +1,21 @@
 import React, { useContext, lazy, Suspense } from 'react';
 import { Store } from '../../context';
 const Subtopic = lazy(() => import('./Subtopic'));
-
-import { Text } from 'native-base';
-import { FlatList, Image, View, TouchableHighlight, Toast } from 'react-native';
+import { Spinner } from 'native-base';
+import { FlatList, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
 const Subtopics = props => {
   const { state } = useContext(Store);
   return state.subtopics_loading === true ? (
-    <Text>Loading...</Text>
+    <Spinner />
   ) : (
-      <View style={{ flex: 1, marginTop: 34 }}>
+      <View style={{ flex: 1 }}>
         <FlatList
           data={state.subtopics}
           renderItem={({ item }) => {
             return (
-              <Suspense fallback={<Text>Loading...</Text>}>
+              <Suspense fallback={<Spinner />}>
                 <Subtopic
                   id={item.id}
                   title={item.title.split(' ').join('-')}

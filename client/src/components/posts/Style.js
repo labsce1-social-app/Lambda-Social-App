@@ -1,12 +1,9 @@
 import { StyleSheet } from 'react-native';
-import { config } from '../../utils/dimensions';
 
 
 export default StyleSheet.create({
     container: {
         flex: 0,
-        minHeight: config.deviceHeight * 0.8,
-        maxHeight: config.deviceHeight * 0.8
     },
     post_image: {
         height: 200,

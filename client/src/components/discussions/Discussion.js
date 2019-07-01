@@ -4,7 +4,7 @@ import style from './Style';
 import { Card, CardItem, Text, Body, Left, View } from 'native-base';
 import moment from 'moment';
 import Reaction from '../../common/Reaction';
-
+import { isEmpty } from '../../utils/utility';
 import { withNavigation } from 'react-navigation';
 
 const Discussion = props => {
@@ -27,10 +27,10 @@ const Discussion = props => {
                             <Text style={style.username}>{props.name} &#8226; {" "}</Text>
                             <Text style={style.date}>{moment(props.date).fromNow()}</Text>
                         </View>
-                        <Image
+                        {!isEmpty(props.image) && props.image.includes('https://') && <Image
                             style={style.avatar}
-                            source={{ url: props.image.replace('http://', 'https://') }}
-                        />
+                            source={{ url: props.image }}
+                        />}
                         <View style={style.stats}>
                             <Reaction
                                 image={require('../../assets/comments.png')}
