@@ -94,7 +94,7 @@ const getCommentsAndJoinUser = () => {
     comment.comment_id
     FROM comment
     JOIN users
-    WHERE comment.user_id = users.id
+    ON comment.user_id = users.id
     `);
 };
 

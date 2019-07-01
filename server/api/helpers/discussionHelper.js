@@ -33,7 +33,7 @@ on upvote.discussion_id = discussion.id
 GROUP BY discussion.id
 ORDER BY ${sortBy} DESC
 LIMIT 10
-`);
+`).returning();
 };
 
 const getCommentedDiscussionsbyUserId = id => {
