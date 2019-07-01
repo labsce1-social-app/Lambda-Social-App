@@ -11,7 +11,8 @@ const Discussion = props => {
     return (
         <Card
             style={{
-                flex: 0
+                flex: 0,
+                marginBottom: 20
             }}
         >
             <CardItem
@@ -19,20 +20,23 @@ const Discussion = props => {
                 onPress={() => props.navigation.navigate('Post', { postId: props.id })}
             >
                 <Left>
-                    <Image
-                        style={style.avatar}
-                        source={{ url: props.image.replace('http://', 'https://') }}
-                    />
                     <Body>
-                        <Text style={style.date}>{moment(props.date).fromNow()}</Text>
                         <Text style={style.title}>s/{props.title}</Text>
-                        <Text style={style.username}>{props.name}</Text>
-                        <Text numberOfLines={1}>{props.discussion}</Text>
+                        <Text numberOfLines={1} style={{ marginBottom: 10, fontSize: 20, marginLeft: 3 }}>{props.discussion}</Text>
+                        <View style={{ flex: 1, flexDirection: 'row', marginBottom: 10, justifyContent: 'flex-start' }}>
+                            <Text style={style.username}>{props.name} &#8226; {" "}</Text>
+                            <Text style={style.date}>{moment(props.date).fromNow()}</Text>
+                        </View>
+                        <Image
+                            style={style.avatar}
+                            source={{ url: props.image.replace('http://', 'https://') }}
+                        />
                         <View style={style.stats}>
                             <Reaction
                                 image={require('../../assets/comments.png')}
                                 count={props.comment}
                             />
+                            <Text>{"  "}</Text>
                             <Reaction
                                 image={require('../../assets/like.png')}
                                 count={props.upvotes}

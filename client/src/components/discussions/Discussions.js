@@ -25,8 +25,9 @@ const Discussions = ({ loading, discussions }) => {
             comment={item.comments}
             upvotes={item.upvotes}
             hashtags={item.hashtags && item.hashtags.map((hashtag, index) => (
-              <Badge key={`hashtag-${hashtag[0]}-${index}`}
-                style={style.badgeColors}><Text style={style.hashtagText}>{hashtag}</Text></Badge>
+              <Text style={style.hashtagText}
+                key={`hashtag-${hashtag[0]}-${index}`}
+              >{hashtag}</Text>
             ))}
           />
         </Suspense>
