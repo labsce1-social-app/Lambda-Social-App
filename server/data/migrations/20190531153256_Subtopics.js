@@ -18,7 +18,7 @@ exports.up = function (knex, Promise) {
       .notNullable();
 
     subtopic
-      .timestamp(true, true);
+      .timestamps(true, true);
 
 
     subtopic

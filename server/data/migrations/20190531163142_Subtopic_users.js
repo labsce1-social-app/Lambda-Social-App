@@ -30,7 +30,7 @@ exports.up = function (knex, Promise) {
       .onUpdate('CASCADE')
       .index();
 
-    subtopic_users.timestamp(true, true);
+    subtopic_users.timestamps(true, true);
   });
 };
 

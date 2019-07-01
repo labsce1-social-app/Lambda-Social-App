@@ -5,7 +5,8 @@ import {
   BASE_URL,
   LOCAL,
   AWS_ACCESS_KEY_ID,
-  AWS_SECRET_ACCESS_KEY
+  AWS_SECRET_ACCESS_KEY,
+  POSTGRES
 } from 'react-native-dotenv';
 import { storeData, getData, deleteData } from './AsyncStorage';
 
@@ -19,6 +20,7 @@ const auth0ClientId = AUTH0_CLIENT;
 const auth0Domain = AUTH0_DOMAIN;
 const local = `http://localhost:3000`;
 const base_url = `https://social-app-test.herokuapp.com`;
+const postgres = 'https://lambdasocial.herokuapp.com';
 
 // check if a user is logged in
 export const isAuthed = async dispatch => {
@@ -40,7 +42,7 @@ export const getDiscussions = async (query, dispatch) => {
   const q = new URLSearchParams({ sort: query });
   dispatch({ type: 'TOP_DISCUSSIONS_FETCHING', payload: true });
   try {
-    const res = await axios.get(`${base_url}/discussions/?${q.toString()}`);
+    const res = await axios.get(`${postgres}/discussions/?${q.toString()}`);
     return dispatch({ type: 'TOP_DISCUSSIONS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -51,7 +53,7 @@ export const getDiscussions = async (query, dispatch) => {
 export const getDiscussionsForSub = async (id, dispatch) => {
   try {
     await dispatch({ type: 'DISCUSSIONS_FETCHING', payload: true });
-    const res = await axios.get(`${base_url}/discussions/s/${id}`)
+    const res = await axios.get(`${postgres}/discussions/s/${id}`)
     return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -62,7 +64,7 @@ export const getDiscussionsForSub = async (id, dispatch) => {
 export const getRecentDiscussions = async (id, dispatch) => {
   try {
     await dispatch({ type: 'DISCUSSIONS_FETCHING', payload: true });
-    const res = await axios.get(`${base_url}/discussions/recent/${id}`)
+    const res = await axios.get(`${postgres}/discussions/recent/${id}`)
     return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: !isEmpty(res.data) ? res.data : null });
   } catch (err) {
     console.log(err);
@@ -77,7 +79,7 @@ export const getCommentsByDiscussionId = (id, dispatch) => {
   dispatch({ type: 'COMMENTS_FETCHING' });
 
   axios
-    .get(`${base_url}/comments/d/${id}`)
+    .get(`${postgres}/comments/d/${id}`)
     .then(res => {
       console.log('get comments', res.data);
       dispatch({ type: 'COMMENTS_FETCHED_SUCCESS', payload: res.data });
@@ -106,7 +108,7 @@ export const getSubtopics = async dispatch => {
   dispatch({ type: 'SUBTOPICS_FETCHING' });
 
   axios
-    .get(`${base_url}/subtopics`)
+    .get(`${postgres}/subtopics`)
     .then(res => {
       console.log('subtopics', res.data);
       dispatch({ type: 'SUBTOPICS_FETCHED', payload: res.data });
@@ -152,7 +154,7 @@ export const handleAuth = async dispatch => {
 // get user from our db
 const getUser = async (user, dispatch) => {
   axios
-    .get(`${base_url}/users/${user.sub}`)
+    .get(`${postgres}/users/${user.sub}`)
     .then(res => {
       console.log('inside getuser axios res', res.data);
 
@@ -183,7 +185,7 @@ const makeUser = async (info, dispatch) => {
   }; // send  nickname as a 'username'
 
   axios
-    .post(`${base_url}/users`, body)
+    .post(`${postgres}/users`, body)
     .then(res => {
       // console.log('post user', res.data);
       // const user = await auth0.auth.userInfo({ token: token });
@@ -284,7 +286,7 @@ export const createSubtopic = (info, sub, dispatch) => {
   };
 
   axios
-    .post(`${base_url}/subtopics/create`, body)
+    .post(`${postgres}/subtopics/create`, body)
     .then(res => {
       console.log('res post subtopic', res.data);
       dispatch({ type: 'CREATE_SUBTOPIC', payload: res.data.id[0] });

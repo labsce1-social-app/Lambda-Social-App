@@ -26,7 +26,7 @@ exports.up = function (knex, Promise) {
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
 
-    upvote.timestamp(true, true);
+    upvote.timestamps(true, true);
   });
 };
 

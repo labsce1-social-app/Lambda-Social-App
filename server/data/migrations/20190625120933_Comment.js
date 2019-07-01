@@ -33,7 +33,7 @@ exports.up = function (knex, Promise) {
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
 
-    comment.timestamp(true, true);
+    comment.timestamps(true, true);
   });
 };
 

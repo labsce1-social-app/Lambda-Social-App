@@ -22,7 +22,7 @@ exports.up = function (knex, Promise) {
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
 
-    hashtag.timestamp(true, true);
+    hashtag.timestamps(true, true);
   });
 };
 

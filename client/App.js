@@ -1,7 +1,6 @@
 import React from 'react';
 import AppNavigator from './AppNavigator';
 import { StoreProvider } from './src/context/';
-import { NativeRouter } from 'react-router-native';
 import { Root } from 'native-base';
 
 // const instructions = Platform.select({
@@ -20,5 +19,4 @@ export default (App = () => (
     </Root>
   </StoreProvider>
 ));
-// // <NativeRouter>
-// {/* </NativeRouter> */}
+
