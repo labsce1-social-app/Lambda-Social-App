@@ -16,28 +16,24 @@ exports.up = function (knex, Promise) {
 
     comment
       .integer('discussion_id')
-      .references('id')
-      .inTable('discussion')
+      .references('discussion.id')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
 
     comment
       .integer('comment_id')
-      .references('id')
-      .inTable('comment')
+      .references('comment.id')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
 
     comment
-      .string('user_id')
-      .references('id')
-      .inTable('users')
+      .text('user_id')
+      .notNullable()
+      .references('users.id')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
 
-    comment.timestamp('created_at').defaultTo(knex.fn.now());
-
-    comment.timestamp('updated_at').defaultTo(knex.fn.now());
+    comment.timestamp(true, true);
   });
 };
 

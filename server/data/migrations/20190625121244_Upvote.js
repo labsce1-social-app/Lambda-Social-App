@@ -14,18 +14,19 @@ exports.up = function (knex, Promise) {
 
     upvote
       .integer('discussion_id')
-      .references('id')
-      .inTable('discussion')
       .notNullable()
+      .references('discussion.id')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
 
     upvote
-      .string('user_id')
-      .references('id')
-      .inTable('users')
+      .text('user_id')
+      .notNullable()
+      .references('users.id')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
+
+    upvote.timestamp(true, true);
   });
 };
 

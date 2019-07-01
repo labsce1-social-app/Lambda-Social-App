@@ -9,9 +9,8 @@
 exports.up = function (knex, Promise) {
   return knex.schema.createTable('subtopic', subtopic => {
     subtopic
-      .increments('id')
-      .primary()
-      .notNullable();
+      .increments()
+      .index()
 
     subtopic
       .string('title', 50)
@@ -19,18 +18,12 @@ exports.up = function (knex, Promise) {
       .notNullable();
 
     subtopic
-      .timestamp('created_at')
-      .defaultTo(knex.fn.now());
+      .timestamp(true, true);
+
 
     subtopic
-      .timestamp('updated_at')
-      .defaultTo(knex.fn.now());
-
-    subtopic
-      .string('creater_id')
-      .notNullable()
-      .references('id')
-      .inTable('users')
+      .text('creater_id')
+      .references('users.id')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
   });

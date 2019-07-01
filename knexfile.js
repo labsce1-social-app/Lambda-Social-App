@@ -25,7 +25,15 @@ module.exports = {
       directory: './server/data/migrations'
     },
     seeds: { directory: './server/data/seeds' },
-    useNullAsDefault: true
+    // client: 'sqlite3',
+    // connection: { filename: './server/data/dev.sqlite3' },
+    // useNullAsDefault: true,
+    // migrations: {
+    //   directory: './server/data/migrations',
+    //   tableName: 'knex_migrations'
+    // },
+    // seeds: { directory: './server/data/seeds/' }
+
   },
   production: {
     client: 'sqlite3',

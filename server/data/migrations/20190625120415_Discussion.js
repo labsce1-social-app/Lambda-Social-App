@@ -15,8 +15,7 @@ exports.up = function (knex, Promise) {
 
     discussion
       .integer('subtopic_id')
-      .references('id')
-      .inTable('subtopic')
+      .references('subtopic.id')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
 
@@ -27,15 +26,13 @@ exports.up = function (knex, Promise) {
     discussion.string('image');
 
     discussion
-      .string('creater_id')
-      .references('id')
-      .inTable('users')
+      .text('creater_id')
+      .notNullable()
+      .references('users.id')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
 
-    discussion.timestamp('created_at').defaultTo(knex.fn.now());
-
-    discussion.timestamp('updated_at').defaultTo(knex.fn.now());
+    discussion.timestamp(true, true);
   });
 };
 
