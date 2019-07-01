@@ -1,6 +1,6 @@
 
 
-module.exports = `insert into public.subtopic_users (user_id, subtopic_id)
+module.exports = `insert into subtopic_users (user_id, subtopic_id)
 values ('11z_wT0BaB6Ddyy', '17'),
 ('l05NsWsKxz1LyVH','3'),
 ('l05NsWsKxz1LyVH','8'),

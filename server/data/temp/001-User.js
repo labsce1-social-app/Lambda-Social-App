@@ -1,5 +1,5 @@
 
-module.exports = `insert into public.users (id, username, email, avatar)
+module.exports = `insert into users (id, username, email, avatar)
 values
   ('11z_wT0BaB6Ddyy',	'Unique_Rippin14',	'Josie_Wintheiser@yahoo.com',	'https://s3.amazonaws.com/uifaces/faces/twitter/heyimjuani/128.jpg'),
 ('Gt4_wTFdwe6Ddyy',	'Brandy41',	'Mose88@hotmail.com',	'https://s3.amazonaws.com/uifaces/faces/twitter/jennyshen/128.jpg'),

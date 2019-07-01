@@ -1,5 +1,5 @@
 
-module.exports = `insert into public.subtopic (id, title, creater_id)
+module.exports = `insert into subtopic (id, title, creater_id)
 values
 ('1',	'necessitatibus voluptatem magnam ut',	'11z_wT0BaB6Ddyy'),
 ('2',	'enim eveniet velit cumque',	'11z_wT0BaB6Ddyy'),

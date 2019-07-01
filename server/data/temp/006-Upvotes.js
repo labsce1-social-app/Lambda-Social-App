@@ -1,6 +1,6 @@
 
 
-module.exports = `insert into public.upvote (discussion_id, user_id)
+module.exports = `insert into upvote (discussion_id, user_id)
 values ('8','t3OvYbjaAzVyM7N'),
 ('10','t3OvYbjaAzVyM7N'),
 ('2','t3OvYbjaAzVyM7N'),

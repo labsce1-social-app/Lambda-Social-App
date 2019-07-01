@@ -1,6 +1,6 @@
 
 
-module.exports = `insert into public.discussion (subtopic_id, title, content, image, creater_id)
+module.exports = `insert into discussion (subtopic_id, title, content, image, creater_id)
 values ('2',	'voluptatibus assumenda velit sed','Ducimus enim iure accusantium aspernatur doloribus ratione. Maiores quia et sed officiis qui. Animi ea exercitationem quia.', 'http://lorempixel.com/640/480','Sa7WiPT_zi5uit_'),
 ('7','ratione facere sit adipisci','distinctio quo a','http://lorempixel.com/640/480','Sa7WiPT_zi5uit_'),
 ('10','et animi eius perferendis','et aut sit natus in atque. Et magni cumque voluptas magni. Quis dolorum tempora nulla in. Nihil odio nulla exercitationem cumque quidem ex.','http://lorempixel.com/640/480','TPxhG7yIFxL2nNo'),
