@@ -32,7 +32,7 @@ const CreateDiscussion = props => {
     }
   })
   const submitHandler = () => {
-    if (isEmpty(title) || isEmpty(conent)) {
+    if (isEmpty(title) || isEmpty(content)) {
       return Toast.show({
         text: "Please fill the title and content",
         buttonText: "Okay",
@@ -55,11 +55,12 @@ const CreateDiscussion = props => {
       creater_id: state.user.id,
       subtopic_id: subId
     }
-    addDiscussion(newDiscussion)
+    addDiscussion(newDiscussion, dispatch)
     setTitle('');
     setContent('');
   }
 
+  console.log(subId)
   return (
     <Card style={{ flex: 1, alignContent: 'center', justifyContent: 'center', height: '100%' }}>
       <CardItem >
@@ -72,7 +73,7 @@ const CreateDiscussion = props => {
             </Item>
             <Item floatingLabel>
               <Label>Tell us what your post is about...</Label>
-              <Textarea style={{ width: '100%' }} rowSpan={5} bordered onChangeText={(e) => setContent(e)} />
+              <Input onChangeText={(e) => setContent(e)} />
             </Item>
 
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', marginTop: 40, width: '80%' }}>

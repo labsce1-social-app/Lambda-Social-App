@@ -235,6 +235,14 @@ export const createSubtopic = async (info, sub, dispatch) => {
   };
 };
 
-export const addDiscussion = async (body, subtopic_id) => {
-
+export const addDiscussion = (body, dispatch) => {
+  const { title, content, image, creater_id, subtopic_id } = body;
+  axios.post(`${postgres}/discussions/create`, { title, content, image, creater_id, subtopic_id })
+    .then(res => {
+      console.log("res: ", res)
+      dispatch({ type: "CREATED_DISCUSSION", payload: { title, content, image, creater_id, subtopic_id } })
+    })
+    .catch(err => {
+      console.log(err)
+    })
 }

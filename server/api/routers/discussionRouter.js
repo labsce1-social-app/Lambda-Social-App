@@ -14,7 +14,7 @@ const {
   getHashTagsByDiscussionId,
   getCommentedDiscussionsbyUserId
 } = require('../helpers/index.js');
-
+const isEmpty = require('../utils/');
 // used for updated timestamps
 const moment = require('moment');
 let timestamp = moment().format('YYYY-MM-DD HH:mm:ss');
@@ -190,33 +190,17 @@ TESTS: {
 router.post('/create', async (req, res) => {
   const { subtopic_id, title, image, content, creater_id } = req.body;
 
-  if (
-    title == null ||
-    title == undefined ||
-    title.length === 0 ||
-    title.length > 50 ||
-    title === '' ||
-    subtopic_id == null ||
-    subtopic_id == undefined ||
-    creater_id == null ||
-    creater_id == undefined
-  ) {
+  if (isEmpty(title) || title.length > 50) {
     res.status(400).json({
       error:
-        'title must be between 0 and 50 charecters, subtopic_id must be valid'
+        'title must be between 0 and 50 charecters'
     });
   } else if ((await checkValidUser(creater_id)) === false) {
     res.status(500).json({ error: 'valid user not found, check creater_id' });
-  } else if (
-    (image === null && content === null) ||
-    (image === undefined && content === undefined) ||
-    (image === '' && content === '')
-  ) {
+  } else if (isEmpty(image) && isEmpty(content)) {
     res.status(400).json({ error: 'must contain either an image or content' });
   } else if ((await canInsertDisucssion(title)) === false) {
     res.status(500).json({ error: 'subtopic already exists' });
-  } else if ((await checkValidSubtopic(subtopic_id)) === false) {
-    res.status(500).json({ error: 'valid subtopic not found' });
   } else {
     db('discussion')
       .insert({
@@ -268,25 +252,16 @@ router.put('/:id', async (req, res) => {
   const { subtopic_id, title, image, content, creater_id } = req.body;
 
   if (
-    title == null ||
-    title == undefined ||
-    title.length === 0 ||
+    isEmpty(title) ||
     title.length > 50 ||
-    title === '' ||
-    subtopic_id == null ||
-    subtopic_id == undefined ||
-    creater_id == null ||
-    creater_id == undefined
+    isEmpty(subtopic_id) ||
+    isEmpty(creater_id)
   ) {
     res.status(400).json({
       error:
         'title must be between 0 and 50 charecters, subtopic_id must be valid'
     });
-  } else if (
-    (image === null && content === null) ||
-    (image === undefined && content === undefined) ||
-    (image === '' && content === '')
-  ) {
+  } else if (isEmpty(image) && isEmpty(content)) {
     res.status(400).json({ error: 'must contain either an image or content' });
   } else if ((await canInsertDisucssion(title)) === false) {
     res.status(500).json({ error: 'subtopic already exists' });
