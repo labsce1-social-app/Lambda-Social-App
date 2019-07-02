@@ -5,7 +5,7 @@ const joinUsersAndSubtopic = () => {
   return db.raw(`
   SELECT discussion.title, discussion.image, discussion.created_at, discussion.updated_at, users.username, discussion.id
   FROM discussion
-  JOIN users, subtopic WHERE discussion.subtopic_id = subtopic.id`);
+  JOIN users, subtopic WHERE discussion.subtopic_id = subtopic.id`).then(res => res.rows);
 };
 
 // defaults sort to upvotes, can also take comments
@@ -33,7 +33,7 @@ on upvote.discussion_id = discussion.id
 GROUP BY discussion.id
 ORDER BY ${sortBy} DESC
 LIMIT 10
-`).returning();
+`).then(res => res.rows);
 };
 
 const getCommentedDiscussionsbyUserId = id => {
@@ -65,7 +65,7 @@ ORDER BY discussion.updated_at DESC
 getHashTagsByDiscussionId = id => {
   return db.raw(`
   select hashtag.hashtag, hashtag.discussion_id from hashtag where hashtag.discussion_id = ${id}
-  `)
+  `).then(res => res.rows)
 }
 
 // add's user column to discussion at id
@@ -81,14 +81,15 @@ const joinUsersAndSubtopicAtId = id => {
 FROM
 	discussion
 INNER JOIN subtopic ON discussion.subtopic_id = subtopic.id AND discussion.id = ${id}
-INNER JOIN users ON discussion.creater_id = users.id`);
-};
+INNER JOIN users ON discussion.creater_id = users.id`)
+    .then(res => res.rows);
+}
 
 const joinUsersAtSubtopicId = id => {
   return db.raw(`SELECT discussion.id, discussion.subtopic_id, discussion.title, discussion.content, discussion.image, discussion.creater_id, users.username, discussion.created_at, discussion.updated_at
   FROM discussion
   JOIN users
-  ON discussion.subtopic_id = ${id} and discussion.creater_id = users.id`);
+  ON discussion.subtopic_id = ${id} and discussion.creater_id = users.id`).then(res => res.rows);
 };
 
 // checks to see if discussion title has been used

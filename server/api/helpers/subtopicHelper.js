@@ -85,7 +85,7 @@ users.username as username
 FROM subtopic
 inner JOIN users
 ON subtopic.creater_id = users.id
-order by date desc`);
+order by date desc`).then((res) => res.rows);
 };
 
 module.exports = {

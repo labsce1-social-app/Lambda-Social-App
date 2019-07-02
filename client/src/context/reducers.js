@@ -5,7 +5,7 @@ export const initialState = {
   top_discussions_loading: false,
   top_discussions_error: '',
   sortBy: 'upvotes',
-  subtopics: [],
+  subtopics: null,
   subtopics_loading: false,
   subtopics_error: '',
   discussions: [],

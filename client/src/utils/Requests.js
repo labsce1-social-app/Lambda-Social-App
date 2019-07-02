@@ -239,7 +239,7 @@ export const addDiscussion = (body, dispatch) => {
   const { title, content, image, creater_id, subtopic_id } = body;
   axios.post(`${postgres}/discussions/create`, { title, content, image, creater_id, subtopic_id })
     .then(res => {
-      console.log("res: ", res)
+      // console.log("res: ", res)
       dispatch({ type: "CREATED_DISCUSSION", payload: { title, content, image, creater_id, subtopic_id } })
     })
     .catch(err => {

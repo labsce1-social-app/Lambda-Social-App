@@ -57,7 +57,7 @@ ON c.discussion_id = d.id
 on reply.id = c.id
 WHERE d.id  = ${discussion_id}
 ORDER BY d.id , reply.id`
-  );
+  ).then(res => res.rows);
 };
 
 
@@ -78,7 +78,7 @@ discussion.created_at as discussion_date,
 from discussion
 inner join users
 on discussion.id = ${discussion_id}
-  `);
+  `).then(res => res.rows);
 };
 
 const getCommentsAndJoinUser = () => {
@@ -95,7 +95,7 @@ const getCommentsAndJoinUser = () => {
     FROM comment
     JOIN users
     ON comment.user_id = users.id
-    `);
+    `).then(res => res.rows);
 };
 
 const getCommentsAndJoinUserById = id => {
@@ -113,13 +113,13 @@ const getCommentsAndJoinUserById = id => {
       JOIN users
       ON comment.user_id = users.id
       AND comment.id = ${id}
-      `);
+      `).then(res => res.rows);
 };
 
 const getCommentsTotal = () => {
   return db.raw(`
   select COUNT(*) from comment
-  `);
+  `).then(res => res.rows);
 };
 
 // checks to see if user_id is a valid user id
