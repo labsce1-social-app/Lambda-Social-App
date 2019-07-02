@@ -12,7 +12,8 @@ const {
   topDiscussions,
   joinUsersAtSubtopicId,
   getHashTagsByDiscussionId,
-  getCommentedDiscussionsbyUserId
+  getCommentedDiscussionsbyUserId,
+  createDiscussion
 } = require('../helpers/index.js');
 const isEmpty = require('../utils/');
 // used for updated timestamps
@@ -188,37 +189,14 @@ TESTS: {
 */
 
 router.post('/create', async (req, res) => {
-  const { subtopic_id, title, image, content, creater_id } = req.body;
-
-  if (isEmpty(title) || title.length > 50) {
-    res.status(400).json({
-      error:
-        'title must be between 0 and 50 charecters'
+  createDiscussion(req.body)
+    .then(discussion => {
+      res.status(201)
+        .json({ id: discussion, message: 'Succesfully created discussion' });
+    })
+    .catch(err => {
+      res.status(500).json({ error: err });
     });
-  } else if ((await checkValidUser(creater_id)) === false) {
-    res.status(500).json({ error: 'valid user not found, check creater_id' });
-  } else if (isEmpty(image) && isEmpty(content)) {
-    res.status(400).json({ error: 'must contain either an image or content' });
-  } else if ((await canInsertDisucssion(title)) === false) {
-    res.status(500).json({ error: 'subtopic already exists' });
-  } else {
-    db('discussion')
-      .insert({
-        subtopic_id,
-        title,
-        image,
-        content,
-        creater_id
-      })
-      .then(discussion => {
-        res
-          .status(201)
-          .json({ id: discussion, message: 'Succesfully created discussion' });
-      })
-      .catch(err => {
-        res.status(500).json({ error: err });
-      });
-  }
 });
 
 /*

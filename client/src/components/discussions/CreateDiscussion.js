@@ -23,16 +23,23 @@ const CreateDiscussion = props => {
   const { state, dispatch } = useContext(Store);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState(null);
   const subId = props.navigation.getParam('subId');
-
+  console.log(state.user.id)
   useEffect(() => {
     if (image !== state.newImage) {
       return setImage(state.newImage)
     }
   })
   const submitHandler = () => {
-    if (isEmpty(title) || isEmpty(content)) {
+    const post = {
+      title,
+      content,
+      image: image,
+      creater_id: state.user.id,
+      subtopic_id: subId
+    }
+    if (isEmpty(post.title) || isEmpty(post.content)) {
       return Toast.show({
         text: "Please fill the title and content",
         buttonText: "Okay",
@@ -40,7 +47,7 @@ const CreateDiscussion = props => {
         type: 'warning'
       })
     }
-    if (title.length > 50) {
+    if (post.title.length > 50) {
       return Toast.show({
         text: "Title can't be longer than 50 characters",
         buttonText: 'Okay',
@@ -48,19 +55,11 @@ const CreateDiscussion = props => {
         type: 'warning'
       })
     }
-    const newDiscussion = {
-      title,
-      content,
-      image,
-      creater_id: state.user.id,
-      subtopic_id: subId
-    }
-    addDiscussion(newDiscussion, dispatch)
     setTitle('');
     setContent('');
+    return addDiscussion(post, dispatch)
   }
 
-  console.log(subId)
   return (
     <Card style={{ flex: 1, alignContent: 'center', justifyContent: 'center', height: '100%' }}>
       <CardItem >
@@ -82,16 +81,25 @@ const CreateDiscussion = props => {
                   Upload an image
                 </Text>
               </Button>
-              <Button bordered success onPress={() => submitHandler()}>
-                <Text>
-                  Done
+              {state.newImage_loading === true ? (
+                <Button bordered light>
+                  <Text>Done</Text>
+                </Button>
+              ) : (
+                  <Button bordered success onPress={() => submitHandler()}>
+                    <Text>
+                      Done
               </Text>
-              </Button>
+                  </Button>
+
+                )}
             </View>
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 40 }}>
-              {image.length > 0 ? (
-                <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
-              ) : state.newImage_loading === true ? <Spinner /> : null}
+              {
+                image !== null ? (
+                  <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+                ) : state.newImage_loading === true ? <Spinner /> : null
+              }
             </View>
           </Form>
         </Content>

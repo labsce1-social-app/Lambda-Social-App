@@ -1,4 +1,5 @@
 const db = require('../../data/dbconfig.js');
+const isEmpty = require('../utils/');
 
 // add's user column to discussion
 const joinUsersAndSubtopic = () => {
@@ -204,7 +205,12 @@ const userCanDeleteDiscussion = async (id, creater_id) => {
   return canDelete;
 };
 
+const createDiscussion = (props) => {
+  return db('discussion').where({ "subtopic_id": props.subtopic_id }).insert(props).return();
+}
+
 module.exports = {
+  createDiscussion,
   joinUsersAndSubtopic,
   joinUsersAndSubtopicAtId,
   canInsertDisucssion,

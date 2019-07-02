@@ -16,8 +16,8 @@ export const initialState = {
   comments: null,
   comments_loading: false,
   comments_error: '',
-  newImage_loading: '',
-  newImage: '',
+  newImage_loading: false,
+  newImage: null,
   newImage_error: '',
 };
 // all of the reducer conditions, we can use the dispatch method to interact with this by simply passing in a type and sending the payload.
@@ -125,7 +125,7 @@ export const reducer = (state = initialState, action) => {
       };
 
     case 'CREATE_SUBTOPIC':
-      const { title, creater_id } = action.payload;
+      const { payload: { title, creater_id } } = action;
       return {
         ...state,
         subtopics_loading: false,
