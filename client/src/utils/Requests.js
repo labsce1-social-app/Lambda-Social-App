@@ -175,7 +175,7 @@ export const handleLogout = async dispatch => {
 };
 
 // handles aws image uploading
-export const uploadImage = () => {
+export const uploadImage = (dispatch) => {
   ImagePicker.showImagePicker({}, response => {
     /*response returns an object with all of the information about the selected image.
     returns data, fileName, fileSize, height, isVertical, latitude, longitude, origURL,
@@ -196,11 +196,12 @@ export const uploadImage = () => {
       secretKey: AWS_SECRET_ACCESS_KEY,
       successActionStatus: 201
     };
+    dispatch({ type: 'SENDING_IMAGE' });
     RNS3.put(file, config)
       .then(response => {
+        console.log(response);
         if (response.status === 403) {
-          console.log(response);
-          throw new Error('Failed to upload image to S3');
+          return dispatch({ type: 'IMAGE_FAILED', payload: 'Failed to upload image to S3' });
         } else {
           /*
           response will come back looking like this, we'll want
@@ -208,11 +209,12 @@ export const uploadImage = () => {
               location: "https://lambdasocialbucket.s3.amazonaws.com/s3%2FIMG_0111.HEIC"
           }
               */
-          return response.body.postResponse.location;
+          return dispatch({ type: 'IMAGE_SUCCESS', payload: response.body.postResponse.location })
         }
       })
       .catch(err => {
         console.log(err);
+        return dispatch({ type: 'IMAGE_FAILED', payload: err })
       });
   });
 };

@@ -15,7 +15,10 @@ export const initialState = {
   user: null,
   comments: null,
   comments_loading: false,
-  comments_error: ''
+  comments_error: '',
+  newImage_loading: '',
+  newImage: '',
+  newImage_error: '',
 };
 // all of the reducer conditions, we can use the dispatch method to interact with this by simply passing in a type and sending the payload.
 export const reducer = (state = initialState, action) => {
@@ -128,6 +131,24 @@ export const reducer = (state = initialState, action) => {
         subtopics_loading: false,
         subtopics: [{ creater_id, title, username: state.user.username }, ...state.subtopics]
       };
+    case 'SENDING_IMAGE':
+      return {
+        newImage_loading: true,
+        newImage: '',
+        newImage_error: ''
+      }
+    case 'IMAGE_SUCCESS':
+      return {
+        newImage_loading: false,
+        newImage: action.payload,
+        newImage_error: ''
+      }
+    case 'IMAGE_FAILED':
+      return {
+        newImage_loading: false,
+        newImage: '',
+        newImage_error: action.payload
+      }
     default:
       throw new Error('not a valid action');
   }

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import {
   Content,
   Form,
@@ -11,8 +11,10 @@ import {
   Label,
   CardItem,
   Text,
-  Toast
+  Toast,
+  Spinner,
 } from 'native-base';
+import { Image } from 'react-native';
 import { addDiscussion, uploadImage } from '../../utils/Requests';
 import { isEmpty } from '../../utils/utility';
 import { Store } from '../../context';
@@ -24,6 +26,11 @@ const CreateDiscussion = props => {
   const [image, setImage] = useState('');
   const subId = props.navigation.getParam('subId');
 
+  useEffect(() => {
+    if (image !== state.newImage) {
+      return setImage(state.newImage)
+    }
+  })
   const submitHandler = () => {
     if (isEmpty(title) || isEmpty(conent)) {
       return Toast.show({
@@ -36,7 +43,9 @@ const CreateDiscussion = props => {
     const newDiscussion = {
       title, content, image
     }
-    return addDiscussion(newDiscussion, subId)
+    addDiscussion(newDiscussion, subId)
+    setTitle('');
+    setContent('');
   }
 
   return (
@@ -53,9 +62,13 @@ const CreateDiscussion = props => {
               <Label>Tell us what your post is about...</Label>
               <Textarea style={{ width: '100%' }} rowSpan={5} bordered onChangeText={(e) => setContent(e)} />
             </Item>
-            {!isEmpty(image) ? <Image source={{ uri: image }} style={{ width: '100%' }} /> : null}
+            {image.length > 0 ? (
+              <Item>
+                <Image source={{ uri: image }} style={{ width: 200, height: null }} />
+              </Item>
+            ) : state.newImage_loading === true ? <Spinner /> : null}
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', marginTop: 40, width: '80%' }}>
-              <Button bordered onPress={() => uploadImage()}>
+              <Button bordered onPress={() => uploadImage(dispatch)}>
                 <Text>
                   Upload an image
                 </Text>
