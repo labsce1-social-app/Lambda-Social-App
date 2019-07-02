@@ -25,12 +25,10 @@ const postgres = 'https://lambdasocial-postgres.herokuapp.com';
 // check if a user is logged in
 export const isAuthed = async dispatch => {
   try {
-    const value = getData('user').then(data => {
-      console.log("data:", data)
-      if (!isEmpty(data)) {
-        return dispatch({ type: 'SET_CURRENT_USER', payload: data });
-      }
-    });
+    const value = await getData('accessToken')
+    if (!isEmpty(value)) {
+      return dispatch({ type: 'SET_CURRENT_USER', payload: value });
+    }
     return value;
   } catch (err) {
     console.log(err);
@@ -113,7 +111,6 @@ export const handleAuth = async dispatch => {
     // rather than another call to auth0 decode idToken for info from auth0
     const decUser = await jwtDecode(idToken);
     const storeUser = await storeData('user', accessToken);
-    // console.log('handleAuth decoded', decUser);
     const followup = await getUser(decUser, dispatch); // send access_token
     return { storeUser, followup }
   } catch (error) {
@@ -123,7 +120,6 @@ export const handleAuth = async dispatch => {
 
 // get user from our db
 const getUser = async (user, dispatch) => {
-  console.log(user);
   storeData('accessToken', {
     username: user.nickname,
     avatar: user.picture,
@@ -225,9 +221,7 @@ export const uploadImage = () => {
 
 // TODO: Change this and all other 'posts' to seperate file
 export const createSubtopic = async (info, sub, dispatch) => {
-  // console.log('fetching in request');
   dispatch({ type: 'SUBTOPICS_FETCHING' });
-
   const body = {
     title: info,
     creater_id: sub
