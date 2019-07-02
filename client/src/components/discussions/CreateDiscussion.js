@@ -40,16 +40,28 @@ const CreateDiscussion = props => {
         type: 'warning'
       })
     }
-    const newDiscussion = {
-      title, content, image
+    if (title.length > 50) {
+      return Toast.show({
+        text: "Title can't be longer than 50 characters",
+        buttonText: 'Okay',
+        duraton: 3000,
+        type: 'warning'
+      })
     }
-    addDiscussion(newDiscussion, subId)
+    const newDiscussion = {
+      title,
+      content,
+      image,
+      creater_id: state.user.id,
+      subtopic_id: subId
+    }
+    addDiscussion(newDiscussion)
     setTitle('');
     setContent('');
   }
 
   return (
-    <Card style={{ flex: 1, alignContent: 'center', justifyContent: 'center' }}>
+    <Card style={{ flex: 1, alignContent: 'center', justifyContent: 'center', height: '100%' }}>
       <CardItem >
         <Content>
           <Form style={{ flex: 1, alignItems: 'center', justifyContent: 'space-evenly', width: '100%', height: 400 }}>
@@ -62,11 +74,7 @@ const CreateDiscussion = props => {
               <Label>Tell us what your post is about...</Label>
               <Textarea style={{ width: '100%' }} rowSpan={5} bordered onChangeText={(e) => setContent(e)} />
             </Item>
-            {image.length > 0 ? (
-              <Item>
-                <Image source={{ uri: image }} style={{ width: 200, height: null }} />
-              </Item>
-            ) : state.newImage_loading === true ? <Spinner /> : null}
+
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', marginTop: 40, width: '80%' }}>
               <Button bordered onPress={() => uploadImage(dispatch)}>
                 <Text>
@@ -78,6 +86,11 @@ const CreateDiscussion = props => {
                   Done
               </Text>
               </Button>
+            </View>
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 40 }}>
+              {image.length > 0 ? (
+                <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+              ) : state.newImage_loading === true ? <Spinner /> : null}
             </View>
           </Form>
         </Content>
