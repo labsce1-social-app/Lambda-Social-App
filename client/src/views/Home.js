@@ -15,7 +15,7 @@ const Home = props => {
   const { state, dispatch } = useContext(Store);
 
   useEffect(() => {
-    isAuthed();
+    isAuthed(dispatch);
   }, () => isAuthed())
 
   useEffect(() => {

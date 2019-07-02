@@ -1,6 +1,6 @@
 import React from 'react';
 import style from './Style';
-import { CardItem, Text, Body, Right, Thumbnail } from 'native-base';
+import { CardItem, Text, Body, Right } from 'native-base';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { View, Image } from 'react-native';
 import moment from 'moment';
