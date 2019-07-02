@@ -8,21 +8,22 @@
 */
 exports.up = function (knex, Promise) {
   return knex.schema.createTable('subtopic', subtopic => {
-    subtopic.increments('id').primary();
+    subtopic
+      .increments()
+      .index()
 
     subtopic
       .string('title', 50)
       .unique()
       .notNullable();
 
-    subtopic.timestamp('created_at').defaultTo(knex.fn.now());
+    subtopic
+      .timestamps(true, true);
 
-    subtopic.timestamp('updated_at').defaultTo(knex.fn.now());
 
     subtopic
-      .string('creater_id')
-      .references('id')
-      .inTable('user')
+      .text('creater_id')
+      .references('users.id')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
   });

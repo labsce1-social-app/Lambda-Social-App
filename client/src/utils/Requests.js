@@ -5,10 +5,11 @@ import {
   BASE_URL,
   LOCAL,
   AWS_ACCESS_KEY_ID,
-  AWS_SECRET_ACCESS_KEY
+  AWS_SECRET_ACCESS_KEY,
+  POSTGRES
 } from 'react-native-dotenv';
 import { storeData, getData, deleteData } from './AsyncStorage';
-
+import { isEmpty } from './utility';
 import Auth0 from 'react-native-auth0';
 import ImagePicker from 'react-native-image-picker';
 import axios from 'axios';
@@ -19,15 +20,15 @@ const auth0ClientId = AUTH0_CLIENT;
 const auth0Domain = AUTH0_DOMAIN;
 const local = `http://localhost:3000`;
 const base_url = `https://social-app-test.herokuapp.com`;
+const postgres = 'https://lambdasocial-postgres.herokuapp.com';
 
 // check if a user is logged in
 export const isAuthed = async dispatch => {
   try {
-    const value = getData('user').then(data => {
-      if (data !== null && data !== undefined) {
-        return dispatch({ type: 'SET_CURRENT_USER', payload: data });
-      }
-    });
+    const value = await getData('accessToken')
+    if (!isEmpty(value)) {
+      return dispatch({ type: 'SET_CURRENT_USER', payload: value });
+    }
     return value;
   } catch (err) {
     console.log(err);
@@ -40,7 +41,7 @@ export const getDiscussions = async (query, dispatch) => {
   const q = new URLSearchParams({ sort: query });
   dispatch({ type: 'TOP_DISCUSSIONS_FETCHING', payload: true });
   try {
-    const res = await axios.get(`${base_url}/discussions/?${q.toString()}`);
+    const res = await axios.get(`${postgres}/discussions/?${q.toString()}`);
     return dispatch({ type: 'TOP_DISCUSSIONS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -51,7 +52,7 @@ export const getDiscussions = async (query, dispatch) => {
 export const getDiscussionsForSub = async (id, dispatch) => {
   try {
     await dispatch({ type: 'DISCUSSIONS_FETCHING', payload: true });
-    const res = await axios.get(`${base_url}/discussions/s/${id}`)
+    const res = await axios.get(`${postgres}/discussions/s/${id}`)
     return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -62,7 +63,7 @@ export const getDiscussionsForSub = async (id, dispatch) => {
 export const getRecentDiscussions = async (id, dispatch) => {
   try {
     await dispatch({ type: 'DISCUSSIONS_FETCHING', payload: true });
-    const res = await axios.get(`${base_url}/discussions/recent/${id}`)
+    const res = await axios.get(`${postgres}/discussions/recent/${id}`)
     return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: !isEmpty(res.data) ? res.data : null });
   } catch (err) {
     console.log(err);
@@ -72,57 +73,29 @@ export const getRecentDiscussions = async (id, dispatch) => {
 
 // used for the PostPage component
 // returns all comments and poster data for the comments page. Returns giant object with all post header data and arrays of comments.
-export const getCommentsByDiscussionId = (id, dispatch) => {
+export const getCommentsByDiscussionId = async (id, dispatch) => {
   // read previous function, they're almost the same
   dispatch({ type: 'COMMENTS_FETCHING' });
-
-  axios
-    .get(`${base_url}/comments/d/${id}`)
-    .then(res => {
-      console.log('get comments', res.data);
-      dispatch({ type: 'COMMENTS_FETCHED_SUCCESS', payload: res.data });
-    })
-    .catch(err => {
-      console.log(err);
-      dispatch({ type: 'COMMENTS_FETCHED_FAILED', payload: error });
-    });
-
-  // try {
-  //   const response = await fetch(`${base_url}/comments/d/${id}`, {
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       Accept: 'application/json'
-  //     }
-  //   });
-  //   const resJSON = await response.json();
-  //   return
-  // } catch (error) {
-  //   console.log(error);
-  // }
+  try {
+    const res = await axios.get(`${postgres}/comments/d/${id}`);
+    return dispatch({ type: 'COMMENTS_FETCHED_SUCCESS', payload: res.data });
+  } catch (err) {
+    console.log(err);
+    return dispatch({ type: 'COMMENTS_FETCHED_FAILED', payload: error });
+  };
 };
 
 // get all subtopics
 export const getSubtopics = async dispatch => {
   dispatch({ type: 'SUBTOPICS_FETCHING' });
-
-  axios
-    .get(`${base_url}/subtopics`)
-    .then(res => {
-      console.log('subtopics', res.data);
-      dispatch({ type: 'SUBTOPICS_FETCHED', payload: res.data });
-    })
-    .catch(err => {
-      console.log(err);
-      dispatch({ type: 'SUBTOPICS_FAILED', payload: error });
-    });
-
-  // try {
-  //   const response = await fetch(`${base_url}/subtopics`);
-  //   const resJson = await response.json();
-  // } catch (error) {
-  //   throw new Error(error);
-  // }
-};
+  try {
+    const res = await axios.get(`${postgres}/subtopics`);
+    return dispatch({ type: 'SUBTOPICS_FETCHED', payload: res.data });
+  } catch (err) {
+    console.log(err);
+    return dispatch({ type: 'SUBTOPICS_FAILED', payload: error });
+  };
+}
 
 // send a user to auth0
 const auth0 = new Auth0({ domain: auth0Domain, clientId: auth0ClientId });
@@ -134,16 +107,12 @@ export const handleAuth = async dispatch => {
       audience: 'https://lambdasocial.auth0.com/api/v2/',
       prompt: 'login'
     });
-
     const { idToken, accessToken } = getAuth;
-
     // rather than another call to auth0 decode idToken for info from auth0
-    const decUser = jwtDecode(idToken);
-
-    await storeData('accessToken', accessToken);
-
-    console.log('handleAuth decoded', decUser);
-    await getUser(decUser, dispatch); // send access_token
+    const decUser = await jwtDecode(idToken);
+    const storeUser = await storeData('user', accessToken);
+    const followup = await getUser(decUser, dispatch); // send access_token
+    return { storeUser, followup }
   } catch (error) {
     console.log('error in login', error);
   }
@@ -151,29 +120,29 @@ export const handleAuth = async dispatch => {
 
 // get user from our db
 const getUser = async (user, dispatch) => {
-  axios
-    .get(`${base_url}/users/${user.sub}`)
-    .then(res => {
-      console.log('inside getuser axios res', res.data);
-
-      // checking if we got a user exists in our db and skips the post
-      if (res.data) {
-        dispatch({
-          type: 'SET_CURRENT_USER',
-          payload: res.data // user's auth0 sub is being saved as id in state(state.user.id)
-        });
-      } else {
-        makeUser(user, dispatch);
-      }
-    })
-    .catch(err => {
-      console.log('axios call error', err);
-    });
+  storeData('accessToken', {
+    username: user.nickname,
+    avatar: user.picture,
+    id: user.sub
+  })
+  try {
+    const res = await axios.get(`${postgres}/users/${user.sub}`);
+    if (res.data) {
+      const send = await dispatch({
+        type: 'SET_CURRENT_USER',
+        payload: res.data // user's auth0 sub is being saved as id in state(state.user.id)
+      });
+      return send
+    } else {
+      return makeUser(user, dispatch);
+    }
+  } catch (err) {
+    console.log('axios call error', err);
+  };
 };
 
 // and create a user in the database
 const makeUser = async (info, dispatch) => {
-  console.log(info);
 
   const body = {
     username: info.nickname,
@@ -181,36 +150,17 @@ const makeUser = async (info, dispatch) => {
     email: info.email,
     avatar: info.picture
   }; // send  nickname as a 'username'
-
-  axios
-    .post(`${base_url}/users`, body)
-    .then(res => {
-      // console.log('post user', res.data);
-      // const user = await auth0.auth.userInfo({ token: token });
-      // console.log(body);
-
-      dispatch({
-        type: 'SET_CURRENT_USER',
-        payload: body
-      });
-    })
-    .catch(err => {
-      console.log('error posting ', err);
+  try {
+    const make = await axios
+      .post(`${postgres}/users`, body)
+    const followup = await dispatch({
+      type: 'SET_CURRENT_USER',
+      payload: body
     });
-
-  // try {
-  //   const postUser = await fetch(`${base_url}/users`, {
-  //     method: 'POST',
-  //     headers: {
-  //       Accept: 'application/json',
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body
-  //   });
-  //   return postUser;
-  // } catch (error) {
-  //   console.log('error in sending user', error);
-  // }
+    return { make, followup }
+  } catch (err) {
+    console.log('error posting ', err);
+  };
 };
 
 // logout a user through state
@@ -218,11 +168,7 @@ export const handleLogout = async dispatch => {
   try {
     const del = await deleteData();
     const dis = await dispatch({ type: 'LOGOUT' });
-    return {
-      del,
-      dis
-    };
-    // return history.push('/home');
+    return { del, dis };
   } catch (err) {
     console.log(err);
   }
@@ -274,37 +220,17 @@ export const uploadImage = () => {
 };
 
 // TODO: Change this and all other 'posts' to seperate file
-export const createSubtopic = (info, sub, dispatch) => {
-  // console.log('fetching in request');
+export const createSubtopic = async (info, sub, dispatch) => {
   dispatch({ type: 'SUBTOPICS_FETCHING' });
-
   const body = {
     title: info,
     creater_id: sub
   };
-
-  axios
-    .post(`${base_url}/subtopics/create`, body)
-    .then(res => {
-      console.log('res post subtopic', res.data);
-      dispatch({ type: 'CREATE_SUBTOPIC', payload: res.data.id[0] });
-    })
-    .catch(err => {
-      console.log(err);
-    });
-
-  // try {
-  //   const newSubtopic = await fetch(`${base_url}/subtopics/create`, {
-  //     method: 'POST',
-  //     body,
-  //     headers: new Headers({
-  //       'Content-Type': 'application/json'
-  //     })
-  //   });
-  //   const subId = await newSubtopic.json();
-  //   // console.log(subId.id[0]);
-
-  // } catch (error) {
-  //   console.log(error);
-  // }
+  try {
+    const res = await axios.post(`${postgres}/subtopics/create`, body);
+    const followup = await dispatch({ type: 'CREATE_SUBTOPIC', payload: body });
+    return { res, followup }
+  } catch (err) {
+    console.log(err);
+  };
 };

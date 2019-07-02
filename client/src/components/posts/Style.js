@@ -1,12 +1,9 @@
 import { StyleSheet } from 'react-native';
-import { config } from '../../utils/dimensions';
 
 
 export default StyleSheet.create({
     container: {
         flex: 0,
-        minHeight: config.deviceHeight * 0.75,
-        maxHeight: config.deviceHeight * 0.75
     },
     post_image: {
         height: 200,
@@ -32,10 +29,9 @@ export default StyleSheet.create({
     chat: {
         marginLeft: 20
     },
-    bubble: {
-        color: 'green'
-    },
-    heart: {
-        color: 'red'
+    reply_container: {
+        flex: 0,
+        padding: 2,
+        marginLeft: 40
     }
 });

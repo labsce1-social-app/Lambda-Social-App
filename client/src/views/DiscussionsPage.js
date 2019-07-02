@@ -17,7 +17,7 @@ const DiscussionsPage = props => {
   }, []);
 
   return (
-    <Container>
+    <Container style={{ backgroundColor: '#F6F8FA', padding: 5 }}>
       <Sort />
       <Discussions
         loading={state.discussions_loading}

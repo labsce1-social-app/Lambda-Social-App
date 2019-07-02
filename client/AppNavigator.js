@@ -93,7 +93,7 @@ const FooterNavigator = createBottomTabNavigator(
     SubTopics: {
       screen: SubtopicsStack,
       navigationOptions: {
-        tabBarIcon: <Icon name="book" />
+        tabBarIcon: <Icon name="md-albums" />
       }
     }
   },

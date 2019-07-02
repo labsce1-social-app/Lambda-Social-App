@@ -9,22 +9,23 @@
   }
 */
 exports.up = function (knex, Promise) {
-    return knex.schema.createTable('hashtag', hashtag => {
-        hashtag.increments('id').primary();
+  return knex.schema.createTable('hashtag', hashtag => {
+    hashtag.increments('id').primary();
 
-        hashtag
-            .string('hashtag', 100);
+    hashtag
+      .string('hashtag', 20);
 
-        hashtag
-            .integer('discussion_id')
-            .references('id')
-            .inTable('discussion')
-            .notNullable()
-            .onDelete('CASCADE')
-            .onUpdate('CASCADE');
-    });
+    hashtag
+      .integer('discussion_id')
+      .notNullable()
+      .references('discussion.id')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE');
+
+    hashtag.timestamps(true, true);
+  });
 };
 
 exports.down = function (knex, Promise) {
-    return knex.schema.dropTableIfExists('hashtag');
+  return knex.schema.dropTableIfExists('hashtag');
 };

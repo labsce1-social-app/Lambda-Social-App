@@ -122,9 +122,11 @@ export const reducer = (state = initialState, action) => {
       };
 
     case 'CREATE_SUBTOPIC':
+      const { title, creater_id } = action.payload;
       return {
         ...state,
-        subtopics_loading: false
+        subtopics_loading: false,
+        subtopics: [{ creater_id, title, username: state.user.username }, ...state.subtopics]
       };
     default:
       throw new Error('not a valid action');

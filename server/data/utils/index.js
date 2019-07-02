@@ -47,6 +47,13 @@ function generateUsers() {
   };
 }
 
+// create a subtopics object
+function generateSubtopics() {
+  return {
+    title: faker.lorem.words(4),
+    creater_id: pickOne(copy_ids)
+  };
+}
 // create a subtopic_users object for joining tables
 function generateSubtopic_users() {
   return {
@@ -55,13 +62,6 @@ function generateSubtopic_users() {
   };
 }
 
-// create a subtopics object
-function generateSubtopics() {
-  return {
-    title: faker.lorem.words(4),
-    creater_id: pickOne(copy_ids)
-  };
-}
 
 // create a discussions object
 function generateDiscussions() {

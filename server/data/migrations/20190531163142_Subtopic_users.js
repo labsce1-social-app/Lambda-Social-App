@@ -13,21 +13,24 @@
 
 exports.up = function (knex, Promise) {
   return knex.schema.createTable('subtopic_users', subtopic_users => {
-    subtopic_users.increments('id').primary();
+    subtopic_users
+      .increments()
+      .index()
 
     subtopic_users
-      .string('user_id')
-      .references('id')
-      .inTable('user')
+      .text('user_id')
+      .references('users.id')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
 
     subtopic_users
       .integer('subtopic_id')
-      .references('id')
-      .inTable('subtopic')
+      .references('subtopic.id')
       .onDelete('CASCADE')
-      .onUpdate('CASCADE');
+      .onUpdate('CASCADE')
+      .index();
+
+    subtopic_users.timestamps(true, true);
   });
 };
 

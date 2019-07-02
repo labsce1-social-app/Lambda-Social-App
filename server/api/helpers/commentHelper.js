@@ -21,20 +21,20 @@ const getCommentsByDiscussionId = discussion_id => {
     `
     SELECT distinct
 d.id as discussion_id,
-c.id as 'original post_id',
-c.comment_post as 'original_post',
-u.id as 'original_commenter_id',
-u.username as 'original_commenter',
-u.avatar as 'orignal_commenter_avatar',
-c.created_at as 'original_created_date',
-reply.id  as 'reply_id',
-reply.post  as 'reply_post',
-reply.id   as 'reply_commenter_id',
-reply.username as 'reply_commenter',
-reply.avatar as 'reply_commenter_avatar',
-reply.created_date as 'reply_created_date'
+c.id as original_post_id,
+c.comment_post as original_post,
+u.id as original_commenter_id,
+u.username as original_commenter,
+u.avatar as orignal_commenter_avatar,
+c.created_at as original_created_date,
+reply.id  as reply_id,
+reply.post  as reply_post,
+reply.id   as reply_commenter_id,
+reply.username as reply_commenter,
+reply.avatar as reply_commenter_avatar,
+reply.created_date as reply_created_date
 FROM comment c
-INNER JOIN user as u
+INNER JOIN users as u
 ON c.user_id = u.id
 INNER JOIN discussion d
 ON c.discussion_id = d.id
@@ -43,19 +43,20 @@ SELECT
 c.id   as id,
 c.comment_id as parent,
 c.comment_post as post,
-user.username as username,
-user.avatar as avatar,
-user.id  as user_id,
+users.username as username,
+users.avatar as avatar,
+users.id  as user_id,
 c.created_at as created_date,
 d.id  as discussion_id
 from comment c
-INNER JOIN user
-ON c.user_id = user.id
+INNER JOIN users
+ON c.user_id = users.id
 INNER JOIN discussion d
-ON c.discussion_id = d.id   where 'parent' is not null)reply
-on reply.'parent' = c.id
+ON c.discussion_id = d.id
+	where c.comment_id is not null)reply
+on reply.id = c.id
 WHERE d.id  = ${discussion_id}
-ORDER BY d.id ,reply.'parent'`
+ORDER BY d.id , reply.id`
   );
 };
 
@@ -63,10 +64,10 @@ ORDER BY d.id ,reply.'parent'`
 
 const getPostDetailByDiscussionId = discussion_id => {
   return db.raw(`
-  SELECT distinct
+   SELECT distinct
 discussion.id as id,
-	(select user.username
-	from user where user.id = discussion.creater_id) as creator,
+	(select users.username
+	from users where users.id = discussion.creater_id) as creator,
 discussion.content as discussion_content,
 discussion.image as discussion_image,
 discussion.created_at as discussion_date,
@@ -75,7 +76,7 @@ discussion.created_at as discussion_date,
 			where upvote.discussion_id = ${discussion_id}
 ) as upvotes
 from discussion
-inner join user
+inner join users
 on discussion.id = ${discussion_id}
   `);
 };
@@ -83,7 +84,7 @@ on discussion.id = ${discussion_id}
 const getCommentsAndJoinUser = () => {
   return db.raw(`
     SELECT
-    user.username,
+    users.username,
     comment.id,
     comment.comment_post,
     comment.user_id,
@@ -92,15 +93,15 @@ const getCommentsAndJoinUser = () => {
     comment.discussion_id,
     comment.comment_id
     FROM comment
-    JOIN user
-    WHERE comment.user_id = user.id
+    JOIN users
+    ON comment.user_id = users.id
     `);
 };
 
 const getCommentsAndJoinUserById = id => {
   return db.raw(`
       SELECT
-      user.username,
+      users.username,
       comment.id,
       comment.comment_post,
       comment.user_id,
@@ -109,8 +110,8 @@ const getCommentsAndJoinUserById = id => {
       comment.discussion_id,
       comment.comment_id
       FROM comment
-      JOIN user
-      WHERE comment.user_id = user.id
+      JOIN users
+      ON comment.user_id = users.id
       AND comment.id = ${id}
       `);
 };
@@ -125,7 +126,7 @@ const getCommentsTotal = () => {
 const checkValidUserComments = async user_id => {
   let isValid = false;
 
-  await db('user')
+  await db('users')
     .where('user_id', user_id)
     .then(id => {
       if (id.length > 0) {

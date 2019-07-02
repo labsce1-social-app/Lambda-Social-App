@@ -10,14 +10,17 @@ export default StyleSheet.create({
         marginBottom: 40
     },
     title: {
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontSize: 24,
+        marginBottom: 10
     },
     date: {
-        fontSize: 12,
-        color: 'rgb(120, 120, 120)'
+        // fontSize: 12,
+        // color: 'rgb(120, 120, 120)'
     },
     username: {
-        fontStyle: 'italic'
+        fontStyle: 'italic',
+        marginLeft: 10
     },
     comment: {
         flex: 1,
@@ -40,9 +43,9 @@ export default StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        width: '70%',
+        width: '30%',
         margin: 10,
-        alignSelf: 'flex-end'
+        alignSelf: 'flex-start'
     },
     hashtags: {
         flex: 0,
@@ -57,7 +60,7 @@ export default StyleSheet.create({
         margin: 5,
     },
     hashtagText: {
-        fontSize: 12,
-        fontWeight: 'bold'
+        fontSize: 14,
+        color: 'slateblue'
     }
 });

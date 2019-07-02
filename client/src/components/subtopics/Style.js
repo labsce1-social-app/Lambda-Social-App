@@ -2,13 +2,9 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
     // Post Summary Icon
-    icon: {
-        width: 48,
-        height: 48,
-        marginBottom: 40
-    },
     title: {
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontSize: 26
     },
     date: {
         fontSize: 12,
@@ -17,15 +13,10 @@ export default StyleSheet.create({
     username: {
         fontStyle: 'italic'
     },
-    comment: {
-        textAlign: 'right',
-    },
-    buttons: {
-        textAlign: 'right',
-        fontSize: 12,
-        marginTop: 25
-    },
-    chat: {
-        marginLeft: 20
+    container: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'space-evenly',
+        height: '100%'
     }
 });

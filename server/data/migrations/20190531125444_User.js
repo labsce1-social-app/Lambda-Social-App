@@ -8,30 +8,32 @@
   }
 */
 exports.up = function (knex, Promise) {
-  return knex.schema.createTable('user', user => {
+  return knex.schema.createTable('users', user => {
     user
-      .string('id') // user_id from auth0 sub
-      .notNullable()
-      .primary();
+      .text('id')
+      .primary()
+      .notNullable();
 
     user
-      .string('username', 25) // username, limited up to 25 characters
+      .string('username', 25)
+      .notNullable();
+
+    user
+      .string('email', 128)
       .unique()
       .notNullable();
 
     user
-      .string('email', 128) // email
-      .unique()
+      .text('avatar')
       .notNullable();
 
     user
-      .string('avatar') // avatar
-      .notNullable();
+      .timestamps(true, true);
   });
 };
 
 exports.down = function (knex, Promise) {
-  return knex.schema.dropTableIfExists('user');
+  return knex.schema.dropTableIfExists('users');
 };
 
 // SELECT 'user' WHERE 'id' = 'id' INSERT 'subtopicID'

@@ -8,7 +8,7 @@
     updated_at: String
   }
 */
-exports.up = function(knex, Promise) {
+exports.up = function (knex, Promise) {
   return knex.schema.createTable('comment', comment => {
     comment.increments('id').primary();
 
@@ -16,31 +16,27 @@ exports.up = function(knex, Promise) {
 
     comment
       .integer('discussion_id')
-      .references('id')
-      .inTable('discussion')
+      .references('discussion.id')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
 
     comment
       .integer('comment_id')
-      .references('id')
-      .inTable('comment')
+      .references('comment.id')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
 
     comment
-      .string('user_id')
-      .references('id')
-      .inTable('user')
+      .text('user_id')
+      .notNullable()
+      .references('users.id')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
 
-    comment.timestamp('created_at').defaultTo(knex.fn.now());
-
-    comment.timestamp('updated_at').defaultTo(knex.fn.now());
+    comment.timestamps(true, true);
   });
 };
 
-exports.down = function(knex, Promise) {
+exports.down = function (knex, Promise) {
   return knex.schema.dropTableIfExists('comment');
 };

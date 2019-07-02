@@ -10,15 +10,13 @@ const PostHeader = (props) => {
     return (
         <>
             <CardItem style={{ maxHeight: config.deviceHeight * 0.35, minHeight: config.deviceHeight * 0.35, overflow: 'scroll' }}>
-                <ScrollView>
-                    <Body>
-                        <Text note>{moment(props.discussion_date).format('DD MMM YY hh:mm am')}</Text>
-                        <Thumbnail source={{ url: props.creator_avatar }} style={style.avatar} />
-                        <Text>{props.creator}</Text>
-                        <Image source={{ url: props.discussion_image }} style={style.post_image} />
-                        <Text>{props.discussion_content}</Text>
-                    </Body>
-                </ScrollView>
+                <Body>
+                    <Text note>{moment(props.discussion_date).format('DD MMM YY hh:mm am')}</Text>
+                    <Thumbnail source={{ url: props.creator_avatar }} style={style.avatar} />
+                    <Text>{props.creator}</Text>
+                    <Image source={{ url: props.discussion_image }} style={style.post_image} />
+                    <Text>{props.discussion_content}</Text>
+                </Body>
             </CardItem>
             <CardItem>
                 <View style={{
@@ -32,9 +30,7 @@ const PostHeader = (props) => {
                     padding: 10
                 }}>
 
-                    {/* <Icon name="heart" /> */}
                     <Reaction count={props.upvotes} image={require('../../assets/like.png')} />
-                    {/* <Text>{props.upvotes}</Text> */}
                 </View>
             </CardItem>
         </>
