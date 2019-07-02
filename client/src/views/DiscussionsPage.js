@@ -6,6 +6,7 @@ import Discussions from '../components/discussions/Discussions';
 import { getDiscussionsForSub } from '../utils/Requests';
 import { withNavigation } from 'react-navigation';
 import { Container } from 'native-base';
+import FabButton from '../components/discussions/FabButton';
 
 // this DiscussionsPage is referring to all discussions inside of a chosen subtopic ONLY
 const DiscussionsPage = props => {
@@ -23,6 +24,7 @@ const DiscussionsPage = props => {
         loading={state.discussions_loading}
         discussions={state.discussions}
       />
+      {props.navigation.state.routeName === 'Discussions' && state.isAuthenticated ? <FabButton /> : null}
     </Container>
   )
 };

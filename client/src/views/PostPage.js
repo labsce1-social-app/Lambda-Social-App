@@ -4,9 +4,12 @@ import Post from '../components/posts/Post';
 import FabButton from '../components/posts/FabButton';
 import { getCommentsByDiscussionId } from '../utils/Requests';
 import { Container } from 'native-base';
+import { withNavigation } from 'react-navigation';
+
+
 const PostPage = props => {
   // handle life cycle for comments
-  const { dispatch } = useContext(Store);
+  const { state, dispatch } = useContext(Store);
 
   const postId = props.navigation.getParam('postId', 'None');
 
@@ -23,9 +26,9 @@ const PostPage = props => {
   return (
     <Container style={{ backgroundColor: '#F6F8FA', padding: 5 }}>
       <Post />
-      <FabButton />
+      {state.isAuthenticated ? <FabButton /> : null}
     </Container>
   )
   // return <Thread />
 };
-export default PostPage;
+export default withNavigation(PostPage);

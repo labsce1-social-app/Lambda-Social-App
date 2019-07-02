@@ -208,9 +208,7 @@ export const uploadImage = () => {
               location: "https://lambdasocialbucket.s3.amazonaws.com/s3%2FIMG_0111.HEIC"
           }
               */
-
-          //TODO: remove this console log and replace it with code
-          console.log(response.body.postResponse.location);
+          return response.body.postResponse.location;
         }
       })
       .catch(err => {
@@ -234,3 +232,7 @@ export const createSubtopic = async (info, sub, dispatch) => {
     console.log(err);
   };
 };
+
+export const addDiscussion = async (body, subtopic_id) => {
+
+}
