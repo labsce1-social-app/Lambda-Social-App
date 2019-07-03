@@ -19,13 +19,13 @@ import { addDiscussion, uploadImage } from '../../utils/Requests';
 import { isEmpty } from '../../utils/utility';
 import { Store } from '../../context';
 
-const CreateDiscussion = props => {
+const CreateDiscussion = (props) => {
   const { state, dispatch } = useContext(Store);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [image, setImage] = useState(null);
   const subId = props.navigation.getParam('subId');
-  console.log(state.user.id)
+
   useEffect(() => {
     if (image !== state.newImage) {
       return setImage(state.newImage)
@@ -39,6 +39,7 @@ const CreateDiscussion = props => {
       creater_id: state.user.id,
       subtopic_id: subId
     }
+    console.log(post)
     if (isEmpty(post.title) || isEmpty(post.content)) {
       return Toast.show({
         text: "Please fill the title and content",
@@ -57,7 +58,7 @@ const CreateDiscussion = props => {
     }
     setTitle('');
     setContent('');
-    return addDiscussion(post, dispatch)
+    return addDiscussion(post, dispatch, props.navigation)
   }
 
   return (

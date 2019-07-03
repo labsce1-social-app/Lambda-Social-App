@@ -235,13 +235,14 @@ export const createSubtopic = async (info, sub, dispatch) => {
   };
 };
 
-export const addDiscussion = (body, dispatch) => {
-  axios.post(`${local}/discussions/create`, body)
-    .then(res => {
-      console.log("res: ", res.data)
-      dispatch({ type: "CREATED_DISCUSSION", payload: body })
-    })
-    .catch(err => {
-      console.log(err)
-    })
+export const addDiscussion = async (post, dispatch, nav) => {
+  try {
+    let { body: post } = await axios.post(`${local}/discussions/create`)
+    await dispatch({ type: "CREATED_DISCUSSION", payload: body })
+    console.log("post: ", post)
+    return body;
+  } catch (err) {
+    console.log("nothing works")
+    console.log(err)
+  }
 }

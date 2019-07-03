@@ -206,7 +206,7 @@ const userCanDeleteDiscussion = async (id, creater_id) => {
 };
 
 const createDiscussion = (props) => {
-  return db('discussion').where({ "subtopic_id": props.subtopic_id }).insert(props).return();
+  return db('discussion').insert(props).then(row => row);
 }
 
 module.exports = {

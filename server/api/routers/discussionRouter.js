@@ -188,11 +188,12 @@ TESTS: {
 }
 */
 
-router.post('/create', async (req, res) => {
+router.post('/create', (req, res) => {
   createDiscussion(req.body)
     .then(discussion => {
+      console.log("discussion:", discussion)
       res.status(201)
-        .json({ id: discussion, message: 'Succesfully created discussion' });
+        .json({ discussion, message: 'Succesfully created discussion' });
     })
     .catch(err => {
       res.status(500).json({ error: err });
