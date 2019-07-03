@@ -18,7 +18,7 @@ export const initialState = {
   comments_error: '',
   newImage_loading: false,
   newImage: null,
-  newImage_error: '',
+  newImage_error: ''
 };
 // all of the reducer conditions, we can use the dispatch method to interact with this by simply passing in a type and sending the payload.
 export const reducer = (state = initialState, action) => {
@@ -31,7 +31,7 @@ export const reducer = (state = initialState, action) => {
         top_discussions_error: ''
       };
     case 'TOP_DISCUSSIONS_FETCHED':
-      console.log("top: ", action.payload)
+      console.log('top: ', action.payload);
       return {
         ...state,
         top_discussons_loading: false,
@@ -125,34 +125,38 @@ export const reducer = (state = initialState, action) => {
       };
 
     case 'CREATE_SUBTOPIC':
-      const { payload: { title, creater_id } } = action;
+      const { title, creater_id } = action.payload;
       return {
         ...state,
         subtopics_loading: false,
-        subtopics: [{ creater_id, title, username: state.user.username }, ...state.subtopics]
+        subtopics: [
+          { creater_id, title, username: state.user.username },
+          ...state.subtopics
+        ]
       };
     case 'SENDING_IMAGE':
       return {
         newImage_loading: true,
         newImage: '',
         newImage_error: ''
-      }
+      };
     case 'IMAGE_SUCCESS':
       return {
         newImage_loading: false,
         newImage: action.payload,
         newImage_error: ''
-      }
+      };
     case 'IMAGE_FAILED':
       return {
         newImage_loading: false,
         newImage: '',
         newImage_error: action.payload
-      }
+      };
     case 'CREATED_DISCUSSION':
       return {
-        discussions: [action.payload, ...state.discussions]
-      }
+        ...state,
+        discussions: [...state.discussions, action.payload]
+      };
     default:
       throw new Error('not a valid action');
   }
