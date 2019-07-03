@@ -3,15 +3,21 @@ const isEmpty = require('../utils/');
 
 // add's user column to discussion
 const joinUsersAndSubtopic = () => {
-  return db.raw(`
+  return db
+    .raw(
+      `
   SELECT discussion.title, discussion.image, discussion.created_at, discussion.updated_at, users.username, discussion.id
   FROM discussion
-  JOIN users, subtopic WHERE discussion.subtopic_id = subtopic.id`).then(res => res.rows);
+  JOIN users, subtopic WHERE discussion.subtopic_id = subtopic.id`
+    )
+    .then(res => res.rows);
 };
 
 // defaults sort to upvotes, can also take comments
 const topDiscussions = (sortBy = 'upvotes') => {
-  return db.raw(`
+  return db
+    .raw(
+      `
   SELECT
 (select users.username from users where users.id = discussion.creater_id) as username,
 discussion.id as id,
@@ -34,7 +40,9 @@ on upvote.discussion_id = discussion.id
 GROUP BY discussion.id
 ORDER BY ${sortBy} DESC
 LIMIT 10
-`).then(res => res.rows);
+`
+    )
+    .then(res => res.rows);
 };
 
 const getCommentedDiscussionsbyUserId = id => {
@@ -60,18 +68,24 @@ inner join upvote
 on upvote.discussion_id = discussion.id
 group by discussion.id
 ORDER BY discussion.updated_at DESC
-`)
-}
+`);
+};
 
 getHashTagsByDiscussionId = id => {
-  return db.raw(`
+  return db
+    .raw(
+      `
   select hashtag.hashtag, hashtag.discussion_id from hashtag where hashtag.discussion_id = ${id}
-  `).then(res => res.rows)
-}
+  `
+    )
+    .then(res => res.rows);
+};
 
 // add's user column to discussion at id
 const joinUsersAndSubtopicAtId = id => {
-  return db.raw(`
+  return db
+    .raw(
+      `
     SELECT
 	discussion.title,
 	discussion.image,
@@ -81,16 +95,21 @@ const joinUsersAndSubtopicAtId = id => {
 	discussion.id
 FROM
 	discussion
-INNER JOIN subtopic ON discussion.subtopic_id = subtopic.id AND discussion.id = ${id}
-INNER JOIN users ON discussion.creater_id = users.id`)
+INNER JOIN subtopic ON discussion.subtopic_id = subtopic.id AND discussion.subtopic_id = ${id}
+INNER JOIN users ON discussion.creater_id = users.id`
+    )
     .then(res => res.rows);
-}
+};
 
 const joinUsersAtSubtopicId = id => {
-  return db.raw(`SELECT discussion.id, discussion.subtopic_id, discussion.title, discussion.content, discussion.image, discussion.creater_id, users.username, discussion.created_at, discussion.updated_at
+  return db
+    .raw(
+      `SELECT discussion.id, discussion.subtopic_id, discussion.title, discussion.content, discussion.image, discussion.creater_id, users.username, discussion.created_at, discussion.updated_at
   FROM discussion
   JOIN users
-  ON discussion.subtopic_id = ${id} and discussion.creater_id = users.id`).then(res => res.rows);
+  ON discussion.subtopic_id = ${id} and discussion.creater_id = users.id`
+    )
+    .then(res => res.rows);
 };
 
 // checks to see if discussion title has been used
@@ -205,9 +224,11 @@ const userCanDeleteDiscussion = async (id, creater_id) => {
   return canDelete;
 };
 
-const createDiscussion = (props) => {
-  return db('discussion').insert(props).then(row => row);
-}
+const createDiscussion = props => {
+  return db('discussion')
+    .insert(props)
+    .then(row => row);
+};
 
 module.exports = {
   createDiscussion,
