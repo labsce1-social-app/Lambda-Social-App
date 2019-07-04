@@ -40,7 +40,8 @@ const CreateDiscussion = props => {
       content,
       image: image,
       creater_id: state.user.id,
-      subtopic_id: subId
+      subtopic_id: subId,
+      username: state.user.username
     };
 
     console.log(post);
@@ -60,9 +61,10 @@ const CreateDiscussion = props => {
         type: 'warning'
       });
     }
-    // setTitle('');
-    // setContent('');
+
     addDiscussion(post, dispatch, props.navigation);
+
+    props.navigation.navigate('Discussions', { subId: subId });
   };
 
   return (

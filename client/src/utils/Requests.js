@@ -18,7 +18,7 @@ import { RNS3 } from 'react-native-aws3';
 
 const auth0ClientId = AUTH0_CLIENT;
 const auth0Domain = AUTH0_DOMAIN;
-const local = `http://localhost:3000`;
+const local = `http://192.168.137.1:3000`;
 const base_url = `https://social-app-test.herokuapp.com`;
 const postgres = 'https://lambdasocial-postgres.herokuapp.com';
 
@@ -244,8 +244,17 @@ export const createSubtopic = async (info, sub, dispatch) => {
 
 export const addDiscussion = async (body, dispatch, nav) => {
   console.log('post discussion', body);
+
+  const apiBody = {
+    title: body.title,
+    content: body.content,
+    image: body.image,
+    creater_id: body.creater_id,
+    subtopic_id: body.subtopic_id
+  };
+
   try {
-    let res = await axios.post(`${local}/discussions/create`, body);
+    let res = await axios.post(`${local}/discussions/create`, apiBody);
     let followup = await dispatch({
       type: 'CREATED_DISCUSSION',
       payload: body
