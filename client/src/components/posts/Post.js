@@ -9,7 +9,7 @@ import { isEmpty } from '../../utils/utility';
 import { ScrollView } from 'react-native-gesture-handler';
 
 // get's discussion id from Route through match.params.id
-const Post = () => {
+const Post = props => {
   // bring in state and dispatch
   const { state } = useContext(Store);
   const { comments, comments_loading } = state;
@@ -24,6 +24,7 @@ const Post = () => {
           <Suspense fallback={<Spinner />}>
             <PostHeader
               // creator_avatar={}
+              title={props.postTitle}
               creator={comments.creator[0].creator}
               discussion_image={comments.creator[0].discussion_image}
               discussion_content={comments.creator[0].discussion_content}

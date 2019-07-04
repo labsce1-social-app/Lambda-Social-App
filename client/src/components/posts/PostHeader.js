@@ -26,6 +26,7 @@ const PostHeader = props => {
         }}
       >
         <Body>
+          <Text>{props.title}</Text>
           <Text note>
             {moment(props.discussion_date).format('DD MMM YY hh:mm am')}
           </Text>
