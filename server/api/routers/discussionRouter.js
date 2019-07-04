@@ -12,9 +12,10 @@ const {
   topDiscussions,
   joinUsersAtSubtopicId,
   getHashTagsByDiscussionId,
-  getCommentedDiscussionsbyUserId
+  getCommentedDiscussionsbyUserId,
+  createDiscussion
 } = require('../helpers/index.js');
-
+const isEmpty = require('../utils/');
 // used for updated timestamps
 const moment = require('moment');
 let timestamp = moment().format('YYYY-MM-DD HH:mm:ss');
@@ -33,28 +34,36 @@ router.get('/?', async (req, res) => {
   const { sort } = req.query;
   try {
     // map through discussions to inject hashtags
-    const top = await topDiscussions(sort)
-      .map(async (item) => {
-        // use reduce to get the compare values
-        return await getHashTagsByDiscussionId(item.id)
-          .reduce(async (acc, { hashtag }) => {
-            // flatten array of hashtags (they come in nested)
-            const flattenDeep = (arr) => {
-              return arr.reduce((acc, val) => Array.isArray(val) ? acc.concat(flattenDeep(val)) : acc.concat(val), [])
-            }
-            // build an obj to send out
-            // spread items and add the hashtags
-            // filter to remove null and undefined hashtags
-            let obj = {
-              ...item, hashtags: flattenDeep([acc.hashtags, hashtag]).filter(n => n)
-            }
-            return obj;
-          }, [])
-      })
+    const top = await topDiscussions(sort).map(async item => {
+      // use reduce to get the compare values
+      return await getHashTagsByDiscussionId(item.id).reduce(
+        async (acc, { hashtag }) => {
+          // flatten array of hashtags (they come in nested)
+          const flattenDeep = arr => {
+            return arr.reduce(
+              (acc, val) =>
+                Array.isArray(val)
+                  ? acc.concat(flattenDeep(val))
+                  : acc.concat(val),
+              []
+            );
+          };
+          // build an obj to send out
+          // spread items and add the hashtags
+          // filter to remove null and undefined hashtags
+          let obj = {
+            ...item,
+            hashtags: flattenDeep([acc.hashtags, hashtag]).filter(n => n)
+          };
+          return obj;
+        },
+        []
+      );
+    });
     // return the function
-    return res.status(200).json(top)
+    return res.status(200).json(top);
   } catch (err) {
-    return res.status(500).json(err)
+    return res.status(500).json(err);
   }
 });
 
@@ -116,28 +125,40 @@ TESTS: {
 router.get('/s/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const top = await joinUsersAtSubtopicId(id)
-      .map(async (item) => {
-        // use reduce to get the compare values
-        return await getHashTagsByDiscussionId(item.id)
-          .reduce(async (acc, { hashtag }) => {
-            // flatten array of hashtags (they come in nested)
-            const flattenDeep = (arr) => {
-              return arr.reduce((acc, val) => Array.isArray(val) ? acc.concat(flattenDeep(val)) : acc.concat(val), [])
-            }
-            // build an obj to send out
-            // spread items and add the hashtags
-            // filter to remove null and undefined hashtags
-            let obj = {
-              ...item, hashtags: flattenDeep([acc.hashtags, hashtag]).filter(n => n)
-            }
-            return obj;
-          }, [])
-      })
+    const top = await joinUsersAtSubtopicId(id);
+    console.log(top);
+    top.map(async item => {
+      // use reduce to get the compare values
+      return await getHashTagsByDiscussionId(item.id).reduce(
+        async (acc, { hashtag }) => {
+          // flatten array of hashtags (they come in nested)
+          const flattenDeep = arr => {
+            return arr.reduce(
+              (acc, val) =>
+                Array.isArray(val)
+                  ? acc.concat(flattenDeep(val))
+                  : acc.concat(val),
+              []
+            );
+          };
+          // build an obj to send out
+          // spread items and add the hashtags
+          // filter to remove null and undefined hashtags
+          let obj = {
+            ...item,
+            hashtags: flattenDeep([acc.hashtags, hashtag]).filter(n => n)
+          };
+
+          console.log(obj);
+          return obj;
+        },
+        []
+      );
+    });
     // return the function
-    return res.status(200).json(top)
+    return res.status(200).json(top);
   } catch (err) {
-    return res.status(500).json(err)
+    return res.status(500).json(err);
   }
 });
 
@@ -154,15 +175,15 @@ TESTS: {
 */
 router.get('/recent/:id', async (req, res) => {
   const { id } = req.params;
-  console.log(id)
+  console.log(id);
   try {
-    const getData = await getCommentedDiscussionsbyUserId(id)
-    console.log(getData)
+    const getData = await getCommentedDiscussionsbyUserId(id);
+    console.log(getData);
     return res.status(200).json(getData);
   } catch (error) {
-    return res.status(500).json(error)
+    return res.status(500).json(error);
   }
-})
+});
 
 /*
 POST ROUTE create a discussion
@@ -187,54 +208,18 @@ TESTS: {
 }
 */
 
-router.post('/create', async (req, res) => {
-  const { subtopic_id, title, image, content, creater_id } = req.body;
-
-  if (
-    title == null ||
-    title == undefined ||
-    title.length === 0 ||
-    title.length > 50 ||
-    title === '' ||
-    subtopic_id == null ||
-    subtopic_id == undefined ||
-    creater_id == null ||
-    creater_id == undefined
-  ) {
-    res.status(400).json({
-      error:
-        'title must be between 0 and 50 charecters, subtopic_id must be valid'
+router.post('/create', (req, res) => {
+  console.log(req.body);
+  createDiscussion(req.body)
+    .then(discussion => {
+      console.log('discussion:', discussion);
+      res
+        .status(201)
+        .json({ discussion, message: 'Succesfully created discussion' });
+    })
+    .catch(err => {
+      res.status(500).json({ error: err });
     });
-  } else if ((await checkValidUser(creater_id)) === false) {
-    res.status(500).json({ error: 'valid user not found, check creater_id' });
-  } else if (
-    (image === null && content === null) ||
-    (image === undefined && content === undefined) ||
-    (image === '' && content === '')
-  ) {
-    res.status(400).json({ error: 'must contain either an image or content' });
-  } else if ((await canInsertDisucssion(title)) === false) {
-    res.status(500).json({ error: 'subtopic already exists' });
-  } else if ((await checkValidSubtopic(subtopic_id)) === false) {
-    res.status(500).json({ error: 'valid subtopic not found' });
-  } else {
-    db('discussion')
-      .insert({
-        subtopic_id,
-        title,
-        image,
-        content,
-        creater_id
-      })
-      .then(discussion => {
-        res
-          .status(201)
-          .json({ id: discussion, message: 'Succesfully created discussion' });
-      })
-      .catch(err => {
-        res.status(500).json({ error: err });
-      });
-  }
 });
 
 /*
@@ -268,25 +253,16 @@ router.put('/:id', async (req, res) => {
   const { subtopic_id, title, image, content, creater_id } = req.body;
 
   if (
-    title == null ||
-    title == undefined ||
-    title.length === 0 ||
+    isEmpty(title) ||
     title.length > 50 ||
-    title === '' ||
-    subtopic_id == null ||
-    subtopic_id == undefined ||
-    creater_id == null ||
-    creater_id == undefined
+    isEmpty(subtopic_id) ||
+    isEmpty(creater_id)
   ) {
     res.status(400).json({
       error:
         'title must be between 0 and 50 charecters, subtopic_id must be valid'
     });
-  } else if (
-    (image === null && content === null) ||
-    (image === undefined && content === undefined) ||
-    (image === '' && content === '')
-  ) {
+  } else if (isEmpty(image) && isEmpty(content)) {
     res.status(400).json({ error: 'must contain either an image or content' });
   } else if ((await canInsertDisucssion(title)) === false) {
     res.status(500).json({ error: 'subtopic already exists' });
