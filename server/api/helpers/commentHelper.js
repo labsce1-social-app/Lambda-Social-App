@@ -43,7 +43,6 @@ const getRepliesByCommentId = comment_id => {
       INNER JOIN discussion
       ON comment.discussion_id = discussion.id
       WHERE comment.comment_id = ${comment_id}
-      ORDER BY comment.id ASC
       `
     ).then(next => next.rows);
   }

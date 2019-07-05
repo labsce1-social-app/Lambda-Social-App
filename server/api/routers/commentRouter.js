@@ -51,10 +51,10 @@ router.get('/d/:id', async (req, res) => {
   const { id } = req.params;
   // get a single discussions details by it's id
   try {
-    const obj = {}
+    const obj = {};
     await getPostDetailByDiscussionId(id)
       .then(async creator => {
-        obj.creator = creator
+        obj.creator = creator;
         console.log('1')
         try {
           await getCommentsByDiscussionId(id)
@@ -62,23 +62,22 @@ router.get('/d/:id', async (req, res) => {
               try {
                 console.log('2')
                 console.log("comment: ", comment)
-                obj.comments = comment
-                const getRep = await getRepliesByCommentId(obj.comments.id)
-                // console.log("replies: ", getRep)
+                obj.comments = comment;
+                const getRep = await getRepliesByCommentId(comment.id)
                 console.log('3')
                 await getRep.reduce(async (acc, curr) => {
                   console.log('4')
-                  return obj.comments.replies = await [
-                    acc, curr
-                  ]
-                })
+                  obj.comments.replies = await [
+                    curr, acc
+                  ];
+                });
               } catch (err) {
-                console.log(err)
+                console.log(err);
               }
             })
           return obj;
         } catch (err) {
-          console.log(err)
+          console.log(err);
         }
       })
       .catch(err => {
