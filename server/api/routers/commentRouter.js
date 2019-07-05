@@ -8,9 +8,10 @@ const {
   getCommentsTotal,
   checkValidUserComments,
   checkValidDiscussionComments,
-  checkMatchInComments
+  checkMatchInComments,
+  getRepliesByCommentId
 } = require('../helpers/index.js');
-
+const isEmpty = require('../utils/');
 // used for updated timestamps
 const moment = require('moment');
 let timestamp = moment().format('YYYY-MM-DD HH:mm:ss');
@@ -46,34 +47,47 @@ TESTS: {
 }
 */
 
-router.get('/d/:id', (req, res) => {
+router.get('/d/:id', async (req, res) => {
   const { id } = req.params;
   // get a single discussions details by it's id
-  getPostDetailByDiscussionId(id)
-    .then(creator => {
-      // check if the creator came back through promise
-      if (creator.length > 0) {
-        // attempt to get comments
-        getCommentsByDiscussionId(id)
-          .then(comments => {
-            // if comments came back, send them with creator detail
-            if (comments.length > 0) {
-              res.status(200).json({ creator, comments });
-            } else {
-              // else send just the creator
-              res.status(200).json({ creator });
-            }
-          })
-          .catch(err => {
-            res.status(500).json({ message: 'no post creator', err });
-          });
-      } else {
-        res.status(404).json({ message: 'no comments yet' });
-      }
-    })
-    .catch(error => {
-      res.status(500).json({ error: 'Server error', error });
-    });
+  try {
+    const obj = {}
+    await getPostDetailByDiscussionId(id)
+      .then(async creator => {
+        obj.creator = creator
+        console.log('1')
+        try {
+          await getCommentsByDiscussionId(id)
+            .map(async (comment) => {
+              try {
+                console.log('2')
+                console.log("comment: ", comment)
+                obj.comments = comment
+                const getRep = await getRepliesByCommentId(obj.comments.id)
+                // console.log("replies: ", getRep)
+                console.log('3')
+                await getRep.reduce(async (acc, curr) => {
+                  console.log('4')
+                  return obj.comments.replies = await [
+                    acc, curr
+                  ]
+                })
+              } catch (err) {
+                console.log(err)
+              }
+            })
+          return obj;
+        } catch (err) {
+          console.log(err)
+        }
+      })
+      .catch(err => {
+        return res.status(500).json({ message: 'no post creator', err });
+      });
+    return res.status(200).json(obj)
+  } catch (err) {
+    return res.status(500).json(err)
+  }
 });
 
 /*
