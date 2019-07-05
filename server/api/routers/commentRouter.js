@@ -50,43 +50,56 @@ TESTS: {
 router.get('/d/:id', async (req, res) => {
   const { id } = req.params;
   // get a single discussions details by it's id
+  // create an empty object to build based on values
+  const obj = {};
+  // get all post head details
+  // step one: add creator details to object
   try {
-    const obj = {};
-    await getPostDetailByDiscussionId(id)
-      .then(async creator => {
-        obj.creator = creator;
-        console.log('1')
-        try {
-          await getCommentsByDiscussionId(id)
-            .map(async (comment) => {
-              try {
-                console.log('2')
-                console.log("comment: ", comment)
-                obj.comments = comment;
-                const getRep = await getRepliesByCommentId(comment.id)
-                console.log('3')
-                await getRep.reduce(async (acc, curr) => {
-                  console.log('4')
-                  obj.comments.replies = await [
-                    curr, acc
-                  ];
-                });
-              } catch (err) {
-                console.log(err);
-              }
-            })
-          return obj;
-        } catch (err) {
-          console.log(err);
-        }
+    console.log('1')
+    // need reduce to accumulate (iterate through values)
+    await getCommentsByDiscussionId(id)
+      .reduce(async (acc, curr) => {
+        // add comments to object
+        obj.comments = await [curr, acc];
       })
-      .catch(err => {
-        return res.status(500).json({ message: 'no post creator', err });
-      });
-    return res.status(200).json(obj)
+    console.log('2')
+    // map to iterate through replies
+    await obj.comments.map((comment) => {
+      //TODO: find out why this isn't returning
+      return getRepliesByCommentId(comment.id)
+        // compare replies to comments by parent id (FK) and comment id (PK)
+        .reduce((acc, curr) => {
+          console.log('3')
+          const replies = []
+          obj.comments.map((item) => {
+            console.log("4")
+            if (item.id === curr.parent_id) {
+              console.log("5")
+              replies.push(acc, curr)
+            }
+          })
+          for (let i = 0; i < Object.keys(obj.comments).length; i++) {
+            obj.comments[i].replies;
+            console.log("6")
+            if (Number(obj.comments[i].id) === Number(curr.parent_id)) {
+              console.log("7")
+              obj.comments[i].replies = replies;
+            } else {
+              console.log("8")
+              obj.comments[i].replies = null;
+            }
+          }
+          return res.status(200).json(obj)
+        }
+        );
+      // return the built out object
+    })
+    // console.log(obj)
+    return await res.status(200).json(obj);
   } catch (err) {
-    return res.status(500).json(err)
+    console.log(err);
   }
+
 });
 
 /*
