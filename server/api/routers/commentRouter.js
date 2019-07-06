@@ -47,60 +47,103 @@ TESTS: {
 }
 */
 
-router.get('/d/:id', async (req, res) => {
+router.get('/d/:id', (req, res) => {
   const { id } = req.params;
   // get a single discussions details by it's id
   // create an empty object to build based on values
-  const obj = {};
+  // const obj = {};
   // get all post head details
   // step one: add creator details to object
-  try {
-    console.log('1')
-    // need reduce to accumulate (iterate through values)
-    await getCommentsByDiscussionId(id)
-      .reduce(async (acc, curr) => {
-        // add comments to object
-        obj.comments = await [curr, acc];
-      })
-    console.log('2')
-    // map to iterate through replies
-    await obj.comments.map((comment) => {
-      //TODO: find out why this isn't returning
-      return getRepliesByCommentId(comment.id)
-        // compare replies to comments by parent id (FK) and comment id (PK)
-        .reduce((acc, curr) => {
-          console.log('3')
-          const replies = []
-          obj.comments.map((item) => {
-            console.log("4")
-            if (item.id === curr.parent_id) {
-              console.log("5")
-              replies.push(acc, curr)
-            }
-          })
-          for (let i = 0; i < Object.keys(obj.comments).length; i++) {
-            obj.comments[i].replies;
-            console.log("6")
-            if (Number(obj.comments[i].id) === Number(curr.parent_id)) {
-              console.log("7")
-              obj.comments[i].replies = replies;
-            } else {
-              console.log("8")
-              obj.comments[i].replies = null;
-            }
-          }
-          return res.status(200).json(obj)
-        }
-        );
-      // return the built out object
-    })
-    // console.log(obj)
-    return await res.status(200).json(obj);
-  } catch (err) {
-    console.log(err);
-  }
 
+  getCommentsByDiscussionId(id).then(comments => {
+    const allComments = [];
+    let obj = {};
+
+    comments.map(comment => {
+      // allComments.push(obj); //////////////////////////////////////////////////////
+
+      getRepliesByCommentId(comment.id).then(replies => {
+        obj = { ...comment };
+        // console.log('REPLIES', replies);
+        // console.log('LINE 70: ', allComments);
+
+        replies.map(reply => {
+          let replies = [];
+
+          if (obj.id === reply.parent_id) {
+            replies.push(reply);
+
+            obj.replies = replies;
+
+            console.log('OBJ IN IF ', obj);
+          } else {
+            obj.replies = null;
+          }
+        });
+
+        // console.log('LINE 83 OLD TOWARD PUSH: ', obj);
+        // let newObj = { ...obj };
+        // console.log('NEWOBJ', newObj);
+
+        allComments.push(obj);
+        console.log('ALL COMMENTS 1', allComments);
+        res.json(allComments);
+      });
+
+      console.log('ALL COMMENTS 2', allComments);
+    });
+
+    console.log('ALL COMMENTS 3', allComments);
+  });
 });
+// try {
+//   console.log('1');
+//   // need reduce to accumulate (iterate through values)
+//   await getCommentsByDiscussionId(id).map(comment => {
+//     // add comments to object
+//     return comments.push(comment);
+//   });
+
+//   // map to iterate through replies
+//   comments.map(comment => {
+//     //TODO: find out why this isn't returning
+
+//     getRepliesByCommentId(comment.id)
+//       // compare replies to comments by parent id (FK) and comment id (PK)
+//       .reduce((acc, curr) => {
+//         console.log('LINE 72', acc, curr);
+
+//         const replies = [];
+
+//         comments.map(item => {
+//           console.log('4');
+//           if (item.id === curr.parent_id) {
+//             console.log('5');
+//             replies.push(acc, curr);
+//           }
+//         });
+
+//         for (let i = 0; i < Object.keys(comments).length; i++) {
+//           comments[i].replies;
+//           console.log('6');
+//           if (Number(comments[i].id) === Number(curr.parent_id)) {
+//             console.log('7');
+//             comments[i].replies = replies;
+//           } else {
+//             console.log('8');
+//             comments[i].replies = null;
+//           }
+//         }
+//         console.log(obj);
+//       });
+
+//     // return the built out object
+//   });
+//   // console.log(obj)
+//   return await res.status(200).json(comments);
+// } catch (err) {
+//   console.log(err);
+// }
 
 /*
 GET ROUTE get comment by id
