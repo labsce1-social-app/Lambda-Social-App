@@ -55,45 +55,32 @@ router.get('/d/:id', (req, res) => {
   // get all post head details
   // step one: add creator details to object
 
+  const allComments = [];
+  let obj = {};
   getCommentsByDiscussionId(id).then(comments => {
-    const allComments = [];
-    let obj = {};
 
     comments.map(comment => {
-      // allComments.push(obj); //////////////////////////////////////////////////////
+      // TODO: this needs to get all the comments
+      // currently only returning one
+      obj = comment;
 
+      // this is properly getting all of the replies (for now)
       getRepliesByCommentId(comment.id).then(replies => {
-        obj = { ...comment };
-        // console.log('REPLIES', replies);
-        // console.log('LINE 70: ', allComments);
-
+        let reps = [];
         replies.map(reply => {
-          let replies = [];
 
           if (obj.id === reply.parent_id) {
-            replies.push(reply);
-
-            obj.replies = replies;
-
-            console.log('OBJ IN IF ', obj);
+            reps.push(reply);
+            obj.replies = reps;
           } else {
             obj.replies = null;
           }
         });
 
-        // console.log('LINE 83 OLD TOWARD PUSH: ', obj);
-        // let newObj = { ...obj };
-        // console.log('NEWOBJ', newObj);
-
         allComments.push(obj);
-        console.log('ALL COMMENTS 1', allComments);
-        res.json(allComments);
+        res.status(200).json(allComments);
       });
-
-      console.log('ALL COMMENTS 2', allComments);
     });
-
-    console.log('ALL COMMENTS 3', allComments);
   });
 });
 // try {
