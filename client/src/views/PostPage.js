@@ -6,12 +6,12 @@ import { getCommentsByDiscussionId } from '../utils/Requests';
 import { Container } from 'native-base';
 import { withNavigation } from 'react-navigation';
 
-
 const PostPage = props => {
   // handle life cycle for comments
   const { state, dispatch } = useContext(Store);
 
   const postId = props.navigation.getParam('postId', 'None');
+  const postTitle = props.navigation.getParam('title');
 
   // need to get the data here because it is where we have access to the id from react router.
 
@@ -25,10 +25,10 @@ const PostPage = props => {
 
   return (
     <Container style={{ backgroundColor: '#F6F8FA', padding: 5 }}>
-      <Post />
+      <Post postTitle={postTitle} />
       {state.isAuthenticated ? <FabButton /> : null}
     </Container>
-  )
+  );
   // return <Thread />
 };
 export default withNavigation(PostPage);

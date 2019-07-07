@@ -61,6 +61,9 @@ const SubtopicsStack = createStackNavigator(
     Load: {
       screen: SubtopicsLoading
     },
+    PostADiscussion: {
+      screen: CreateDiscussion
+    },
 
     Modal: {
       screen: AddSModal,
@@ -82,14 +85,7 @@ const FooterNavigator = createBottomTabNavigator(
         tabBarIcon: <Icon name="home" />
       }
     },
-    PostADiscussion: {
-      screen: CreateDiscussion,
 
-      navigationOptions: ({ navigation }) => ({
-        tabBarIcon: <CreateButton navigation={navigation} />,
-        keyboardHidesTabBar: true
-      })
-    },
     SubTopics: {
       screen: SubtopicsStack,
       navigationOptions: {

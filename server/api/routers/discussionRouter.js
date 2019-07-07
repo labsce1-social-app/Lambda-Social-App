@@ -34,28 +34,36 @@ router.get('/?', async (req, res) => {
   const { sort } = req.query;
   try {
     // map through discussions to inject hashtags
-    const top = await topDiscussions(sort)
-      .map(async (item) => {
-        // use reduce to get the compare values
-        return await getHashTagsByDiscussionId(item.id)
-          .reduce(async (acc, { hashtag }) => {
-            // flatten array of hashtags (they come in nested)
-            const flattenDeep = (arr) => {
-              return arr.reduce((acc, val) => Array.isArray(val) ? acc.concat(flattenDeep(val)) : acc.concat(val), [])
-            }
-            // build an obj to send out
-            // spread items and add the hashtags
-            // filter to remove null and undefined hashtags
-            let obj = {
-              ...item, hashtags: flattenDeep([acc.hashtags, hashtag]).filter(n => n)
-            }
-            return obj;
-          }, [])
-      })
+    const top = await topDiscussions(sort).map(async item => {
+      // use reduce to get the compare values
+      return await getHashTagsByDiscussionId(item.id).reduce(
+        async (acc, { hashtag }) => {
+          // flatten array of hashtags (they come in nested)
+          const flattenDeep = arr => {
+            return arr.reduce(
+              (acc, val) =>
+                Array.isArray(val)
+                  ? acc.concat(flattenDeep(val))
+                  : acc.concat(val),
+              []
+            );
+          };
+          // build an obj to send out
+          // spread items and add the hashtags
+          // filter to remove null and undefined hashtags
+          let obj = {
+            ...item,
+            hashtags: flattenDeep([acc.hashtags, hashtag]).filter(n => n)
+          };
+          return obj;
+        },
+        []
+      );
+    });
     // return the function
-    return res.status(200).json(top)
+    return res.status(200).json(top);
   } catch (err) {
-    return res.status(500).json(err)
+    return res.status(500).json(err);
   }
 });
 
@@ -117,28 +125,40 @@ TESTS: {
 router.get('/s/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const top = await joinUsersAtSubtopicId(id)
-      .map(async (item) => {
-        // use reduce to get the compare values
-        return await getHashTagsByDiscussionId(item.id)
-          .reduce(async (acc, { hashtag }) => {
-            // flatten array of hashtags (they come in nested)
-            const flattenDeep = (arr) => {
-              return arr.reduce((acc, val) => Array.isArray(val) ? acc.concat(flattenDeep(val)) : acc.concat(val), [])
-            }
-            // build an obj to send out
-            // spread items and add the hashtags
-            // filter to remove null and undefined hashtags
-            let obj = {
-              ...item, hashtags: flattenDeep([acc.hashtags, hashtag]).filter(n => n)
-            }
-            return obj;
-          }, [])
-      })
+    const top = await joinUsersAtSubtopicId(id);
+    console.log(top);
+    top.map(async item => {
+      // use reduce to get the compare values
+      return await getHashTagsByDiscussionId(item.id).reduce(
+        async (acc, { hashtag }) => {
+          // flatten array of hashtags (they come in nested)
+          const flattenDeep = arr => {
+            return arr.reduce(
+              (acc, val) =>
+                Array.isArray(val)
+                  ? acc.concat(flattenDeep(val))
+                  : acc.concat(val),
+              []
+            );
+          };
+          // build an obj to send out
+          // spread items and add the hashtags
+          // filter to remove null and undefined hashtags
+          let obj = {
+            ...item,
+            hashtags: flattenDeep([acc.hashtags, hashtag]).filter(n => n)
+          };
+
+          console.log(obj);
+          return obj;
+        },
+        []
+      );
+    });
     // return the function
-    return res.status(200).json(top)
+    return res.status(200).json(top);
   } catch (err) {
-    return res.status(500).json(err)
+    return res.status(500).json(err);
   }
 });
 
@@ -155,15 +175,15 @@ TESTS: {
 */
 router.get('/recent/:id', async (req, res) => {
   const { id } = req.params;
-  console.log(id)
+  console.log(id);
   try {
-    const getData = await getCommentedDiscussionsbyUserId(id)
-    console.log(getData)
+    const getData = await getCommentedDiscussionsbyUserId(id);
+    console.log(getData);
     return res.status(200).json(getData);
   } catch (error) {
-    return res.status(500).json(error)
+    return res.status(500).json(error);
   }
-})
+});
 
 /*
 POST ROUTE create a discussion
@@ -189,10 +209,12 @@ TESTS: {
 */
 
 router.post('/create', (req, res) => {
+  console.log(req.body);
   createDiscussion(req.body)
     .then(discussion => {
-      console.log("discussion:", discussion)
-      res.status(201)
+      console.log('discussion:', discussion);
+      res
+        .status(201)
         .json({ discussion, message: 'Succesfully created discussion' });
     })
     .catch(err => {

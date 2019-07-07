@@ -25,7 +25,7 @@ const postgres = 'https://lambdasocial-postgres.herokuapp.com';
 // check if a user is logged in
 export const isAuthed = async dispatch => {
   try {
-    const value = await getData('accessToken')
+    const value = await getData('accessToken');
     if (!isEmpty(value)) {
       return dispatch({ type: 'SET_CURRENT_USER', payload: value });
     }
@@ -41,34 +41,37 @@ export const getDiscussions = async (query, dispatch) => {
   const q = new URLSearchParams({ sort: query });
   dispatch({ type: 'TOP_DISCUSSIONS_FETCHING', payload: true });
   try {
-    const res = await axios.get(`${local}/discussions/?${q.toString()}`);
+    const res = await axios.get(`${postgres}/discussions/?${q.toString()}`);
     return dispatch({ type: 'TOP_DISCUSSIONS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
     return dispatch({ type: 'TOP_DISCUSSIONS_FAILED', payload: err });
-  };
+  }
 };
 
 export const getDiscussionsForSub = async (id, dispatch) => {
   try {
     await dispatch({ type: 'DISCUSSIONS_FETCHING', payload: true });
-    const res = await axios.get(`${local}/discussions/s/${id}`)
+    const res = await axios.get(`${postgres}/discussions/s/${id}`);
     return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
     return dispatch({ type: 'DISCUSSIONS_FAILED', payload: err });
-  };
+  }
 };
 
 export const getRecentDiscussions = async (id, dispatch) => {
   try {
     await dispatch({ type: 'DISCUSSIONS_FETCHING', payload: true });
-    const res = await axios.get(`${local}/discussions/recent/${id}`)
-    return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: !isEmpty(res.data) ? res.data : null });
+    const res = await axios.get(`${postgres}/discussions/recent/${id}`);
+    return dispatch({
+      type: 'DISCUSSIONS_FETCHED',
+      payload: !isEmpty(res.data) ? res.data : null
+    });
   } catch (err) {
     console.log(err);
     return dispatch({ type: 'DISCUSSIONS_FAILED', payload: err });
-  };
+  }
 };
 
 // used for the PostPage component
@@ -77,19 +80,19 @@ export const getCommentsByDiscussionId = async (id, dispatch) => {
   // read previous function, they're almost the same
   dispatch({ type: 'COMMENTS_FETCHING' });
   try {
-    const res = await axios.get(`${local}/comments/d/${id}`);
+    const res = await axios.get(`${postgres}/comments/d/${id}`);
     return dispatch({ type: 'COMMENTS_FETCHED_SUCCESS', payload: res.data });
   } catch (err) {
     console.log(err);
-    return dispatch({ type: 'COMMENTS_FETCHED_FAILED', payload: error });
-  };
+    return dispatch({ type: 'COMMENTS_FETCHED_FAILED', payload: err });
+  }
 };
 
 // get all subtopics
 export const getSubtopics = async dispatch => {
   dispatch({ type: 'SUBTOPICS_FETCHING' });
   try {
-    const res = await axios.get(`${local}/subtopics`);
+    const res = await axios.get(`${postgres}/subtopics`);
     return dispatch({ type: 'SUBTOPICS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -112,7 +115,7 @@ export const handleAuth = async dispatch => {
     const decUser = await jwtDecode(idToken);
     const storeUser = await storeData('user', accessToken);
     const followup = await getUser(decUser, dispatch); // send access_token
-    return { storeUser, followup }
+    return { storeUser, followup };
   } catch (error) {
     console.log('error in login', error);
   }
@@ -124,26 +127,25 @@ const getUser = async (user, dispatch) => {
     username: user.nickname,
     avatar: user.picture,
     id: user.sub
-  })
+  });
   try {
-    const res = await axios.get(`${local}/users/${user.sub}`);
+    const res = await axios.get(`${postgres}/users/${user.sub}`);
     if (res.data) {
       const send = await dispatch({
         type: 'SET_CURRENT_USER',
         payload: res.data // user's auth0 sub is being saved as id in state(state.user.id)
       });
-      return send
+      return send;
     } else {
       return makeUser(user, dispatch);
     }
   } catch (err) {
     console.log('axios call error', err);
-  };
+  }
 };
 
 // and create a user in the database
 const makeUser = async (info, dispatch) => {
-
   const body = {
     username: info.nickname,
     id: info.sub,
@@ -151,16 +153,15 @@ const makeUser = async (info, dispatch) => {
     avatar: info.picture
   }; // send  nickname as a 'username'
   try {
-    const make = await axios
-      .post(`${local}/users`, body)
+    const make = await axios.post(`${postgres}/users`, body);
     const followup = await dispatch({
       type: 'SET_CURRENT_USER',
       payload: body
     });
-    return { make, followup }
+    return { make, followup };
   } catch (err) {
     console.log('error posting ', err);
-  };
+  }
 };
 
 // logout a user through state
@@ -175,7 +176,7 @@ export const handleLogout = async dispatch => {
 };
 
 // handles aws image uploading
-export const uploadImage = (dispatch) => {
+export const uploadImage = dispatch => {
   ImagePicker.showImagePicker({}, response => {
     /*response returns an object with all of the information about the selected image.
     returns data, fileName, fileSize, height, isVertical, latitude, longitude, origURL,
@@ -201,7 +202,10 @@ export const uploadImage = (dispatch) => {
       .then(response => {
         console.log(response);
         if (response.status === 403) {
-          return dispatch({ type: 'IMAGE_FAILED', payload: 'Failed to upload image to S3' });
+          return dispatch({
+            type: 'IMAGE_FAILED',
+            payload: 'Failed to upload image to S3'
+          });
         } else {
           /*
           response will come back looking like this, we'll want
@@ -209,12 +213,15 @@ export const uploadImage = (dispatch) => {
               location: "https://lambdasocialbucket.s3.amazonaws.com/s3%2FIMG_0111.HEIC"
           }
               */
-          return dispatch({ type: 'IMAGE_SUCCESS', payload: response.body.postResponse.location })
+          return dispatch({
+            type: 'IMAGE_SUCCESS',
+            payload: response.body.postResponse.location
+          });
         }
       })
       .catch(err => {
         console.log(err);
-        return dispatch({ type: 'IMAGE_FAILED', payload: err })
+        return dispatch({ type: 'IMAGE_FAILED', payload: err });
       });
   });
 };
@@ -227,22 +234,35 @@ export const createSubtopic = async (info, sub, dispatch) => {
     creater_id: sub
   };
   try {
-    const res = await axios.post(`${local}/subtopics/create`, body);
+    const res = await axios.post(`${postgres}/subtopics/create`, body);
     const followup = await dispatch({ type: 'CREATE_SUBTOPIC', payload: body });
-    return { res, followup }
+    return { res, followup };
   } catch (err) {
     console.log(err);
-  };
+  }
 };
 
-export const addDiscussion = async (post, dispatch, nav) => {
+export const addDiscussion = async (body, dispatch, nav) => {
+  console.log('post discussion', body);
+
+  const apiBody = {
+    title: body.title,
+    content: body.content,
+    image: body.image,
+    creater_id: body.creater_id,
+    subtopic_id: body.subtopic_id
+  };
+
   try {
-    let { body: post } = await axios.post(`${local}/discussions/create`)
-    await dispatch({ type: "CREATED_DISCUSSION", payload: body })
-    console.log("post: ", post)
-    return body;
+    let res = await axios.post(`${postgres}/discussions/create`, apiBody);
+    let followup = await dispatch({
+      type: 'CREATED_DISCUSSION',
+      payload: body
+    });
+
+    return { res, followup };
   } catch (err) {
-    console.log("nothing works")
-    console.log(err)
+    console.log('nothing works');
+    console.log(err);
   }
-}
+};
