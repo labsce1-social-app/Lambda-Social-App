@@ -22,11 +22,11 @@ const Post = () => {
                     <Suspense fallback={<Spinner />}>
                         <PostHeader
                             // creator_avatar={}
-                            creator={comments.creator[0].creator}
-                            discussion_image={comments.creator[0].discussion_image.replace('http://', 'https://')}
-                            discussion_content={comments.creator[0].discussion_content}
-                            discussion_date={comments.creator[0].discussion_date}
-                            upvotes={comments.creator[0].upvotes}
+                            creator={comments[0].creator}
+                            discussion_image={comments[0].discussion_image.replace('http://', 'https://')}
+                            discussion_content={comments[0].discussion_content}
+                            discussion_date={comments[0].discussion_date}
+                            upvotes={comments[0].upvotes}
                         />
                     </Suspense>
                 ) : null}
@@ -40,11 +40,12 @@ const Post = () => {
                                 <Suspense fallback={<Spinner />}>
 
                                     <Comment
-                                        image={item.orignal_commenter_avatar}
-                                        date={item.original_created_date}
-                                        name={item.original_commenter}
-                                        comment={item.original_post}
-                                        item={item}
+                                        image={item.avatar}
+                                        date={item.created_date}
+                                        name={item.username}
+                                        comment={item.post}
+                                        item={item.replies}
+                                        id={item.replies.id}
                                     />
                                 </Suspense>
                             )
