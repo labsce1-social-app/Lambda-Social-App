@@ -23,7 +23,7 @@ const Post = () => {
                         <PostHeader
                             // creator_avatar={}
                             creator={comments[0].creator}
-                            discussion_image={comments[0].discussion_image.replace('http://', 'https://')}
+                            discussion_image={comments[0].discussion_image}
                             discussion_content={comments[0].discussion_content}
                             discussion_date={comments[0].discussion_date}
                             upvotes={comments[0].upvotes}
