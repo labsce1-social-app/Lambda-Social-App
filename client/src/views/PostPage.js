@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { Store } from '../context';
 import Post from '../components/posts/Post';
 import FabButton from '../components/posts/FabButton';
@@ -9,7 +9,7 @@ import { withNavigation } from 'react-navigation';
 const PostPage = props => {
   // handle life cycle for comments
   const { state, dispatch } = useContext(Store);
-
+  const [isReplying, setIsReplying] = useState(false)
   const postId = props.navigation.getParam('postId', 'None');
   const postTitle = props.navigation.getParam('title');
 
@@ -25,8 +25,8 @@ const PostPage = props => {
 
   return (
     <Container style={{ backgroundColor: '#F6F8FA', padding: 5 }}>
-      <Post postTitle={postTitle} />
-      {state.isAuthenticated ? <FabButton /> : null}
+      <Post postTitle={postTitle} isReplying={isReplying} />
+      {state.isAuthenticated ? <FabButton replyToComment={() => setIsReplying(!isReplying)} /> : null}
     </Container>
   );
   // return <Thread />
