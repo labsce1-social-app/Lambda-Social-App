@@ -1,12 +1,3 @@
-// const {
-//     genUsers,
-//     genSubtopics,
-//     genSubtopicUsers,
-//     genDiscussions,
-//     genComments,
-//     genUpvotes,
-//     genHashtags,
-// } = require('../utils');
 const users = require('../temp/001-User');
 const subtopics = require('../temp/002-Subtopics');
 const subtopic_users = require('../temp/003-Subtopic_users');

@@ -47,90 +47,23 @@ TESTS: {
 }
 */
 
-router.get('/d/:id', (req, res) => {
+router.get('/d/:id', async (req, res) => {
   const { id } = req.params;
-  // get a single discussions details by it's id
-  // create an empty object to build based on values
-  // const obj = {};
-  // get all post head details
-  // step one: add creator details to object
-
-  const allComments = [];
-  let obj = {};
-  getCommentsByDiscussionId(id).then(comments => {
-
-    comments.map(comment => {
-      // TODO: this needs to get all the comments
-      // currently only returning one
-      obj = comment;
-
-      // this is properly getting all of the replies (for now)
-      getRepliesByCommentId(comment.id).then(replies => {
-        let reps = [];
-        replies.map(reply => {
-
-          if (obj.id === reply.parent_id) {
-            reps.push(reply);
-            obj.replies = reps;
-          } else {
-            obj.replies = null;
-          }
-        });
-
-        allComments.push(obj);
-        res.status(200).json(allComments);
-      });
-    });
-  });
-});
-// try {
-//   console.log('1');
-//   // need reduce to accumulate (iterate through values)
-//   await getCommentsByDiscussionId(id).map(comment => {
-//     // add comments to object
-//     return comments.push(comment);
-//   });
-
-//   // map to iterate through replies
-//   comments.map(comment => {
-//     //TODO: find out why this isn't returning
-
-//     getRepliesByCommentId(comment.id)
-//       // compare replies to comments by parent id (FK) and comment id (PK)
-//       .reduce((acc, curr) => {
-//         console.log('LINE 72', acc, curr);
-
-//         const replies = [];
-
-//         comments.map(item => {
-//           console.log('4');
-//           if (item.id === curr.parent_id) {
-//             console.log('5');
-//             replies.push(acc, curr);
-//           }
-//         });
-
-//         for (let i = 0; i < Object.keys(comments).length; i++) {
-//           comments[i].replies;
-//           console.log('6');
-//           if (Number(comments[i].id) === Number(curr.parent_id)) {
-//             console.log('7');
-//             comments[i].replies = replies;
-//           } else {
-//             console.log('8');
-//             comments[i].replies = null;
-//           }
-//         }
-//         console.log(obj);
-//       });
-
-//     // return the built out object
-//   });
-//   // console.log(obj)
-//   return await res.status(200).json(comments);
-// } catch (err) {
-//   console.log(err);
-// }
+  try {
+    const postDetail = await getPostDetailByDiscussionId(id)
+    let obj = { postDetail, comments: [] };
+    getCommentsByDiscussionId(id).then(async comments => {
+      await Promise.all(comments.map(comment => {
+        return getRepliesByCommentId(comment.id).then(replies => {
+          obj.comments.push({ ...comment, replies })
+        })
+      }))
+      res.status(200).json(obj);
+    })
+  } catch (err) {
+    res.status(500).json({ message: 'Something done broke', err })
+  }
+})
 
 /*
 GET ROUTE get comment by id
