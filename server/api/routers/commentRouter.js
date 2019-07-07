@@ -51,7 +51,7 @@ router.get('/d/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const postDetail = await getPostDetailByDiscussionId(id)
-    let obj = { postDetail, comments: [] };
+    let obj = { ...postDetail, comments: [] };
     getCommentsByDiscussionId(id).then(async comments => {
       await Promise.all(comments.map(comment => {
         return getRepliesByCommentId(comment.id).then(replies => {

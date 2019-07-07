@@ -93,7 +93,7 @@ export const getSubtopics = async dispatch => {
     return dispatch({ type: 'SUBTOPICS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
-    return dispatch({ type: 'SUBTOPICS_FAILED', payload: error });
+    return dispatch({ type: 'SUBTOPICS_FAILED', payload: err });
   };
 }
 
