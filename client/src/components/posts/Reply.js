@@ -1,23 +1,16 @@
 import React from 'react';
 import style from './Style';
-import { CardItem, Text, Body, Right } from 'native-base';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { View, Image } from 'react-native';
+import { CardItem, Text, Body } from 'native-base';
+import { View, StyleSheet } from 'react-native';
 import moment from 'moment';
 
 const Reply = ({ item }) => {
     return (
         <View style={style.reply_container}>
-            <CardItem style={{ flex: 1, flexDirection: 'row', width: '100%' }}>
-                <Body style={{ flex: 1, flexDirection: 'column', borderColors: '#E9E9E9', borderLeftWidth: 0.5, lineHeight: 30, paddingLeft: 20, marginLeft: 3 }}>
-                    <Text style={{ color: '#606770', fontWeight: 'bold', fontSize: 14 }}>{item.reply_commenter} {moment(item.reply_created_date).fromNow()}</Text>
-                    <Text>{item.reply_post}</Text>
-                    <Right style={{ width: '98%' }}>
-                        <TouchableOpacity style={{ flex: 1, flexDirection: 'row', textAlign: 'right', alignSelf: 'flex-end', paddingRight: 15 }}>
-                            <Image style={{ width: 20, height: 20 }} source={require('../../assets/reply.png')} />
-                            <Text style={{ marginLeft: 10, color: '#606770', fontWeight: 'bold', fontSize: 14 }}>Reply</Text>
-                        </TouchableOpacity>
-                    </Right>
+            <CardItem style={styles.cardItem}>
+                <Body style={styles.body}>
+                    <Text style={styles.date}>{item.username} {moment(item.created_date).fromNow()}</Text>
+                    <Text>{item.post}</Text>
                 </Body>
             </CardItem>
         </View >
@@ -25,3 +18,25 @@ const Reply = ({ item }) => {
 }
 
 export default Reply;
+
+const styles = StyleSheet.create({
+    cardItem: {
+        flex: 1,
+        flexDirection: 'row',
+        width: '100%'
+    },
+    body: {
+        flex: 1,
+        flexDirection: 'column',
+        borderColor: '#FF5252',
+        borderLeftWidth: 0.5,
+        lineHeight: 30,
+        paddingLeft: 20,
+        marginLeft: 3
+    },
+    date: {
+        color: '#606770',
+        fontWeight: 'bold',
+        fontSize: 14
+    }
+})

@@ -1,64 +1,52 @@
 const db = require('../../data/dbconfig.js');
+const isEmpty = require('../utils/');
 
-const getCommentsByDiscussionId = discussion_id => {
-  // leave the first part commented out for now
+const getCommentsByDiscussionId = (discussion_id) => {
   return db.raw(
-    // `
-    //       SELECT
-    // comment.id as comment_id,
-    // comment.comment_post as post,
-    // user.username as username,
-    // user.avatar as avatar,
-    // user.id as user_id,
-    // comment.created_at as created_date,
-    // discussion.id as discussion_id
-    // from comment
-    // INNER JOIN user
-    // ON comment.user_id = user.id
-    // INNER JOIN discussion
-    // ON comment.discussion_id = discussion.id
-    // WHERE discussion.id = ${discussion_id}`
+    //this returns primary parent comments only (no replies)
     `
-    SELECT distinct
-d.id as discussion_id,
-c.id as original_post_id,
-c.comment_post as original_post,
-u.id as original_commenter_id,
-u.username as original_commenter,
-u.avatar as orignal_commenter_avatar,
-c.created_at as original_created_date,
-reply.id  as reply_id,
-reply.post  as reply_post,
-reply.id   as reply_commenter_id,
-reply.username as reply_commenter,
-reply.avatar as reply_commenter_avatar,
-reply.created_date as reply_created_date
-FROM comment c
-INNER JOIN users as u
-ON c.user_id = u.id
-INNER JOIN discussion d
-ON c.discussion_id = d.id
-LEFT OUTER JOIN (
-SELECT
-c.id   as id,
-c.comment_id as parent,
-c.comment_post as post,
-users.username as username,
-users.avatar as avatar,
-users.id  as user_id,
-c.created_at as created_date,
-d.id  as discussion_id
-from comment c
-INNER JOIN users
-ON c.user_id = users.id
-INNER JOIN discussion d
-ON c.discussion_id = d.id
-	where c.comment_id is not null)reply
-on reply.id = c.id
-WHERE d.id  = ${discussion_id}
-ORDER BY d.id , reply.id`
-  ).then(res => res.rows);
+      SELECT
+      comment.id as id,
+      comment.comment_post as post,
+      users.username as username,
+      users.avatar as avatar,
+      users.id as user_id,
+      comment.created_at as created_date,
+      discussion.id as discussion_id
+      from comment
+      INNER JOIN users
+      ON comment.user_id = users.id
+      INNER JOIN discussion
+      ON comment.discussion_id = discussion.id
+      where comment.discussion_id = ${discussion_id}
+      and comment.comment_id is null
+      `
+  ).then(next => next.rows);
 };
+
+const getRepliesByCommentId = comment_id => {
+  if (!isEmpty(comment_id)) {
+    return db.raw(
+      `
+      SELECT
+      comment.id,
+      comment.comment_id as parent_id,
+      comment.comment_post as post,
+      users.username as username,
+      users.avatar as avatar,
+      users.id as user_id,
+      comment.created_at as created_date,
+      discussion.id as discussion_id
+      from comment
+      INNER JOIN users
+      ON comment.user_id = users.id
+      INNER JOIN discussion
+      ON comment.discussion_id = discussion.id
+      WHERE comment.comment_id = ${comment_id}
+      `
+    ).then(next => next.rows);
+  }
+}
 
 
 
@@ -78,7 +66,7 @@ discussion.created_at as discussion_date,
 from discussion
 inner join users
 on discussion.id = ${discussion_id}
-  `).then(res => res.rows);
+  `).then(next => next.rows);
 };
 
 const getCommentsAndJoinUser = () => {
@@ -95,7 +83,7 @@ const getCommentsAndJoinUser = () => {
     FROM comment
     JOIN users
     ON comment.user_id = users.id
-    `).then(res => res.rows);
+    `).then(next => next.rows);
 };
 
 const getCommentsAndJoinUserById = id => {
@@ -113,13 +101,13 @@ const getCommentsAndJoinUserById = id => {
       JOIN users
       ON comment.user_id = users.id
       AND comment.id = ${id}
-      `).then(res => res.rows);
+      `).return(next => next.rows);
 };
 
 const getCommentsTotal = () => {
   return db.raw(`
   select COUNT(*) from comment
-  `).then(res => res.rows);
+  `).then(next => next.rows);
 };
 
 // checks to see if user_id is a valid user id
@@ -177,6 +165,7 @@ const checkMatchInComments = async (id, user_id) => {
 
 module.exports = {
   getCommentsByDiscussionId,
+  getRepliesByCommentId,
   getCommentsAndJoinUser,
   getCommentsAndJoinUserById,
   getPostDetailByDiscussionId,

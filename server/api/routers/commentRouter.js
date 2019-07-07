@@ -8,9 +8,10 @@ const {
   getCommentsTotal,
   checkValidUserComments,
   checkValidDiscussionComments,
-  checkMatchInComments
+  checkMatchInComments,
+  getRepliesByCommentId
 } = require('../helpers/index.js');
-
+const isEmpty = require('../utils/');
 // used for updated timestamps
 const moment = require('moment');
 let timestamp = moment().format('YYYY-MM-DD HH:mm:ss');
@@ -46,35 +47,23 @@ TESTS: {
 }
 */
 
-router.get('/d/:id', (req, res) => {
+router.get('/d/:id', async (req, res) => {
   const { id } = req.params;
-  // get a single discussions details by it's id
-  getPostDetailByDiscussionId(id)
-    .then(creator => {
-      // check if the creator came back through promise
-      if (creator.length > 0) {
-        // attempt to get comments
-        getCommentsByDiscussionId(id)
-          .then(comments => {
-            // if comments came back, send them with creator detail
-            if (comments.length > 0) {
-              res.status(200).json({ creator, comments });
-            } else {
-              // else send just the creator
-              res.status(200).json({ creator });
-            }
-          })
-          .catch(err => {
-            res.status(500).json({ message: 'no post creator', err });
-          });
-      } else {
-        res.status(404).json({ message: 'no comments yet' });
-      }
+  try {
+    const postDetail = await getPostDetailByDiscussionId(id)
+    let obj = { ...postDetail, comments: [] };
+    getCommentsByDiscussionId(id).then(async comments => {
+      await Promise.all(comments.map(comment => {
+        return getRepliesByCommentId(comment.id).then(replies => {
+          obj.comments.push({ ...comment, replies })
+        })
+      }))
+      res.status(200).json(obj);
     })
-    .catch(error => {
-      res.status(500).json({ error: 'Server error', error });
-    });
-});
+  } catch (err) {
+    res.status(500).json({ message: 'Something done broke', err })
+  }
+})
 
 /*
 GET ROUTE get comment by id
