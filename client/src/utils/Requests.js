@@ -266,3 +266,20 @@ export const addDiscussion = async (body, dispatch, nav) => {
     console.log(err);
   }
 };
+
+// create a comment (not a reply)
+export const addComment = async (dispatch, body) => {
+  console.log(body)
+  try {
+    let res = await axios.post(`${local}/comments/create`, body);
+    let followup = await dispatch({
+      type: 'CREATED_COMMENT',
+      payload: body
+    });
+
+    return { res, followup };
+  } catch (err) {
+    console.log(err)
+    dispatch({ type: 'CREATING_COMMENT_FAILED', payload: err })
+  }
+}

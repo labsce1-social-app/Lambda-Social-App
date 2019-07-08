@@ -157,6 +157,20 @@ export const reducer = (state = initialState, action) => {
         ...state,
         discussions: [...state.discussions, action.payload]
       };
+    case 'CREATED_COMMENT':
+      return {
+        ...state,
+        comments: {
+          "0": state.comments[0],
+          comments: [...state.comments.comments, action.payload]
+        },
+        comments_error: '',
+      };
+    case 'CREATING_COMMENT_FAILED':
+      return {
+        ...state,
+        comments_error: action.paload
+      };
     default:
       throw new Error('not a valid action');
   }

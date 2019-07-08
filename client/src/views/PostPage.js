@@ -8,6 +8,8 @@ import { withNavigation } from 'react-navigation';
 import KeyboardShift from '../common/KeyboardShift';
 
 const PostPage = props => {
+  // get ref to scrollview to automatically scroll to the bottom
+  // of comments
   let scrollView = React.createRef();
 
   // handle life cycle for comments
@@ -42,7 +44,9 @@ const PostPage = props => {
             replyToComment={() => {
               scrollView.current.scrollToEnd({ animated: true })
               setIsReplying(!isReplying)
-            }} />
+            }}
+            postId={JSON.stringify(postId)}
+          />
         ) : null}
       </Container>
     </KeyboardShift>
