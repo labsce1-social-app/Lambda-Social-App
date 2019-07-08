@@ -8,7 +8,7 @@ const FabButton = (props) => {
 
     return (
         <Fab
-            active={active}
+            active={props.isReplying === false ? false : active}
             direction="up"
             containerStyle={{}}
             style={[{ backgroundColor: '#5067FF' }, styles.shadow]}

@@ -36,10 +36,14 @@ const PostPage = props => {
           isReplying={isReplying}
           ref={scrollView}
         />
-        {state.isAuthenticated ? <FabButton replyToComment={() => {
-          scrollView.current.scrollToEnd({ animated: true })
-          setIsReplying(!isReplying)
-        }} /> : null}
+        {state.isAuthenticated ? (
+          <FabButton
+            isreplying={isReplying}
+            replyToComment={() => {
+              scrollView.current.scrollToEnd({ animated: true })
+              setIsReplying(!isReplying)
+            }} />
+        ) : null}
       </Container>
     </KeyboardShift>
   );
