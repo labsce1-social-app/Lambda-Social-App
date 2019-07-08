@@ -10,14 +10,13 @@ import InputComment from './InputComment';
 const Comment = lazy(() => import('./Comment'));
 
 // get's discussion id from Route through match.params.id
-const Post = (props) => {
+const Post = React.forwardRef((props, ref) => {
     // bring in state and dispatch
     const { state } = useContext(Store);
     const { comments, comments_loading } = state;
-
+    console.log(ref)
     return state.comments_loading ? <Text style={style.container}>Loading... </Text> : (
-        <ScrollView>
-
+        <ScrollView ref={ref}>
             <Card style={style.container}>
                 {!isEmpty(comments) && comments_loading === false ? (
                     <Suspense fallback={<Spinner />}>
@@ -65,6 +64,6 @@ const Post = (props) => {
             </Card >
         </ScrollView>
     );
-}
+})
 
 export default Post;

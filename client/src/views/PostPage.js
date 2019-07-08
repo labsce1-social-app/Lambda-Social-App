@@ -1,12 +1,15 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useContext, useState, useRef } from 'react';
 import { Store } from '../context';
 import Post from '../components/posts/Post';
 import FabButton from '../components/posts/FabButton';
 import { getCommentsByDiscussionId } from '../utils/Requests';
 import { Container } from 'native-base';
 import { withNavigation } from 'react-navigation';
+import KeyboardShift from '../common/KeyboardShift';
 
 const PostPage = props => {
+  let scrollView = React.createRef();
+
   // handle life cycle for comments
   const { state, dispatch } = useContext(Store);
   const [isReplying, setIsReplying] = useState(false)
@@ -23,11 +26,22 @@ const PostPage = props => {
     () => getCommentsByDiscussionId()
   );
 
+
   return (
-    <Container style={{ backgroundColor: '#F6F8FA', padding: 5 }}>
-      <Post postTitle={postTitle} isReplying={isReplying} />
-      {state.isAuthenticated ? <FabButton replyToComment={() => setIsReplying(!isReplying)} /> : null}
-    </Container>
+    <KeyboardShift>
+      <Container style={{ backgroundColor: '#F6F8FA', padding: 5 }}>
+
+        <Post
+          postTitle={postTitle}
+          isReplying={isReplying}
+          ref={scrollView}
+        />
+        {state.isAuthenticated ? <FabButton replyToComment={() => {
+          scrollView.current.scrollToEnd({ animated: true })
+          setIsReplying(!isReplying)
+        }} /> : null}
+      </Container>
+    </KeyboardShift>
   );
   // return <Thread />
 };

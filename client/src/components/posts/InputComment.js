@@ -1,5 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { Content, Item, Input, Form } from 'native-base';
+import { Content, Item, Input } from 'native-base';
+import { KeyboardAvoidingView, StyleSheet } from 'react-native';
+
 import { Store } from '../../context/';
 
 const InputComment = (props) => {
@@ -7,20 +9,23 @@ const InputComment = (props) => {
     const [comment, setComment] = useState('');
 
     return (
-        <Content style={{ marginBottom: 10 }}>
-            <Form
-            // TODO: need to add submit handling to comment reply
-            // onSubmit={}
-            >
-                <Item>
-                    <Input
-                        placeholder={`replying to ${state.comments[0].creator}`}
-                        onChange={(e) => setComment(e.target.value)} value={comment}
-                    />
-                </Item>
-            </Form>
-        </Content>
+
+        <Input
+            style={styles.textInput}
+            autoFocus={true}
+            placeholder={`replying to ${state.comments[0].creator}`}
+            onChange={(e) => setComment(e.target.value)} value={comment}
+        // onSubmitEditing={}
+        />
+
     );
 }
 
 export default InputComment;
+
+const styles = StyleSheet.create({
+    textInput: {
+        backgroundColor: 'white',
+        height: 40
+    }
+})
