@@ -1,6 +1,6 @@
 import React from 'react';
 import { CardItem, Thumbnail, Body, Text } from 'native-base';
-import { Image, View, ScrollView } from 'react-native';
+import { Image, View, ScrollView, StyleSheet } from 'react-native';
 import Reaction from '../../common/Reaction';
 import style from './Style';
 import { config } from '../../utils/dimensions';
@@ -26,7 +26,7 @@ const PostHeader = props => {
         }}
       >
         <Body>
-          <Text>{props.title}</Text>
+          <Text style={style.title}>{props.title}</Text>
           <Text note>
             {moment(props.discussion_date).format('DD MMM YY hh:mm am')}
           </Text>
