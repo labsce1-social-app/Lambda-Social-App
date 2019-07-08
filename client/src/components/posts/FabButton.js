@@ -3,12 +3,10 @@ import { Button, Icon, Fab } from 'native-base';
 import { StyleSheet } from 'react-native';
 
 const FabButton = (props) => {
-
     const [active, setActive] = useState(false)
-
     return (
         <Fab
-            active={props.isReplying === false ? false : active}
+            active={active}
             direction="up"
             containerStyle={{}}
             style={[{ backgroundColor: '#5067FF' }, styles.shadow]}
