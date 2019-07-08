@@ -15,6 +15,7 @@ const PostPage = props => {
   // handle life cycle for comments
   const { state, dispatch } = useContext(Store);
   const [isReplying, setIsReplying] = useState(false)
+  const [isReplyingToComment, setIsReplyingToComment] = useState(false);
   const postId = props.navigation.getParam('postId', 'None');
   const postTitle = props.navigation.getParam('title');
 
@@ -28,7 +29,6 @@ const PostPage = props => {
     () => getCommentsByDiscussionId()
   );
 
-
   return (
     <KeyboardShift>
       <Container style={{ backgroundColor: '#F6F8FA', padding: 5 }}>
@@ -36,7 +36,9 @@ const PostPage = props => {
         <Post
           postTitle={postTitle}
           isReplying={isReplying}
+          isReplyingToComment={isReplyingToComment}
           ref={scrollView}
+          startReply={() => setIsReplyingToComment(!isReplyingToComment)}
         />
         {state.isAuthenticated ? (
           <FabButton

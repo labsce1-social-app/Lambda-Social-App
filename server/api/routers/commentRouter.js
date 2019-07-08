@@ -5,7 +5,6 @@ const {
   getCommentsAndJoinUser,
   getCommentsAndJoinUserById,
   getPostDetailByDiscussionId,
-  getCommentsTotal,
   checkValidUserComments,
   checkValidDiscussionComments,
   checkMatchInComments,
@@ -142,6 +141,62 @@ router.post('/create', async (req, res) => {
         res
           .status(201)
           .json({ id: comment, message: 'Succesfully created comment' });
+      })
+      .catch(err => {
+        res.status(500).json({ error: 'server error' });
+      });
+  }
+});
+
+/*
+POST ROUTE create a comment reply
+TODO: Add middleware to ensure user is logged in
+@BODY = {
+    comment_post: !STRING - required
+    discussion_id: !INT - required (discussion_id from discussion table)
+    comment_id: !INT - required (same as id)
+    user_id: !INT - required (user_id from user table)
+    created_at: required (timestamp)
+    updated_at: required (timestamp)
+}
+ROUTE = '/comments/create
+returns = id of created comment
+TESTS: {
+    1) SHOULD RETURN ERROR IF COMMENT_POST, DISCUSSION_ID, COMMENT_ID OR USER_ID IS MISSING
+    2) USER_ID SHOULD BE VALID
+    3) DISCUSSION_ID SHOULD BE VALID
+}
+*/
+
+router.post('/create/reply', async (req, res) => {
+  const { comment_post, discussion_id, user_id, comment_id } = req.body;
+
+  if (isEmpty(comment_post) || isEmpty(discussion_id) || isEmpty(user_id) || isEmpty(comment_id)) {
+    res.status(400).json({
+      error: 'comment_post, discussion_id, and user_id and comment_id must be present'
+    });
+  } else if ((checkValidUserComments(user_id)) === false) {
+    res.status(500).json({ error: `invalid user_id: ${user_id} sent` });
+  } else if ((checkValidDiscussionComments(discussion_id)) === false) {
+    res
+      .status(500)
+      .json({ error: `invalid discussion_id: ${discussion_id} sent` });
+  } else {
+
+    db('comment')
+      .returning('*')
+      .insert({
+        comment_post,
+        discussion_id,
+        comment_id,
+        user_id,
+        created_at: timestamp,
+        updated_at: timestamp,
+      })
+      .then(comment => {
+        res
+          .status(201)
+          .json({ reply: comment, message: 'Succesfully created comment' });
       })
       .catch(err => {
         res.status(500).json({ error: 'server error' });

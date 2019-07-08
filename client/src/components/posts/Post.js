@@ -1,4 +1,4 @@
-import React, { useContext, lazy, Suspense } from 'react';
+import React, { useContext, lazy, Suspense, useState } from 'react';
 import { Store } from '../../context/';
 import { ScrollView } from 'react-native-gesture-handler';
 import { FlatList, Text } from 'react-native';
@@ -6,7 +6,8 @@ import { Card, Spinner } from 'native-base';
 import { isEmpty } from '../../utils/utility'
 import style from './Style';
 import PostHeader from './PostHeader';
-import InputComment from './InputComment';
+import CommentInput from './CommentInput';
+import ReplyInput from './ReplyInput';
 const Comment = lazy(() => import('./Comment'));
 
 // get's discussion id from Route through match.params.id
@@ -14,6 +15,13 @@ const Post = React.forwardRef((props, ref) => {
     // bring in state and dispatch
     const { state } = useContext(Store);
     const { comments, comments_loading } = state;
+    const [commentDetails, setCommentDetails] = useState(null);
+    console.log(commentDetails)
+
+    const handleReply = (item) => {
+        setCommentDetails(item)
+        return props.startReply();
+    }
 
     return state.comments_loading ? (
         <Spinner />
@@ -48,6 +56,7 @@ const Post = React.forwardRef((props, ref) => {
                                             comment={item.post}
                                             item={item.replies}
                                             id={item.replies.id}
+                                            passCommentDetails={() => handleReply(item)}
                                         />
                                     </Suspense>
                                 )
@@ -62,7 +71,8 @@ const Post = React.forwardRef((props, ref) => {
                             comment="No one has posted yet"
                         />
                     ) : <Text> Loading...</Text>}
-                    {props.isReplying ? (<InputComment />) : null}
+                    {props.isReplying ? (<CommentInput />) : null}
+                    {props.isReplyingToComment === true ? (<ReplyInput commentDetails={commentDetails} />) : null}
                 </Card >
             </ScrollView>
         );

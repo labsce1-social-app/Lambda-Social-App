@@ -13,6 +13,7 @@ const Reply = ({ item }) => {
                     <Text>{item.post}</Text>
                 </Body>
             </CardItem>
+
         </View >
     )
 }

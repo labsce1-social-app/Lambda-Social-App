@@ -4,9 +4,15 @@ import { View, Image, FlatList, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import moment from 'moment';
 import Reply from './Reply.js';
-import { isEmpty } from '../../utils/utility'
+import { isEmpty } from '../../utils/utility';
 
-const Comment = ({ comment, name, date, item }) => {
+const Comment = ({
+    comment,
+    name,
+    date,
+    item,
+    passCommentDetails
+}) => {
     return (
         <View style={styles.viewContainer}>
             <CardItem style={styles.cardItem}>
@@ -14,11 +20,15 @@ const Comment = ({ comment, name, date, item }) => {
                     <Text style={styles.date}>{name} {moment(date).fromNow()}</Text>
                     <Text>{comment}</Text>
                     <Right style={{ width: '98%' }}>
-                        <TouchableOpacity style={styles.touchable}>
+                        <TouchableOpacity
+                            style={styles.touchable}
+                            onPress={passCommentDetails}
+                        >
                             <Image
                                 style={{ width: 20, height: 20 }}
                                 source={require('../../assets/reply.png')}
                             />
+
                             <Text style={styles.reply}>Reply</Text>
                         </TouchableOpacity>
                     </Right>

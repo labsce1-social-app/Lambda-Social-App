@@ -269,7 +269,7 @@ export const addDiscussion = async (body, dispatch, nav) => {
 
 // create a comment (not a reply)
 export const addComment = async (dispatch, body) => {
-  console.log(body)
+
   try {
     let res = await axios.post(`${local}/comments/create`, body);
     let followup = await dispatch({

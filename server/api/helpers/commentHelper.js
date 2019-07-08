@@ -104,12 +104,6 @@ const getCommentsAndJoinUserById = id => {
       `).return(next => next.rows);
 };
 
-const getCommentsTotal = () => {
-  return db.raw(`
-  select COUNT(*) from comment
-  `).then(next => next.rows);
-};
-
 // checks to see if user_id is a valid user id
 const checkValidUserComments = async user_id => {
   let isValid = false;
@@ -169,7 +163,6 @@ module.exports = {
   getCommentsAndJoinUser,
   getCommentsAndJoinUserById,
   getPostDetailByDiscussionId,
-  getCommentsTotal,
   checkValidUserComments,
   checkValidDiscussionComments,
   checkMatchInComments

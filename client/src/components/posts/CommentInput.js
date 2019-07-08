@@ -2,12 +2,12 @@ import React, { useState, useContext } from 'react';
 import { Input, Item } from 'native-base';
 import { StyleSheet } from 'react-native';
 import { addComment } from '../../utils/Requests';
-import { Store } from '../../context/';
+import { Store } from '../../context';
 
-const InputComment = (props) => {
+const CommentInput = (props) => {
     const { state, dispatch } = useContext(Store);
     const [comment, setComment] = useState('');
-    console.log(comment)
+
     const sendComment = () => {
         const newComment = {
             user_id: state.user.id,
@@ -32,7 +32,7 @@ const InputComment = (props) => {
     );
 }
 
-export default InputComment;
+export default CommentInput;
 
 const styles = StyleSheet.create({
     textInput: {
