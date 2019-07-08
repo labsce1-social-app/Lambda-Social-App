@@ -116,26 +116,18 @@ TESTS: {
 router.post('/create', async (req, res) => {
   const { comment_post, discussion_id, user_id } = req.body;
 
-  if (
-    comment_post === null ||
-    comment_post === undefined ||
-    comment_post.length < 1 ||
-    discussion_id === null ||
-    discussion_id === undefined ||
-    user_id === null ||
-    user_id === undefined
-  ) {
+  if (isEmpty(comment_post) || isEmpty(discussion_id) || isEmpty(user_id)) {
     res.status(400).json({
       error: 'comment_post, discussion_id, and user_id must be present'
     });
-  } else if ((await checkValidUserComments(user_id)) === false) {
+  } else if ((checkValidUserComments(user_id)) === false) {
     res.status(500).json({ error: `invalid user_id: ${user_id} sent` });
-  } else if ((await checkValidDiscussionComments(discussion_id)) === false) {
+  } else if ((checkValidDiscussionComments(discussion_id)) === false) {
     res
       .status(500)
       .json({ error: `invalid discussion_id: ${discussion_id} sent` });
   } else {
-    const commentTotal = await getCommentsTotal();
+    // const commentTotal = await getCommentsTotal();
 
     db('comment')
       .insert({
@@ -144,7 +136,7 @@ router.post('/create', async (req, res) => {
         user_id,
         created_at: timestamp,
         updated_at: timestamp,
-        comment_id: commentTotal[0]['COUNT(*)'] + 1
+        // comment_id: commentTotal[0]['COUNT(*)'] + 1
       })
       .then(comment => {
         res
