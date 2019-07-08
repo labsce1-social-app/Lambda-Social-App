@@ -6,20 +6,19 @@
     creater_id: Int! (foreign key to a user for ownership)
   }
 */
-exports.up = function (knex, Promise) {
+exports.up = function(knex, Promise) {
   return knex.schema.createTable('subtopic', subtopic => {
     subtopic
-      .increments()
+      .increments('id')
       .index()
+      .primary();
 
     subtopic
       .string('title', 50)
       .unique()
       .notNullable();
 
-    subtopic
-      .timestamps(true, true);
-
+    subtopic.timestamps(true, true);
 
     subtopic
       .text('creater_id')
@@ -29,6 +28,6 @@ exports.up = function (knex, Promise) {
   });
 };
 
-exports.down = function (knex, Promise) {
+exports.down = function(knex, Promise) {
   return knex.schema.dropTableIfExists('subtopic');
 };
