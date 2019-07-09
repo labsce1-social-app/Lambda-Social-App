@@ -12,7 +12,8 @@ const CommentInput = (props) => {
         const newComment = {
             user_id: state.user.id,
             comment_post: comment,
-            discussion_id: props.postId
+            discussion_id: props.postId,
+            username: state.user.username
         }
         addComment(dispatch, newComment)
         setComment('')

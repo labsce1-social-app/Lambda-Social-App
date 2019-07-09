@@ -269,11 +269,17 @@ export const addDiscussion = async (body, dispatch, nav) => {
 
 // create a comment (not a reply)
 export const addComment = async (dispatch, body) => {
+  const newReply = {
+    user_id: body.user_id,
+    comment_post: body.comment_post,
+    discussion_id: body.discussion_id,
+    username: body.username
+  }
   try {
     let res = await axios.post(`${local}/comments/create`, body);
     let followup = await dispatch({
       type: 'CREATED_COMMENT',
-      payload: res.data.id[0]
+      payload: newReply
     });
 
     return { res, followup };
@@ -285,11 +291,18 @@ export const addComment = async (dispatch, body) => {
 
 // create a comment (not a reply)
 export const addCommentReply = async (dispatch, body) => {
+  const newReply = {
+    user_id: body.user_id,
+    comment_post: body.comment_post,
+    discussion_id: body.discussion_id,
+    comment_id: body.comment_id,
+    username: body.username
+  }
   try {
     let res = await axios.post(`${local}/comments/create/reply`, body);
     let followup = await dispatch({
       type: 'CREATED_REPLY',
-      payload: res.data.reply[0]
+      payload: newReply
     });
 
     return { res, followup };

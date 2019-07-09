@@ -22,7 +22,8 @@ const ReplyInput = ({ commentDetails, postId }) => {
             user_id: state.user.id,
             comment_post: comment,
             discussion_id: postId,
-            comment_id: commentDetails.id
+            comment_id: commentDetails.id,
+            username: state.user.username
         }
         addCommentReply(dispatch, newComment);
         setComment('');
