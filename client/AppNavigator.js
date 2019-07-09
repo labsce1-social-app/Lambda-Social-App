@@ -62,7 +62,10 @@ const SubtopicsStack = createStackNavigator(
       screen: SubtopicsLoading
     },
     PostADiscussion: {
-      screen: CreateDiscussion
+      screen: CreateDiscussion,
+      navigationOptions: ({ navigation }) => ({
+        title: 'Start a Discussion'
+      })
     },
 
     Modal: {
