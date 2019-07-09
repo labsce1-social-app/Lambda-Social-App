@@ -156,7 +156,9 @@ const CreateDiscussion = props => {
               />
             ) : state.newImage_loading === true ? (
               <Spinner />
-            ) : null}
+            ) : (
+              <Text>Add an image</Text>
+            )}
           </View>
         </Form>
       </Content>

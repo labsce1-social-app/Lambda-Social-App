@@ -11,7 +11,7 @@ const ImagePost = props => {
     return null;
   } else {
     const imageUrl = props.discussion_image.replace('http://', 'https://');
-    return <Image source={{ url: imageUrl }} />;
+    return <Image source={{ url: props.discussion_image }} />;
   }
 };
 
