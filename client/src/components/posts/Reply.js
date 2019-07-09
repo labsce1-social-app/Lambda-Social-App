@@ -10,7 +10,7 @@ const Reply = ({ item }) => {
             <CardItem style={styles.cardItem}>
                 <Body style={styles.body}>
                     <Text style={styles.date}>{item.username} {moment(item.created_date).fromNow()}</Text>
-                    <Text>{item.post}</Text>
+                    <Text>{item.comment_post}</Text>
                 </Body>
             </CardItem>
 

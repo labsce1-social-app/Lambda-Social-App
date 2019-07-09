@@ -174,20 +174,21 @@ export const reducer = (state = initialState, action) => {
         comments_error: action.paload
       };
     case 'CREATED_REPLY':
-      const { payload: body } = action;
       return {
         ...state,
-        comments: state.comments.map((comment, idx) => {
-          console.log(comment.id)
-          if (body.id === comment.id) {
-            return {
-              ...comment,
-              replies: [...comment.replies, body]
+        comments: {
+          ['0']: { ...state.comments['0'] },
+          comments: state.comments.comments.map((comment) => {
+            if (action.payload.comment_id === comment.id) {
+              return {
+                ...comment,
+                replies: [...comment.replies, action.payload]
+              }
+            } else {
+              return comment;
             }
-          } else {
-            return comment;
-          }
-        })
+          })
+        }
       }
     default:
       throw new Error('not a valid action');

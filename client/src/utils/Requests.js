@@ -288,8 +288,8 @@ export const addCommentReply = async (dispatch, body) => {
   try {
     let res = await axios.post(`${local}/comments/create/reply`, body);
     let followup = await dispatch({
-      type: 'CRATED_REPLY',
-      payload: res.data.id[0]
+      type: 'CREATED_REPLY',
+      payload: res.data.reply[0]
     });
 
     return { res, followup };
