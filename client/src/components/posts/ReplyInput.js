@@ -5,7 +5,7 @@ import { addCommentReply } from '../../utils/Requests';
 import { Store } from '../../context';
 import { isEmpty } from '../../utils/utility';
 
-const ReplyInput = ({ commentDetails, postId }) => {
+const ReplyInput = ({ commentDetails, postId, hideInput }) => {
     const { state, dispatch } = useContext(Store);
     const [username, setUsername] = useState('')
     const [comment, setComment] = useState('');
@@ -28,10 +28,11 @@ const ReplyInput = ({ commentDetails, postId }) => {
         addCommentReply(dispatch, newComment);
         setComment('');
         setUsername('');
+        hideInput()
     }
 
     return (
-        <Item rounded >
+        <Item rounded>
             <Input
                 style={styles.textInput}
                 autoFocus={true}

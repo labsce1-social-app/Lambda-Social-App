@@ -17,11 +17,13 @@ const CommentInput = (props) => {
         }
         addComment(dispatch, newComment)
         setComment('')
+        props.hideInput()
     }
 
     return (
         <Item rounded >
             <Input
+                onBlur={props.setIsReplying}
                 style={styles.textInput}
                 autoFocus={true}
                 placeholder={`replying to ${state.comments[0].creator}`}

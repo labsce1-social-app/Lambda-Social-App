@@ -7,7 +7,7 @@ import { isEmpty } from '../../utils/utility'
 import style from './Style';
 import PostHeader from './PostHeader';
 import CommentInput from './CommentInput';
-import ReplyInput from './ReplyInput';
+// import ReplyInput from './ReplyInput';
 const Comment = lazy(() => import('./Comment'));
 
 // get's discussion id from Route through match.params.id
@@ -15,12 +15,6 @@ const Post = React.forwardRef((props, ref) => {
     // bring in state and dispatch
     const { state } = useContext(Store);
     const { comments, comments_loading } = state;
-    const [commentDetails, setCommentDetails] = useState(null);
-
-    const handleReply = (item) => {
-        setCommentDetails(item)
-        return props.startReply();
-    }
 
     return state.comments_loading ? (
         <Spinner />
@@ -47,14 +41,17 @@ const Post = React.forwardRef((props, ref) => {
                             renderItem={({ item }) => {
                                 return (
                                     <Suspense fallback={<Spinner />}>
-
                                         <Comment
                                             image={item.avatar}
                                             date={item.created_date}
                                             name={item.username}
                                             comment={item.comment_post}
                                             item={item.replies}
-                                            passCommentDetails={() => handleReply(item)}
+                                            passCommentDetails={() => props.startReply()}
+                                            commentDetails={item}
+                                            isReplyingToComment={props.isReplyingToComment}
+                                            postId={props.postId}
+                                            hideInput={props.hideInput}
                                         />
                                     </Suspense>
                                 )
@@ -69,10 +66,9 @@ const Post = React.forwardRef((props, ref) => {
                             comment="No one has posted yet"
                         />
                     ) : <Text> Loading...</Text>}
-                    {props.isReplying ? (<CommentInput postId={props.postId} />) : null}
-                    {props.isReplyingToComment === true ? (
-                        <ReplyInput
-                            commentDetails={commentDetails}
+                    {props.isReplying ? (
+                        <CommentInput
+                            hideInput={props.hideInput}
                             postId={props.postId}
                         />
                     ) : null}

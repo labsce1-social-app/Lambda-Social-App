@@ -1,18 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CardItem, Text, Body, Right } from 'native-base';
 import { View, Image, FlatList, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import moment from 'moment';
 import Reply from './Reply.js';
 import { isEmpty } from '../../utils/utility';
+import ReplyInput from './ReplyInput';
 
 const Comment = ({
     comment,
     name,
     date,
     item,
-    passCommentDetails
+    passCommentDetails,
+    postId,
+    hideInput,
+    isReplyingToComment,
+    commentDetails
 }) => {
+    const [isReplying, setIsReplying] = useState(false)
+    // fires when reply button is pressed on a comment
+    const handleReplyPress = () => {
+        // retrieves comment user details about the post being replied to
+        passCommentDetails()
+        // flag that tells us when to open/close keyboard input
+        setIsReplying(!isReplying)
+    }
     return (
         <View style={styles.viewContainer}>
             <CardItem style={styles.cardItem}>
@@ -22,7 +35,7 @@ const Comment = ({
                     <Right style={{ width: '98%' }}>
                         <TouchableOpacity
                             style={styles.touchable}
-                            onPress={passCommentDetails}
+                            onPress={() => handleReplyPress()}
                         >
                             <Image
                                 style={{ width: 20, height: 20 }}
@@ -41,6 +54,7 @@ const Comment = ({
                         return (
                             <Reply
                                 item={item}
+
                             />
                         )
                     }}
@@ -48,6 +62,15 @@ const Comment = ({
                     keyExtractor={({ item }) => `${item}`}
                 />
                 : null}
+            {isReplying === true ? (
+                <ReplyInput
+                    postId={postId}
+                    hideInput={hideInput}
+                    isReplyingToComment={isReplyingToComment}
+                    hideInput={hideInput}
+                    commentDetails={commentDetails}
+                />
+            ) : null}
         </View >
     )
 }

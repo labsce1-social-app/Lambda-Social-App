@@ -18,7 +18,7 @@ const PostPage = props => {
   const [isReplyingToComment, setIsReplyingToComment] = useState(false);
   const postId = props.navigation.getParam('postId', 'None');
   const postTitle = props.navigation.getParam('title');
-
+  console.log(isReplyingToComment)
   // need to get the data here because it is where we have access to the id from react router.
 
   // useEffect is treated as componentDidMount and componentWillUnmount
@@ -29,6 +29,10 @@ const PostPage = props => {
     () => getCommentsByDiscussionId()
   );
 
+  const closeInputs = () => {
+    setIsReplying(false)
+  }
+
   return (
     <KeyboardShift>
       <Container style={{ backgroundColor: '#F6F8FA', padding: 5 }}>
@@ -36,9 +40,9 @@ const PostPage = props => {
         <Post
           postTitle={postTitle}
           isReplying={isReplying}
-          isReplyingToComment={isReplyingToComment}
           ref={scrollView}
           startReply={() => setIsReplyingToComment(!isReplyingToComment)}
+          hideInput={() => closeInputs()}
           postId={JSON.stringify(postId)}
         />
         {state.isAuthenticated ? (

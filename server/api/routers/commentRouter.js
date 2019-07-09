@@ -126,8 +126,6 @@ router.post('/create', async (req, res) => {
       .status(500)
       .json({ error: `invalid discussion_id: ${discussion_id} sent` });
   } else {
-    // const commentTotal = await getCommentsTotal();
-
     db('comment')
       .insert({
         comment_post,
@@ -135,7 +133,6 @@ router.post('/create', async (req, res) => {
         user_id,
         created_at: timestamp,
         updated_at: timestamp,
-        // comment_id: commentTotal[0]['COUNT(*)'] + 1
       })
       .then(comment => {
         res
