@@ -235,7 +235,7 @@ export const createSubtopic = async (info, sub, dispatch) => {
   try {
     const res = await axios.post(`${LOCAL}/subtopics/create`, body);
 
-    console.log(res.data.subtopic[0]);
+    // console.log(res.data.subtopic[0]);
     const followup = await dispatch({
       type: 'CREATE_SUBTOPIC',
       payload: res.data.subtopic[0]
@@ -260,10 +260,10 @@ export const addDiscussion = async (body, dispatch, nav) => {
 
   try {
     let res = await axios.post(`${LOCAL}/discussions/create`, apiBody);
-    console.log(res);
+    // console.log(res.data);
     let followup = await dispatch({
       type: 'CREATED_DISCUSSION',
-      payload: body
+      payload: res.data.discussion[0]
     });
 
     return { res, followup };
