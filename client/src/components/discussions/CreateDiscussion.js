@@ -25,7 +25,7 @@ const CreateDiscussion = props => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState('');
 
   const subId = props.navigation.getParam('subId');
 
@@ -70,65 +70,38 @@ const CreateDiscussion = props => {
     props.navigation.navigate('Discussions', { subId: subId });
   };
 
+  // console.log('USER: ', state.user);
+  // console.log('IS IT AN IMAGE? ', image);
+
   return (
     <Container
       style={{
-        // flex: 1,
-        // alignContent: 'center',
-        // justifyContent: 'center',
         height: '100%'
       }}
     >
-      {/* <CardItem> */}
-      <Content padder>
+      <Content>
         <Form
           style={{
             flex: 1,
             alignItems: 'center',
-            // justifyContent: 'space-evenly',
             width: '100%',
             height: '100%'
           }}
         >
-          {/* <Text style={{ fontSize: 24 }}>Let's start a discussion.. </Text> */}
-          {/* <Label>Title</Label> */}
-          {/* <Item> */}
-          <TextInput
-            style={{ width: '100%' }}
-            placeholder="title"
-            onChangeText={e => setTitle(e)}
-          />
-          {/* </Item> */}
-          {/* <Label>Tell us what your post is about...</Label> */}
-          {/* <Item> */}
-          <View style={{ padding: 5, flex: 1 }}>
-            <TextInput
-              style={{
-                // width: '100%',
-                height: 150,
-                justifyContent: 'flex-start'
-              }}
-              placeholderTextColor="grey"
-              numberOLines={10}
-              multiline={true}
-              placeholder="post is about"
-              onChangeText={e => setContent(e)}
-            />
-          </View>
-          {/* </Item> */}
-
           <View
             style={{
               flex: 1,
               flexDirection: 'row',
               justifyContent: 'space-around',
-              marginTop: 40,
-              width: '80%'
+              marginTop: 15,
+              width: '80%',
+              marginBottom: 0
             }}
           >
             <Button bordered onPress={() => uploadImage(dispatch)}>
               <Text>Upload an image</Text>
             </Button>
+
             {state.newImage_loading === true ? (
               <Button bordered light>
                 <Text>Done</Text>
@@ -139,15 +112,44 @@ const CreateDiscussion = props => {
               </Button>
             )}
           </View>
+
+          <View
+            style={{
+              width: '100%',
+              borderBottomColor: 'grey',
+              borderBottomWidth: 0.5,
+              marginBottom: 10,
+              padding: 3
+            }}
+          >
+            <TextInput placeholder="Title" onChangeText={e => setTitle(e)} />
+          </View>
+
+          <View style={{ width: '100%', padding: 3 }}>
+            <TextInput
+              style={{
+                // width: '100%',
+                height: 200,
+                justifyContent: 'flex-start',
+                textAlignVertical: 'top'
+              }}
+              placeholderTextColor="grey"
+              numberOLines={10}
+              multiline={true}
+              placeholder="What is your post about..."
+              onChangeText={e => setContent(e)}
+            />
+          </View>
+
           <View
             style={{
               flex: 1,
               justifyContent: 'center',
               alignItems: 'center',
-              marginTop: 40
+              marginTop: 15
             }}
           >
-            {image !== null ? (
+            {image ? (
               <Image
                 source={{ uri: image }}
                 style={{ width: 200, height: 200 }}
@@ -158,7 +160,6 @@ const CreateDiscussion = props => {
           </View>
         </Form>
       </Content>
-      {/* </CardItem> */}
     </Container>
   );
 };
