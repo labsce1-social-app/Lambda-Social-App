@@ -158,6 +158,7 @@ export const reducer = (state = initialState, action) => {
     case 'CREATED_DISCUSSION':
       return {
         ...state,
+        newImage: '',
         discussions: [...state.discussions, action.payload]
       };
     default:
