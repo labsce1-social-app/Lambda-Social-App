@@ -125,12 +125,12 @@ export const reducer = (state = initialState, action) => {
       };
 
     case 'CREATE_SUBTOPIC':
-      const { title, creater_id } = action.payload;
+      const { title, creater_id, id } = action.payload;
       return {
         ...state,
         subtopics_loading: false,
         subtopics: [
-          { creater_id, title, username: state.user.username },
+          { creater_id, title, username: state.user.username, id },
           ...state.subtopics
         ]
       };

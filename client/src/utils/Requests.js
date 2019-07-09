@@ -41,7 +41,7 @@ export const getDiscussions = async (query, dispatch) => {
   const q = new URLSearchParams({ sort: query });
   dispatch({ type: 'TOP_DISCUSSIONS_FETCHING', payload: true });
   try {
-    const res = await axios.get(`${postgres}/discussions/?${q.toString()}`);
+    const res = await axios.get(`${LOCAL}/discussions/?${q.toString()}`);
     return dispatch({ type: 'TOP_DISCUSSIONS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -52,7 +52,7 @@ export const getDiscussions = async (query, dispatch) => {
 export const getDiscussionsForSub = async (id, dispatch) => {
   try {
     await dispatch({ type: 'DISCUSSIONS_FETCHING', payload: true });
-    const res = await axios.get(`${postgres}/discussions/s/${id}`);
+    const res = await axios.get(`${LOCAL}/discussions/s/${id}`);
     return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -63,7 +63,7 @@ export const getDiscussionsForSub = async (id, dispatch) => {
 export const getRecentDiscussions = async (id, dispatch) => {
   try {
     await dispatch({ type: 'DISCUSSIONS_FETCHING', payload: true });
-    const res = await axios.get(`${postgres}/discussions/recent/${id}`);
+    const res = await axios.get(`${LOCAL}/discussions/recent/${id}`);
     return dispatch({
       type: 'DISCUSSIONS_FETCHED',
       payload: !isEmpty(res.data) ? res.data : null
@@ -80,7 +80,7 @@ export const getCommentsByDiscussionId = async (id, dispatch) => {
   // read previous function, they're almost the same
   dispatch({ type: 'COMMENTS_FETCHING' });
   try {
-    const res = await axios.get(`${postgres}/comments/d/${id}`);
+    const res = await axios.get(`${LOCAL}/comments/d/${id}`);
     return dispatch({ type: 'COMMENTS_FETCHED_SUCCESS', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -92,13 +92,13 @@ export const getCommentsByDiscussionId = async (id, dispatch) => {
 export const getSubtopics = async dispatch => {
   dispatch({ type: 'SUBTOPICS_FETCHING' });
   try {
-    const res = await axios.get(`${postgres}/subtopics`);
+    const res = await axios.get(`${LOCAL}/subtopics`);
     return dispatch({ type: 'SUBTOPICS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
     return dispatch({ type: 'SUBTOPICS_FAILED', payload: err });
-  };
-}
+  }
+};
 
 // send a user to auth0
 const auth0 = new Auth0({ domain: auth0Domain, clientId: auth0ClientId });
@@ -129,7 +129,7 @@ const getUser = async (user, dispatch) => {
     id: user.sub
   });
   try {
-    const res = await axios.get(`${postgres}/users/${user.sub}`);
+    const res = await axios.get(`${LOCAL}/users/${user.sub}`);
     if (res.data) {
       const send = await dispatch({
         type: 'SET_CURRENT_USER',
@@ -153,7 +153,7 @@ const makeUser = async (info, dispatch) => {
     avatar: info.picture
   }; // send  nickname as a 'username'
   try {
-    const make = await axios.post(`${postgres}/users`, body);
+    const make = await axios.post(`${LOCAL}/users`, body);
     const followup = await dispatch({
       type: 'SET_CURRENT_USER',
       payload: body
@@ -210,9 +210,8 @@ export const uploadImage = dispatch => {
           /*
           response will come back looking like this, we'll want
           the location for the POST request to make a discussion.
-              location: "https://lambdasocialbucket.s3.amazonaws.com/s3%2FIMG_0111.HEIC"
-          }
-              */
+              location: "https://lambdasocialbucket.s3.amazonaws.com/s3%2FIMG_0111.HEIC"  
+        */
           return dispatch({
             type: 'IMAGE_SUCCESS',
             payload: response.body.postResponse.location
@@ -234,8 +233,14 @@ export const createSubtopic = async (info, sub, dispatch) => {
     creater_id: sub
   };
   try {
-    const res = await axios.post(`${postgres}/subtopics/create`, body);
-    const followup = await dispatch({ type: 'CREATE_SUBTOPIC', payload: body });
+    const res = await axios.post(`${LOCAL}/subtopics/create`, body);
+
+    console.log(res.data.subtopic[0]);
+    const followup = await dispatch({
+      type: 'CREATE_SUBTOPIC',
+      payload: res.data.subtopic[0]
+    });
+
     return { res, followup };
   } catch (err) {
     console.log(err);
@@ -254,7 +259,8 @@ export const addDiscussion = async (body, dispatch, nav) => {
   };
 
   try {
-    let res = await axios.post(`${postgres}/discussions/create`, apiBody);
+    let res = await axios.post(`${LOCAL}/discussions/create`, apiBody);
+    console.log(res);
     let followup = await dispatch({
       type: 'CREATED_DISCUSSION',
       payload: body
