@@ -69,11 +69,11 @@ router.post('/create', async (req, res) => {
   } else {
     if (await canInsertSubtopic(body.title)) {
       db('subtopic')
-        .insert(body)
+        .insert(body, ['id', 'title', 'creater_id'])
         .then(subtopic => {
           res
             .status(201)
-            .json({ id: subtopic, message: 'Succesfully created subtopic' });
+            .json({ subtopic, message: 'Succesfully created subtopic' });
         })
         .catch(err => {
           res.status(500).json({ error: err });
@@ -202,10 +202,10 @@ router.put('/:id', async (req, res) => {
 router.get('/', (req, res) => {
   getAllSubtopicsWithCreator()
     .then(subtopics => {
-      res.status(200).json(subtopics)
+      res.status(200).json(subtopics);
     })
     .catch(err => {
-      res.status(500).json({ error: 'Server error' })
+      res.status(500).json({ error: 'Server error' });
     });
 });
 
