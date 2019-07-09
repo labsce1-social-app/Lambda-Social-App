@@ -31,7 +31,7 @@ export const reducer = (state = initialState, action) => {
         top_discussions_error: ''
       };
     case 'TOP_DISCUSSIONS_FETCHED':
-      console.log('top: ', action.payload);
+      // console.log('top: ', action.payload);
       return {
         ...state,
         top_discussons_loading: false,
@@ -136,18 +136,21 @@ export const reducer = (state = initialState, action) => {
       };
     case 'SENDING_IMAGE':
       return {
+        ...state,
         newImage_loading: true,
         newImage: '',
         newImage_error: ''
       };
     case 'IMAGE_SUCCESS':
       return {
+        ...state,
         newImage_loading: false,
         newImage: action.payload,
         newImage_error: ''
       };
     case 'IMAGE_FAILED':
       return {
+        ...state,
         newImage_loading: false,
         newImage: '',
         newImage_error: action.payload
