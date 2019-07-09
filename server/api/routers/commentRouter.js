@@ -129,6 +129,7 @@ router.post('/create', async (req, res) => {
     // const commentTotal = await getCommentsTotal();
 
     db('comment')
+      .returning('*')
       .insert({
         comment_post,
         discussion_id,

@@ -7,9 +7,10 @@ import { isEmpty } from '../../utils/utility';
 
 const ReplyInput = ({ commentDetails, postId }) => {
     const { state, dispatch } = useContext(Store);
-    const [comment, setComment] = useState('');
     const [username, setUsername] = useState('')
-    console.log(username)
+    const [comment, setComment] = useState('');
+    const [isSet, setIsSet] = useState(false);
+
     useEffect(() => {
         if (!isEmpty(commentDetails)) {
             const userProp = setUsername(commentDetails.username);
@@ -17,24 +18,43 @@ const ReplyInput = ({ commentDetails, postId }) => {
         }
     })
 
+    useEffect(() => {
+        if (!isEmpty(username) && isSet === false) {
+            return replyConfig();
+        }
+    })
+
+    const replyConfig = () => {
+        setIsSet(true)
+        setComment(username)
+    }
+
     const sendReply = () => {
         const newComment = {
-            user_id: commentDetails.user_id,
+            user_id: state.user.id,
             comment_post: comment,
             discussion_id: postId,
             comment_id: commentDetails.id
         }
-        addCommentReply(dispatch, newComment)
-        setComment('')
+        addCommentReply(dispatch, newComment);
+        setComment('');
+        setUsername('');
+        setIsSet(false);
     }
 
+    const commentHandler = (e) => {
+        setComment(e)
+    }
+
+    console.log(comment)
     return (
         <Item rounded >
             <Input
                 style={styles.textInput}
                 autoFocus={true}
-                // placeholder={`replying to ${username}`}
-                onChangeText={(e) => setComment([username, e])}
+                defaultValue={username}
+                name="comment"
+                onChangeText={(e) => commentHandler(e)}
                 value={comment}
                 onSubmitEditing={() => sendReply()}
             />

@@ -16,7 +16,6 @@ const Post = React.forwardRef((props, ref) => {
     const { state } = useContext(Store);
     const { comments, comments_loading } = state;
     const [commentDetails, setCommentDetails] = useState(null);
-    console.log(commentDetails)
 
     const handleReply = (item) => {
         setCommentDetails(item)
@@ -53,9 +52,8 @@ const Post = React.forwardRef((props, ref) => {
                                             image={item.avatar}
                                             date={item.created_date}
                                             name={item.username}
-                                            comment={item.post}
+                                            comment={item.comment_post}
                                             item={item.replies}
-                                            id={item.replies.id}
                                             passCommentDetails={() => handleReply(item)}
                                         />
                                     </Suspense>
@@ -71,8 +69,14 @@ const Post = React.forwardRef((props, ref) => {
                             comment="No one has posted yet"
                         />
                     ) : <Text> Loading...</Text>}
-                    {props.isReplying ? (<CommentInput />) : null}
-                    {props.isReplyingToComment === true ? (<ReplyInput commentDetails={commentDetails} />) : null}
+                    {props.isReplying ? (<CommentInput postId={props.postId} />) : null}
+                    {props.isReplyingToComment === true ? (
+                        <ReplyInput
+                            commentDetails={commentDetails}
+                            postId={props.postId}
+                        />
+                    ) : null}
+
                 </Card >
             </ScrollView>
         );

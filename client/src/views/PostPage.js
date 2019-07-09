@@ -39,6 +39,7 @@ const PostPage = props => {
           isReplyingToComment={isReplyingToComment}
           ref={scrollView}
           startReply={() => setIsReplyingToComment(!isReplyingToComment)}
+          postId={JSON.stringify(postId)}
         />
         {state.isAuthenticated ? (
           <FabButton

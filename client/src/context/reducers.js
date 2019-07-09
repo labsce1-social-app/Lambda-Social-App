@@ -158,11 +158,13 @@ export const reducer = (state = initialState, action) => {
         discussions: [...state.discussions, action.payload]
       };
     case 'CREATED_COMMENT':
+      const { payload } = action;
+      const { comments } = state.comments;
       return {
         ...state,
         comments: {
-          "0": state.comments[0],
-          comments: [...state.comments.comments, action.payload]
+          ['0']: { ...state.comments['0'] },
+          comments: [...comments, payload]
         },
         comments_error: '',
       };
@@ -171,6 +173,22 @@ export const reducer = (state = initialState, action) => {
         ...state,
         comments_error: action.paload
       };
+    case 'CREATED_REPLY':
+      const { payload: body } = action;
+      return {
+        ...state,
+        comments: state.comments.map((comment, idx) => {
+          console.log(comment.id)
+          if (body.id === comment.id) {
+            return {
+              ...comment,
+              replies: [...comment.replies, body]
+            }
+          } else {
+            return comment;
+          }
+        })
+      }
     default:
       throw new Error('not a valid action');
   }
