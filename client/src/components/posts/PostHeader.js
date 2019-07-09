@@ -6,15 +6,6 @@ import style from './Style';
 import { config } from '../../utils/dimensions';
 import moment from 'moment';
 
-const ImagePost = props => {
-  if (!props.discussion_image) {
-    return null;
-  } else {
-    const imageUrl = props.discussion_image.replace('http://', 'https://');
-    return <Image source={{ url: props.discussion_image }} />;
-  }
-};
-
 const PostHeader = props => {
   return (
     <>
@@ -36,7 +27,10 @@ const PostHeader = props => {
           />
           <Text>{props.creator}</Text>
 
-          <ImagePost style={style.post_image} />
+          <Image
+            style={style.post_image}
+            source={{ uri: props.discussion_image }}
+          />
 
           <Text>{props.discussion_content}</Text>
         </Body>
