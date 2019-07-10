@@ -31,7 +31,7 @@ export const reducer = (state = initialState, action) => {
         top_discussions_error: ''
       };
     case 'TOP_DISCUSSIONS_FETCHED':
-      console.log('top: ', action.payload);
+      // console.log('top: ', action.payload);
       return {
         ...state,
         top_discussons_loading: false,
@@ -125,37 +125,54 @@ export const reducer = (state = initialState, action) => {
       };
 
     case 'CREATE_SUBTOPIC':
-      const { title, creater_id } = action.payload;
+      const { title, creater_id, id } = action.payload;
       return {
         ...state,
         subtopics_loading: false,
         subtopics: [
-          { creater_id, title, username: state.user.username },
+          { creater_id, title, username: state.user.username, id },
           ...state.subtopics
         ]
       };
     case 'SENDING_IMAGE':
       return {
+        ...state,
         newImage_loading: true,
         newImage: '',
         newImage_error: ''
       };
     case 'IMAGE_SUCCESS':
       return {
+        ...state,
         newImage_loading: false,
         newImage: action.payload,
         newImage_error: ''
       };
     case 'IMAGE_FAILED':
       return {
+        ...state,
         newImage_loading: false,
         newImage: '',
         newImage_error: action.payload
       };
     case 'CREATED_DISCUSSION':
+      const { content, image, subtopic_id } = action.payload;
+
       return {
         ...state,
-        discussions: [...state.discussions, action.payload]
+        newImage: '',
+        discussions: [
+          ...state.discussions,
+          {
+            id: action.payload.id,
+            title: action.payload.title,
+            content,
+            creater_id,
+            image,
+            subtopic_id,
+            username: state.user.username
+          }
+        ]
       };
     case 'CREATED_COMMENT':
       const { payload } = action;

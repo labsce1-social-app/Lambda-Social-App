@@ -97,8 +97,8 @@ export const getSubtopics = async dispatch => {
   } catch (err) {
     console.log(err);
     return dispatch({ type: 'SUBTOPICS_FAILED', payload: err });
-  };
-}
+  }
+};
 
 // send a user to auth0
 const auth0 = new Auth0({ domain: auth0Domain, clientId: auth0ClientId });
@@ -210,9 +210,8 @@ export const uploadImage = dispatch => {
           /*
           response will come back looking like this, we'll want
           the location for the POST request to make a discussion.
-              location: "https://lambdasocialbucket.s3.amazonaws.com/s3%2FIMG_0111.HEIC"
-          }
-              */
+              location: "https://lambdasocialbucket.s3.amazonaws.com/s3%2FIMG_0111.HEIC"  
+        */
           return dispatch({
             type: 'IMAGE_SUCCESS',
             payload: response.body.postResponse.location
@@ -235,7 +234,13 @@ export const createSubtopic = async (info, sub, dispatch) => {
   };
   try {
     const res = await axios.post(`${postgres}/subtopics/create`, body);
-    const followup = await dispatch({ type: 'CREATE_SUBTOPIC', payload: body });
+
+    // console.log(res.data.subtopic[0]);
+    const followup = await dispatch({
+      type: 'CREATE_SUBTOPIC',
+      payload: res.data.subtopic[0]
+    });
+
     return { res, followup };
   } catch (err) {
     console.log(err);
@@ -255,9 +260,10 @@ export const addDiscussion = async (body, dispatch, nav) => {
 
   try {
     let res = await axios.post(`${postgres}/discussions/create`, apiBody);
+    // console.log(res.data);
     let followup = await dispatch({
       type: 'CREATED_DISCUSSION',
-      payload: body
+      payload: res.data.discussion[0]
     });
 
     return { res, followup };

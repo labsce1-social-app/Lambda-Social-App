@@ -12,9 +12,10 @@ import {
   CardItem,
   Text,
   Toast,
-  Spinner
+  Spinner,
+  Container
 } from 'native-base';
-import { Image } from 'react-native';
+import { Image, TextInput } from 'react-native';
 import { addDiscussion, uploadImage } from '../../utils/Requests';
 import { isEmpty } from '../../utils/utility';
 import { Store } from '../../context';
@@ -23,7 +24,9 @@ const CreateDiscussion = props => {
   const { state, dispatch } = useContext(Store);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [image, setImage] = useState(null);
+
+  const [image, setImage] = useState('');
+
   const subId = props.navigation.getParam('subId');
 
   console.log('subtopic id for discussion', subId);
@@ -67,79 +70,99 @@ const CreateDiscussion = props => {
     props.navigation.navigate('Discussions', { subId: subId });
   };
 
+  // console.log('USER: ', state.user);
+  // console.log('IS IT AN IMAGE? ', image);
+
   return (
-    <Card
+    <Container
       style={{
-        flex: 1,
-        alignContent: 'center',
-        justifyContent: 'center',
         height: '100%'
       }}
     >
-      <CardItem>
-        <Content>
-          <Form
+      <Content>
+        <Form
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            width: '100%',
+            height: '100%'
+          }}
+        >
+          <View
             style={{
               flex: 1,
-              alignItems: 'center',
-              justifyContent: 'space-evenly',
-              width: '100%',
-              height: 400
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              marginTop: 15,
+              width: '80%',
+              marginBottom: 0
             }}
           >
-            <Text style={{ fontSize: 24 }}>Let's start a discussion.. </Text>
-            <Item floatingLabel>
-              <Label>Title</Label>
-              <Input onChangeText={e => setTitle(e)} />
-            </Item>
-            <Item floatingLabel>
-              <Label>Tell us what your post is about...</Label>
-              <Input onChangeText={e => setContent(e)} />
-            </Item>
+            <Button bordered onPress={() => uploadImage(dispatch)}>
+              <Text>Upload an image</Text>
+            </Button>
 
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-                marginTop: 40,
-                width: '80%'
-              }}
-            >
-              <Button bordered onPress={() => uploadImage(dispatch)}>
-                <Text>Upload an image</Text>
+            {state.newImage_loading === true ? (
+              <Button bordered light>
+                <Text>Done</Text>
               </Button>
-              {state.newImage_loading === true ? (
-                <Button bordered light>
-                  <Text>Done</Text>
-                </Button>
-              ) : (
-                <Button bordered success onPress={() => submitHandler()}>
-                  <Text>Done</Text>
-                </Button>
-              )}
-            </View>
-            <View
+            ) : (
+              <Button bordered success onPress={() => submitHandler()}>
+                <Text>Done</Text>
+              </Button>
+            )}
+          </View>
+
+          <View
+            style={{
+              width: '100%',
+              borderBottomColor: 'grey',
+              borderBottomWidth: 0.5,
+              marginBottom: 10,
+              padding: 3
+            }}
+          >
+            <TextInput placeholder="Title" onChangeText={e => setTitle(e)} />
+          </View>
+
+          <View style={{ width: '100%', padding: 3 }}>
+            <TextInput
               style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 40
+                // width: '100%',
+                height: 200,
+                justifyContent: 'flex-start',
+                textAlignVertical: 'top'
               }}
-            >
-              {image !== null ? (
-                <Image
-                  source={{ uri: image }}
-                  style={{ width: 200, height: 200 }}
-                />
-              ) : state.newImage_loading === true ? (
-                <Spinner />
-              ) : null}
-            </View>
-          </Form>
-        </Content>
-      </CardItem>
-    </Card>
+              placeholderTextColor="grey"
+              numberOLines={10}
+              multiline={true}
+              placeholder="What is your post about..."
+              onChangeText={e => setContent(e)}
+            />
+          </View>
+
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 15
+            }}
+          >
+            {image ? (
+              <Image
+                source={{ uri: image }}
+                style={{ width: 200, height: 200 }}
+              />
+            ) : state.newImage_loading === true ? (
+              <Spinner />
+            ) : (
+              <Text>Add an image</Text>
+            )}
+          </View>
+        </Form>
+      </Content>
+    </Container>
   );
 };
 

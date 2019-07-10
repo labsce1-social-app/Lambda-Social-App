@@ -11,11 +11,12 @@
   }
 */
 
-exports.up = function (knex, Promise) {
+exports.up = function(knex, Promise) {
   return knex.schema.createTable('subtopic_users', subtopic_users => {
     subtopic_users
-      .increments()
+      .increments('id')
       .index()
+      .primary();
 
     subtopic_users
       .text('user_id')
@@ -34,6 +35,6 @@ exports.up = function (knex, Promise) {
   });
 };
 
-exports.down = function (knex, Promise) {
+exports.down = function(knex, Promise) {
   return knex.schema.dropTableIfExists('subtopic_users');
 };

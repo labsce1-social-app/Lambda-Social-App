@@ -55,6 +55,9 @@ const SubtopicsStack = createStackNavigator(
         headerLeft: <DrawerButton navigation={navigation} />
       })
     },
+    Post: {
+      screen: PostPage
+    },
     Discussions: {
       screen: DiscussionsPage
     },
@@ -62,7 +65,10 @@ const SubtopicsStack = createStackNavigator(
       screen: SubtopicsLoading
     },
     PostADiscussion: {
-      screen: CreateDiscussion
+      screen: CreateDiscussion,
+      navigationOptions: ({ navigation }) => ({
+        title: 'Start a Discussion'
+      })
     },
 
     Modal: {
@@ -95,10 +101,17 @@ const FooterNavigator = createBottomTabNavigator(
   },
   {
     tabBarOptions: {
-      showLabel: false,
       keyboardHidesTabBar: true,
+      activeTintColor: '#bb1333',
+      // activeBackgroundColor: '#d3d3d3',
+      inactiveTintColor: 'grey',
+      labelStyle: {
+        fontWeight: 'bold'
+      },
 
       style: {
+        // justifyContent: 'space-around',
+        alignItems: 'space-around',
         shadowColor: 'rgba(58,55,55,0.1)',
         shadowOpacity: 2,
         shadowRadius: 20,
