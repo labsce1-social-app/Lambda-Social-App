@@ -14,7 +14,6 @@ import { Root } from 'native-base';
 export default (App = () => (
   <StoreProvider>
     <Root>
-
       <AppNavigator />
     </Root>
   </StoreProvider>

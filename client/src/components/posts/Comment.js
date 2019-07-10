@@ -1,12 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CardItem, Text, Body, Right } from 'native-base';
 import { View, Image, FlatList, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import moment from 'moment';
 import Reply from './Reply.js';
-import { isEmpty } from '../../utils/utility'
+import { isEmpty } from '../../utils/utility';
+import ReplyInput from './ReplyInput';
 
-const Comment = ({ comment, name, date, item }) => {
+const Comment = ({
+    comment,
+    name,
+    date,
+    item,
+    passCommentDetails,
+    postId,
+    hideInput,
+    isReplyingToComment,
+    commentDetails,
+}) => {
+    const [isReplying, setIsReplying] = useState(false)
+    // fires when reply button is pressed on a comment
+    const handleReplyPress = () => {
+        // retrieves comment user details about the post being replied to
+        passCommentDetails()
+        // flag that tells us when to open/close keyboard input
+        setIsReplying(!isReplying)
+    }
     return (
         <View style={styles.viewContainer}>
             <CardItem style={styles.cardItem}>
@@ -14,11 +33,15 @@ const Comment = ({ comment, name, date, item }) => {
                     <Text style={styles.date}>{name} {moment(date).fromNow()}</Text>
                     <Text>{comment}</Text>
                     <Right style={{ width: '98%' }}>
-                        <TouchableOpacity style={styles.touchable}>
+                        <TouchableOpacity
+                            style={styles.touchable}
+                            onPress={() => handleReplyPress()}
+                        >
                             <Image
                                 style={{ width: 20, height: 20 }}
                                 source={require('../../assets/reply.png')}
                             />
+
                             <Text style={styles.reply}>Reply</Text>
                         </TouchableOpacity>
                     </Right>
@@ -31,6 +54,7 @@ const Comment = ({ comment, name, date, item }) => {
                         return (
                             <Reply
                                 item={item}
+
                             />
                         )
                     }}
@@ -38,6 +62,16 @@ const Comment = ({ comment, name, date, item }) => {
                     keyExtractor={({ item }) => `${item}`}
                 />
                 : null}
+            {isReplying === true ? (
+                <ReplyInput
+                    postId={postId}
+                    hideInput={hideInput}
+                    isReplyingToComment={isReplyingToComment}
+                    hideInput={hideInput}
+                    commentDetails={commentDetails}
+                    setFlagToFalse={() => setIsReplying(false)}
+                />
+            ) : null}
         </View >
     )
 }

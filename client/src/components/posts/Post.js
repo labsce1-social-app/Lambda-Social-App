@@ -1,29 +1,32 @@
-import React, { useContext, lazy, Suspense } from 'react';
+import React, { useContext, lazy, Suspense, useState } from 'react';
 import { Store } from '../../context/';
-import { FlatList, Text, View } from 'react-native';
-import { Card, Spinner, Container } from 'native-base';
-import PostHeader from './PostHeader';
-import style from './Style';
-const Comment = lazy(() => import('./Comment'));
-import { isEmpty } from '../../utils/utility';
+
 import { ScrollView } from 'react-native-gesture-handler';
+import { FlatList, Text, View } from 'react-native';
+import { Card, Spinner } from 'native-base';
+import { isEmpty } from '../../utils/utility'
+
+import style from './Style';
+import PostHeader from './PostHeader';
+import CommentInput from './CommentInput';
+// import ReplyInput from './ReplyInput';
+const Comment = lazy(() => import('./Comment'));
 
 // get's discussion id from Route through match.params.id
-const Post = props => {
+const Post = React.forwardRef((props, ref) => {
   // bring in state and dispatch
   const { state } = useContext(Store);
   const { comments, comments_loading } = state;
-  console.log(comments);
+
   return state.comments_loading ? (
-    <Text style={style.container}>Loading... </Text>
+    <Spinner />
   ) : (
-    <ScrollView>
+    <ScrollView ref={ref}>
       <View style={style.container}>
         {!isEmpty(comments) && comments_loading === false ? (
           <Suspense fallback={<Spinner />}>
             <PostHeader
               // creator_avatar={}
-              title={props.postTitle}
               creator={comments[0].creator}
               discussion_image={comments[0].discussion_image}
               discussion_content={comments[0].discussion_content}
@@ -44,9 +47,14 @@ const Post = props => {
                     image={item.avatar}
                     date={item.created_date}
                     name={item.username}
-                    comment={item.post}
+                    comment={item.comment_post}
                     item={item.replies}
-                    id={item.replies.id}
+                    passCommentDetails={() => props.startReply()}
+                    commentDetails={item}
+                    isReplyingToComment={props.isReplyingToComment}
+                    postId={props.postId}
+                    hideInput={props.hideInput}
+                    setIsReplying={props.setIsReplying}
                   />
                 </Suspense>
               );
@@ -63,9 +71,13 @@ const Post = props => {
         ) : (
           <Text> Loading...</Text>
         )}
+        {props.isReplying ? (
+          <CommentInput hideInput={props.hideInput} postId={props.postId} />
+        ) : null}
       </View>
     </ScrollView>
   );
-};
+});
+
 
 export default Post;

@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Button, Icon, Fab } from 'native-base';
 import { StyleSheet } from 'react-native';
 
+// Floating action button for posts.
+
 const FabButton = (props) => {
-
     const [active, setActive] = useState(false)
-
     return (
         <Fab
             active={active}
@@ -15,7 +15,7 @@ const FabButton = (props) => {
             position="bottomRight"
             onPress={() => setActive(!active)}>
             <Icon name="arrow-up" />
-            <Button style={[{ backgroundColor: '#34A34F' }, styles.shadow]}>
+            <Button style={[{ backgroundColor: '#34A34F' }, styles.shadow]} onPress={props.replyToComment}>
                 <Icon name="md-code-working" />
             </Button>
             <Button style={[{ backgroundColor: '#3B5998' }, styles.shadow]}>
