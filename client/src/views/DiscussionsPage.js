@@ -15,7 +15,7 @@ const DiscussionsPage = props => {
   const subId = props.navigation.getParam('subId');
 
   useEffect(() => {
-    getDiscussionsForSub(subId, dispatch);
+    getDiscussionsForSub(subId, state.user.id, dispatch);
   }, []);
 
   return (

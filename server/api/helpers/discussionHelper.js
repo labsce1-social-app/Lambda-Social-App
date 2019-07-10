@@ -14,7 +14,7 @@ const joinUsersAndSubtopic = () => {
 };
 
 // defaults sort to upvotes, can also take comments
-const topDiscussions = (sortBy = 'upvotes') => {
+const topDiscussions = (sortBy = 'upvotes', user_id = null) => {
   return db
     .raw(
       `
@@ -26,6 +26,13 @@ discussion.title,
 discussion.image,
 discussion.created_at,
 discussion.updated_at,
+(select exists
+ 	(
+		select upvote.user_id
+			from upvote
+				where upvote.user_id = ${user_id}
+				and upvote.discussion_id = discussion.id)
+	) as voted,
 (select count( comment.comment_post) from comment where discussion.id = comment.discussion_id) as comments,
 (select count( upvote.user_id) from upvote where upvote.discussion_id = discussion.id) as upvotes
 FROM discussion
@@ -45,7 +52,7 @@ LIMIT 10
     .then(res => res.rows);
 };
 
-const getCommentedDiscussionsbyUserId = id => {
+const getCommentedDiscussionsbyUserId = (id, user_id=null) => {
   return db.raw(`
   SELECT distinct
 (select users.username from users where users.id = discussion.creater_id) as username,
@@ -55,6 +62,13 @@ discussion.title,
 discussion.image,
 discussion.created_at,
 discussion.updated_at,
+(select exists
+ 	(
+		select upvote.user_id
+			from upvote
+				where upvote.user_id = ${user_id}
+				and upvote.discussion_id = discussion.id)
+	) as voted,
 (select count( comment.comment_post) from comment where discussion.id = comment.discussion_id) as comments,
 (select count( upvote.user_id) from upvote where upvote.discussion_id = discussion.id) as upvotes
 FROM discussion

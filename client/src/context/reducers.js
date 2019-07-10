@@ -195,9 +195,7 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         top_discussions: state.top_discussions.map((discussion) => {
-          console.log(action.payload)
           if (action.payload.discussion_id === discussion.id) {
-            console.log("IN THERE ")
             return {
               ...discussion,
               upvotes: (parseInt(discussion.upvotes) + 1)
@@ -211,9 +209,7 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         top_discussions: state.top_discussions.map((discussion) => {
-          console.log(action.payload)
           if (action.payload.discussion_id === discussion.id) {
-            console.log("IN THERE ")
             return {
               ...discussion,
               upvotes: (parseInt(discussion.upvotes) - 1)

@@ -36,12 +36,12 @@ export const isAuthed = async dispatch => {
 };
 
 // getsDiscussions, can also take in a query string to sort the discussions, only good for top10 discussions on landing page.
-export const getDiscussions = async (query, dispatch) => {
+export const getDiscussions = async (query, dispatch, user_id) => {
   // handle loading state
   const q = new URLSearchParams({ sort: query });
   dispatch({ type: 'TOP_DISCUSSIONS_FETCHING', payload: true });
   try {
-    const res = await axios.get(`${local}/discussions/?${q.toString()}`);
+    const res = await axios.get(`${local}/discussions/?${q.toString()}`, { data: user_id });
     return dispatch({ type: 'TOP_DISCUSSIONS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -49,10 +49,10 @@ export const getDiscussions = async (query, dispatch) => {
   }
 };
 
-export const getDiscussionsForSub = async (id, dispatch) => {
+export const getDiscussionsForSub = async (id, dispatch, user_id = null) => {
   try {
     await dispatch({ type: 'DISCUSSIONS_FETCHING', payload: true });
-    const res = await axios.get(`${local}/discussions/s/${id}`);
+    const res = await axios.get(`${local}/discussions/s/${id}`, { data: user_id });
     return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -337,7 +337,7 @@ export const upvoteDiscussion = async (dispatch, body, top) => {
 export const downvoteDiscussion = async (dispatch, body, top) => {
   try {
     let followup;
-    let res = await axios.post(`${local}/upvotes/subtract`, body);
+    let res = await axios.delete(`${local}/upvotes/subtract`, { data: body });
     if (top) {
       followup = await dispatch({
         type: 'USER_DOWNVOTED_TOP',

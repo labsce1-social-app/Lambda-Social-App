@@ -47,7 +47,7 @@ const Discussions = ({ loading, discussions }) => {
             comment={item.comments}
             upvotes={item.upvotes}
             handlePressFirst={() => upvote(item.id)}
-            handlePressSecond={() => downvote()}
+            handlePressSecond={() => downvote(item.id)}
             hashtags={item.hashtags && item.hashtags.map((hashtag, index) => (
               <Text style={style.hashtagText}
                 key={`hashtag-${hashtag[0]}-${index}`}

@@ -1,7 +1,7 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { withNavigation } from 'react-navigation';
 import Discussions from '../components/discussions/Discussions';
-
+import { isEmpty } from '../utils/utility';
 import Sort from '../components/discussions/Sort';
 
 import { Container } from 'native-base';
@@ -13,21 +13,30 @@ import { getDiscussions, isAuthed, getSubtopics } from '../utils/Requests';
 
 const Home = props => {
   const { state, dispatch } = useContext(Store);
+  const [user_id, setUserId] = useState('null')
 
   useEffect(() => {
     isAuthed(dispatch);
   }, () => isAuthed())
 
-  useEffect(() => {
-    getDiscussions(state.sortBy, dispatch);
-  }, []);
-
   useEffect(
     () => {
       getSubtopics(dispatch);
-    },
-    () => getSubtopics()
+    }, () => getSubtopics()
   );
+
+  useEffect(() => {
+    // checks if user exists in state because
+    // getDiscussions will need it to see if the
+    // user has voted on the discussions present,
+    // else it will pass null if user not logged in.
+    // this will give us a generic list where upvotes
+    // won't be personalized to a user.
+    if (!isEmpty(state.user)) {
+      setUserId(state.user.id)
+    }
+    getDiscussions(state.sortBy, dispatch, user_id);
+  }, () => getDiscussions());
 
   return (
     <Container style={{ backgroundColor: '#F6F8FA', padding: 5 }}>
