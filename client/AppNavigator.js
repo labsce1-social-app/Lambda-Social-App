@@ -98,8 +98,10 @@ const FooterNavigator = createBottomTabNavigator(
   },
   {
     tabBarOptions: {
-      showLabel: false,
       keyboardHidesTabBar: true,
+      activeTintColor: '#bb1333',
+
+      inactiveTintColor: 'grey',
 
       style: {
         shadowColor: 'rgba(58,55,55,0.1)',
