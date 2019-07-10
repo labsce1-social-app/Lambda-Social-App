@@ -156,10 +156,23 @@ export const reducer = (state = initialState, action) => {
         newImage_error: action.payload
       };
     case 'CREATED_DISCUSSION':
+      const { content, image, subtopic_id } = action.payload;
+
       return {
         ...state,
         newImage: '',
-        discussions: [...state.discussions, action.payload]
+        discussions: [
+          ...state.discussions,
+          {
+            id: action.payload.id,
+            title: action.payload.title,
+            content,
+            creater_id,
+            image,
+            subtopic_id,
+            username: state.user.username
+          }
+        ]
       };
     default:
       throw new Error('not a valid action');
