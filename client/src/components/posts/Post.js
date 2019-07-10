@@ -4,7 +4,7 @@ import { Store } from '../../context/';
 import { ScrollView } from 'react-native-gesture-handler';
 import { FlatList, Text, View } from 'react-native';
 import { Card, Spinner } from 'native-base';
-import { isEmpty } from '../../utils/utility'
+import { isEmpty } from '../../utils/utility';
 
 import style from './Style';
 import PostHeader from './PostHeader';
@@ -27,6 +27,7 @@ const Post = React.forwardRef((props, ref) => {
           <Suspense fallback={<Spinner />}>
             <PostHeader
               // creator_avatar={}
+              title={props.postTitle}
               creator={comments[0].creator}
               discussion_image={comments[0].discussion_image}
               discussion_content={comments[0].discussion_content}
@@ -78,6 +79,5 @@ const Post = React.forwardRef((props, ref) => {
     </ScrollView>
   );
 });
-
 
 export default Post;
