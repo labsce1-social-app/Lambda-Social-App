@@ -312,30 +312,46 @@ export const addCommentReply = async (dispatch, body) => {
   }
 }
 
-export const upvoteDiscussion = async (dispatch, body) => {
+export const upvoteDiscussion = async (dispatch, body, top) => {
   try {
     let res = await axios.post(`${local}/upvotes/add`, body);
-    let followup = await dispatch({
-      type: 'USER_UPVOTED',
-      payload: 1
-    })
+    let followup;
+    if (top) {
+      followup = await dispatch({
+        type: 'USER_UPVOTED_TOP',
+        payload: body
+      })
+    } else {
+      /*followup = await dispatch({
+        type: 'USER_UPVOTED',
+        payload: body
+      }) */
+    }
     return { res, followup };
   } catch (err) {
     console.log(err)
-    dispatch({ type: 'UPVOTE_ACTION_FAILED', payload: err })
+    dispatch({ type: 'VOTE_ACTION_FAILED', payload: err })
   }
 }
 
-export const downvoteDiscussion = async (dispatch, body) => {
+export const downvoteDiscussion = async (dispatch, body, top) => {
   try {
+    let followup;
     let res = await axios.post(`${local}/upvotes/subtract`, body);
-    let followup = await dispatch({
-      type: 'USER_UPVOTED',
-      payload: 1
-    })
+    if (top) {
+      followup = await dispatch({
+        type: 'USER_DOWNVOTED_TOP',
+        payload: body
+      })
+    } else {
+      /*followup = await dispatch({
+          type: 'USER_DOWNVOTED',
+          payload: body
+        }) */
+    }
     return { res, followup };
   } catch (err) {
     console.log(err)
-    dispatch({ type: 'UPVOTE_ACTION_FAILED', payload: err })
+    dispatch({ type: 'VOTE_ACTION_FAILED', payload: err })
   }
 }

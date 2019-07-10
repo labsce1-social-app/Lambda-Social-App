@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, lazy, Suspense } from 'react';
 import { Store } from '../../context/';
-import { upvoteDiscussion } from '../../utils/Requests';
+import { upvoteDiscussion, downvoteDiscussion } from '../../utils/Requests';
 import { FlatList } from 'react-native-gesture-handler';
 const Discussion = lazy(() => import('./Discussion'));
 import { Text, Card, CardItem } from 'native-base';
@@ -18,11 +18,17 @@ const Discussions = ({ loading, discussions }) => {
       user_id: state.user.id,
       discussion_id
     }
-    upvoteDiscussion(dispatch, newUpvote);
+    const top = true;
+    upvoteDiscussion(dispatch, newUpvote, top);
   }
 
-  const downvote = () => {
-    console.log("DOWNVOTE CLICKED!!")
+  const downvote = (discussion_id) => {
+    const newDownvote = {
+      user_id: state.user.id,
+      discussion_id
+    }
+    const top = true;
+    downvoteDiscussion(dispatch, newDownvote, top);
   }
   return loading === true ? (
     <Text>Loading...</Text>
