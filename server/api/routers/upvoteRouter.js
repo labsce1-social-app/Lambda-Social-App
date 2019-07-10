@@ -14,8 +14,11 @@ router.post('/', async (req, res) => {
     }
     try {
         const upvote = await upvoteByDiscussionId(user_id, discussion_id)
-        res.status(201).json(upvote)
+        console.log(upvote)
+        return res.status(201).json(upvote)
     } catch (error) {
         return res.status(500).json(error)
     }
 })
+
+module.exports = router;

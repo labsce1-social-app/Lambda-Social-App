@@ -8,6 +8,6 @@ module.exports = {
   ...commentHelper,
   ...discussionHelper,
   ...subtopicHelper,
-    upvoteHelper,
+  ...upvoteHelper,
   ...usersHelper
 };

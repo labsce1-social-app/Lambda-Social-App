@@ -4,7 +4,8 @@ const {
   userRouter,
   subtopicRouter,
   commentRouter,
-  discussionRouter
+  discussionRouter,
+  upvoteRouter
 } = require('./routers/');
 
 const server = express();
@@ -17,6 +18,7 @@ server.use('/users', userRouter);
 server.use('/subtopics', subtopicRouter);
 server.use('/discussions', discussionRouter);
 server.use('/comments', commentRouter);
+server.use('/upvotes', upvoteRouter);
 
 // configure sanity check
 server.get('/', (req, res) =>
