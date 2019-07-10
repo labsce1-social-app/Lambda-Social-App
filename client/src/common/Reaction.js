@@ -4,7 +4,7 @@ import {
     Text, TouchableOpacity, Animated
 } from 'react-native';
 
-const Reaction = ({ count, image }) => {
+const Reaction = ({ count, image, handlePressFirst, handlePressSecond }) => {
     const [springValue, setSprintValue] = useState(new Animated.Value(0.3));
     const [clicked, setClicked] = useState(false)
 
@@ -15,12 +15,14 @@ const Reaction = ({ count, image }) => {
                 friction: 1,
             }).start();
             setClicked(true)
+            handlePressFirst()
         } else {
             Animated.spring(springValue, {
                 toValue: 0.3,
                 friction: 1,
             }).start();
             setClicked(false)
+            handlePressSecond()
         }
     }
     return (
@@ -39,6 +41,10 @@ const Reaction = ({ count, image }) => {
     );
 }
 
+Reaction.defaultProps = {
+    handlePressFirst: () => { },
+    handlePressSecond: () => { }
+}
 
 const styles = StyleSheet.create({
     container: {

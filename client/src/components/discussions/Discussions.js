@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, lazy, Suspense } from 'react';
+import { Store } from '../../context/';
 import { FlatList } from 'react-native-gesture-handler';
 const Discussion = lazy(() => import('./Discussion'));
 import { Text, Card, CardItem, Badge } from 'native-base';
@@ -8,6 +9,18 @@ import style from './Style';
 
 
 const Discussions = ({ loading, discussions }) => {
+  const { state, dispatch } = useContext(Store);
+  const upvote = (discussion_id) => {
+    const newUpvote = {
+      user_id: state.user.id,
+      discussion_id
+    }
+    console.log(newUpvote);
+  }
+
+  const downvote = () => {
+    console.log("DOWNVOTE CLICKED!!")
+  }
   return loading === true ? (
     <Text>Loading...</Text>
   ) : loading === false && !isEmpty(discussions) ? (
@@ -24,6 +37,8 @@ const Discussions = ({ loading, discussions }) => {
             date={item.created_at}
             comment={item.comments}
             upvotes={item.upvotes}
+            handlePressFirst={() => upvote(item.id)}
+            handlePressSecond={() => downvote()}
             hashtags={item.hashtags && item.hashtags.map((hashtag, index) => (
               <Text style={style.hashtagText}
                 key={`hashtag-${hashtag[0]}-${index}`}
