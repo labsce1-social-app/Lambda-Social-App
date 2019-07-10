@@ -1,7 +1,7 @@
 import React, { useContext, lazy, Suspense } from 'react';
 import { Store } from '../../context/';
-import { FlatList, Text } from 'react-native';
-import { Card, Spinner } from 'native-base';
+import { FlatList, Text, View } from 'react-native';
+import { Card, Spinner, Container } from 'native-base';
 import PostHeader from './PostHeader';
 import style from './Style';
 const Comment = lazy(() => import('./Comment'));
@@ -18,7 +18,7 @@ const Post = props => {
     <Text style={style.container}>Loading... </Text>
   ) : (
     <ScrollView>
-      <Card style={style.container}>
+      <View style={style.container}>
         {!isEmpty(comments) && comments_loading === false ? (
           <Suspense fallback={<Spinner />}>
             <PostHeader
@@ -63,7 +63,7 @@ const Post = props => {
         ) : (
           <Text> Loading...</Text>
         )}
-      </Card>
+      </View>
     </ScrollView>
   );
 };

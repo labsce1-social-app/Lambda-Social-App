@@ -24,7 +24,7 @@ const PostPage = props => {
   );
 
   return (
-    <Container style={{ backgroundColor: '#F6F8FA', padding: 5 }}>
+    <Container style={{ backgroundColor: '#F6F8FA' }}>
       <Post postTitle={postTitle} />
       {state.isAuthenticated ? <FabButton /> : null}
     </Container>

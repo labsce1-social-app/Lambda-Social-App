@@ -2,12 +2,15 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
-    flex: 0
+    flex: 1,
+    flexDirection: 'column'
+    // justifyContent: 'space-between'
   },
   post_image: {
     height: 200,
-    width: 200,
-    flex: 1
+    width: '100%',
+    marginBottom: 10
+    // flex: 1
   },
   avatar: {
     width: 50,
@@ -21,6 +24,24 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 5
   },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    paddingBottom: 5,
+    marginBottom: 10,
+    borderBottomColor: 'grey',
+    borderBottomWidth: 0.5
+  },
+  top: {
+    flex: 1,
+    flexDirection: 'row',
+    marginBottom: 10
+  },
+  heading: {
+    fontSize: 14,
+    width: 50,
+    height: 20
+  },
   comment: {
     textAlign: 'right',
     fontSize: 10
@@ -32,8 +53,5 @@ export default StyleSheet.create({
     flex: 0,
     padding: 2,
     marginLeft: 40
-  },
-  title: {
-    fontSize: 18
   }
 });
