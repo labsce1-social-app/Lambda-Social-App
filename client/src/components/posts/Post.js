@@ -52,6 +52,7 @@ const Post = React.forwardRef((props, ref) => {
                                             isReplyingToComment={props.isReplyingToComment}
                                             postId={props.postId}
                                             hideInput={props.hideInput}
+                                            setIsReplying={props.setIsReplying}
                                         />
                                     </Suspense>
                                 )

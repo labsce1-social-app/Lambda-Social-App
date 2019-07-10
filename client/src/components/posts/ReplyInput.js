@@ -5,11 +5,14 @@ import { addCommentReply } from '../../utils/Requests';
 import { Store } from '../../context';
 import { isEmpty } from '../../utils/utility';
 
-const ReplyInput = ({ commentDetails, postId, hideInput }) => {
+const ReplyInput = ({ commentDetails, postId, hideInput, setFlagToFalse }) => {
     const { state, dispatch } = useContext(Store);
     const [username, setUsername] = useState('')
     const [comment, setComment] = useState('');
 
+    // this useEffect fires when the original posts comment detials
+    // are preset. It's main functionality is to get data for the
+    // placeholder which tells the user who they're replying to.
     useEffect(() => {
         if (!isEmpty(commentDetails)) {
             const userProp = setUsername(`Replying to ${commentDetails.username}`);
@@ -18,6 +21,8 @@ const ReplyInput = ({ commentDetails, postId, hideInput }) => {
     })
 
     const sendReply = () => {
+        // sendReply gathers all of the details needed to make a reply
+        // then submits it, empties the fields then hides the keyboard
         const newComment = {
             user_id: state.user.id,
             comment_post: comment,
@@ -28,7 +33,8 @@ const ReplyInput = ({ commentDetails, postId, hideInput }) => {
         addCommentReply(dispatch, newComment);
         setComment('');
         setUsername('');
-        hideInput()
+        hideInput();
+        setFlagToFalse();
     }
 
     return (
@@ -41,6 +47,7 @@ const ReplyInput = ({ commentDetails, postId, hideInput }) => {
                 onChangeText={(e) => setComment(e)}
                 value={comment}
                 onSubmitEditing={() => sendReply()}
+                onBlur={hideInput}
             />
         </Item>
     );

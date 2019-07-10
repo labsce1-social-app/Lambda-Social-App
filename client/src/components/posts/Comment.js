@@ -16,7 +16,7 @@ const Comment = ({
     postId,
     hideInput,
     isReplyingToComment,
-    commentDetails
+    commentDetails,
 }) => {
     const [isReplying, setIsReplying] = useState(false)
     // fires when reply button is pressed on a comment
@@ -69,6 +69,7 @@ const Comment = ({
                     isReplyingToComment={isReplyingToComment}
                     hideInput={hideInput}
                     commentDetails={commentDetails}
+                    setFlagToFalse={() => setIsReplying(false)}
                 />
             ) : null}
         </View >

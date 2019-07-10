@@ -3,6 +3,9 @@ import { Animated, Dimensions, Keyboard, StyleSheet, TextInput, UIManager } from
 
 const { State: TextInputState } = TextInput;
 
+// KeyBoardShift will handle moving the view to where the input will be located.
+// This allows us to avoid covering up the input when the keyboard comes up so
+// that users can see what they're typing.
 const KeyBoardShift = (props) => {
     const [shift, setShift] = useState(new Animated.Value(0));
 

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Button, Icon, Fab } from 'native-base';
 import { StyleSheet } from 'react-native';
 
+// Floating action button for posts.
+
 const FabButton = (props) => {
     const [active, setActive] = useState(false)
     return (
