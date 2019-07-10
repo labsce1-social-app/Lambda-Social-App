@@ -55,6 +55,9 @@ const SubtopicsStack = createStackNavigator(
         headerLeft: <DrawerButton navigation={navigation} />
       })
     },
+    Post: {
+      screen: PostPage
+    },
     Discussions: {
       screen: DiscussionsPage
     },
@@ -100,10 +103,15 @@ const FooterNavigator = createBottomTabNavigator(
     tabBarOptions: {
       keyboardHidesTabBar: true,
       activeTintColor: '#bb1333',
-
+      // activeBackgroundColor: '#d3d3d3',
       inactiveTintColor: 'grey',
+      labelStyle: {
+        fontWeight: 'bold'
+      },
 
       style: {
+        // justifyContent: 'space-around',
+        alignItems: 'space-around',
         shadowColor: 'rgba(58,55,55,0.1)',
         shadowOpacity: 2,
         shadowRadius: 20,
