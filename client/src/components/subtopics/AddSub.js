@@ -21,7 +21,7 @@ const AddSub = () => {
         <>
           <Item floatingLabel>
             <Label>Create a Subtopic</Label>
-            <Input onChangeText={e => setInput(e)} />
+            <Input value={input} onChangeText={e => setInput(e)} />
           </Item>
         </>
       )}
