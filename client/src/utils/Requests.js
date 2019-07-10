@@ -311,3 +311,31 @@ export const addCommentReply = async (dispatch, body) => {
     dispatch({ type: 'CREATING_COMMENT_FAILED', payload: err })
   }
 }
+
+export const upvoteDiscussion = async (dispatch, body) => {
+  try {
+    let res = await axios.post(`${local}/upvotes/add`, body);
+    let followup = await dispatch({
+      type: 'USER_UPVOTED',
+      payload: 1
+    })
+    return { res, followup };
+  } catch (err) {
+    console.log(err)
+    dispatch({ type: 'UPVOTE_ACTION_FAILED', payload: err })
+  }
+}
+
+export const downvoteDiscussion = async (dispatch, body) => {
+  try {
+    let res = await axios.post(`${local}/upvotes/subtract`, body);
+    let followup = await dispatch({
+      type: 'USER_UPVOTED',
+      payload: 1
+    })
+    return { res, followup };
+  } catch (err) {
+    console.log(err)
+    dispatch({ type: 'UPVOTE_ACTION_FAILED', payload: err })
+  }
+}

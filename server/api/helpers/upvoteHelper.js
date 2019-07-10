@@ -7,6 +7,12 @@ const upvoteByDiscussionId = (user_id, discussion_id) => {
 
 }
 
+// takes in user id and discussion id to delete from upvote
+const downvoteByDiscussionId = (user_id, discussion_id) => {
+    return db('upvote').where({ user_id, discussion_id }).del()
+}
+
 module.exports = {
-    upvoteByDiscussionId
+    upvoteByDiscussionId,
+    downvoteByDiscussionId
 }

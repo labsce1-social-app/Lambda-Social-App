@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, lazy, Suspense } from 'react';
 import { Store } from '../../context/';
+import { upvoteDiscussion } from '../../utils/Requests';
 import { FlatList } from 'react-native-gesture-handler';
 const Discussion = lazy(() => import('./Discussion'));
-import { Text, Card, CardItem, Badge } from 'native-base';
+import { Text, Card, CardItem } from 'native-base';
 import { isEmpty } from '../../utils/utility';
 import { config } from '../../utils/dimensions';
 import style from './Style';
@@ -10,12 +11,14 @@ import style from './Style';
 
 const Discussions = ({ loading, discussions }) => {
   const { state, dispatch } = useContext(Store);
+
+  // handles adding upvotes, sends data to context reducer
   const upvote = (discussion_id) => {
     const newUpvote = {
       user_id: state.user.id,
       discussion_id
     }
-    console.log(newUpvote);
+    upvoteDiscussion(dispatch, newUpvote);
   }
 
   const downvote = () => {
