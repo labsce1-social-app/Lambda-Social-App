@@ -7,7 +7,7 @@ const getCommentsByDiscussionId = (discussion_id) => {
     `
       SELECT
       comment.id as id,
-      comment.comment_post as post,
+      comment.comment_post,
       users.username as username,
       users.avatar as avatar,
       users.id as user_id,
@@ -31,7 +31,7 @@ const getRepliesByCommentId = comment_id => {
       SELECT
       comment.id,
       comment.comment_id as parent_id,
-      comment.comment_post as post,
+      comment.comment_post,
       users.username as username,
       users.avatar as avatar,
       users.id as user_id,
@@ -104,12 +104,6 @@ const getCommentsAndJoinUserById = id => {
       `).return(next => next.rows);
 };
 
-const getCommentsTotal = () => {
-  return db.raw(`
-  select COUNT(*) from comment
-  `).then(next => next.rows);
-};
-
 // checks to see if user_id is a valid user id
 const checkValidUserComments = async user_id => {
   let isValid = false;
@@ -169,7 +163,6 @@ module.exports = {
   getCommentsAndJoinUser,
   getCommentsAndJoinUserById,
   getPostDetailByDiscussionId,
-  getCommentsTotal,
   checkValidUserComments,
   checkValidDiscussionComments,
   checkMatchInComments

@@ -41,7 +41,7 @@ export const getDiscussions = async (query, dispatch) => {
   const q = new URLSearchParams({ sort: query });
   dispatch({ type: 'TOP_DISCUSSIONS_FETCHING', payload: true });
   try {
-    const res = await axios.get(`${postgres}/discussions/?${q.toString()}`);
+    const res = await axios.get(`${local}/discussions/?${q.toString()}`);
     return dispatch({ type: 'TOP_DISCUSSIONS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -52,7 +52,7 @@ export const getDiscussions = async (query, dispatch) => {
 export const getDiscussionsForSub = async (id, dispatch) => {
   try {
     await dispatch({ type: 'DISCUSSIONS_FETCHING', payload: true });
-    const res = await axios.get(`${postgres}/discussions/s/${id}`);
+    const res = await axios.get(`${local}/discussions/s/${id}`);
     return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -63,7 +63,7 @@ export const getDiscussionsForSub = async (id, dispatch) => {
 export const getRecentDiscussions = async (id, dispatch) => {
   try {
     await dispatch({ type: 'DISCUSSIONS_FETCHING', payload: true });
-    const res = await axios.get(`${postgres}/discussions/recent/${id}`);
+    const res = await axios.get(`${local}/discussions/recent/${id}`);
     return dispatch({
       type: 'DISCUSSIONS_FETCHED',
       payload: !isEmpty(res.data) ? res.data : null
@@ -80,7 +80,7 @@ export const getCommentsByDiscussionId = async (id, dispatch) => {
   // read previous function, they're almost the same
   dispatch({ type: 'COMMENTS_FETCHING' });
   try {
-    const res = await axios.get(`${postgres}/comments/d/${id}`);
+    const res = await axios.get(`${local}/comments/d/${id}`);
     return dispatch({ type: 'COMMENTS_FETCHED_SUCCESS', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -92,7 +92,7 @@ export const getCommentsByDiscussionId = async (id, dispatch) => {
 export const getSubtopics = async dispatch => {
   dispatch({ type: 'SUBTOPICS_FETCHING' });
   try {
-    const res = await axios.get(`${postgres}/subtopics`);
+    const res = await axios.get(`${local}/subtopics`);
     return dispatch({ type: 'SUBTOPICS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -129,7 +129,7 @@ const getUser = async (user, dispatch) => {
     id: user.sub
   });
   try {
-    const res = await axios.get(`${postgres}/users/${user.sub}`);
+    const res = await axios.get(`${local}/users/${user.sub}`);
     if (res.data) {
       const send = await dispatch({
         type: 'SET_CURRENT_USER',
@@ -153,7 +153,7 @@ const makeUser = async (info, dispatch) => {
     avatar: info.picture
   }; // send  nickname as a 'username'
   try {
-    const make = await axios.post(`${postgres}/users`, body);
+    const make = await axios.post(`${local}/users`, body);
     const followup = await dispatch({
       type: 'SET_CURRENT_USER',
       payload: body
@@ -266,3 +266,48 @@ export const addDiscussion = async (body, dispatch, nav) => {
     console.log(err);
   }
 };
+
+// create a comment (not a reply)
+export const addComment = async (dispatch, body) => {
+  const newReply = {
+    user_id: body.user_id,
+    comment_post: body.comment_post,
+    discussion_id: body.discussion_id,
+    username: body.username
+  }
+  try {
+    let res = await axios.post(`${local}/comments/create`, body);
+    let followup = await dispatch({
+      type: 'CREATED_COMMENT',
+      payload: newReply
+    });
+
+    return { res, followup };
+  } catch (err) {
+    console.log(err)
+    dispatch({ type: 'CREATING_COMMENT_FAILED', payload: err })
+  }
+}
+
+// create a comment (not a reply)
+export const addCommentReply = async (dispatch, body) => {
+  const newReply = {
+    user_id: body.user_id,
+    comment_post: body.comment_post,
+    discussion_id: body.discussion_id,
+    comment_id: body.comment_id,
+    username: body.username
+  }
+  try {
+    let res = await axios.post(`${local}/comments/create/reply`, body);
+    let followup = await dispatch({
+      type: 'CREATED_REPLY',
+      payload: newReply
+    });
+
+    return { res, followup };
+  } catch (err) {
+    console.log(err)
+    dispatch({ type: 'CREATING_COMMENT_FAILED', payload: err })
+  }
+}
