@@ -1,4 +1,4 @@
-package com.lambdasocial;
+package com.android_lambdasocial;
 
 import android.app.Application;
 

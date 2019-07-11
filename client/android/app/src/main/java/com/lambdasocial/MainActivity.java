@@ -1,4 +1,4 @@
-package com.lambdasocial;
+package com.android_lambdasocial;
 
 import android.os.Bundle;
 import com.facebook.react.ReactFragmentActivity;
