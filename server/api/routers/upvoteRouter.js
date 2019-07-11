@@ -31,7 +31,6 @@ router.delete('/subtract', async (req, res) => {
     }
     try {
         const downvote = await downvoteByDiscussionId(user_id, discussion_id)
-        console.log(downvote)
         return res.status(200).json(downvote)
     } catch (error) {
         return res.status(500).json(error)

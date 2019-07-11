@@ -15,7 +15,7 @@ const NavLinks = ({ navigation, state, dispatch, text }) => {
 
     const handleRecent = () => {
         if (state.isAuthenticated === true) {
-            navigation.navigate('Discussions', {
+            navigation.navigate('RecentDiscussions', {
                 subId: state.user.id
             })
         } else {

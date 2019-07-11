@@ -126,7 +126,6 @@ router.get('/s/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const top = await joinUsersAtSubtopicId(id);
-    console.log(top);
     top.map(async item => {
       // use reduce to get the compare values
       return await getHashTagsByDiscussionId(item.id).reduce(
@@ -149,7 +148,6 @@ router.get('/s/:id', async (req, res) => {
             hashtags: flattenDeep([acc.hashtags, hashtag]).filter(n => n)
           };
 
-          console.log(obj);
           return obj;
         },
         []
@@ -173,12 +171,10 @@ TESTS: {
     1) RETURNS DISCUSSIONS BY SUBTOPIC_ID
 }
 */
-router.get('/recent/:id', async (req, res) => {
-  const { id } = req.params;
-  console.log(id);
+router.post('/recent', async (req, res) => {
+  const { id } = req.body;
   try {
     const getData = await getCommentedDiscussionsbyUserId(id);
-    console.log(getData);
     return res.status(200).json(getData);
   } catch (error) {
     return res.status(500).json(error);
@@ -209,10 +205,8 @@ TESTS: {
 */
 
 router.post('/create', (req, res) => {
-  console.log(req.body);
   createDiscussion(req.body)
     .then(discussion => {
-      console.log('discussion:', discussion);
       res
         .status(201)
         .json({ discussion, message: 'Succesfully created discussion' });

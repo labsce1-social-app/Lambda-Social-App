@@ -93,7 +93,6 @@ export const reducer = (state = initialState, action) => {
         comments_error: ''
       };
     case 'COMMENTS_FETCHED_SUCCESS':
-      console.log(state.comment)
       return {
         ...state,
         comments: action.payload,

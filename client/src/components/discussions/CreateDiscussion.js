@@ -29,7 +29,6 @@ const CreateDiscussion = props => {
 
   const subId = props.navigation.getParam('subId');
 
-  console.log('subtopic id for discussion', subId);
 
   useEffect(() => {
     if (image !== state.newImage) {
@@ -47,7 +46,6 @@ const CreateDiscussion = props => {
       username: state.user.username
     };
 
-    console.log(post);
     if (isEmpty(post.title) || isEmpty(post.content)) {
       return Toast.show({
         text: 'Please fill the title and content',
@@ -70,8 +68,7 @@ const CreateDiscussion = props => {
     props.navigation.navigate('Discussions', { subId: subId });
   };
 
-  // console.log('USER: ', state.user);
-  // console.log('IS IT AN IMAGE? ', image);
+
 
   return (
     <Container
@@ -107,10 +104,10 @@ const CreateDiscussion = props => {
                 <Text>Done</Text>
               </Button>
             ) : (
-              <Button bordered success onPress={() => submitHandler()}>
-                <Text>Done</Text>
-              </Button>
-            )}
+                <Button bordered success onPress={() => submitHandler()}>
+                  <Text>Done</Text>
+                </Button>
+              )}
           </View>
 
           <View
@@ -157,8 +154,8 @@ const CreateDiscussion = props => {
             ) : state.newImage_loading === true ? (
               <Spinner />
             ) : (
-              <Text>Add an image</Text>
-            )}
+                  <Text>Add an image</Text>
+                )}
           </View>
         </Form>
       </Content>

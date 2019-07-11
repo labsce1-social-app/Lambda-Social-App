@@ -14,7 +14,7 @@ const DiscussionsPage = props => {
 
     useEffect(() => {
         getRecentDiscussions(subId, dispatch);
-    }, []);
+    }, () => getRecentDiscussions());
 
     return (
         <Container>

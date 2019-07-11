@@ -4,7 +4,6 @@ import { StyleSheet } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
 const FabButton = ({ navigation }) => {
-    console.log(navigation)
     const [active, setActive] = useState(false)
 
     return (
