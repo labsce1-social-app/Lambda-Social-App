@@ -200,8 +200,8 @@ export const reducer = (state = initialState, action) => {
             upvotes: (parseInt(state.comments['0'].upvotes) + 1),
             voted: true
           },
-          comments: { ...state.comments }
-        }
+          comments: [...state.comments.comments]
+        },
       }
     case 'USER_DOWNVOTED':
       return {
@@ -212,8 +212,8 @@ export const reducer = (state = initialState, action) => {
             upvotes: (parseInt(state.comments['0'].upvotes) - 1),
             voted: true
           },
-          comments: { ...state.comments }
-        }
+          comments: [...state.comments.comments]
+        },
       }
 
     case 'VOTE_ACTION_FAILED':

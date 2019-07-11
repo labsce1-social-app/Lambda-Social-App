@@ -30,6 +30,7 @@ const Post = React.forwardRef((props, ref) => {
                                 discussion_content={comments[0].discussion_content}
                                 discussion_date={comments[0].discussion_date}
                                 upvotes={comments[0].upvotes}
+                                voted={comments[0].voted}
                             />
                         </Suspense>
                     ) : null}

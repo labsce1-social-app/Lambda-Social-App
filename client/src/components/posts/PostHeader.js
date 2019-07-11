@@ -76,8 +76,9 @@ const PostHeader = props => {
         >
           <Reaction
             count={props.upvotes}
-            handlePressFirst={() => upvote(props.id)}
-            handlePressSecond={() => downvote(props.id)}
+            voted={props.voted}
+            handlePressFirst={() => props.voted === false ? upvote(props.id) : downvote(props.id)}
+            handlePressSecond={() => props.voted === true ? downvote(props.id) : upvote(props.id)}
             image={require('../../assets/like.png')}
           />
         </View>
