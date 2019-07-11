@@ -32,10 +32,9 @@ TESTS: {
 
 router.get('/?', async (req, res) => {
   const { sort } = req.query;
-  const { user_id } = req.body;
   try {
     // map through discussions to inject hashtags
-    const top = await topDiscussions(sort, user_id).map(async item => {
+    const top = await topDiscussions(sort).map(async item => {
       // use reduce to get the compare values
       return await getHashTagsByDiscussionId(item.id).reduce(
         async (acc, { hashtag }) => {
@@ -125,10 +124,8 @@ TESTS: {
 
 router.get('/s/:id', async (req, res) => {
   const { id } = req.params;
-  const { user_id } = req.body;
-
   try {
-    const top = await joinUsersAtSubtopicId(id, user_id);
+    const top = await joinUsersAtSubtopicId(id);
     console.log(top);
     top.map(async item => {
       // use reduce to get the compare values

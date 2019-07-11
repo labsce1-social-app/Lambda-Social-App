@@ -32,7 +32,6 @@ export const reducer = (state = initialState, action) => {
         top_discussions_error: ''
       };
     case 'TOP_DISCUSSIONS_FETCHED':
-      console.log('top: ', action.payload);
       return {
         ...state,
         top_discussons_loading: false,
@@ -94,6 +93,7 @@ export const reducer = (state = initialState, action) => {
         comments_error: ''
       };
     case 'COMMENTS_FETCHED_SUCCESS':
+      console.log(state.comment)
       return {
         ...state,
         comments: action.payload,
@@ -191,34 +191,31 @@ export const reducer = (state = initialState, action) => {
           })
         }
       }
-    case 'USER_UPVOTED_TOP':
+    case 'USER_UPVOTED':
       return {
         ...state,
-        top_discussions: state.top_discussions.map((discussion) => {
-          if (action.payload.discussion_id === discussion.id) {
-            return {
-              ...discussion,
-              upvotes: (parseInt(discussion.upvotes) + 1)
-            }
-          } else {
-            return discussion;
-          }
-        })
+        comments: {
+          ['0']: {
+            ...state.comments[0],
+            upvotes: (parseInt(state.comments['0'].upvotes) + 1),
+            voted: true
+          },
+          comments: { ...state.comments }
+        }
       }
-    case 'USER_DOWNVOTED_TOP':
+    case 'USER_DOWNVOTED':
       return {
         ...state,
-        top_discussions: state.top_discussions.map((discussion) => {
-          if (action.payload.discussion_id === discussion.id) {
-            return {
-              ...discussion,
-              upvotes: (parseInt(discussion.upvotes) - 1)
-            }
-          } else {
-            return discussion;
-          }
-        })
+        comments: {
+          ['0']: {
+            ...state.comments[0],
+            upvotes: (parseInt(state.comments['0'].upvotes) - 1),
+            voted: true
+          },
+          comments: { ...state.comments }
+        }
       }
+
     case 'VOTE_ACTION_FAILED':
       return {
         ...state,

@@ -4,7 +4,7 @@ import {
     Text, TouchableOpacity, Animated
 } from 'react-native';
 
-const Reaction = ({ count, image, handlePressFirst, handlePressSecond }) => {
+const Reaction = ({ count, image, handlePressFirst, handlePressSecond, voted }) => {
     const [springValue, setSprintValue] = useState(new Animated.Value(0.3));
     const [clicked, setClicked] = useState(false)
 
@@ -36,7 +36,7 @@ const Reaction = ({ count, image, handlePressFirst, handlePressSecond }) => {
                 { transform: [{ scale: springValue }], alignSelf: 'center' }
                 ]}>
             </Animated.Image>
-            <Text>{count}</Text>
+            <Text style={{ color: voted ? '#0064B5' : '#000000' }}>{count}</Text>
         </TouchableOpacity>
     );
 }

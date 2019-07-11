@@ -46,10 +46,13 @@ TESTS: {
 }
 */
 
-router.get('/d/:id', async (req, res) => {
+router.post('/d/:id', async (req, res) => {
   const { id } = req.params;
+  const { user_id } = req.body;
   try {
-    const postDetail = await getPostDetailByDiscussionId(id)
+    console.log(id)
+    console.log(user_id)
+    const postDetail = await getPostDetailByDiscussionId(id, user_id)
     let obj = { ...postDetail, comments: [] };
     getCommentsByDiscussionId(id).then(async comments => {
       await Promise.all(comments.map(comment => {

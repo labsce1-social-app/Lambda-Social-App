@@ -18,13 +18,13 @@ const PostPage = props => {
   const [isReplyingToComment, setIsReplyingToComment] = useState(false);
   const postId = props.navigation.getParam('postId', 'None');
   const postTitle = props.navigation.getParam('title');
-  console.log(isReplyingToComment)
+
   // need to get the data here because it is where we have access to the id from react router.
 
   // useEffect is treated as componentDidMount and componentWillUnmount
   useEffect(
     () => {
-      getCommentsByDiscussionId(JSON.stringify(postId), dispatch);
+      getCommentsByDiscussionId(JSON.stringify(postId), dispatch, state.user.id);
     },
     () => getCommentsByDiscussionId()
   );

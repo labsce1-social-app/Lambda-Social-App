@@ -24,9 +24,9 @@ const Post = React.forwardRef((props, ref) => {
                     {!isEmpty(comments) && comments_loading === false ? (
                         <Suspense fallback={<Spinner />}>
                             <PostHeader
-                                // creator_avatar={}
+                                id={props.postId}
                                 creator={comments[0].creator}
-                                discussion_image={comments[0].discussion_image.replace('http://', 'https://')}
+                                discussion_image={comments[0].discussion_image}
                                 discussion_content={comments[0].discussion_content}
                                 discussion_date={comments[0].discussion_date}
                                 upvotes={comments[0].upvotes}

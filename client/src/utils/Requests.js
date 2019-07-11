@@ -36,12 +36,12 @@ export const isAuthed = async dispatch => {
 };
 
 // getsDiscussions, can also take in a query string to sort the discussions, only good for top10 discussions on landing page.
-export const getDiscussions = async (query, dispatch, user_id) => {
+export const getDiscussions = async (query, dispatch) => {
   // handle loading state
   const q = new URLSearchParams({ sort: query });
   dispatch({ type: 'TOP_DISCUSSIONS_FETCHING', payload: true });
   try {
-    const res = await axios.get(`${local}/discussions/?${q.toString()}`, { data: user_id });
+    const res = await axios.get(`${local}/discussions/?${q.toString()}`);
     return dispatch({ type: 'TOP_DISCUSSIONS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -49,10 +49,10 @@ export const getDiscussions = async (query, dispatch, user_id) => {
   }
 };
 
-export const getDiscussionsForSub = async (id, dispatch, user_id = null) => {
+export const getDiscussionsForSub = async (id, dispatch) => {
   try {
     await dispatch({ type: 'DISCUSSIONS_FETCHING', payload: true });
-    const res = await axios.get(`${local}/discussions/s/${id}`, { data: user_id });
+    const res = await axios.get(`${local}/discussions/s/${id}`);
     return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -76,11 +76,14 @@ export const getRecentDiscussions = async (id, dispatch) => {
 
 // used for the PostPage component
 // returns all comments and poster data for the comments page. Returns giant object with all post header data and arrays of comments.
-export const getCommentsByDiscussionId = async (id, dispatch) => {
+export const getCommentsByDiscussionId = async (id, dispatch, user_id) => {
   // read previous function, they're almost the same
   dispatch({ type: 'COMMENTS_FETCHING' });
+  const body = {
+    user_id: user_id
+  }
   try {
-    const res = await axios.get(`${local}/comments/d/${id}`);
+    const res = await axios.post(`${local}/comments/d/${id}`, body);
     return dispatch({ type: 'COMMENTS_FETCHED_SUCCESS', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -312,21 +315,14 @@ export const addCommentReply = async (dispatch, body) => {
   }
 }
 
-export const upvoteDiscussion = async (dispatch, body, top) => {
+export const upvoteDiscussion = async (dispatch, body) => {
   try {
     let res = await axios.post(`${local}/upvotes/add`, body);
-    let followup;
-    if (top) {
-      followup = await dispatch({
-        type: 'USER_UPVOTED_TOP',
-        payload: body
-      })
-    } else {
-      /*followup = await dispatch({
-        type: 'USER_UPVOTED',
-        payload: body
-      }) */
-    }
+    let followup = await dispatch({
+      type: 'USER_UPVOTED',
+      payload: body
+    })
+
     return { res, followup };
   } catch (err) {
     console.log(err)
@@ -334,21 +330,16 @@ export const upvoteDiscussion = async (dispatch, body, top) => {
   }
 }
 
-export const downvoteDiscussion = async (dispatch, body, top) => {
+export const downvoteDiscussion = async (dispatch, body) => {
   try {
-    let followup;
+
     let res = await axios.delete(`${local}/upvotes/subtract`, { data: body });
-    if (top) {
-      followup = await dispatch({
-        type: 'USER_DOWNVOTED_TOP',
-        payload: body
-      })
-    } else {
-      /*followup = await dispatch({
-          type: 'USER_DOWNVOTED',
-          payload: body
-        }) */
-    }
+
+    let followup = await dispatch({
+      type: 'USER_DOWNVOTED',
+      payload: body
+    })
+
     return { res, followup };
   } catch (err) {
     console.log(err)

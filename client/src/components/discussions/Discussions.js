@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, lazy, Suspense } from 'react';
-import { Store } from '../../context/';
-import { upvoteDiscussion, downvoteDiscussion } from '../../utils/Requests';
+import React, { lazy, Suspense } from 'react';
+
 import { FlatList } from 'react-native-gesture-handler';
 const Discussion = lazy(() => import('./Discussion'));
 import { Text, Card, CardItem } from 'native-base';
@@ -10,26 +9,7 @@ import style from './Style';
 
 
 const Discussions = ({ loading, discussions }) => {
-  const { state, dispatch } = useContext(Store);
 
-  // handles adding upvotes, sends data to context reducer
-  const upvote = (discussion_id) => {
-    const newUpvote = {
-      user_id: state.user.id,
-      discussion_id
-    }
-    const top = true;
-    upvoteDiscussion(dispatch, newUpvote, top);
-  }
-
-  const downvote = (discussion_id) => {
-    const newDownvote = {
-      user_id: state.user.id,
-      discussion_id
-    }
-    const top = true;
-    downvoteDiscussion(dispatch, newDownvote, top);
-  }
   return loading === true ? (
     <Text>Loading...</Text>
   ) : loading === false && !isEmpty(discussions) ? (
@@ -46,8 +26,7 @@ const Discussions = ({ loading, discussions }) => {
             date={item.created_at}
             comment={item.comments}
             upvotes={item.upvotes}
-            handlePressFirst={() => upvote(item.id)}
-            handlePressSecond={() => downvote(item.id)}
+            voted={item.voted}
             hashtags={item.hashtags && item.hashtags.map((hashtag, index) => (
               <Text style={style.hashtagText}
                 key={`hashtag-${hashtag[0]}-${index}`}

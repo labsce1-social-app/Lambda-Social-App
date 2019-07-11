@@ -56,6 +56,7 @@ const Discussion = props => {
               <Reaction
                 image={require('../../assets/like.png')}
                 count={props.upvotes}
+                voted={props.voted}
                 handlePressFirst={props.handlePressFirst}
                 handlePressSecond={props.handlePressSecond}
               />
