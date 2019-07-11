@@ -5,9 +5,8 @@ import Sort from '../components/discussions/Sort';
 import Discussions from '../components/discussions/Discussions';
 import { getDiscussionsForSub } from '../utils/Requests';
 import { withNavigation } from 'react-navigation';
-import { Container, Text } from 'native-base';
+import { Container } from 'native-base';
 import FabButton from '../components/discussions/FabButton';
-
 // this DiscussionsPage is referring to all discussions inside of a chosen subtopic ONLY
 
 const DiscussionsPage = props => {
@@ -16,7 +15,7 @@ const DiscussionsPage = props => {
 
   useEffect(() => {
     getDiscussionsForSub(subId, dispatch);
-  }, []);
+  }, [subId]);
 
   return (
     <Container style={{ backgroundColor: '#F6F8FA', padding: 5 }}>
@@ -26,9 +25,9 @@ const DiscussionsPage = props => {
         discussions={state.discussions}
       />
       {props.navigation.state.routeName === 'Discussions' &&
-      state.isAuthenticated ? (
-        <FabButton />
-      ) : null}
+        state.isAuthenticated ? (
+          <FabButton />
+        ) : null}
     </Container>
   );
 };

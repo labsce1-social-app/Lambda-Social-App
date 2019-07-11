@@ -18,7 +18,8 @@ export const initialState = {
   comments_error: '',
   newImage_loading: false,
   newImage: null,
-  newImage_error: ''
+  newImage_error: '',
+  upvote_error: ''
 };
 // all of the reducer conditions, we can use the dispatch method to interact with this by simply passing in a type and sending the payload.
 export const reducer = (state = initialState, action) => {
@@ -31,7 +32,6 @@ export const reducer = (state = initialState, action) => {
         top_discussions_error: ''
       };
     case 'TOP_DISCUSSIONS_FETCHED':
-      // console.log('top: ', action.payload);
       return {
         ...state,
         top_discussons_loading: false,
@@ -93,6 +93,7 @@ export const reducer = (state = initialState, action) => {
         comments_error: ''
       };
     case 'COMMENTS_FETCHED_SUCCESS':
+      console.log(state.comment)
       return {
         ...state,
         comments: action.payload,
@@ -206,6 +207,36 @@ export const reducer = (state = initialState, action) => {
             }
           })
         }
+      }
+    case 'USER_UPVOTED':
+      return {
+        ...state,
+        comments: {
+          ['0']: {
+            ...state.comments[0],
+            upvotes: (parseInt(state.comments['0'].upvotes) + 1),
+            voted: true
+          },
+          comments: [...state.comments.comments]
+        },
+      }
+    case 'USER_DOWNVOTED':
+      return {
+        ...state,
+        comments: {
+          ['0']: {
+            ...state.comments[0],
+            upvotes: (parseInt(state.comments['0'].upvotes) - 1),
+            voted: true
+          },
+          comments: [...state.comments.comments]
+        },
+      }
+
+    case 'VOTE_ACTION_FAILED':
+      return {
+        ...state,
+        upvote_error: action.payload
       }
     default:
       throw new Error('not a valid action');

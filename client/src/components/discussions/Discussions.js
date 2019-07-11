@@ -1,12 +1,14 @@
-import React, { useContext, useEffect, lazy, Suspense } from 'react';
+import React, { lazy, Suspense } from 'react';
+
 import { FlatList } from 'react-native-gesture-handler';
 const Discussion = lazy(() => import('./Discussion'));
-import { Text, Card, CardItem, Badge } from 'native-base';
+import { Text, Card, CardItem } from 'native-base';
 import { isEmpty } from '../../utils/utility';
 import { config } from '../../utils/dimensions';
 import style from './Style';
 
 const Discussions = ({ loading, discussions }) => {
+
   return loading === true ? (
     <Text>Loading...</Text>
   ) : loading === false && !isEmpty(discussions) ? (
@@ -23,6 +25,8 @@ const Discussions = ({ loading, discussions }) => {
             date={item.created_at}
             comment={item.comments}
             upvotes={item.upvotes}
+
+            voted={item.voted}
             hashtags={
               item.hashtags &&
               item.hashtags.map((hashtag, index) => (
@@ -41,14 +45,14 @@ const Discussions = ({ loading, discussions }) => {
       refreshing={loading}
     />
   ) : (
-    <Card>
-      <CardItem>
-        <Text style={{ padding: 15, height: config.deviceHeight * 0.65 }}>
-          Looks like no one has created a discussion in this subtopic yet...
+        <Card>
+          <CardItem>
+            <Text style={{ padding: 15, height: config.deviceHeight * 0.65 }}>
+              Looks like no one has created a discussion in this subtopic yet...
         </Text>
-      </CardItem>
-    </Card>
-  );
+          </CardItem>
+        </Card>
+      );
 };
 
 export default Discussions;

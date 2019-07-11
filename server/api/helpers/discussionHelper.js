@@ -45,7 +45,7 @@ LIMIT 10
     .then(res => res.rows);
 };
 
-const getCommentedDiscussionsbyUserId = id => {
+const getCommentedDiscussionsbyUserId = (id) => {
   return db.raw(`
   SELECT distinct
 (select users.username from users where users.id = discussion.creater_id) as username,
@@ -92,7 +92,9 @@ const joinUsersAndSubtopicAtId = id => {
 	discussion.created_at,
 	discussion.updated_at,
 	users.username,
-	discussion.id
+  discussion.id,
+  (select count( comment.comment_post) from comment where discussion.id = comment.discussion_id) as comments,
+(select count( upvote.user_id) from upvote where upvote.discussion_id = discussion.id) as upvotes
 FROM
 	discussion
 INNER JOIN subtopic ON discussion.subtopic_id = subtopic.id AND discussion.subtopic_id = ${id}
@@ -104,7 +106,9 @@ INNER JOIN users ON discussion.creater_id = users.id`
 const joinUsersAtSubtopicId = id => {
   return db
     .raw(
-      `SELECT discussion.id, discussion.subtopic_id, discussion.title, discussion.content, discussion.image, discussion.creater_id, users.username, discussion.created_at, discussion.updated_at
+      `SELECT discussion.id, discussion.subtopic_id, discussion.title, discussion.content, discussion.image, discussion.creater_id, users.username, discussion.created_at, discussion.updated_at,
+      (select count( comment.comment_post) from comment where discussion.id = comment.discussion_id) as comments,
+(select count( upvote.user_id) from upvote where upvote.discussion_id = discussion.id) as upvotes
   FROM discussion
   JOIN users
   ON discussion.subtopic_id = ${id} and discussion.creater_id = users.id`

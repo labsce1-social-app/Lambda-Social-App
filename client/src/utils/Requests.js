@@ -41,7 +41,7 @@ export const getDiscussions = async (query, dispatch) => {
   const q = new URLSearchParams({ sort: query });
   dispatch({ type: 'TOP_DISCUSSIONS_FETCHING', payload: true });
   try {
-    const res = await axios.get(`${local}/discussions/?${q.toString()}`);
+    const res = await axios.get(`${postgres}/discussions/?${q.toString()}`);
     return dispatch({ type: 'TOP_DISCUSSIONS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -52,7 +52,7 @@ export const getDiscussions = async (query, dispatch) => {
 export const getDiscussionsForSub = async (id, dispatch) => {
   try {
     await dispatch({ type: 'DISCUSSIONS_FETCHING', payload: true });
-    const res = await axios.get(`${local}/discussions/s/${id}`);
+    const res = await axios.get(`${postgres}/discussions/s/${id}`);
     return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -63,7 +63,7 @@ export const getDiscussionsForSub = async (id, dispatch) => {
 export const getRecentDiscussions = async (id, dispatch) => {
   try {
     await dispatch({ type: 'DISCUSSIONS_FETCHING', payload: true });
-    const res = await axios.get(`${local}/discussions/recent/${id}`);
+    const res = await axios.get(`${postgres}/discussions/recent/${id}`);
     return dispatch({
       type: 'DISCUSSIONS_FETCHED',
       payload: !isEmpty(res.data) ? res.data : null
@@ -76,11 +76,14 @@ export const getRecentDiscussions = async (id, dispatch) => {
 
 // used for the PostPage component
 // returns all comments and poster data for the comments page. Returns giant object with all post header data and arrays of comments.
-export const getCommentsByDiscussionId = async (id, dispatch) => {
+export const getCommentsByDiscussionId = async (id, dispatch, user_id) => {
   // read previous function, they're almost the same
   dispatch({ type: 'COMMENTS_FETCHING' });
+  const body = {
+    user_id: user_id
+  }
   try {
-    const res = await axios.get(`${local}/comments/d/${id}`);
+    const res = await axios.post(`${postgres}/comments/d/${id}`, body);
     return dispatch({ type: 'COMMENTS_FETCHED_SUCCESS', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -92,7 +95,7 @@ export const getCommentsByDiscussionId = async (id, dispatch) => {
 export const getSubtopics = async dispatch => {
   dispatch({ type: 'SUBTOPICS_FETCHING' });
   try {
-    const res = await axios.get(`${local}/subtopics`);
+    const res = await axios.get(`${postgres}/subtopics`);
     return dispatch({ type: 'SUBTOPICS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -129,7 +132,7 @@ const getUser = async (user, dispatch) => {
     id: user.sub
   });
   try {
-    const res = await axios.get(`${local}/users/${user.sub}`);
+    const res = await axios.get(`${postgres}/users/${user.sub}`);
     if (res.data) {
       const send = await dispatch({
         type: 'SET_CURRENT_USER',
@@ -153,7 +156,7 @@ const makeUser = async (info, dispatch) => {
     avatar: info.picture
   }; // send  nickname as a 'username'
   try {
-    const make = await axios.post(`${local}/users`, body);
+    const make = await axios.post(`${postgres}/users`, body);
     const followup = await dispatch({
       type: 'SET_CURRENT_USER',
       payload: body
@@ -210,7 +213,7 @@ export const uploadImage = dispatch => {
           /*
           response will come back looking like this, we'll want
           the location for the POST request to make a discussion.
-              location: "https://lambdasocialbucket.s3.amazonaws.com/s3%2FIMG_0111.HEIC"  
+              location: "https://lambdasocialbucket.s3.amazonaws.com/s3%2FIMG_0111.HEIC"
         */
           return dispatch({
             type: 'IMAGE_SUCCESS',
@@ -282,7 +285,7 @@ export const addComment = async (dispatch, body) => {
     username: body.username
   }
   try {
-    let res = await axios.post(`${local}/comments/create`, body);
+    let res = await axios.post(`${postgres}/comments/create`, body);
     let followup = await dispatch({
       type: 'CREATED_COMMENT',
       payload: newReply
@@ -305,7 +308,7 @@ export const addCommentReply = async (dispatch, body) => {
     username: body.username
   }
   try {
-    let res = await axios.post(`${local}/comments/create/reply`, body);
+    let res = await axios.post(`${postgres}/comments/create/reply`, body);
     let followup = await dispatch({
       type: 'CREATED_REPLY',
       payload: newReply
@@ -315,5 +318,37 @@ export const addCommentReply = async (dispatch, body) => {
   } catch (err) {
     console.log(err)
     dispatch({ type: 'CREATING_COMMENT_FAILED', payload: err })
+  }
+}
+
+export const upvoteDiscussion = async (dispatch, body) => {
+  try {
+    let res = await axios.post(`${postgres}/upvotes/add`, body);
+    let followup = await dispatch({
+      type: 'USER_UPVOTED',
+      payload: body
+    })
+
+    return { res, followup };
+  } catch (err) {
+    console.log(err)
+    dispatch({ type: 'VOTE_ACTION_FAILED', payload: err })
+  }
+}
+
+export const downvoteDiscussion = async (dispatch, body) => {
+  try {
+
+    let res = await axios.delete(`${postgres}/upvotes/subtract`, { data: body });
+
+    let followup = await dispatch({
+      type: 'USER_DOWNVOTED',
+      payload: body
+    })
+
+    return { res, followup };
+  } catch (err) {
+    console.log(err)
+    dispatch({ type: 'VOTE_ACTION_FAILED', payload: err })
   }
 }

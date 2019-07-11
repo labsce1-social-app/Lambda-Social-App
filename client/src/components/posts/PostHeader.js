@@ -1,4 +1,6 @@
-import React from 'react';
+
+import React, { useContext } from 'react';
+import { Store } from '../../context'
 import {
   CardItem,
   Card,
@@ -13,10 +15,36 @@ import Reaction from '../../common/Reaction';
 import style from './Style';
 import { config } from '../../utils/dimensions';
 import moment from 'moment';
+import { upvoteDiscussion, downvoteDiscussion } from '../../utils/Requests';
+
+const ImagePost = props => {
+  if (!props.discussion_image) {
+    return null;
+  } else {
+    const imageUrl = props.discussion_image;
+    return <Image source={{ url: imageUrl }} />;
+  }
+};
 
 const PostHeader = props => {
-  console.log(props.creator_avatar);
+  const { state, dispatch } = useContext(Store);
 
+  // handles adding upvotes, sends data to context reducer
+  const upvote = (discussion_id) => {
+    const newUpvote = {
+      user_id: state.user.id,
+      discussion_id
+    }
+    upvoteDiscussion(dispatch, newUpvote);
+  }
+
+  const downvote = (discussion_id) => {
+    const newDownvote = {
+      user_id: state.user.id,
+      discussion_id
+    }
+    downvoteDiscussion(dispatch, newDownvote);
+  }
   return (
     <CardItem>
       <Content>
@@ -50,21 +78,14 @@ const PostHeader = props => {
             source={{ uri: props.discussion_image }}
           />
         </View>
-
-        <View
-          style={{
-            // flex: 1,
-            alignItems: 'flex-start',
-            // backgroundColor: 'grey',
-            width: '100%'
-          }}
-        >
-          <View style={{ width: 50 }}>
-            <Reaction
-              count={props.upvotes}
-              image={require('../../assets/like.png')}
-            />
-          </View>
+        <View style={{ width: 50 }}>
+          <Reaction
+            count={props.upvotes}
+            voted={props.voted}
+            handlePressFirst={() => props.voted === false ? upvote(props.id) : downvote(props.id)}
+            handlePressSecond={() => props.voted === true ? downvote(props.id) : upvote(props.id)}
+            image={require('../../assets/like.png')}
+          />
         </View>
       </Content>
     </CardItem>

@@ -2,11 +2,8 @@ import React, { useContext, useEffect } from 'react';
 import { StatusBar } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import Discussions from '../components/discussions/Discussions';
-
 import Sort from '../components/discussions/Sort';
-
 import { Container } from 'native-base';
-
 import { Store } from '../context/';
 import { getDiscussions, isAuthed, getSubtopics } from '../utils/Requests';
 
@@ -22,16 +19,15 @@ const Home = props => {
     () => isAuthed()
   );
 
-  useEffect(() => {
-    getDiscussions(state.sortBy, dispatch);
-  }, []);
-
   useEffect(
     () => {
       getSubtopics(dispatch);
-    },
-    () => getSubtopics()
+    }, () => getSubtopics()
   );
+
+  useEffect(() => {
+    getDiscussions(state.sortBy, dispatch);
+  }, [state.sortBy]);
 
   return (
     <Container style={{ backgroundColor: '#F6F8FA', padding: 5 }}>

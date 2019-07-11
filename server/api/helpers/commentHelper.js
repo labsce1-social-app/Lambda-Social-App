@@ -50,7 +50,7 @@ const getRepliesByCommentId = comment_id => {
 
 
 
-const getPostDetailByDiscussionId = discussion_id => {
+const getPostDetailByDiscussionId = (discussion_id, user_id = null) => {
   return db.raw(`
    SELECT distinct
 discussion.id as id,
@@ -62,7 +62,14 @@ discussion.created_at as discussion_date,
 (select count(upvote.user_id)
 	from upvote
 			where upvote.discussion_id = ${discussion_id}
-) as upvotes
+) as upvotes,
+(select exists
+ 	(
+		select upvote.user_id
+			from upvote
+				where upvote.user_id = '${user_id}'
+				and upvote.discussion_id = discussion.id)
+	) as voted
 from discussion
 inner join users
 on discussion.id = ${discussion_id}
