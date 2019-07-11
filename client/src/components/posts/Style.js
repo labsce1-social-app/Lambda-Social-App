@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 export default StyleSheet.create({
   container: {
@@ -33,14 +33,31 @@ export default StyleSheet.create({
     borderBottomWidth: 0.5
   },
   top: {
-    flex: 1,
-    flexDirection: 'row',
-    marginBottom: 10
+    ...Platform.select({
+      ios: {
+        flex: 1,
+        flexDirection: 'row',
+        marginBottom: 10,
+        width: '90%'
+      },
+      android: {
+        flex: 1,
+        flexDirection: 'row',
+        marginBottom: 10
+      }
+    })
   },
   heading: {
     fontSize: 14,
-    width: 50,
-    height: 20
+    ...Platform.select({
+      ios: {
+        marginRight: 10
+      },
+      android: {
+        width: 50,
+        height: 20
+      }
+    })
   },
   comment: {
     textAlign: 'right',
