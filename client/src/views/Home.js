@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { StatusBar } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import Discussions from '../components/discussions/Discussions';
 import Sort from '../components/discussions/Sort';
@@ -11,9 +12,12 @@ import { getDiscussions, isAuthed, getSubtopics } from '../utils/Requests';
 const Home = props => {
   const { state, dispatch } = useContext(Store);
 
-  useEffect(() => {
-    isAuthed(dispatch);
-  }, () => isAuthed())
+  useEffect(
+    () => {
+      isAuthed(dispatch);
+    },
+    () => isAuthed()
+  );
 
   useEffect(
     () => {
@@ -27,6 +31,7 @@ const Home = props => {
 
   return (
     <Container style={{ backgroundColor: '#F6F8FA', padding: 5 }}>
+      <StatusBar backgroundColor="white" barStyle="dark-content" />
       <Sort />
       <Discussions
         loading={state.top_discussions_loading}

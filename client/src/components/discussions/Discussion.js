@@ -26,7 +26,7 @@ const Discussion = props => {
       >
         <Left>
           <Body>
-            <Text style={style.title}>s/{props.title}</Text>
+            <Text style={style.title}>{props.title}</Text>
             <Text
               numberOfLines={1}
               style={{ marginBottom: 10, fontSize: 20, marginLeft: 3 }}

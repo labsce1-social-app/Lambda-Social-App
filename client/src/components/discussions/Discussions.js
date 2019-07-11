@@ -7,7 +7,6 @@ import { isEmpty } from '../../utils/utility';
 import { config } from '../../utils/dimensions';
 import style from './Style';
 
-
 const Discussions = ({ loading, discussions }) => {
 
   return loading === true ? (
@@ -26,12 +25,19 @@ const Discussions = ({ loading, discussions }) => {
             date={item.created_at}
             comment={item.comments}
             upvotes={item.upvotes}
+
             voted={item.voted}
-            hashtags={item.hashtags && item.hashtags.map((hashtag, index) => (
-              <Text style={style.hashtagText}
-                key={`hashtag-${hashtag[0]}-${index}`}
-              >{hashtag}</Text>
-            ))}
+            hashtags={
+              item.hashtags &&
+              item.hashtags.map((hashtag, index) => (
+                <Text
+                  style={style.hashtagText}
+                  key={`hashtag-${hashtag[0]}-${index}`}
+                >
+                  {hashtag}
+                </Text>
+              ))
+            }
           />
         </Suspense>
       )}

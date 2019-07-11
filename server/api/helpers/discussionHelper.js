@@ -230,7 +230,14 @@ const userCanDeleteDiscussion = async (id, creater_id) => {
 
 const createDiscussion = props => {
   return db('discussion')
-    .insert(props)
+    .insert(props, [
+      'id',
+      'title',
+      'creater_id',
+      'content',
+      'image',
+      'subtopic_id'
+    ])
     .then(row => row);
 };
 
