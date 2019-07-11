@@ -123,7 +123,6 @@ export const reducer = (state = initialState, action) => {
         isAuthenticated: false,
         user: null
       };
-
     case 'CREATE_SUBTOPIC':
       const { title, creater_id, id } = action.payload;
       return {
@@ -134,6 +133,13 @@ export const reducer = (state = initialState, action) => {
           ...state.subtopics
         ]
       };
+    case 'CREATE_SUBTOPIC_FAILED':
+      return {
+        ...state,
+        subtopics_loading: false,
+        subtopics: [...state.subtopics],
+        subtopics_error: action.payload
+      }
     case 'SENDING_IMAGE':
       return {
         ...state,

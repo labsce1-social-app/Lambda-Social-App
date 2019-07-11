@@ -251,6 +251,10 @@ export const createSubtopic = async (info, sub, dispatch) => {
     return { res, followup };
   } catch (err) {
     console.log(err);
+    dispatch({
+      type: 'CREATE_SUBTOPIC_FAILED',
+      payload: err
+    })
   }
 };
 
