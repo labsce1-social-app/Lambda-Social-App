@@ -10,7 +10,7 @@ import {
   Container,
   Content
 } from 'native-base';
-import { Image, View, ScrollView, StyleSheet } from 'react-native';
+import { Image, View, ScrollView, StyleSheet, Platform } from 'react-native';
 import Reaction from '../../common/Reaction';
 import style from './Style';
 import { config } from '../../utils/dimensions';
@@ -48,16 +48,7 @@ const PostHeader = props => {
   return (
     <CardItem>
       <Content>
-        <View
-          style={
-            {
-              // maxHeight: config.deviceHeight * 0.35,
-              // minHeight: config.deviceHeight * 0.35
-              // overflow: 'scroll'
-              // marginBottom: 5
-            }
-          }
-        >
+        <View>
           <View style={style.top}>
             <Text style={style.heading}>{props.creator}</Text>
             <Text note style={style.heading}>

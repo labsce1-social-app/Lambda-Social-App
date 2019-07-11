@@ -6,6 +6,7 @@ import { getCommentsByDiscussionId } from '../utils/Requests';
 import { Container } from 'native-base';
 import { withNavigation } from 'react-navigation';
 import KeyboardShift from '../common/KeyboardShift';
+import { Platform } from 'react-native';
 
 const PostPage = props => {
   // get ref to scrollview to automatically scroll to the bottom
@@ -35,7 +36,7 @@ const PostPage = props => {
 
   return (
     <KeyboardShift>
-      <Container style={{ backgroundColor: '#F6F8FA', padding: 5 }}>
+      <Container style={{ backgroundColor: Platform.OS === 'ios' ? '#FFFFFF' : '#F6F8FA', padding: 5 }}>
 
         <Post
           postTitle={postTitle}
