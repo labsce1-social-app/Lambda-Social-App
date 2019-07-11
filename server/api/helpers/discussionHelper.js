@@ -47,7 +47,7 @@ LIMIT 10
 
 const getCommentedDiscussionsbyUserId = (id) => {
   return db.raw(`
-  SELECT distinct
+    SELECT distinct
 (select users.username from users where users.id = discussion.creater_id) as username,
 discussion.id as id,
 discussion.content,
@@ -62,13 +62,13 @@ inner join subtopic
 on discussion.subtopic_id = subtopic.id
 inner join users
 on users.id = discussion.creater_id
-inner join comment
-on comment.user_id = '${id}'
 inner join upvote
 on upvote.discussion_id = discussion.id
-group by discussion.id
-ORDER BY discussion.updated_at DESC
-`);
+inner join comment
+on comment.discussion_id = discussion.id
+where comment.user_id = '${id}'
+GROUP BY discussion.id
+`).then(res => res.rows);
 };
 
 getHashTagsByDiscussionId = id => {
