@@ -1,10 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Store } from '../../context/';
 import { Item, Label, Input, Form, Button, Text, Toast } from 'native-base';
-import { View, Keyboard } from 'react-native';
+import { View, Keyboard, Platform } from 'react-native';
 import { createSubtopic } from '../../utils/Requests';
 import { isEmpty } from '../../utils/utility';
-
 
 const AddSub = () => {
   const { state, dispatch } = useContext(Store);
@@ -34,10 +33,7 @@ const AddSub = () => {
     }
   }, [state.subtopics_error])
   return (
-    <Form onSubmitEditing={() => {
-      // rather than null have it show a toast
-      input.length > 3 ? createSub() : null;
-    }}>
+    <Form onSubmitEditing={() => createSub()}>
       {state.isAuthenticated === false ? (
         <Item disabled>
           <Label>Sign In To Create a Subtopic...</Label>
@@ -56,7 +52,14 @@ const AddSub = () => {
           >
             <View
               style={{
-                width: 300,
+                ...Platform.select({
+                  ios: {
+                    width: '100%'
+                  },
+                  android: {
+                    width: 300,
+                  }
+                }),
                 backgroundColor: '#f1f1f1',
                 borderWidth: 0.5,
                 borderColor: 'grey',
@@ -70,20 +73,23 @@ const AddSub = () => {
                 maxLength={50}
                 blurOnSubmit={true}
                 placeholderTextColor="grey"
+                onBlur={Keyboard.dismiss}
                 value={input}
                 onChangeText={e => setInput(e)}
                 placeholder="new Subtopic title"
               />
             </View>
-
-            <Button
-              rounded
-              danger
-              style={{ height: 35, marginTop: 2, marginLeft: 3 }}
-              // onPress={}
-            >
-              <Text style={{ fontSize: 11 }}>Create</Text>
-            </Button>
+            {Platform.OS === 'ios' ? null : (
+              <Button
+                rounded
+                danger
+                type="submit"
+                style={{ height: 35, marginTop: 2, marginLeft: 3 }}
+                onPress={() => createSub()}
+              >
+                <Text style={{ fontSize: 11 }}>Create</Text>
+              </Button>
+            )}
           </View>
         )}
     </Form>
