@@ -2,14 +2,8 @@ import React, { useContext, useState, useEffect } from 'react';
 import {
   Content,
   Form,
-  Textarea,
   Button,
-  Card,
-  Input,
-  Item,
   View,
-  Label,
-  CardItem,
   Text,
   Toast,
   Spinner,
@@ -19,6 +13,8 @@ import { Image, TextInput } from 'react-native';
 import { addDiscussion, uploadImage } from '../../utils/Requests';
 import { isEmpty } from '../../utils/utility';
 import { Store } from '../../context';
+
+const hashtags = [];
 
 const CreateDiscussion = props => {
   const { state, dispatch } = useContext(Store);
@@ -37,13 +33,17 @@ const CreateDiscussion = props => {
   });
 
   const submitHandler = () => {
+    if (content.match(/#[a-zA-z]+/gi)) {
+      hashtags.push(content.match(/#[a-zA-z]+/gi));
+    }
     const post = {
       title,
-      content,
+      content: content.replace(/#[a-zA-z]+/gi, ''),
       image: image,
       creater_id: state.user.id,
       subtopic_id: subId,
-      username: state.user.username
+      username: state.user.username,
+      hashtag: hashtags
     };
 
     if (isEmpty(post.title) || isEmpty(post.content)) {
@@ -68,7 +68,7 @@ const CreateDiscussion = props => {
     props.navigation.navigate('Discussions', { subId: subId });
   };
 
-
+  console.log(hashtags)
 
   return (
     <Container

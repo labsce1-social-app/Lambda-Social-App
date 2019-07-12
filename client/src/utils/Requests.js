@@ -258,13 +258,13 @@ export const createSubtopic = async (info, sub, dispatch) => {
 };
 
 export const addDiscussion = async (body, dispatch, nav) => {
-
   const apiBody = {
     title: body.title,
     content: body.content,
     image: body.image,
     creater_id: body.creater_id,
-    subtopic_id: body.subtopic_id
+    subtopic_id: body.subtopic_id,
+    hashtags: body.hashtag
   };
 
   try {
