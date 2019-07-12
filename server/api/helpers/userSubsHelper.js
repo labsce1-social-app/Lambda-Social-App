@@ -12,6 +12,14 @@ const getUsersFavSubtopics = id => {
     .then(res => res.rows);
 };
 
+const addFavoriteSubtopicToUser = body => {
+  console.log('WE ARE INSERTING: ', body);
+  return db('subtopic_users')
+    .insert(body, ['subtopic_id', 'user_id'])
+    .then(row => row);
+};
+
 module.exports = {
-  getUsersFavSubtopics
+  getUsersFavSubtopics,
+  addFavoriteSubtopicToUser
 };
