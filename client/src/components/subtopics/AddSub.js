@@ -34,7 +34,10 @@ const AddSub = () => {
     }
   }, [state.subtopics_error])
   return (
-    <Form onSubmitEditing={() => createSub()}>
+    <Form onSubmitEditing={() => {
+      // rather than null have it show a toast
+      input.length > 3 ? createSub() : null;
+    }}>
       {state.isAuthenticated === false ? (
         <Item disabled>
           <Label>Sign In To Create a Subtopic...</Label>
@@ -77,10 +80,7 @@ const AddSub = () => {
               rounded
               danger
               style={{ height: 35, marginTop: 2, marginLeft: 3 }}
-              onPress={() => {
-                // rather than null have it show a toast
-                input.length > 3 ? createSub() : null;
-              }}
+              // onPress={}
             >
               <Text style={{ fontSize: 11 }}>Create</Text>
             </Button>

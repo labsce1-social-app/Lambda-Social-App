@@ -258,7 +258,6 @@ export const createSubtopic = async (info, sub, dispatch) => {
 };
 
 export const addDiscussion = async (body, dispatch, nav) => {
-  console.log('post discussion', body);
 
   const apiBody = {
     title: body.title,
@@ -278,7 +277,10 @@ export const addDiscussion = async (body, dispatch, nav) => {
 
     return { res, followup };
   } catch (err) {
-    console.log('nothing works');
+    dispatch({
+      type: 'CREATE_DISCUSSION_FAILED',
+      payload: res.response.data
+    })
     console.log(err);
   }
 };

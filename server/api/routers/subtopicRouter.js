@@ -7,7 +7,7 @@ const {
   checkValidSubtopic,
   getAllSubtopicsWithCreator
 } = require('../helpers/index.js');
-const isEmpty = require('../utils/index');
+const { isEmpty } = require('../utils/index');
 /*
 GET ROUTE get single subtopic
 @PARAM = ID
@@ -50,32 +50,21 @@ TESTS: {
 
 router.post('/create', async (req, res) => {
   const { title, creater_id } = req.body;
-  console.log(req.body)
-  try {
-    if (
-      isEmpty(title) ||
-      title.length > 50 ||
-      isEmpty(title) ||
-      isEmpty(creater_id)
-    ) {
-      res.status(400).json({
-        error:
-          'title must be between 0 and 50 charecters, creater_id must be valid'
-      });
-    } else if ((checkValidUser(creater_id)) === false) {
-      res.status(404).json({ error: 'valid user not found, check creater_id' });
-    } else {
-      const insertSub = await db('subtopic').insert({ title, creater_id }).then(res => res.rowCount);
-      console.log(insertSub)
-      if (insertSub.code === "23505") {
-        return res.status(409).json({ error: `${title} already exists` })
-      }
-      return res.status(201).json(insertSub)
-    }
-  } catch (err) {
-    return res.status(500).json({ error: err });
-  };
 
+  if (isEmpty(title) || title.length > 50 || isEmpty(title) ||
+    isEmpty(creater_id)) {
+    return res.status(400).json('title must be between 0 and 50 charecters, creater_id must be valid');
+  } else if ((checkValidUser(creater_id)) === false) {
+    return res.status(404).json('valid user not found, check creater_id');
+  } else if (db('subtopic').where({ 'title': title })) {
+    // TODO: figure out how to get this message
+    return res.status(409).json(`${title} already exists`)
+  } else {
+    const insertSub = await db('subtopic')
+      .insert({ title, creater_id })
+      .then(res => res.rowCount);
+    return res.status(201).json(insertSub)
+  }
 });
 
 /*
