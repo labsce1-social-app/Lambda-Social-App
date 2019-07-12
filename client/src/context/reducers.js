@@ -11,6 +11,7 @@ export const initialState = {
   discussions: [],
   discussions_loading: false,
   discussions_error: '',
+  dscussions_error: '',
   isAuthenticated: false,
   user: null,
   comments: null,
@@ -123,7 +124,6 @@ export const reducer = (state = initialState, action) => {
         isAuthenticated: false,
         user: null
       };
-
     case 'CREATE_SUBTOPIC':
       const { title, creater_id, id } = action.payload;
       return {
@@ -134,6 +134,13 @@ export const reducer = (state = initialState, action) => {
           ...state.subtopics
         ]
       };
+    case 'CREATE_SUBTOPIC_FAILED':
+      return {
+        ...state,
+        subtopics_loading: false,
+        subtopics: [...state.subtopics],
+        subtopics_error: action.payload
+      }
     case 'SENDING_IMAGE':
       return {
         ...state,
@@ -157,7 +164,6 @@ export const reducer = (state = initialState, action) => {
       };
     case 'CREATED_DISCUSSION':
       const { content, image, subtopic_id } = action.payload;
-
       return {
         ...state,
         newImage: '',
@@ -174,6 +180,11 @@ export const reducer = (state = initialState, action) => {
           }
         ]
       };
+    case 'CREATE_DISCUSSION_FAILED':
+      return {
+        ...state,
+        dscussions_error: action.payload
+      }
     case 'CREATED_COMMENT':
       const { payload } = action;
       const { comments } = state.comments;

@@ -1,5 +1,6 @@
 import React from 'react';
 import AppNavigator from './AppNavigator';
+import { Root } from 'native-base';
 import { StoreProvider } from './src/context/';
 
 // const instructions = Platform.select({
@@ -12,7 +13,9 @@ import { StoreProvider } from './src/context/';
 // this is where the entire app gets exported from, the context store provider is wrapped around here to give everything access to the store
 export default (App = () => (
   <StoreProvider>
+    <Root>
       <AppNavigator />
+    </Root>
   </StoreProvider>
 ));
 

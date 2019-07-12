@@ -33,17 +33,14 @@ export default StyleSheet.create({
     borderBottomWidth: 0.5
   },
   top: {
+    flex: 1,
+    flexDirection: 'row',
+    marginBottom: 10,
     ...Platform.select({
       ios: {
-        flex: 1,
-        flexDirection: 'row',
-        marginBottom: 10,
         width: '90%'
       },
       android: {
-        flex: 1,
-        flexDirection: 'row',
-        marginBottom: 10
       }
     })
   },
