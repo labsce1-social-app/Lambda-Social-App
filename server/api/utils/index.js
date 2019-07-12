@@ -1,5 +1,14 @@
 const isEmpty = (value) => value === undefined || value === null || (typeof value === 'object' && Object.keys(value).length === 0) || (typeof value === 'string' && value.trim().length === 0)
 
+// flatten array of hashtags (they come in nested)
+const flattenArray = arr => {
+    return arr.reduce(
+        (acc, val) =>
+            Array.isArray(val)
+                ? acc.concat(flattenArray(val))
+                : acc.concat(val),
+        []
+    );
+};
 
-
-module.exports = isEmpty;
+module.exports = { isEmpty, flattenArray };

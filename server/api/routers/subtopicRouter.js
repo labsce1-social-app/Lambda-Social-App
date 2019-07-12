@@ -7,7 +7,7 @@ const {
   checkValidSubtopic,
   getAllSubtopicsWithCreator
 } = require('../helpers/index.js');
-const isEmpty = require('../utils/index');
+const {isEmpty} = require('../utils/index');
 /*
 GET ROUTE get single subtopic
 @PARAM = ID

@@ -1,5 +1,5 @@
 const db = require('../../data/dbconfig.js');
-const isEmpty = require('../utils/');
+const {isEmpty} = require('../utils/');
 
 // add's user column to discussion
 const joinUsersAndSubtopic = () => {
@@ -82,6 +82,7 @@ const getHashTagsByDiscussionId = id => {
 };
 
 const addHashTags = (discussion_id, hashtag) => {
+  console.log(hashtag)
   return db('hashtag').insert({ 'discussion_id': discussion_id, 'hashtag': hashtag }).then(res => res)
 }
 
