@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const db = require('../../data/dbconfig.js');
 const {
+  addHashTags,
   joinUsersAndSubtopic,
   joinUsersAndSubtopicAtId,
   canInsertDisucssion,
@@ -204,16 +205,24 @@ TESTS: {
 }
 */
 
-router.post('/create', (req, res) => {
-  createDiscussion(req.body)
-    .then(discussion => {
-      res
-        .status(201)
-        .json({ discussion, message: 'Succesfully created discussion' });
-    })
-    .catch(err => {
-      res.status(500).json({ error: err });
-    });
+router.post('/create', async (req, res) => {
+  const { title, creater_id, content, image, subtopic_id, hashtags } = req.body;
+  const create = await createDiscussion({ title, creater_id, content, image, subtopic_id })
+    .then(async (discussion) => {
+      let hash;
+      discussion.forEach(async (item) => {
+        if (item.id) {
+          hashtags.forEach((hashtag) => {
+            hash = addHashTags(item.id, hashtag)
+          })
+        }
+      })
+      return {
+        discussion, hash
+      }
+    }).catch(err => res.status(500).json(err))
+
+  res.status(201).json({ ...create, message: 'Succesfully created discussion' });
 });
 
 /*

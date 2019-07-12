@@ -71,7 +71,7 @@ GROUP BY discussion.id
 `).then(res => res.rows);
 };
 
-getHashTagsByDiscussionId = id => {
+const getHashTagsByDiscussionId = id => {
   return db
     .raw(
       `
@@ -80,6 +80,10 @@ getHashTagsByDiscussionId = id => {
     )
     .then(res => res.rows);
 };
+
+const addHashTags = (discussion_id, hashtag) => {
+  return db('hashtag').insert({ 'discussion_id': discussion_id, 'hashtag': hashtag }).then(res => res)
+}
 
 // add's user column to discussion at id
 const joinUsersAndSubtopicAtId = id => {
@@ -242,6 +246,7 @@ const createDiscussion = props => {
 };
 
 module.exports = {
+  addHashTags,
   createDiscussion,
   joinUsersAndSubtopic,
   joinUsersAndSubtopicAtId,
