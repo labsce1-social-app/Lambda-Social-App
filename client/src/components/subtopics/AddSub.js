@@ -1,15 +1,17 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Store } from '../../context/';
 import { Item, Label, Input, Form, Button, Text, Toast } from 'native-base';
-import { View } from 'react-native';
+import { View, Keyboard } from 'react-native';
 import { createSubtopic } from '../../utils/Requests';
 import { isEmpty } from '../../utils/utility';
+
 
 const AddSub = () => {
   const { state, dispatch } = useContext(Store);
   const [input, setInput] = useState('');
 
   const createSub = () => {
+    Keyboard.dismiss()
     if (isEmpty(input)) {
       Toast.show({
         text: 'Title must be between 0 and 50 characters',

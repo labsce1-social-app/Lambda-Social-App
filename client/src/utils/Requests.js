@@ -242,10 +242,9 @@ export const createSubtopic = async (info, sub, dispatch) => {
   try {
     const res = await axios.post(`${local}/subtopics/create`, body);
 
-    // console.log(res.data.subtopic[0]);
     const followup = await dispatch({
       type: 'CREATE_SUBTOPIC',
-      payload: res.data.subtopic[0]
+      payload: body
     });
 
     return { res, followup };
@@ -253,7 +252,7 @@ export const createSubtopic = async (info, sub, dispatch) => {
     console.log(err);
     dispatch({
       type: 'CREATE_SUBTOPIC_FAILED',
-      payload: err
+      payload: err.response.data
     })
   }
 };
