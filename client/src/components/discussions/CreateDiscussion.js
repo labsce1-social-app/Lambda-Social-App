@@ -132,7 +132,7 @@ const CreateDiscussion = props => {
               placeholderTextColor="grey"
               numberOLines={10}
               multiline={true}
-              placeholder="What is your post about..."
+              placeholder="Tell us what your post is about. Use hashtags to label your post."
               onChangeText={e => setContent(e)}
             />
           </View>
