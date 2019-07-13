@@ -53,7 +53,6 @@ export const getDiscussionsForSub = async (id, dispatch) => {
   try {
     await dispatch({ type: 'DISCUSSIONS_FETCHING', payload: true });
     const res = await axios.get(`${local}/discussions/s/${id}`);
-    console.log(res.data)
     return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -68,7 +67,6 @@ export const getRecentDiscussions = async (id, dispatch) => {
   try {
     await dispatch({ type: 'DISCUSSIONS_FETCHING', payload: true });
     const res = await axios.post(`${local}/discussions/recent`, body);
-    console.log(res.data)
     return dispatch({
       type: 'DISCUSSIONS_FETCHED',
       payload: res.data
@@ -208,7 +206,6 @@ export const uploadImage = dispatch => {
     dispatch({ type: 'SENDING_IMAGE' });
     RNS3.put(file, config)
       .then(response => {
-        console.log(response);
         if (response.status === 403) {
           return dispatch({
             type: 'IMAGE_FAILED',
@@ -271,7 +268,6 @@ export const addDiscussion = async (body, dispatch, nav) => {
   try {
     let res = await axios.post(`${local}/discussions/create`, apiBody);
 
-    // console.log(res.data);
     let followup = await dispatch({
       type: 'CREATED_DISCUSSION',
       payload: res.data

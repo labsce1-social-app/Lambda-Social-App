@@ -68,7 +68,6 @@ const CreateDiscussion = props => {
     props.navigation.navigate('Discussions', { subId: subId });
   };
 
-  console.log(hashtags)
 
   return (
     <Container

@@ -118,7 +118,7 @@ router.get('/s/:id', async (req, res) => {
   try {
     const top = await joinUsersAtSubtopicId(id).map(async item => {
       // use reduce to get the compare values
-      return await getHashTagsByDiscussionId(id).reduce(
+      return await getHashTagsByDiscussionId(item.id).reduce(
         async (acc, { hashtag }) => {
           // build an obj to send out
           // spread items and add the hashtags
@@ -189,7 +189,6 @@ router.post('/create', async (req, res) => {
   const flatTags = await flattenArray(hashtags)
   await createDiscussion(title, creater_id, content, image, subtopic_id)
     .then(async (disc) => {
-      // console.log(disc)
       disc.map(async (discuss) => {
         flatTags.map(async (hashtag) => {
           return addHashTags(discuss.id, hashtag);
