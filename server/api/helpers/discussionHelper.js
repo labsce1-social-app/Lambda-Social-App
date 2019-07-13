@@ -27,7 +27,7 @@ discussion.image,
 discussion.created_at,
 discussion.updated_at,
 (select count( comment.comment_post) from comment where discussion.id = comment.discussion_id) as comments,
-(select count( upvote.user_id) from upvote where upvote.discussion_id = discussion.id) as upvotes
+(select sum( upvote.vote) from upvote where upvote.discussion_id = discussion.id) as upvotes
 FROM discussion
 inner join subtopic
 on discussion.subtopic_id = subtopic.id
@@ -56,7 +56,7 @@ discussion.image,
 discussion.created_at,
 discussion.updated_at,
 (select count( comment.comment_post) from comment where discussion.id = comment.discussion_id) as comments,
-(select count( upvote.user_id) from upvote where upvote.discussion_id = discussion.id) as upvotes
+(select sum( upvote.vote) from upvote where upvote.discussion_id = discussion.id) as upvotes
 FROM discussion
 inner join subtopic
 on discussion.subtopic_id = subtopic.id
@@ -100,7 +100,7 @@ discussion.image,
 discussion.created_at,
 discussion.updated_at,
 (select count( comment.comment_post) from comment where discussion.id = comment.discussion_id) as comments,
-(select count( upvote.user_id) from upvote where upvote.discussion_id = discussion.id) as upvotes
+(select sum( upvote.vote) from upvote where upvote.discussion_id = discussion.id) as upvotes
 FROM discussion
 inner join subtopic
 on discussion.subtopic_id = ${id}
@@ -121,7 +121,7 @@ const joinUsersAtSubtopicId = id => {
     .raw(
       `SELECT discussion.id, discussion.subtopic_id, discussion.title, discussion.content, discussion.image, discussion.creater_id, users.username, discussion.created_at, discussion.updated_at,
       (select count( comment.comment_post) from comment where discussion.id = comment.discussion_id) as comments,
-(select count( upvote.user_id) from upvote where upvote.discussion_id = discussion.id) as upvotes
+(select sum( upvote.vote) from upvote where upvote.discussion_id = discussion.id) as upvotes
   FROM discussion
   JOIN users
   ON discussion.subtopic_id = ${id} and discussion.creater_id = users.id

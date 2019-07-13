@@ -26,6 +26,13 @@ exports.up = function (knex, Promise) {
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
 
+    // vote: int
+    // can go +1 or -1 values
+    upvote
+      .integer('vote')
+      .notNullable()
+      .defaultTo(0)
+
     upvote.timestamps(true, true);
   });
 };
