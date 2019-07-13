@@ -24,8 +24,10 @@ exports.up = function (knex, Promise) {
       .notNullable()
       .references('users.id')
       .onDelete('CASCADE')
-      .onUpdate('CASCADE');
+      .onUpdate('CASCADE')
 
+    upvote
+      .unique(['discussion_id', 'user_id'])
     // vote: int
     // can go +1 or -1 values
     upvote
