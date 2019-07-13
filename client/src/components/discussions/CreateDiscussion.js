@@ -9,7 +9,7 @@ import {
   Spinner,
   Container
 } from 'native-base';
-import { Image, TextInput } from 'react-native';
+import { Image, TextInput, Platform } from 'react-native';
 import { addDiscussion, uploadImage } from '../../utils/Requests';
 import { isEmpty } from '../../utils/utility';
 import { Store } from '../../context';
@@ -81,7 +81,12 @@ const CreateDiscussion = props => {
             flex: 1,
             alignItems: 'center',
             width: '100%',
-            height: '100%'
+            height: '100%',
+            ...Platform.select({
+              ios: {
+                padding: 20
+              }
+            })
           }}
         >
           <View
@@ -115,7 +120,12 @@ const CreateDiscussion = props => {
               borderBottomColor: 'grey',
               borderBottomWidth: 0.5,
               marginBottom: 10,
-              padding: 3
+              padding: 3,
+              ...Platform.select({
+                ios: {
+                  marginTop: 20,
+                }
+              })
             }}
           >
             <TextInput placeholder="Title" onChangeText={e => setTitle(e)} />
@@ -127,12 +137,13 @@ const CreateDiscussion = props => {
                 // width: '100%',
                 height: 200,
                 justifyContent: 'flex-start',
-                textAlignVertical: 'top'
+                textAlignVertical: 'top',
+
               }}
               placeholderTextColor="grey"
               numberOLines={10}
               multiline={true}
-              placeholder="Tell us what your post is about. Use hashtags to label your post."
+              placeholder="Tell us what your post is about. Use hashtags if you would like to label your post."
               onChangeText={e => setContent(e)}
             />
           </View>
