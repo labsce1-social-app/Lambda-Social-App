@@ -187,7 +187,7 @@ router.post('/create', async (req, res) => {
   const { title, creater_id, content, image, subtopic_id, hashtags } = req.body;
 
   const flatTags = await flattenArray(hashtags)
-  const discussion = await createDiscussion(title, creater_id, content, image, subtopic_id)
+  await createDiscussion(title, creater_id, content, image, subtopic_id)
     .then(async (disc) => {
       // console.log(disc)
       disc.map(async (discuss) => {
@@ -214,9 +214,7 @@ router.post('/create', async (req, res) => {
     );
   });
 
-
-
-  res.status(201).json({ top });
+  res.status(201).json(top);
 });
 
 /*

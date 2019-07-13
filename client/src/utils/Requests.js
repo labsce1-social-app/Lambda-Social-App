@@ -258,6 +258,7 @@ export const createSubtopic = async (info, sub, dispatch) => {
 };
 
 export const addDiscussion = async (body, dispatch, nav) => {
+  dispatch({ type: 'DISCUSSIONS_FETCHING' })
   const apiBody = {
     title: body.title,
     content: body.content,
@@ -273,7 +274,7 @@ export const addDiscussion = async (body, dispatch, nav) => {
     // console.log(res.data);
     let followup = await dispatch({
       type: 'CREATED_DISCUSSION',
-      payload: res.data.discussion[0]
+      payload: res.data
     });
 
     return { res, followup };

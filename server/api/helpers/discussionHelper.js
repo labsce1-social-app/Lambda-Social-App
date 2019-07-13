@@ -68,6 +68,7 @@ inner join comment
 on comment.discussion_id = discussion.id
 where comment.user_id = '${id}'
 GROUP BY discussion.id
+ORDER BY discussion.updated_at DESC
 `).then(res => res.rows);
 };
 
@@ -109,7 +110,8 @@ inner join comment
 on comment.user_id = users.id
 inner join upvote
 on upvote.discussion_id = discussion.id
-GROUP BY discussion.id`
+GROUP BY discussion.id
+ORDER BY discussion.updated_at DESC`
     )
     .then(res => res.rows);
 };
@@ -122,7 +124,8 @@ const joinUsersAtSubtopicId = id => {
 (select count( upvote.user_id) from upvote where upvote.discussion_id = discussion.id) as upvotes
   FROM discussion
   JOIN users
-  ON discussion.subtopic_id = ${id} and discussion.creater_id = users.id`
+  ON discussion.subtopic_id = ${id} and discussion.creater_id = users.id
+  ORDER BY discussion.updated_at DESC`
     )
     .then(res => res.rows);
 };
