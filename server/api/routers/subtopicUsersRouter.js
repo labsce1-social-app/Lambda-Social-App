@@ -3,7 +3,8 @@ const db = require('../../data/dbconfig.js');
 
 const {
   getUsersFavSubtopics,
-  addFavoriteSubtopicToUser
+  addFavoriteSubtopicToUser,
+  unFavoriteSubtopicById
 } = require('../helpers/userSubsHelper');
 
 router.get('/:id', (req, res) => {
@@ -31,6 +32,19 @@ router.post('/favorite', (req, res) => {
     })
     .catch(err => {
       console.log('COULDNT INSERT ', err);
+      res.status(500).json({ error: err });
+    });
+});
+
+router.delete('/unfavorite/:id', (req, res) => {
+  const { id } = req.params;
+
+  unFavoriteSubtopicById(id)
+    .then(ret => {
+      console.log('DELTED IN ROUTER: ', ret);
+      res.status(200).json({ message: `Successfully unfavorited` });
+    })
+    .catch(err => {
       res.status(500).json({ error: err });
     });
 });

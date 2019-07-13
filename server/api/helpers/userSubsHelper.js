@@ -23,7 +23,16 @@ const addFavoriteSubtopicToUser = body => {
     .then(row => row);
 };
 
+const unFavoriteSubtopicById = id => {
+  return db
+    .raw(`DELETE FROM subtopic_users WHERE subtopic_users.id = '${id}'`)
+    .then(res => {
+      console.log('DELETED AND THEN: ', res);
+    });
+};
+
 module.exports = {
   getUsersFavSubtopics,
-  addFavoriteSubtopicToUser
+  addFavoriteSubtopicToUser,
+  unFavoriteSubtopicById
 };
