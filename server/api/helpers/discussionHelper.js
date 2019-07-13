@@ -1,5 +1,5 @@
 const db = require('../../data/dbconfig.js');
-const isEmpty = require('../utils/');
+const { isEmpty } = require('../utils/');
 
 // add's user column to discussion
 const joinUsersAndSubtopic = () => {
@@ -68,10 +68,11 @@ inner join comment
 on comment.discussion_id = discussion.id
 where comment.user_id = '${id}'
 GROUP BY discussion.id
+ORDER BY discussion.updated_at DESC
 `).then(res => res.rows);
 };
 
-getHashTagsByDiscussionId = id => {
+const getHashTagsByDiscussionId = id => {
   return db
     .raw(
       `
@@ -81,24 +82,36 @@ getHashTagsByDiscussionId = id => {
     .then(res => res.rows);
 };
 
+const addHashTags = (discussion_id, hashtag) => {
+  return db('hashtag').insert({ 'discussion_id': discussion_id, 'hashtag': hashtag }).then(res => res).catch(err => console.log(err))
+}
+
 // add's user column to discussion at id
 const joinUsersAndSubtopicAtId = id => {
   return db
     .raw(
       `
-    SELECT
-	discussion.title,
-	discussion.image,
-	discussion.created_at,
-	discussion.updated_at,
-	users.username,
-  discussion.id,
-  (select count( comment.comment_post) from comment where discussion.id = comment.discussion_id) as comments,
+     SELECT
+(select users.username from users where users.id = discussion.creater_id) as username,
+discussion.id as id,
+discussion.content,
+discussion.title,
+discussion.image,
+discussion.created_at,
+discussion.updated_at,
+(select count( comment.comment_post) from comment where discussion.id = comment.discussion_id) as comments,
 (select count( upvote.user_id) from upvote where upvote.discussion_id = discussion.id) as upvotes
-FROM
-	discussion
-INNER JOIN subtopic ON discussion.subtopic_id = subtopic.id AND discussion.subtopic_id = ${id}
-INNER JOIN users ON discussion.creater_id = users.id`
+FROM discussion
+inner join subtopic
+on discussion.subtopic_id = ${id}
+inner join users
+on users.id = discussion.creater_id
+inner join comment
+on comment.user_id = users.id
+inner join upvote
+on upvote.discussion_id = discussion.id
+GROUP BY discussion.id
+ORDER BY discussion.updated_at DESC`
     )
     .then(res => res.rows);
 };
@@ -111,7 +124,8 @@ const joinUsersAtSubtopicId = id => {
 (select count( upvote.user_id) from upvote where upvote.discussion_id = discussion.id) as upvotes
   FROM discussion
   JOIN users
-  ON discussion.subtopic_id = ${id} and discussion.creater_id = users.id`
+  ON discussion.subtopic_id = ${id} and discussion.creater_id = users.id
+  ORDER BY discussion.updated_at DESC`
     )
     .then(res => res.rows);
 };
@@ -228,20 +242,23 @@ const userCanDeleteDiscussion = async (id, creater_id) => {
   return canDelete;
 };
 
-const createDiscussion = props => {
+const createDiscussion = (title, creater_id, content, image, subtopic_id) => {
+  const body = { title, creater_id, content, image, subtopic_id }
+
   return db('discussion')
-    .insert(props, [
+    .insert(body, [
       'id',
       'title',
       'creater_id',
       'content',
       'image',
-      'subtopic_id'
-    ])
-    .then(row => row);
+      'subtopic_id'])
 };
 
+
+
 module.exports = {
+  addHashTags,
   createDiscussion,
   joinUsersAndSubtopic,
   joinUsersAndSubtopicAtId,

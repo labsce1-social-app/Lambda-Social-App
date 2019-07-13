@@ -1,5 +1,5 @@
 const db = require('../../data/dbconfig.js');
-const isEmpty = require('../utils/');
+const {isEmpty} = require('../utils/');
 
 // takes in user id and discussion id to insert the user
 const upvoteByDiscussionId = (user_id, discussion_id) => {

@@ -163,22 +163,12 @@ export const reducer = (state = initialState, action) => {
         newImage_error: action.payload
       };
     case 'CREATED_DISCUSSION':
-      const { content, image, subtopic_id } = action.payload;
       return {
         ...state,
         newImage: '',
-        discussions: [
-          ...state.discussions,
-          {
-            id: action.payload.id,
-            title: action.payload.title,
-            content,
-            creater_id,
-            image,
-            subtopic_id,
-            username: state.user.username
-          }
-        ]
+        discussions: action.payload,
+        discussions_loading: false,
+        discussions_error: ''
       };
     case 'CREATE_DISCUSSION_FAILED':
       return {

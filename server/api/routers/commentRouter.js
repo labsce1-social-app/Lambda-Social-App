@@ -10,7 +10,7 @@ const {
   checkMatchInComments,
   getRepliesByCommentId
 } = require('../helpers/index.js');
-const isEmpty = require('../utils/');
+const {isEmpty} = require('../utils/');
 // used for updated timestamps
 const moment = require('moment');
 let timestamp = moment().format('YYYY-MM-DD HH:mm:ss');
