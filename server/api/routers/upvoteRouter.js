@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const db = require('../../data/dbconfig.js');
-const isEmpty = require('../utils/');
+const {isEmpty} = require('../utils/');
 
 const {
     upvoteByDiscussionId,

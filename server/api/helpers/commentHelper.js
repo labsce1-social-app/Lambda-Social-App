@@ -1,5 +1,5 @@
 const db = require('../../data/dbconfig.js');
-const isEmpty = require('../utils/');
+const { isEmpty } = require('../utils/');
 
 const getCommentsByDiscussionId = (discussion_id) => {
   return db.raw(

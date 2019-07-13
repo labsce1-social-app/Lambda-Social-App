@@ -2,23 +2,19 @@ import React, { useContext, useState, useEffect } from 'react';
 import {
   Content,
   Form,
-  Textarea,
   Button,
-  Card,
-  Input,
-  Item,
   View,
-  Label,
-  CardItem,
   Text,
   Toast,
   Spinner,
   Container
 } from 'native-base';
-import { Image, TextInput } from 'react-native';
+import { Image, TextInput, Platform } from 'react-native';
 import { addDiscussion, uploadImage } from '../../utils/Requests';
 import { isEmpty } from '../../utils/utility';
 import { Store } from '../../context';
+
+const hashtags = [];
 
 const CreateDiscussion = props => {
   const { state, dispatch } = useContext(Store);
@@ -37,13 +33,17 @@ const CreateDiscussion = props => {
   });
 
   const submitHandler = () => {
+    if (content.match(/#[a-zA-z]+/gi)) {
+      hashtags.push(content.match(/#[a-zA-z]+/gi));
+    }
     const post = {
       title,
-      content,
+      content: content.replace(/#[a-zA-z]+/gi, ''),
       image: image,
       creater_id: state.user.id,
       subtopic_id: subId,
-      username: state.user.username
+      username: state.user.username,
+      hashtag: hashtags
     };
 
     if (isEmpty(post.title) || isEmpty(post.content)) {
@@ -69,7 +69,6 @@ const CreateDiscussion = props => {
   };
 
 
-
   return (
     <Container
       style={{
@@ -82,7 +81,12 @@ const CreateDiscussion = props => {
             flex: 1,
             alignItems: 'center',
             width: '100%',
-            height: '100%'
+            height: '100%',
+            ...Platform.select({
+              ios: {
+                padding: 20
+              }
+            })
           }}
         >
           <View
@@ -116,7 +120,12 @@ const CreateDiscussion = props => {
               borderBottomColor: 'grey',
               borderBottomWidth: 0.5,
               marginBottom: 10,
-              padding: 3
+              padding: 3,
+              ...Platform.select({
+                ios: {
+                  marginTop: 20,
+                }
+              })
             }}
           >
             <TextInput placeholder="Title" onChangeText={e => setTitle(e)} />
@@ -128,12 +137,13 @@ const CreateDiscussion = props => {
                 // width: '100%',
                 height: 200,
                 justifyContent: 'flex-start',
-                textAlignVertical: 'top'
+                textAlignVertical: 'top',
+
               }}
               placeholderTextColor="grey"
               numberOLines={10}
               multiline={true}
-              placeholder="What is your post about..."
+              placeholder="Tell us what your post is about. Use hashtags if you would like to label your post."
               onChangeText={e => setContent(e)}
             />
           </View>

@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const db = require('../../data/dbconfig.js');
 const {
+  addHashTags,
   joinUsersAndSubtopic,
   joinUsersAndSubtopicAtId,
   canInsertDisucssion,
@@ -13,9 +14,9 @@ const {
   joinUsersAtSubtopicId,
   getHashTagsByDiscussionId,
   getCommentedDiscussionsbyUserId,
-  createDiscussion
+  createDiscussion,
 } = require('../helpers/index.js');
-const isEmpty = require('../utils/');
+const { isEmpty, flattenArray } = require('../utils/');
 // used for updated timestamps
 const moment = require('moment');
 let timestamp = moment().format('YYYY-MM-DD HH:mm:ss');
@@ -38,22 +39,12 @@ router.get('/?', async (req, res) => {
       // use reduce to get the compare values
       return await getHashTagsByDiscussionId(item.id).reduce(
         async (acc, { hashtag }) => {
-          // flatten array of hashtags (they come in nested)
-          const flattenDeep = arr => {
-            return arr.reduce(
-              (acc, val) =>
-                Array.isArray(val)
-                  ? acc.concat(flattenDeep(val))
-                  : acc.concat(val),
-              []
-            );
-          };
           // build an obj to send out
           // spread items and add the hashtags
           // filter to remove null and undefined hashtags
           let obj = {
             ...item,
-            hashtags: flattenDeep([acc.hashtags, hashtag]).filter(n => n)
+            hashtags: flattenArray([acc.hashtags, hashtag]).filter(n => n)
           };
           return obj;
         },
@@ -125,29 +116,17 @@ TESTS: {
 router.get('/s/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const top = await joinUsersAtSubtopicId(id);
-    top.map(async item => {
+    const top = await joinUsersAtSubtopicId(id).map(async item => {
       // use reduce to get the compare values
       return await getHashTagsByDiscussionId(item.id).reduce(
         async (acc, { hashtag }) => {
-          // flatten array of hashtags (they come in nested)
-          const flattenDeep = arr => {
-            return arr.reduce(
-              (acc, val) =>
-                Array.isArray(val)
-                  ? acc.concat(flattenDeep(val))
-                  : acc.concat(val),
-              []
-            );
-          };
           // build an obj to send out
           // spread items and add the hashtags
           // filter to remove null and undefined hashtags
           let obj = {
             ...item,
-            hashtags: flattenDeep([acc.hashtags, hashtag]).filter(n => n)
+            hashtags: flattenArray([acc.hashtags, hashtag]).filter(n => n)
           };
-
           return obj;
         },
         []
@@ -204,16 +183,37 @@ TESTS: {
 }
 */
 
-router.post('/create', (req, res) => {
-  createDiscussion(req.body)
-    .then(discussion => {
-      res
-        .status(201)
-        .json({ discussion, message: 'Succesfully created discussion' });
+router.post('/create', async (req, res) => {
+  const { title, creater_id, content, image, subtopic_id, hashtags } = req.body;
+
+  const flatTags = await flattenArray(hashtags)
+  await createDiscussion(title, creater_id, content, image, subtopic_id)
+    .then(async (disc) => {
+      disc.map(async (discuss) => {
+        flatTags.map(async (hashtag) => {
+          return addHashTags(discuss.id, hashtag);
+        })
+      })
     })
-    .catch(err => {
-      res.status(500).json({ error: err });
-    });
+
+  const top = await joinUsersAtSubtopicId(subtopic_id).map(async item => {
+    // use reduce to get the compare values
+    return await getHashTagsByDiscussionId(item.id).reduce(
+      async (acc, { hashtag }) => {
+        // build an obj to send out
+        // spread items and add the hashtags
+        // filter to remove null and undefined hashtags
+        let obj = {
+          ...item,
+          hashtags: flattenArray([acc.hashtags, hashtag]).filter(n => n)
+        };
+        return obj;
+      },
+      []
+    );
+  });
+
+  res.status(201).json(top);
 });
 
 /*
