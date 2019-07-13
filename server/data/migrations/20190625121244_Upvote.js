@@ -26,6 +26,12 @@ exports.up = function (knex, Promise) {
       .onDelete('CASCADE')
       .onUpdate('CASCADE')
 
+    // creating a unique constraint accross discusion id and user id
+    // this will make it so that there can only be one row
+    // in this table with these two values
+    // this is used to determine if a user should be added into the list
+    // of id's or just have their votes updated
+    // see /api/helpers/upvoteHelpers for more details
     upvote
       .unique(['discussion_id', 'user_id'])
     // vote: int
