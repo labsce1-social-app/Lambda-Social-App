@@ -14,7 +14,7 @@ const {
   joinUsersAtSubtopicId,
   getHashTagsByDiscussionId,
   getCommentedDiscussionsbyUserId,
-  createDiscussion
+  createDiscussion,
 } = require('../helpers/index.js');
 const { isEmpty, flattenArray } = require('../utils/');
 // used for updated timestamps
@@ -116,10 +116,9 @@ TESTS: {
 router.get('/s/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const top = await joinUsersAtSubtopicId(id);
-    top.map(async item => {
+    const top = await joinUsersAtSubtopicId(id).map(async item => {
       // use reduce to get the compare values
-      return await getHashTagsByDiscussionId(item.id).reduce(
+      return await getHashTagsByDiscussionId(id).reduce(
         async (acc, { hashtag }) => {
           // build an obj to send out
           // spread items and add the hashtags
@@ -128,7 +127,6 @@ router.get('/s/:id', async (req, res) => {
             ...item,
             hashtags: flattenArray([acc.hashtags, hashtag]).filter(n => n)
           };
-
           return obj;
         },
         []
@@ -187,24 +185,38 @@ TESTS: {
 
 router.post('/create', async (req, res) => {
   const { title, creater_id, content, image, subtopic_id, hashtags } = req.body;
-  const flatTags = await flattenArray(hashtags)
-  console.log(flatTags)
-  const create = await createDiscussion({ title, creater_id, content, image, subtopic_id })
-    .then(async (discussion) => {
-      let hash;
-      discussion.forEach(async (item) => {
-        if (item.id) {
-          flatTags.forEach((hashtag) => {
-            hash = addHashTags(item.id, hashtag)
-          })
-        }
-      })
-      return {
-        discussion, hash
-      }
-    }).catch(err => res.status(500).json(err))
 
-  res.status(201).json({ ...create, message: 'Succesfully created discussion' });
+  const flatTags = await flattenArray(hashtags)
+  const discussion = await createDiscussion(title, creater_id, content, image, subtopic_id)
+    .then(async (disc) => {
+      // console.log(disc)
+      disc.map(async (discuss) => {
+        flatTags.map(async (hashtag) => {
+          return addHashTags(discuss.id, hashtag);
+        })
+      })
+    })
+
+  const top = await joinUsersAtSubtopicId(subtopic_id).map(async item => {
+    // use reduce to get the compare values
+    return await getHashTagsByDiscussionId(item.id).reduce(
+      async (acc, { hashtag }) => {
+        // build an obj to send out
+        // spread items and add the hashtags
+        // filter to remove null and undefined hashtags
+        let obj = {
+          ...item,
+          hashtags: flattenArray([acc.hashtags, hashtag]).filter(n => n)
+        };
+        return obj;
+      },
+      []
+    );
+  });
+
+
+
+  res.status(201).json({ top });
 });
 
 /*

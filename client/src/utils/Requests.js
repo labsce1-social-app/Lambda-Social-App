@@ -53,6 +53,7 @@ export const getDiscussionsForSub = async (id, dispatch) => {
   try {
     await dispatch({ type: 'DISCUSSIONS_FETCHING', payload: true });
     const res = await axios.get(`${local}/discussions/s/${id}`);
+    console.log(res.data)
     return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -244,12 +245,11 @@ export const createSubtopic = async (info, sub, dispatch) => {
 
     const followup = await dispatch({
       type: 'CREATE_SUBTOPIC',
-      payload: body
+      payload: res.data.subtopic[0]
     });
 
     return { res, followup };
   } catch (err) {
-    console.log(err);
     dispatch({
       type: 'CREATE_SUBTOPIC_FAILED',
       payload: err.response.data
@@ -264,11 +264,12 @@ export const addDiscussion = async (body, dispatch, nav) => {
     image: body.image,
     creater_id: body.creater_id,
     subtopic_id: body.subtopic_id,
-    hashtags: body.hashtag
+    hashtags: body.hashtag,
   };
 
   try {
     let res = await axios.post(`${local}/discussions/create`, apiBody);
+
     // console.log(res.data);
     let followup = await dispatch({
       type: 'CREATED_DISCUSSION',

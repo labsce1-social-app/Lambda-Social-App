@@ -1,6 +1,6 @@
 const isEmpty = (value) => value === undefined || value === null || (typeof value === 'object' && Object.keys(value).length === 0) || (typeof value === 'string' && value.trim().length === 0)
 
-// flatten array of hashtags (they come in nested)
+// flatten arrays that come in nested
 const flattenArray = arr => {
     return arr.reduce(
         (acc, val) =>
