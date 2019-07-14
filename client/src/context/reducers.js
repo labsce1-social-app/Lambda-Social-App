@@ -20,7 +20,10 @@ export const initialState = {
   newImage_loading: false,
   newImage: null,
   newImage_error: '',
-  upvote_error: ''
+  upvote_error: '',
+  hashtags: null,
+  hashtags_loading: false,
+  hashtags_error: ''
 };
 // all of the reducer conditions, we can use the dispatch method to interact with this by simply passing in a type and sending the payload.
 export const reducer = (state = initialState, action) => {
@@ -232,11 +235,29 @@ export const reducer = (state = initialState, action) => {
           comments: [...state.comments.comments]
         },
       }
-
     case 'VOTE_ACTION_FAILED':
       return {
         ...state,
         upvote_error: action.payload
+      }
+    case 'FETCHING_HASHTAGS':
+      return {
+        ...state,
+        hashtags_loading: true,
+        hashtags_error: ''
+      }
+    case 'FETCH_HASHTAGS_SUCCESSFULLY':
+      return {
+        ...state,
+        hashtags: action.payload,
+        hashtags_loading: false,
+        hashtags_error: ''
+      }
+    case 'FETCH_HASHTAGS_FAILED':
+      return {
+        ...state,
+        hashtags_loading: false,
+        hashtags_error: action.payload
       }
     default:
       throw new Error('not a valid action');

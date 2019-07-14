@@ -11,7 +11,7 @@ const HashtagPage = (props) => {
     const subId = props.navigation.getParam('subId');
 
     useEffect(() => {
-        getHashtags();
+        getHashtags(dispatch);
     }, () => getHashtags());
 
     return (

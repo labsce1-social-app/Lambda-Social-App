@@ -359,3 +359,31 @@ export const downvoteDiscussion = async (dispatch, body) => {
     dispatch({ type: 'VOTE_ACTION_FAILED', payload: err })
   }
 }
+
+export const getHashtags = async (dispatch) => {
+  dispatch({ type: 'FETCHING_HASHTAGS' })
+  try {
+    let res = await axios.post(`${local}/discussions/hashtags`)
+    let followup = await dispatch({
+      type: 'FETCH_HASHTAGS_SUCCESSFULLY',
+      payload: res.data
+    })
+    return { res, followup };
+  } catch (err) {
+    dispatch({ type: 'FETCH_HASHTAGS_FAILED', payload: err })
+  }
+}
+
+export const getByHashtags = async (dispatch, hashtag) => {
+  dispatch({ type: 'DISCUSSION_FETCHING' })
+  try {
+    let res = await axios.post(`${local}/discussions/byhashtags`, { hash: hashtag })
+    let followup = await dispatch({
+      type: 'DISCUSSION_FETCHED',
+      payload: res.data
+    })
+    return { res, followup };
+  } catch (err) {
+    dispatch({ type: 'DISCUSSIONS_FAILED', payload: err })
+  }
+}

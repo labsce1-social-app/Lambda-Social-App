@@ -7,7 +7,7 @@ import PostPage from './src/views/PostPage';
 import SubtopicsPage from './src/views/SubtopicsPage';
 import SubtopicsLoading from './src/components/subtopics/SubtopicsLoading';
 import AddSModal from './src/components/subtopics/AddSModal';
-
+import HashtagPage from './src/views/HashtagPage';
 import {
   createDrawerNavigator,
   createAppContainer,
@@ -64,6 +64,12 @@ const SubtopicsStack = createStackNavigator(
     },
     RecentDiscussions: {
       screen: RecentDiscussionsPage
+    },
+    Hashtags: {
+      screen: HashtagPage,
+      navigationOptions: ({ navigation }) => ({
+        title: 'Search'
+      })
     },
     Load: {
       screen: SubtopicsLoading
