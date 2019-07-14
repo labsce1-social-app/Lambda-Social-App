@@ -58,15 +58,11 @@ const Discussion = props => {
                 count={props.upvotes}
                 voted={props.voted}
                 color="green"
-                handlePressFirst={props.handlePressFirst}
-                handlePressSecond={props.handlePressSecond}
               />
               <Reaction
                 image={require('../../assets/down.png')}
                 voted={props.voted}
                 color="orange"
-                handlePressFirst={props.handlePressFirst}
-                handlePressSecond={props.handlePressSecond}
               />
             </View>
           </Body>

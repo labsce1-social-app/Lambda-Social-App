@@ -41,8 +41,7 @@ const Reaction = ({ count, image, handlePress, voted, color }) => {
 }
 
 Reaction.defaultProps = {
-    handlePressFirst: () => { },
-    handlePressSecond: () => { },
+    handlePress: () => { },
     color: null,
     count: null
 }

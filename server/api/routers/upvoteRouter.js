@@ -20,7 +20,7 @@ router.post('/add', async (req, res) => {
 })
 
 // removes user id from upvote table where discussion matches
-router.delete('/subtract', async (req, res) => {
+router.post('/subtract', async (req, res) => {
     const { user_id, discussion_id } = req.body;
 
     if (isEmpty(user_id) || isEmpty(discussion_id)) {

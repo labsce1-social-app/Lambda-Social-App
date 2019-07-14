@@ -333,7 +333,7 @@ export const upvoteDiscussion = async (dispatch, body) => {
     let res = await axios.post(`${local}/upvotes/add`, body);
     let followup = await dispatch({
       type: 'USER_UPVOTED',
-      payload: body
+      payload: res.data
     })
 
     return { res, followup };
@@ -346,11 +346,11 @@ export const upvoteDiscussion = async (dispatch, body) => {
 export const downvoteDiscussion = async (dispatch, body) => {
   try {
 
-    let res = await axios.delete(`${local}/upvotes/subtract`, { data: body });
+    let res = await axios.post(`${local}/upvotes/subtract`, body);
 
     let followup = await dispatch({
       type: 'USER_DOWNVOTED',
-      payload: body
+      payload: res.data
     })
 
     return { res, followup };
