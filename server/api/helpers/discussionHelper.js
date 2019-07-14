@@ -255,6 +255,12 @@ const createDiscussion = (title, creater_id, content, image, subtopic_id) => {
       'subtopic_id'])
 };
 
+const getDistinctHashtags = () => {
+  return db.raw(`
+  select distinct hashtag from hashtag order by hashtag
+  `)
+}
+
 const getDiscussionsByHashtags = (hashtag) => {
   return db.raw(`
   SELECT distinct
@@ -300,5 +306,6 @@ module.exports = {
   topDiscussions,
   getHashTagsByDiscussionId,
   getCommentedDiscussionsbyUserId,
+  getDistinctHashtags,
   getDiscussionsByHashtags
 };
