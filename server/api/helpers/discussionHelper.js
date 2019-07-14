@@ -255,6 +255,34 @@ const createDiscussion = (title, creater_id, content, image, subtopic_id) => {
       'subtopic_id'])
 };
 
+const getDiscussionsByHashtags = (hashtag) => {
+  return db.raw(`
+  SELECT distinct
+(select users.username from users where users.id = discussion.creater_id) as username,
+discussion.id as id,
+discussion.content,
+discussion.title,
+discussion.image,
+discussion.created_at,
+discussion.updated_at,
+(select count( comment.comment_post) from comment where discussion.id = comment.discussion_id) as comments,
+(select sum( upvote.vote) from upvote where upvote.discussion_id = discussion.id) as upvotes
+FROM discussion
+inner join hashtag
+on hashtag.discussion_id = discussion.id
+inner join subtopic
+on discussion.subtopic_id = subtopic.id
+inner join users
+on users.id = discussion.creater_id
+inner join comment
+on comment.user_id = users.id
+inner join upvote
+on upvote.discussion_id = discussion.id
+where hashtag.hashtag = ${hashtag}
+ORDER BY discussion.updated_at DESC
+`)
+}
+
 
 
 module.exports = {
@@ -271,5 +299,6 @@ module.exports = {
   joinUsersAtSubtopicId,
   topDiscussions,
   getHashTagsByDiscussionId,
-  getCommentedDiscussionsbyUserId
+  getCommentedDiscussionsbyUserId,
+  getDiscussionsByHashtags
 };
