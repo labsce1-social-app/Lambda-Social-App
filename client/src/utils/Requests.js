@@ -375,11 +375,11 @@ export const getHashtags = async (dispatch) => {
 }
 
 export const getByHashtags = async (dispatch, hashtag) => {
-  dispatch({ type: 'DISCUSSION_FETCHING' })
+  dispatch({ type: 'DISCUSSIONS_FETCHING' })
   try {
     let res = await axios.post(`${local}/discussions/byhashtags`, { hash: hashtag })
     let followup = await dispatch({
-      type: 'DISCUSSION_FETCHED',
+      type: 'DISCUSSIONS_FETCHED',
       payload: res.data
     })
     return { res, followup };

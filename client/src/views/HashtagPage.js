@@ -8,7 +8,6 @@ import { Container, Content } from 'native-base';
 
 const HashtagPage = (props) => {
     const { state, dispatch } = useContext(Store);
-    const subId = props.navigation.getParam('subId');
 
     useEffect(() => {
         getHashtags(dispatch);

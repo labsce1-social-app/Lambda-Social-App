@@ -18,9 +18,9 @@ const Hashtag = (props) => {
                         style={{ margin: 10, alignSelf: null }}
                         bordered
                         // style={{ alignSelf: null, width: '100%' }}
-                        onPress={() => props.navigation.navigate('Discussion', {
-                            postId: props.id,
-                            title: props.title
+                        onPress={() => props.navigation.navigate('DiscussionsByHashtags', {
+                            hashtag: item.hashtag,
+                            title: item.hashtag
                         })}>
                         <Text>{item.hashtag}</Text>
                     </Button>
