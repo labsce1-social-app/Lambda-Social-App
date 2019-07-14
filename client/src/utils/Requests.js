@@ -41,7 +41,7 @@ export const getDiscussions = async (query, dispatch) => {
   const q = new URLSearchParams({ sort: query });
   dispatch({ type: 'TOP_DISCUSSIONS_FETCHING', payload: true });
   try {
-    const res = await axios.get(`${local}/discussions/?${q.toString()}`);
+    const res = await axios.get(`${postgres}/discussions/?${q.toString()}`);
     return dispatch({ type: 'TOP_DISCUSSIONS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -52,7 +52,7 @@ export const getDiscussions = async (query, dispatch) => {
 export const getDiscussionsForSub = async (id, dispatch) => {
   try {
     await dispatch({ type: 'DISCUSSIONS_FETCHING', payload: true });
-    const res = await axios.get(`${local}/discussions/s/${id}`);
+    const res = await axios.get(`${postgres}/discussions/s/${id}`);
     return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -66,7 +66,7 @@ export const getRecentDiscussions = async (id, dispatch) => {
   }
   try {
     await dispatch({ type: 'DISCUSSIONS_FETCHING', payload: true });
-    const res = await axios.post(`${local}/discussions/recent`, body);
+    const res = await axios.post(`${postgres}/discussions/recent`, body);
     return dispatch({
       type: 'DISCUSSIONS_FETCHED',
       payload: res.data
@@ -86,7 +86,7 @@ export const getCommentsByDiscussionId = async (id, dispatch, user_id) => {
     user_id: user_id
   }
   try {
-    const res = await axios.post(`${local}/comments/d/${id}`, body);
+    const res = await axios.post(`${postgres}/comments/d/${id}`, body);
     return dispatch({ type: 'COMMENTS_FETCHED_SUCCESS', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -98,7 +98,7 @@ export const getCommentsByDiscussionId = async (id, dispatch, user_id) => {
 export const getSubtopics = async dispatch => {
   dispatch({ type: 'SUBTOPICS_FETCHING' });
   try {
-    const res = await axios.get(`${local}/subtopics`);
+    const res = await axios.get(`${postgres}/subtopics`);
     return dispatch({ type: 'SUBTOPICS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -135,7 +135,7 @@ const getUser = async (user, dispatch) => {
     id: user.sub
   });
   try {
-    const res = await axios.get(`${local}/users/${user.sub}`);
+    const res = await axios.get(`${postgres}/users/${user.sub}`);
     if (res.data) {
       const send = await dispatch({
         type: 'SET_CURRENT_USER',
@@ -159,7 +159,7 @@ const makeUser = async (info, dispatch) => {
     avatar: info.picture
   }; // send  nickname as a 'username'
   try {
-    const make = await axios.post(`${local}/users`, body);
+    const make = await axios.post(`${postgres}/users`, body);
     const followup = await dispatch({
       type: 'SET_CURRENT_USER',
       payload: body
@@ -238,7 +238,7 @@ export const createSubtopic = async (info, sub, dispatch) => {
     creater_id: sub
   };
   try {
-    const res = await axios.post(`${local}/subtopics/create`, body);
+    const res = await axios.post(`${postgres}/subtopics/create`, body);
 
     const followup = await dispatch({
       type: 'CREATE_SUBTOPIC',
@@ -266,7 +266,7 @@ export const addDiscussion = async (body, dispatch, nav) => {
   };
 
   try {
-    let res = await axios.post(`${local}/discussions/create`, apiBody);
+    let res = await axios.post(`${postgres}/discussions/create`, apiBody);
 
     let followup = await dispatch({
       type: 'CREATED_DISCUSSION',
@@ -292,7 +292,7 @@ export const addComment = async (dispatch, body) => {
     username: body.username
   }
   try {
-    let res = await axios.post(`${local}/comments/create`, body);
+    let res = await axios.post(`${postgres}/comments/create`, body);
     let followup = await dispatch({
       type: 'CREATED_COMMENT',
       payload: newReply
@@ -315,7 +315,7 @@ export const addCommentReply = async (dispatch, body) => {
     username: body.username
   }
   try {
-    let res = await axios.post(`${local}/comments/create/reply`, body);
+    let res = await axios.post(`${postgres}/comments/create/reply`, body);
     let followup = await dispatch({
       type: 'CREATED_REPLY',
       payload: newReply
@@ -330,7 +330,7 @@ export const addCommentReply = async (dispatch, body) => {
 
 export const upvoteDiscussion = async (dispatch, body) => {
   try {
-    let res = await axios.post(`${local}/upvotes/add`, body);
+    let res = await axios.post(`${postgres}/upvotes/add`, body);
     let followup = await dispatch({
       type: 'USER_UPVOTED',
       payload: res.data
@@ -346,7 +346,7 @@ export const upvoteDiscussion = async (dispatch, body) => {
 export const downvoteDiscussion = async (dispatch, body) => {
   try {
 
-    let res = await axios.post(`${local}/upvotes/subtract`, body);
+    let res = await axios.post(`${postgres}/upvotes/subtract`, body);
 
     let followup = await dispatch({
       type: 'USER_DOWNVOTED',
