@@ -363,7 +363,7 @@ export const downvoteDiscussion = async (dispatch, body) => {
 export const getHashtags = async (dispatch) => {
   dispatch({ type: 'FETCHING_HASHTAGS' })
   try {
-    let res = await axios.post(`${local}/discussions/hashtags`)
+    let res = await axios.post(`${postgres}/discussions/hashtags`)
     let followup = await dispatch({
       type: 'FETCH_HASHTAGS_SUCCESSFULLY',
       payload: res.data
@@ -377,7 +377,7 @@ export const getHashtags = async (dispatch) => {
 export const getByHashtags = async (dispatch, hashtag) => {
   dispatch({ type: 'DISCUSSIONS_FETCHING' })
   try {
-    let res = await axios.post(`${local}/discussions/byhashtags`, { hash: hashtag })
+    let res = await axios.post(`${postgres}/discussions/byhashtags`, { hash: hashtag })
     let followup = await dispatch({
       type: 'DISCUSSIONS_FETCHED',
       payload: res.data
