@@ -258,7 +258,7 @@ const createDiscussion = (title, creater_id, content, image, subtopic_id) => {
 const getDistinctHashtags = () => {
   return db.raw(`
   select distinct hashtag from hashtag order by hashtag
-  `)
+  `).then(res => res.rows);
 }
 
 const getDiscussionsByHashtags = (hashtag) => {
@@ -286,7 +286,7 @@ inner join upvote
 on upvote.discussion_id = discussion.id
 where hashtag.hashtag = ${hashtag}
 ORDER BY discussion.updated_at DESC
-`)
+`).then(res => res.rows);
 }
 
 

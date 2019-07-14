@@ -15,6 +15,8 @@ const {
   getHashTagsByDiscussionId,
   getCommentedDiscussionsbyUserId,
   createDiscussion,
+  getDistinctHashtags,
+  getDiscussionsByHashtags
 } = require('../helpers/index.js');
 const { isEmpty, flattenArray } = require('../utils/');
 // used for updated timestamps
@@ -340,5 +342,36 @@ router.delete('/:id', async (req, res) => {
       });
   }
 });
+
+router.post('/byhashtags', async (req, res) => {
+  const { hashtag } = req.body;
+  try {
+    const top = await getDiscussionsByHashtags(hashtag).map(async item => {
+      // use reduce to get the compare values
+      return await getHashTagsByDiscussionId(item.id).reduce(
+        async (acc, { hashtag }) => {
+          // build an obj to send out
+          // spread items and add the hashtags
+          // filter to remove null and undefined hashtags
+          let obj = {
+            ...item,
+            hashtags: flattenArray([acc.hashtags, hashtag]).filter(n => n)
+          };
+          return obj;
+        },
+        []
+      );
+    });
+    // return the function
+    return res.status(200).json(top);
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+});
+
+router.get('/hashtags', async (req, res) => {
+  const hash = await getDistinctHashtags()
+  return res.status(200).json(hash);
+})
 
 module.exports = router;
