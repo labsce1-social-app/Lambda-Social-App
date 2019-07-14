@@ -3,7 +3,7 @@ import { Store } from '../context/';
 import { getHashtags } from '../utils/Requests';
 import Hashtag from '../components/hashtags/Hashtag';
 import { withNavigation } from 'react-navigation';
-import { Container } from 'native-base';
+import { Container, Content } from 'native-base';
 
 
 const HashtagPage = (props) => {
@@ -17,7 +17,8 @@ const HashtagPage = (props) => {
     return (
         <Container style={{
             backgroundColor: '#F6F8FA',
-            padding: 5
+            width: '100%',
+            padding: 10
         }}>
             <Hashtag loading={state.hashtags_loading}
                 hashtags={state.hashtags}
