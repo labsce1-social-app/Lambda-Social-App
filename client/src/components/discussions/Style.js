@@ -43,8 +43,9 @@ export default StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        width: '30%',
+        width: '50%',
         margin: 10,
+        marginTop: 40,
         alignSelf: 'flex-start'
     },
     hashtags: {

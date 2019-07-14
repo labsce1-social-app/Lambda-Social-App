@@ -69,13 +69,23 @@ const PostHeader = props => {
             source={{ uri: props.discussion_image }}
           />
         </View>
-        <View style={{ width: 50 }}>
+        <View style={{
+          width: 100,
+          flex: 1,
+          flexDirection: 'row'
+        }}>
           <Reaction
+            image={require('../../assets/up.png')}
             count={props.upvotes}
             voted={props.voted}
-            handlePressFirst={() => props.voted === false ? upvote(props.id) : downvote(props.id)}
-            handlePressSecond={() => props.voted === true ? downvote(props.id) : upvote(props.id)}
-            image={require('../../assets/like.png')}
+            color="green"
+            handlePress={() => upvote(props.id)}
+          />
+          <Reaction
+            image={require('../../assets/down.png')}
+            voted={props.voted}
+            color="orange"
+            handlePress={() => downvote(props.id)}
           />
         </View>
       </Content>

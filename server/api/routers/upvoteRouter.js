@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const db = require('../../data/dbconfig.js');
-const {isEmpty} = require('../utils/');
+const { isEmpty } = require('../utils/');
 
 const {
     upvoteByDiscussionId,
@@ -14,27 +14,21 @@ router.post('/add', async (req, res) => {
     if (isEmpty(user_id) || isEmpty(discussion_id)) {
         return res.status(400).json('missing user_id or discussion_id')
     }
-    try {
-        const upvote = await upvoteByDiscussionId(user_id, discussion_id)
-        return res.status(201).json(upvote)
-    } catch (error) {
-        return res.status(500).json(error)
-    }
+    const upvote = await upvoteByDiscussionId(user_id, discussion_id)
+    return res.status(201).json(upvote)
+
 })
 
 // removes user id from upvote table where discussion matches
-router.delete('/subtract', async (req, res) => {
+router.post('/subtract', async (req, res) => {
     const { user_id, discussion_id } = req.body;
 
     if (isEmpty(user_id) || isEmpty(discussion_id)) {
         return res.status(400).json('missing user_id or discussion_id')
     }
-    try {
-        const downvote = await downvoteByDiscussionId(user_id, discussion_id)
-        return res.status(200).json(downvote)
-    } catch (error) {
-        return res.status(500).json(error)
-    }
+    const downvote = await downvoteByDiscussionId(user_id, discussion_id)
+    return res.status(200).json(downvote)
+
 })
 
 module.exports = router;
