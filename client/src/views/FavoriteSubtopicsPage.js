@@ -5,10 +5,12 @@ import { getFavoriteSubtopics } from '../utils/Requests';
 // import { withNavigation } from 'react-navigation';
 import { Container } from 'native-base';
 
+import Subtopics from '../components/subtopics/Subtopics';
+
 // this DiscussionsPage is referring to all discussions inside of a chosen subtopic ONLY
 const FavoriteSubtopics = props => {
   const { state, dispatch } = useContext(Store);
-  console.log('IN FAVORITES USER ID ', state.user.id);
+  // console.log('IN FAVORITES USER ID ', state.user.id);
 
   useEffect(
     () => {
@@ -20,6 +22,7 @@ const FavoriteSubtopics = props => {
   return (
     <Container>
       <Text>IN FAVORITES</Text>
+      <Subtopics subtopics={state.favorite_subtopics} />
     </Container>
   );
 };
