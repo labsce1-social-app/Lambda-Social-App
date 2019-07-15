@@ -7,10 +7,11 @@ const getUsersFavSubtopics = id => {
       subtopic_users.user_id as user_id, 
       subtopic_users.subtopic_id as id, 
       subtopic.title as title, 
-      subtopic.creater_id
+      users.username as username
       FROM subtopic_users
       inner JOIN subtopic
       on subtopic.id = subtopic_users.subtopic_id
+      inner JOIN users on subtopic.creater_id = users.id
       WHERE subtopic_users.user_id = '${id}'`
     )
     .then(res => res.rows);
