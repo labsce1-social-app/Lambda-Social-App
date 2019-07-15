@@ -118,3 +118,31 @@ export const addDiscussion = async (body, dispatch, nav) => {
         console.log(err);
     }
 };
+
+export const getHashtags = async (dispatch) => {
+    dispatch({ type: 'FETCHING_HASHTAGS' })
+    try {
+        let res = await axios.post(`${postgres}/discussions/hashtags`)
+        let followup = await dispatch({
+            type: 'FETCH_HASHTAGS_SUCCESSFULLY',
+            payload: res.data
+        })
+        return { res, followup };
+    } catch (err) {
+        dispatch({ type: 'FETCH_HASHTAGS_FAILED', payload: err })
+    }
+}
+
+export const getByHashtags = async (dispatch, hashtag) => {
+    dispatch({ type: 'DISCUSSIONS_FETCHING' })
+    try {
+        let res = await axios.post(`${postgres}/discussions/byhashtags`, { hash: hashtag })
+        let followup = await dispatch({
+            type: 'DISCUSSIONS_FETCHED',
+            payload: res.data
+        })
+        return { res, followup };
+    } catch (err) {
+        dispatch({ type: 'DISCUSSIONS_FAILED', payload: err })
+    }
+}

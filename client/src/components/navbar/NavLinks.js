@@ -37,6 +37,12 @@ const NavLinks = ({ navigation, state, dispatch, text }) => {
         })
     }
 
+    const handleSearch = () => {
+        navigation.navigate('Hashtags', {
+            subId: state.user.id
+        })
+    }
+
     return (
         <Card>
             <CardItem>
@@ -59,6 +65,16 @@ const NavLinks = ({ navigation, state, dispatch, text }) => {
                     name="md-star"
                     style={{ color: state.isAuthenticated ? 'black' : 'gray' }} />
                 <Text style={{ color: state.isAuthenticated ? 'black' : 'gray' }}>Favorite Subs</Text>
+                <Right >
+                    <Icon name="arrow-forward" />
+                </Right>
+            </CardItem>
+            <CardItem button onPress={() => handleSearch()}>
+                <Icon
+                    active
+                    name="md-grid"
+                    style={{ color: state.isAuthenticated ? 'black' : 'gray' }} />
+                <Text style={{ color: state.isAuthenticated ? 'black' : 'gray' }}>Hashtag Search</Text>
                 <Right >
                     <Icon name="arrow-forward" />
                 </Right>
