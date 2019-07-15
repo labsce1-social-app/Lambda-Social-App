@@ -1,11 +1,18 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useInterval } from 'react';
 import { StatusBar } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import Discussions from '../components/discussions/Discussions';
 import Sort from '../components/discussions/Sort';
 import { Container } from 'native-base';
 import { Store } from '../context/';
-import { getDiscussions, isAuthed, getSubtopics } from '../utils/Requests';
+import {
+  getDiscussions,
+  isAuthed,
+  getSubtopics,
+  getFavoriteSubtopics
+} from '../utils/Requests';
+
+import { getData } from '../utils/AsyncStorage';
 
 // this home is referring to TopDiscussions component ONLY
 
@@ -22,12 +29,29 @@ const Home = props => {
   useEffect(
     () => {
       getSubtopics(dispatch);
-    }, () => getSubtopics()
+    },
+    () => getSubtopics()
   );
 
   useEffect(() => {
     getDiscussions(state.sortBy, dispatch);
   }, [state.sortBy]);
+
+  useEffect(
+    () => {
+      getUserSubs(dispatch);
+    },
+    () => getUserSubs()
+  );
+
+  const getUserSubs = async dispatch => {
+    let userId = await getData('accessToken');
+
+    userId = userId.id;
+    // console.log(userId);
+
+    await getFavoriteSubtopics(dispatch, userId);
+  };
 
   return (
     <Container style={{ backgroundColor: '#F6F8FA', padding: 5 }}>
