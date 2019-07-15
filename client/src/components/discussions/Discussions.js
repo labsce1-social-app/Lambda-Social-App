@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from 'react';
-
+import { withNavigation } from 'react-navigation';
 import { FlatList } from 'react-native-gesture-handler';
 const Discussion = lazy(() => import('./Discussion'));
 import { Text, Card, CardItem } from 'native-base';
@@ -7,13 +7,13 @@ import { isEmpty } from '../../utils/utility';
 import { config } from '../../utils/dimensions';
 import style from './Style';
 
-const Discussions = ({ loading, discussions }) => {
+const Discussions = (props) => {
 
-  return loading === true ? (
+  return props.loading === true ? (
     <Text>Loading...</Text>
-  ) : loading === false && !isEmpty(discussions) ? (
+  ) : props.loading === false && !isEmpty(props.discussions) ? (
     <FlatList
-      data={discussions}
+      data={props.discussions}
       renderItem={({ item }) => (
         <Suspense fallback={<Text>Loading...</Text>}>
           <Discussion
@@ -31,6 +31,10 @@ const Discussions = ({ loading, discussions }) => {
               item.hashtags &&
               item.hashtags.map((hashtag, index) => (
                 <Text
+                  onPress={() => props.navigation.navigate('DiscussionsByHashtags', {
+                    hashtag: hashtag,
+                    title: hashtag
+                  })}
                   style={style.hashtagText}
                   key={`hashtag-${hashtag[0]}-${index}`}
                 >
@@ -42,7 +46,7 @@ const Discussions = ({ loading, discussions }) => {
         </Suspense>
       )}
       keyExtractor={item => `${item.id}`}
-      refreshing={loading}
+      refreshing={props.loading}
     />
   ) : (
         <Card>
@@ -55,4 +59,4 @@ const Discussions = ({ loading, discussions }) => {
       );
 };
 
-export default Discussions;
+export default withNavigation(Discussions);
