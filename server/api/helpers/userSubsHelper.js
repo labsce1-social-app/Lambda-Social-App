@@ -32,9 +32,13 @@ const addFavoriteSubtopicToUser = async body => {
     });
 };
 
-const unFavoriteSubtopicById = id => {
+const unFavoriteSubtopicById = (subId, userId) => {
   return db
-    .raw(`DELETE FROM subtopic_users WHERE subtopic_users.id = '${id}'`)
+    .raw(
+      `DELETE FROM subtopic_users
+      WHERE subtopic_users.subtopic_id = '${subId}' AND
+      subtopic_users.user_id = '${userId}'`
+    )
     .then(res => {
       console.log('DELETED AND THEN: ', res);
     });

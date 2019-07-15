@@ -54,10 +54,10 @@ router.post('/favorite', async (req, res) => {
 /**
  * unsubscribe from a subtopic with subtopic_id
  */
-router.delete('/unfavorite/:id', (req, res) => {
-  const { id } = req.params;
+router.post('/unfavorite', (req, res) => {
+  const { subId, userId } = req.body;
 
-  unFavoriteSubtopicById(id)
+  unFavoriteSubtopicById(subId, userId)
     .then(ret => {
       // console.log('DELTED IN ROUTER: ', ret);
       if (ret) res.json({ Message: 'Nothing to unfavorite' });
