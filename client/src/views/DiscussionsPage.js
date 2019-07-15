@@ -1,12 +1,14 @@
 import React, { useContext, useEffect } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { Store } from '../context/';
 // TODO: remove this later and place into it's own route
 import Sort from '../components/discussions/Sort';
 import Discussions from '../components/discussions/Discussions';
-import { getDiscussionsForSub } from '../utils/Requests';
+import { getDiscussionsForSub, favoriteTheSubtopic } from '../utils/Requests';
 import { withNavigation } from 'react-navigation';
 import { Container } from 'native-base';
 import FabButton from '../components/discussions/FabButton';
+
 // this DiscussionsPage is referring to all discussions inside of a chosen subtopic ONLY
 
 const DiscussionsPage = props => {
@@ -17,17 +19,32 @@ const DiscussionsPage = props => {
     getDiscussionsForSub(subId, dispatch);
   }, [subId]);
 
+  const favorite = (subId, userId) => {
+    const sub = {
+      subtopic_id: subId,
+      user_id: userId
+    };
+
+    favoriteTheSubtopic(dispatch, sub);
+  };
+
   return (
     <Container style={{ backgroundColor: '#F6F8FA', padding: 5 }}>
+      <View>
+        <TouchableOpacity onPress={() => favorite(subId, state.user.id)}>
+          <Text>Fav</Text>
+        </TouchableOpacity>
+      </View>
+
       <Sort />
       <Discussions
         loading={state.discussions_loading}
         discussions={state.discussions}
       />
       {props.navigation.state.routeName === 'Discussions' &&
-        state.isAuthenticated ? (
-          <FabButton />
-        ) : null}
+      state.isAuthenticated ? (
+        <FabButton />
+      ) : null}
     </Container>
   );
 };
