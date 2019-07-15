@@ -370,10 +370,17 @@ export const getFavoriteSubtopics = async (dispatch, id) => {
 };
 
 export const favoriteTheSubtopic = async (dispatch, sub) => {
-  try {
-    let res = axios.post(`${local}/subtopic_users`, sub);
+  // console.log(sub);
 
-    return { res };
+  try {
+    let res = axios.post(`${local}/subtopic_users/favorite`, sub);
+
+    let followup = await dispatch({
+      type: 'FAVORITE_SUBTOPICS_FETCHED',
+      payload: res.data
+    });
+
+    return { res, followup };
   } catch (err) {
     console.log(err);
   }
