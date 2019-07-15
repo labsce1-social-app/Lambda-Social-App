@@ -3,10 +3,10 @@ const db = require('../../data/dbconfig.js');
 const getUsersFavSubtopics = id => {
   return db
     .raw(
-      `SELECT subtopic_users.id, 
+      `SELECT  
       subtopic_users.user_id as user_id, 
-      subtopic_users.subtopic_id as subtopic_id, 
-      subtopic.title as subtopic_title, 
+      subtopic_users.subtopic_id as id, 
+      subtopic.title as title, 
       subtopic.creater_id
       FROM subtopic_users
       inner JOIN subtopic
@@ -19,7 +19,7 @@ const getUsersFavSubtopics = id => {
 const addFavoriteSubtopicToUser = body => {
   console.log('WE ARE INSERTING: ', body);
   return db('subtopic_users')
-    .insert(body, ['id', 'subtopic_id', 'user_id'])
+    .insert(body, ['id', 'user_id'])
     .then(row => row);
 };
 
