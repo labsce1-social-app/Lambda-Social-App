@@ -3,7 +3,7 @@ const db = require('../../data/dbconfig.js');
 const getUsersFavSubtopics = id => {
   return db
     .raw(
-      `SELECT  
+      `SELECT 
       subtopic_users.user_id as user_id, 
       subtopic_users.subtopic_id as id, 
       subtopic.title as title, 
@@ -17,10 +17,21 @@ const getUsersFavSubtopics = id => {
     .then(res => res.rows);
 };
 
-const addFavoriteSubtopicToUser = body => {
+const addFavoriteSubtopicToUser = async body => {
   console.log('WE ARE INSERTING: ', body);
   return db('subtopic_users')
-    .insert(body, ['id', 'user_id'])
+    .insert(body, ['id', 'user_id', 'subtopic_id'])
+    .whereNotExists(
+      await function() {
+        this.select('*')
+          .from('subtopic_users')
+          .whereRaw(
+            `subtopic_users.subtopic_id = '${
+              body.subtopic_id
+            }' AND subtopic_users.user_id = '${body.user_id}'`
+          );
+      }
+    )
     .then(row => row);
 };
 
@@ -32,8 +43,30 @@ const unFavoriteSubtopicById = id => {
     });
 };
 
+const canFavorite = async sub => {
+  console.log(sub);
+  let valid = true;
+  await db
+    .raw(
+      `SELECT subtopic_users.subtopic_id,
+    subtopic_users.user_id 
+    FROM subtopic_users 
+    WHERE subtopic_users.subtopic_id = '${sub.subtopic_id}' AND
+    subtopic_users.user_id  = '${sub.user_id}' `
+    )
+    .then(res => {
+      if (res.rows.length >= 1) valid = false;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+  return valid;
+};
+
 module.exports = {
   getUsersFavSubtopics,
   addFavoriteSubtopicToUser,
-  unFavoriteSubtopicById
+  unFavoriteSubtopicById,
+  canFavorite
 };
