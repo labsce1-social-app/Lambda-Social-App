@@ -360,8 +360,10 @@ export const getFavoriteSubtopics = async (dispatch, id) => {
   console.log('USER ID SENDING', id);
   try {
     let res = await axios.get(`${local}/subtopic_users/${id}`);
-    console.log(res);
+
     console.log(res.data);
+
+    dispatch({ type: 'FAVORITE_SUBTOPICS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
   }

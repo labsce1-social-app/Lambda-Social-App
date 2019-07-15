@@ -6,6 +6,7 @@ export const initialState = {
   top_discussions_error: '',
   sortBy: 'upvotes',
   subtopics: null,
+  favorite_subtopics: null,
   subtopics_loading: false,
   subtopics_error: '',
   discussions: [],
@@ -183,7 +184,7 @@ export const reducer = (state = initialState, action) => {
           ['0']: { ...state.comments['0'] },
           comments: [...comments, payload]
         },
-        comments_error: '',
+        comments_error: ''
       };
     case 'CREATING_COMMENT_FAILED':
       return {
@@ -195,48 +196,53 @@ export const reducer = (state = initialState, action) => {
         ...state,
         comments: {
           ['0']: { ...state.comments['0'] },
-          comments: state.comments.comments.map((comment) => {
+          comments: state.comments.comments.map(comment => {
             if (action.payload.comment_id === comment.id) {
               return {
                 ...comment,
                 replies: [...comment.replies, action.payload]
-              }
+              };
             } else {
               return comment;
             }
           })
         }
-      }
+      };
     case 'USER_UPVOTED':
       return {
         ...state,
         comments: {
           ['0']: {
             ...state.comments[0],
-            upvotes: (parseInt(state.comments['0'].upvotes) + 1),
+            upvotes: parseInt(state.comments['0'].upvotes) + 1,
             voted: true
           },
           comments: [...state.comments.comments]
-        },
-      }
+        }
+      };
     case 'USER_DOWNVOTED':
       return {
         ...state,
         comments: {
           ['0']: {
             ...state.comments[0],
-            upvotes: (parseInt(state.comments['0'].upvotes) - 1),
+            upvotes: parseInt(state.comments['0'].upvotes) - 1,
             voted: true
           },
           comments: [...state.comments.comments]
-        },
-      }
+        }
+      };
 
     case 'VOTE_ACTION_FAILED':
       return {
         ...state,
         upvote_error: action.payload
-      }
+      };
+    case 'FAVORITE_SUBTOPICS_FETCHED':
+      return {
+        ...state,
+        favorite_subtopics: action.payload
+      };
     default:
       throw new Error('not a valid action');
   }
