@@ -18,7 +18,7 @@ import { RNS3 } from 'react-native-aws3';
 
 const auth0ClientId = AUTH0_CLIENT;
 const auth0Domain = AUTH0_DOMAIN;
-const local = `http://localhost:3000`;
+const local = `http://192.168.137.1:3000`;
 const base_url = `https://social-app-test.herokuapp.com`;
 const postgres = 'https://lambdasocial-postgres.herokuapp.com';
 
@@ -63,11 +63,11 @@ export const getDiscussionsForSub = async (id, dispatch) => {
 export const getRecentDiscussions = async (id, dispatch) => {
   const body = {
     id
-  }
+  };
   try {
     await dispatch({ type: 'DISCUSSIONS_FETCHING', payload: true });
     const res = await axios.post(`${local}/discussions/recent`, body);
-    console.log(res.data)
+    console.log(res.data);
     return dispatch({
       type: 'DISCUSSIONS_FETCHED',
       payload: res.data
@@ -85,7 +85,7 @@ export const getCommentsByDiscussionId = async (id, dispatch, user_id) => {
   dispatch({ type: 'COMMENTS_FETCHING' });
   const body = {
     user_id: user_id
-  }
+  };
   try {
     const res = await axios.post(`${local}/comments/d/${id}`, body);
     return dispatch({ type: 'COMMENTS_FETCHED_SUCCESS', payload: res.data });
@@ -287,7 +287,7 @@ export const addComment = async (dispatch, body) => {
     comment_post: body.comment_post,
     discussion_id: body.discussion_id,
     username: body.username
-  }
+  };
   try {
     let res = await axios.post(`${local}/comments/create`, body);
     let followup = await dispatch({
@@ -297,10 +297,10 @@ export const addComment = async (dispatch, body) => {
 
     return { res, followup };
   } catch (err) {
-    console.log(err)
-    dispatch({ type: 'CREATING_COMMENT_FAILED', payload: err })
+    console.log(err);
+    dispatch({ type: 'CREATING_COMMENT_FAILED', payload: err });
   }
-}
+};
 
 // create a comment (not a reply)
 export const addCommentReply = async (dispatch, body) => {
@@ -310,7 +310,7 @@ export const addCommentReply = async (dispatch, body) => {
     discussion_id: body.discussion_id,
     comment_id: body.comment_id,
     username: body.username
-  }
+  };
   try {
     let res = await axios.post(`${local}/comments/create/reply`, body);
     let followup = await dispatch({
@@ -320,10 +320,10 @@ export const addCommentReply = async (dispatch, body) => {
 
     return { res, followup };
   } catch (err) {
-    console.log(err)
-    dispatch({ type: 'CREATING_COMMENT_FAILED', payload: err })
+    console.log(err);
+    dispatch({ type: 'CREATING_COMMENT_FAILED', payload: err });
   }
-}
+};
 
 export const upvoteDiscussion = async (dispatch, body) => {
   try {
@@ -331,28 +331,48 @@ export const upvoteDiscussion = async (dispatch, body) => {
     let followup = await dispatch({
       type: 'USER_UPVOTED',
       payload: body
-    })
+    });
 
     return { res, followup };
   } catch (err) {
-    console.log(err)
-    dispatch({ type: 'VOTE_ACTION_FAILED', payload: err })
+    console.log(err);
+    dispatch({ type: 'VOTE_ACTION_FAILED', payload: err });
   }
-}
+};
 
 export const downvoteDiscussion = async (dispatch, body) => {
   try {
-
     let res = await axios.delete(`${local}/upvotes/subtract`, { data: body });
 
     let followup = await dispatch({
       type: 'USER_DOWNVOTED',
       payload: body
-    })
+    });
 
     return { res, followup };
   } catch (err) {
-    console.log(err)
-    dispatch({ type: 'VOTE_ACTION_FAILED', payload: err })
+    console.log(err);
+    dispatch({ type: 'VOTE_ACTION_FAILED', payload: err });
   }
-}
+};
+
+export const getFavoriteSubtopics = async (dispatch, id) => {
+  console.log('USER ID SENDING', id);
+  try {
+    let res = await axios.get(`${local}/subtopic_users/${id}`);
+    console.log(res);
+    console.log(res.data);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const favoriteTheSubtopic = async (dispatch, sub) => {
+  try {
+    let res = axios.post(`${local}/subtopic_users`, sub);
+
+    return { res };
+  } catch (err) {
+    console.log(err);
+  }
+};
