@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Text, Card } from 'native-base';
-import { FlatList, View } from 'react-native';
+import { FlatList } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
 const Hashtag = (props) => {

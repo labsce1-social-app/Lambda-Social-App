@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from 'react';
 import { Store } from '../context/';
-import { getHashtags } from '../utils/Requests';
+import { getHashtags } from '../context/actions/discussionActions';
 import Hashtag from '../components/hashtags/Hashtag';
 import { withNavigation } from 'react-navigation';
-import { Container, Content } from 'native-base';
+import { Container } from 'native-base';
 
 
 const HashtagPage = (props) => {

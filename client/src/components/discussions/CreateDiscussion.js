@@ -10,7 +10,7 @@ import {
   Container
 } from 'native-base';
 import { Image, TextInput, Platform } from 'react-native';
-import { addDiscussion, uploadImage } from '../../utils/Requests';
+import { addDiscussion, uploadImage } from '../../context/actions/discussionActions';
 import { isEmpty } from '../../utils/utility';
 import { Store } from '../../context';
 

@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Store } from '../../context/';
 import { Item, Label, Input, Form, Button, Text, Toast } from 'native-base';
 import { View, Keyboard, Platform } from 'react-native';
-import { createSubtopic } from '../../utils/Requests';
+import { createSubtopic } from '../../context/actions/subtopicActions';
 import { isEmpty } from '../../utils/utility';
 
 const AddSub = () => {

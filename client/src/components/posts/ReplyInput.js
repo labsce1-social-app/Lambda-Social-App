@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Input, Item } from 'native-base';
 import { StyleSheet } from 'react-native';
-import { addCommentReply } from '../../utils/Requests';
+import { addCommentReply } from '../../context/actions/commentActions';
 import { Store } from '../../context';
 import { isEmpty } from '../../utils/utility';
 

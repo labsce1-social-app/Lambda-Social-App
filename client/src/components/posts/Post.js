@@ -2,7 +2,7 @@ import React, { useContext, lazy, Suspense } from 'react';
 import { Store } from '../../context/';
 import { ScrollView } from 'react-native-gesture-handler';
 import { FlatList, Text, View } from 'react-native';
-import { Card, Spinner } from 'native-base';
+import { Spinner } from 'native-base';
 import { isEmpty } from '../../utils/utility'
 import style from './Style';
 import PostHeader from './PostHeader';
