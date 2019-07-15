@@ -54,11 +54,15 @@ const Discussion = props => {
               />
               <Text>{'  '}</Text>
               <Reaction
-                image={require('../../assets/like.png')}
+                image={require('../../assets/up.png')}
                 count={props.upvotes}
                 voted={props.voted}
-                handlePressFirst={props.handlePressFirst}
-                handlePressSecond={props.handlePressSecond}
+                color="green"
+              />
+              <Reaction
+                image={require('../../assets/down.png')}
+                voted={props.voted}
+                color="orange"
               />
             </View>
           </Body>

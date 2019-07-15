@@ -214,7 +214,7 @@ export const reducer = (state = initialState, action) => {
         comments: {
           ['0']: {
             ...state.comments[0],
-            upvotes: (parseInt(state.comments['0'].upvotes) + 1),
+            upvotes: action.payload,
             voted: true
           },
           comments: [...state.comments.comments]
@@ -226,7 +226,7 @@ export const reducer = (state = initialState, action) => {
         comments: {
           ['0']: {
             ...state.comments[0],
-            upvotes: (parseInt(state.comments['0'].upvotes) - 1),
+            upvotes: action.payload,
             voted: true
           },
           comments: [...state.comments.comments]
