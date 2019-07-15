@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, Toast, CardItem, Icon, Text, Right } from 'native-base';
-import { handleAuth, handleLogout } from '../../utils/Requests';
+import { handleAuth, handleLogout } from '../../context/actions/authActions';
 
 const NavLinks = ({ navigation, state, dispatch, text }) => {
     const handleLogging = () => {

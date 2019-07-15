@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from 'react';
-import { reducer, initialState } from "./reducers";
+import { reducer, initialState } from "./reducers/reducers";
 
 // create the store with context, add state and dispatch
 export const Store = createContext({ state: {}, dispatch: () => { } });

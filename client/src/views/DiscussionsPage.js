@@ -3,8 +3,8 @@ import { Store } from '../context/';
 // TODO: remove this later and place into it's own route
 import Sort from '../components/discussions/Sort';
 import Discussions from '../components/discussions/Discussions';
-import { getDiscussionsForSub } from '../utils/Requests';
-import { withNavigation } from 'react-navigation';
+import { getDiscussionsForSub } from '../context/actions/discussionActions';
+import { withNavigationFocus, withNavigation } from 'react-navigation';
 import { Container } from 'native-base';
 import FabButton from '../components/discussions/FabButton';
 // this DiscussionsPage is referring to all discussions inside of a chosen subtopic ONLY
@@ -13,9 +13,13 @@ const DiscussionsPage = props => {
   const { state, dispatch } = useContext(Store);
   const subId = props.navigation.getParam('subId');
 
-  useEffect(() => {
-    getDiscussionsForSub(subId, dispatch);
-  }, [subId]);
+  //withNavigationFocus HOC gives access to isFocused props which returns a boolean
+  // when the page is being focused. Using this as a subscription listener to see if the
+  // component has changed
+  useEffect(
+    () => {
+      getDiscussionsForSub(subId, dispatch);
+    }, [props.isFocused]);
 
   return (
     <Container style={{ backgroundColor: '#F6F8FA', padding: 5 }}>
@@ -40,4 +44,4 @@ DiscussionsPage.navigationOptions = ({ navigation }) => ({
   }
 });
 
-export default withNavigation(DiscussionsPage);
+export default withNavigationFocus(withNavigation(DiscussionsPage));

@@ -13,7 +13,7 @@ import {
 
 import { Store } from '../../context';
 
-import { getSubtopics } from '../../utils/Requests';
+import { getSubtopics } from '../../context/actions/subtopicActions';
 
 const SubtopicsLoading = props => {
   const { state, dispatch } = useContext(Store);

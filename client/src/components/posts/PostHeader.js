@@ -3,28 +3,25 @@ import React, { useContext } from 'react';
 import { Store } from '../../context'
 import {
   CardItem,
-  Card,
   Thumbnail,
-  Body,
   Text,
-  Container,
   Content
 } from 'native-base';
-import { Image, View, ScrollView, StyleSheet, Platform } from 'react-native';
+import { Image, View } from 'react-native';
 import Reaction from '../../common/Reaction';
 import style from './Style';
-import { config } from '../../utils/dimensions';
 import moment from 'moment';
-import { upvoteDiscussion, downvoteDiscussion } from '../../utils/Requests';
+import { upvoteDiscussion, downvoteDiscussion } from '../../context/actions/upvoteActions';
 
-const ImagePost = props => {
-  if (!props.discussion_image) {
-    return null;
-  } else {
-    const imageUrl = props.discussion_image;
-    return <Image source={{ url: imageUrl }} />;
-  }
-};
+// doesn't seem to be used??
+// const ImagePost = props => {
+//   if (!props.discussion_image) {
+//     return null;
+//   } else {
+//     const imageUrl = props.discussion_image;
+//     return <Image source={{ url: imageUrl }} />;
+//   }
+// };
 
 const PostHeader = props => {
   const { state, dispatch } = useContext(Store);
