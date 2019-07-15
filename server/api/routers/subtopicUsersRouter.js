@@ -59,7 +59,9 @@ router.delete('/unfavorite/:id', (req, res) => {
 
   unFavoriteSubtopicById(id)
     .then(ret => {
-      console.log('DELTED IN ROUTER: ', ret);
+      // console.log('DELTED IN ROUTER: ', ret);
+      if (ret) res.json({ Message: 'Nothing to unfavorite' });
+
       res.status(200).json({ message: `Successfully unfavorited` });
     })
     .catch(err => {

@@ -3,9 +3,10 @@ const db = require('../../data/dbconfig.js');
 const getUsersFavSubtopics = id => {
   return db
     .raw(
-      `SELECT 
-      subtopic_users.user_id as user_id, 
+      `SELECT
+      subtopic_users.id as favorite_id,
       subtopic_users.subtopic_id as id, 
+      subtopic_users.user_id as user_id, 
       subtopic.title as title, 
       users.username as username
       FROM subtopic_users
@@ -14,25 +15,21 @@ const getUsersFavSubtopics = id => {
       inner JOIN users on subtopic.creater_id = users.id
       WHERE subtopic_users.user_id = '${id}'`
     )
-    .then(res => res.rows);
+    .then(res => res.rows)
+    .catch(err => {
+      console.log(err);
+    });
 };
 
 const addFavoriteSubtopicToUser = async body => {
   console.log('WE ARE INSERTING: ', body);
   return db('subtopic_users')
     .insert(body, ['id', 'user_id', 'subtopic_id'])
-    .whereNotExists(
-      await function() {
-        this.select('*')
-          .from('subtopic_users')
-          .whereRaw(
-            `subtopic_users.subtopic_id = '${
-              body.subtopic_id
-            }' AND subtopic_users.user_id = '${body.user_id}'`
-          );
-      }
-    )
-    .then(row => row);
+    .then(row => row)
+    .catch(err => {
+      console.log(err);
+      res.json({ error: err });
+    });
 };
 
 const unFavoriteSubtopicById = id => {
