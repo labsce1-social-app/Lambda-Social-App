@@ -18,7 +18,7 @@ import { RNS3 } from 'react-native-aws3';
 
 const auth0ClientId = AUTH0_CLIENT;
 const auth0Domain = AUTH0_DOMAIN;
-const local = `http://192.168.137.1:3000`;
+const local = `http://localhost:3000`;
 const base_url = `https://social-app-test.herokuapp.com`;
 const postgres = 'https://lambdasocial-postgres.herokuapp.com';
 
