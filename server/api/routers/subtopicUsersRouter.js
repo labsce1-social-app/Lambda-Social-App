@@ -61,8 +61,9 @@ router.post('/unfavorite', (req, res) => {
     .then(ret => {
       // console.log('DELTED IN ROUTER: ', ret);
       if (ret) res.json({ Message: 'Nothing to unfavorite' });
-
-      res.status(200).json({ message: `Successfully unfavorited` });
+      getUsersFavSubtopics(userId).then(subs => {
+        res.status(200).json(subs);
+      });
     })
     .catch(err => {
       res.status(500).json({ error: err });
