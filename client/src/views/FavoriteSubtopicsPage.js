@@ -21,10 +21,16 @@ const FavoriteSubtopics = props => {
 
   return (
     <Container>
-      <Text>IN FAVORITES</Text>
       <Subtopics subtopics={state.favorite_subtopics} />
     </Container>
   );
 };
+
+FavoriteSubtopics.navigationOptions = ({ navigation }) => ({
+  title: 'Favorite Subtopics',
+  headerTitleStyle: {
+    fontSize: 16
+  }
+})
 
 export default FavoriteSubtopics;
