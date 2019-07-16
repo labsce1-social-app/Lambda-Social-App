@@ -52,7 +52,7 @@ export const favoriteTheSubtopic = async (dispatch, sub) => {
   // console.log(sub);
 
   try {
-    let res = axios.post(`${postgres}/subtopic_users/favorite`, sub);
+    let res = await axios.post(`${postgres}/subtopic_users/favorite`, sub);
 
     let followup = await dispatch({
       type: 'SUBTOPIC_FAVORITED',

@@ -267,6 +267,7 @@ export const reducer = (state = initialState, action) => {
         favorite_subtopics: action.payload
       };
     case 'SUBTOPIC_FAVORITED':
+      console.log(action.payload)
       return {
         ...state,
         favorite: true,
