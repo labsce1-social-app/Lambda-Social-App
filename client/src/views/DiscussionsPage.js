@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Platform } from 'react-native';
 import { Store } from '../context/';
 // TODO: remove this later and place into it's own route
-import Sort from '../components/discussions/Sort';
 import Discussions from '../components/discussions/Discussions';
 import { getDiscussionsForSub } from '../context/actions/discussionActions';
-
+import { isEmpty } from '../utils/utility';
 import {
   favoriteTheSubtopic,
   unFavoriteTheSubtopic
@@ -19,7 +18,7 @@ import FabButton from '../components/discussions/FabButton';
 const DiscussionsPage = props => {
   const { state, dispatch } = useContext(Store);
   const subId = props.navigation.getParam('subId');
-
+  const [favorited, setFavorited] = useState(false);
   //withNavigationFocus HOC gives access to isFocused props which returns a boolean
   // when the page is being focused. Using this as a subscription listener to see if the
   // component has changed
@@ -27,6 +26,17 @@ const DiscussionsPage = props => {
     getDiscussionsForSub(subId, dispatch);
   }, [props.isFocused]);
 
+  useEffect(() => {
+    if (!isEmpty(state.favorite_subtopics)) {
+      state.favorite_subtopics.forEach((item) => {
+        if (item.id === subId) {
+          setFavorited(true);
+        }
+      })
+    }
+  }, [state.favorite_subtopics])
+
+  console.log(favorited)
   const favorite = async (subId, userId) => {
     const sub = {
       subtopic_id: subId,
@@ -55,6 +65,8 @@ const DiscussionsPage = props => {
     });
   };
 
+
+
   return (
     <Container style={{ backgroundColor: '#F6F8FA', padding: 5 }}>
       <View
@@ -63,27 +75,39 @@ const DiscussionsPage = props => {
           // backgroundColor: 'red',
           flexDirection: 'row',
           justifyContent: 'space-around',
-          maxHeight: 30,
-          marginBottom: 20
+          ...Platform.select({
+            ios: {
+              maxHeight: 30,
+              marginBottom: 20
+            },
+            android: {
+              maxHeight: 30,
+              marginBottom: 20
+            }
+          })
         }}
       >
-        <TouchableOpacity onPress={() => unFavorite(subId, state.user.id)}>
-          <Icon name="close-circle" />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => favorite(subId, state.user.id)}>
-          <Icon name="add-circle" />
-        </TouchableOpacity>
+        {favorited === true ? (
+          <TouchableOpacity onPress={() => unFavorite(subId, state.user.id)}>
+            <Icon name="close-circle" />
+          </TouchableOpacity>
+        ) : (
+            <TouchableOpacity onPress={() => favorite(subId, state.user.id)}>
+              <Icon name="add-circle" />
+            </TouchableOpacity>
+          )}
+
       </View>
 
-      <Sort />
+
       <Discussions
         loading={state.discussions_loading}
         discussions={state.discussions}
       />
       {props.navigation.state.routeName === 'Discussions' &&
-      state.isAuthenticated ? (
-        <FabButton />
-      ) : null}
+        state.isAuthenticated ? (
+          <FabButton />
+        ) : null}
     </Container>
   );
 };
