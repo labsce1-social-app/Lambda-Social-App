@@ -45,7 +45,7 @@ const Discussion = props => {
               <Text style={style.date}>{moment(props.date).fromNow()}</Text>
             </View>
             {!isEmpty(props.image) && props.image.includes('https://') && (
-              <Image style={style.avatar} source={{ url: props.image }} />
+              <Image style={style.avatar} source={{ uri: props.image }} />
             )}
             <View style={style.stats}>
               <Reaction

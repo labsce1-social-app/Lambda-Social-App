@@ -1,4 +1,6 @@
 import React, { lazy, Suspense } from 'react';
+import { View } from 'react-native';
+
 import { withNavigation } from 'react-navigation';
 import { FlatList } from 'react-native-gesture-handler';
 const Discussion = lazy(() => import('./Discussion'));
@@ -7,8 +9,7 @@ import { isEmpty } from '../../utils/utility';
 import { config } from '../../utils/dimensions';
 import style from './Style';
 
-const Discussions = (props) => {
-
+const Discussions = props => {
   return props.loading === true ? (
     <Text>Loading...</Text>
   ) : props.loading === false && !isEmpty(props.discussions) ? (
@@ -25,16 +26,17 @@ const Discussions = (props) => {
             date={item.created_at}
             comment={item.comments}
             upvotes={item.upvotes}
-
             voted={item.voted}
             hashtags={
               item.hashtags &&
               item.hashtags.map((hashtag, index) => (
                 <Text
-                  onPress={() => props.navigation.navigate('DiscussionsByHashtags', {
-                    hashtag: hashtag,
-                    title: hashtag
-                  })}
+                  onPress={() =>
+                    props.navigation.navigate('DiscussionsByHashtags', {
+                      hashtag: hashtag,
+                      title: hashtag
+                    })
+                  }
                   style={style.hashtagText}
                   key={`hashtag-${hashtag[0]}-${index}`}
                 >
@@ -49,14 +51,12 @@ const Discussions = (props) => {
       refreshing={props.loading}
     />
   ) : (
-        <Card>
-          <CardItem>
-            <Text style={{ padding: 15, height: config.deviceHeight * 0.65 }}>
-              Looks like no one has created a discussion in this subtopic yet...
-        </Text>
-          </CardItem>
-        </Card>
-      );
+    <View>
+      <Text style={{ padding: 15, height: config.deviceHeight * 0.65 }}>
+        Looks like no one has created a discussion in this subtopic yet...
+      </Text>
+    </View>
+  );
 };
 
 export default withNavigation(Discussions);

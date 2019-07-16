@@ -18,4 +18,3 @@ export default (App = () => (
     </Root>
   </StoreProvider>
 ));
-

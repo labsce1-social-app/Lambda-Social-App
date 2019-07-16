@@ -6,6 +6,7 @@ export const initialState = {
   top_discussions_error: '',
   sortBy: 'upvotes',
   subtopics: null,
+  favorite_subtopics: null,
   subtopics_loading: false,
   subtopics_error: '',
   discussions: [],
@@ -21,6 +22,7 @@ export const initialState = {
   newImage: null,
   newImage_error: '',
   upvote_error: '',
+  favorite: false,
   hashtags: null,
   hashtags_loading: false,
   hashtags_error: ''
@@ -143,7 +145,7 @@ export const reducer = (state = initialState, action) => {
         subtopics_loading: false,
         subtopics: [...state.subtopics],
         subtopics_error: action.payload
-      }
+      };
     case 'SENDING_IMAGE':
       return {
         ...state,
@@ -177,7 +179,7 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         dscussions_error: action.payload
-      }
+      };
     case 'CREATED_COMMENT':
       const { payload } = action;
       const { comments } = state.comments;
@@ -187,7 +189,7 @@ export const reducer = (state = initialState, action) => {
           ['0']: { ...state.comments['0'] },
           comments: [...comments, payload]
         },
-        comments_error: '',
+        comments_error: ''
       };
     case 'CREATING_COMMENT_FAILED':
       return {
@@ -199,18 +201,18 @@ export const reducer = (state = initialState, action) => {
         ...state,
         comments: {
           ['0']: { ...state.comments['0'] },
-          comments: state.comments.comments.map((comment) => {
+          comments: state.comments.comments.map(comment => {
             if (action.payload.comment_id === comment.id) {
               return {
                 ...comment,
                 replies: [...comment.replies, action.payload]
-              }
+              };
             } else {
               return comment;
             }
           })
         }
-      }
+      };
     case 'USER_UPVOTED':
       return {
         ...state,
@@ -221,8 +223,8 @@ export const reducer = (state = initialState, action) => {
             voted: true
           },
           comments: [...state.comments.comments]
-        },
-      }
+        }
+      };
     case 'USER_DOWNVOTED':
       return {
         ...state,
@@ -233,32 +235,49 @@ export const reducer = (state = initialState, action) => {
             voted: true
           },
           comments: [...state.comments.comments]
-        },
-      }
+        }
+      };
     case 'VOTE_ACTION_FAILED':
       return {
         ...state,
         upvote_error: action.payload
-      }
+      };
     case 'FETCHING_HASHTAGS':
       return {
         ...state,
         hashtags_loading: true,
         hashtags_error: ''
-      }
+      };
     case 'FETCH_HASHTAGS_SUCCESSFULLY':
       return {
         ...state,
         hashtags: action.payload,
         hashtags_loading: false,
         hashtags_error: ''
-      }
+      };
     case 'FETCH_HASHTAGS_FAILED':
       return {
         ...state,
         hashtags_loading: false,
         hashtags_error: action.payload
-      }
+      };
+    case 'FAVORITE_SUBTOPICS_FETCHED':
+      return {
+        ...state,
+        favorite_subtopics: action.payload
+      };
+    case 'SUBTOPIC_FAVORITED':
+      return {
+        ...state,
+        favorite: true,
+        favorite_subtopics: action.payload
+      };
+    case 'UN_FAVORITE':
+      return {
+        ...state,
+        favorite: false,
+        favorite_subtopics: action.payload
+      };
     default:
       throw new Error('not a valid action');
   }

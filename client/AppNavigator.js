@@ -20,6 +20,7 @@ import DrawerContent from './src/components/navbar/DrawerContent';
 import DrawerButton from './src/components/navbar/DrawerButton';
 import CreateDiscussion from './src/components/discussions/CreateDiscussion';
 import RecentDiscussionsPage from './src/views/RecentDiscussionsPage';
+import FavoriteSubtopicsPage from './src/views/FavoriteSubtopicsPage';
 
 // this component serves as a routing page, it will render everything based on the current url so it will be used to navigate the site.
 
@@ -38,6 +39,9 @@ const HomeStack = createStackNavigator({
   },
   Post: {
     screen: PostPage
+  },
+  FavoriteSubtopics: {
+    screen: FavoriteSubtopicsPage
   }
 });
 
