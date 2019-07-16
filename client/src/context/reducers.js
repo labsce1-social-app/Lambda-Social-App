@@ -20,7 +20,8 @@ export const initialState = {
   newImage_loading: false,
   newImage: null,
   newImage_error: '',
-  upvote_error: ''
+  upvote_error: '',
+  favorite: false
 };
 // all of the reducer conditions, we can use the dispatch method to interact with this by simply passing in a type and sending the payload.
 export const reducer = (state = initialState, action) => {
@@ -241,6 +242,18 @@ export const reducer = (state = initialState, action) => {
     case 'FAVORITE_SUBTOPICS_FETCHED':
       return {
         ...state,
+        favorite_subtopics: action.payload
+      };
+    case 'SUBTOPIC_FAVORITED':
+      return {
+        ...state,
+        favorite: true,
+        favorite_subtopics: action.payload
+      };
+    case 'UN_FAVORITE':
+      return {
+        ...state,
+        favorite: false,
         favorite_subtopics: action.payload
       };
     default:

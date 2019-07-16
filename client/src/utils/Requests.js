@@ -376,11 +376,27 @@ export const favoriteTheSubtopic = async (dispatch, sub) => {
     let res = axios.post(`${local}/subtopic_users/favorite`, sub);
 
     let followup = await dispatch({
-      type: 'FAVORITE_SUBTOPICS_FETCHED',
+      type: 'SUBTOPIC_FAVORITED',
       payload: res.data
     });
 
     return { res, followup };
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const unFavoriteTheSubtopic = async (dispatch, sub) => {
+  // console.log('SUB TO UNSUB', sub);
+  const unSub = {
+    subId: sub.subId,
+    userId: sub.userId
+  };
+
+  try {
+    let res = await axios.post(`${local}/subtopic_users/unfavorite`, unSub);
+
+    return dispatch({ type: 'UN_FAVORITE', payload: res.data });
   } catch (err) {
     console.log(err);
   }
