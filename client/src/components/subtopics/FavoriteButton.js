@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, TouchableOpacity, Platform } from 'react-native';
+import { Image, TouchableOpacity } from 'react-native';
 import { Store } from '../../context/';
-import { Icon, Toast } from 'native-base';
+import { Icon, Toast, Card, Text } from 'native-base';
 import { isEmpty } from '../../utils/utility';
 import {
     favoriteTheSubtopic,
@@ -13,21 +13,17 @@ const FavoriteButton = ({ subId }) => {
     const [favorited, setFavorited] = useState(false);
 
     useEffect(() => {
-        return () => {
-            favoriteChecker()
-        };
-    }, [favorited])
+        favoriteChecker()
+    }, [favorite])
 
     const favoriteChecker = () => {
         if (!isEmpty(state.favorite_subtopics)) {
-            return state.favorite_subtopics.forEach((item) => {
+            state.favorite_subtopics.forEach((item) => {
                 if (item.id === subId) {
                     console.log("IT'S TRUEEEE")
                     return setFavorited(true)
                 }
             })
-        } else {
-            return setFavorited(false)
         }
     }
 
@@ -58,34 +54,34 @@ const FavoriteButton = ({ subId }) => {
     };
 
     return (
-        <View
+        <Card
             style={{
                 flex: 1,
                 // backgroundColor: 'red',
                 flexDirection: 'row',
-                justifyContent: 'space-around',
-                ...Platform.select({
-                    ios: {
-                        maxHeight: 30,
-                        marginBottom: 20
-                    },
-                    android: {
-                        maxHeight: 30,
-                        marginBottom: 20
-                    }
-                })
+                justifyContent: 'flex-end',
+                height: 100,
+                padding: 10,
+                marginBottom: 15,
+                width: '60%',
             }}
         >
             {favorited === true ? (
-                <TouchableOpacity onPress={() => unFavorite(subId, state.user.id)}>
-                    <Icon name="close-circle" />
+                <TouchableOpacity
+                    onPress={() => unFavorite(subId, state.user.id)}
+                    style={{ flex: 1, flexDirection: 'row', alignItems: 'center', width: '70%', justifyContent: 'space-between' }}
+                >
+                    <Text>Add to Favorite</Text>
+                    <Image source={require("../../assets/favorite.png")} style={{ tintColor: 'gray' }} />
                 </TouchableOpacity>
             ) : (
-                    <TouchableOpacity onPress={() => favorite(subId, state.user.id)}>
-                        <Icon name="add-circle" />
+                    <TouchableOpacity onPress={() => favorite(subId, state.user.id)}
+                        style={{ flex: 1, flexDirection: 'row', alignItems: 'center', width: '70%', justifyContent: 'space-between' }}>
+                        <Text>Remove From Favorite</Text>
+                        <Image source={require("../../assets/favorite.png")} style={{ tintColor: 'yellow' }} />
                     </TouchableOpacity>
                 )}
-        </View>
+        </Card>
     )
 }
 

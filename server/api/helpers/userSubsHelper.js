@@ -22,11 +22,9 @@ const getUsersFavSubtopics = id => {
 };
 
 const addFavoriteSubtopicToUser = body => {
-  console.log('WE ARE INSERTING: ', body);
   return db('subtopic_users')
     .insert(body, ['id', 'user_id', 'subtopic_id'])
     .then(res => {
-      console.log(res)
       return res
     })
     .catch(err => {
@@ -43,12 +41,11 @@ const unFavoriteSubtopicById = (subId, userId) => {
       subtopic_users.user_id = '${userId}'`
     )
     .then(res => {
-      console.log('DELETED AND THEN: ', res);
+      res.json(res)
     });
 };
 
 const canFavorite = async sub => {
-  console.log(sub);
   let valid = true;
   await db
     .raw(

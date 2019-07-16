@@ -31,7 +31,6 @@ router.get('/:id', (req, res) => {
  * Takes in user_id and subtopic_id
  */
 router.post('/favorite', async (req, res) => {
-  console.log('REQ.BODY: ', req.body);
 
   if (await canFavorite(req.body)) {
     addFavoriteSubtopicToUser(req.body)

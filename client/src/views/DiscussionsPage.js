@@ -13,59 +13,12 @@ import FavoriteButton from '../components/subtopics/FavoriteButton';
 const DiscussionsPage = props => {
   const { state, dispatch } = useContext(Store);
   const subId = props.navigation.getParam('subId');
-  // const [favorited, setFavorited] = useState(false);
   //withNavigationFocus HOC gives access to isFocused props which returns a boolean
   // when the page is being focused. Using this as a subscription listener to see if the
   // component has changed
   useEffect(() => {
     getDiscussionsForSub(subId, dispatch);
   }, [props.isFocused]);
-
-  // useEffect(() => {
-  //   favoriteChecker()
-  // }, [favorited]);
-
-  // const favoriteChecker = () => {
-  //   if (!isEmpty(state.favorite_subtopics)) {
-  //     return state.favorite_subtopics.map((item) => {
-  //       if (item.id === subId) {
-  //         console.log("IT'S TRUEEEEEE")
-  //         return setFavorited(true)
-  //       }
-  //     })
-  //   } else {
-  //     setFavorited(false)
-  //   }
-  // }
-
-  // console.log(favorited)
-  // const favorite = async (subId, userId) => {
-  //   const sub = {
-  //     subtopic_id: subId,
-  //     user_id: userId
-  //   };
-  //   await favoriteTheSubtopic(dispatch, sub);
-  //   Toast.show({
-  //     text: `Favorited!`,
-  //     buttonText: 'Ok'
-  //   });
-  //   setFavorited(true)
-  // };
-
-  // const unFavorite = async (subId, userId) => {
-  //   const sub = {
-  //     subId,
-  //     userId
-  //   };
-  //   await unFavoriteTheSubtopic(dispatch, sub);
-  //   Toast.show({
-  //     text: `un favorited :|`,
-  //     buttonText: 'Ok'
-  //   });
-  //   setFavorited(false)
-  // };
-
-
 
   return (
     <Container style={{ backgroundColor: '#F6F8FA', padding: 5 }}>
