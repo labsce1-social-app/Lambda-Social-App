@@ -18,7 +18,6 @@ router.get('/:id', (req, res) => {
 
   getUsersFavSubtopics(id)
     .then(subs => {
-      console.log('SUBS', subs);
       res.status(200).json(subs);
     })
     .catch(err => {
@@ -32,7 +31,7 @@ router.get('/:id', (req, res) => {
  * Takes in user_id and subtopic_id
  */
 router.post('/favorite', async (req, res) => {
-  // console.log('REQ.BODY: ', req.body);
+  console.log('REQ.BODY: ', req.body);
 
   if (await canFavorite(req.body)) {
     addFavoriteSubtopicToUser(req.body)

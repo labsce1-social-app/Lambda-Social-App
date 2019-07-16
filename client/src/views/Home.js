@@ -9,8 +9,10 @@ import { getDiscussions } from '../context/actions/discussionActions';
 import { isAuthed } from '../context/actions/authActions';
 import {
   getSubtopics,
-  getFavoriteSubtopics
+  getFavoriteSubtopics,
 } from '../context/actions/subtopicActions';
+import { getData } from '../utils/AsyncStorage';
+import { isEmpty } from '../utils/utility';
 
 // this home is referring to TopDiscussions component ONLY
 
@@ -24,30 +26,26 @@ const Home = props => {
     () => isAuthed()
   );
 
-  useEffect(
-    () => {
-      getSubtopics(dispatch);
-    },
-    () => getSubtopics()
-  );
-
+  // gather top discussions
   useEffect(() => {
     getDiscussions(state.sortBy, dispatch);
   }, [state.sortBy]);
 
+  // gather all subtopics
+  useEffect(() => {
+    getSubtopics(dispatch)
+  }, () => getSubtopics);
+
+  // gather favorited subs
   useEffect(
     () => {
       getUserSubs(dispatch);
-    },
-    () => getUserSubs()
-  );
+    }, () => getUserSubts());
 
+  // gather favorite subtopics helper function
   const getUserSubs = async dispatch => {
     let userId = await getData('accessToken');
-
     userId = userId.id;
-    // console.log(userId);
-
     await getFavoriteSubtopics(dispatch, userId);
   };
 

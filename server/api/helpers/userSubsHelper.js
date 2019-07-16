@@ -5,9 +5,9 @@ const getUsersFavSubtopics = id => {
     .raw(
       `SELECT
       subtopic_users.id as favorite_id,
-      subtopic_users.subtopic_id as id, 
-      subtopic_users.user_id as user_id, 
-      subtopic.title as title, 
+      subtopic_users.subtopic_id as id,
+      subtopic_users.user_id as user_id,
+      subtopic.title as title,
       users.username as username
       FROM subtopic_users
       inner JOIN subtopic
@@ -21,11 +21,14 @@ const getUsersFavSubtopics = id => {
     });
 };
 
-const addFavoriteSubtopicToUser = async body => {
+const addFavoriteSubtopicToUser = body => {
   console.log('WE ARE INSERTING: ', body);
   return db('subtopic_users')
     .insert(body, ['id', 'user_id', 'subtopic_id'])
-    .then(row => row)
+    .then(res => {
+      console.log(res)
+      return res
+    })
     .catch(err => {
       console.log(err);
       res.json({ error: err });
@@ -50,8 +53,8 @@ const canFavorite = async sub => {
   await db
     .raw(
       `SELECT subtopic_users.subtopic_id,
-    subtopic_users.user_id 
-    FROM subtopic_users 
+    subtopic_users.user_id
+    FROM subtopic_users
     WHERE subtopic_users.subtopic_id = '${sub.subtopic_id}' AND
     subtopic_users.user_id  = '${sub.user_id}' `
     )

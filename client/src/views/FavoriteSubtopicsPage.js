@@ -17,7 +17,7 @@ const FavoriteSubtopics = props => {
       getFavoriteSubtopics(dispatch, state.user.id);
     },
     () => getFavoriteSubtopics()
-  );
+  ), [state.user.id];
 
   return (
     <Container>

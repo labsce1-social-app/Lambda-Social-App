@@ -1,7 +1,6 @@
 import {
     AUTH0_CLIENT,
     AUTH0_DOMAIN,
-    BASE_URL,
     LOCAL,
     AWS_ACCESS_KEY_ID,
     AWS_SECRET_ACCESS_KEY,
@@ -19,7 +18,8 @@ const auth0ClientId = AUTH0_CLIENT;
 const auth0Domain = AUTH0_DOMAIN;
 const local = `http://localhost:3000`;
 const base_url = `https://social-app-test.herokuapp.com`;
-const postgres = 'https://lambdasocial-postgres.herokuapp.com';
+// const postgres = 'https://lambdasocial-postgres.herokuapp.com';
+const postgres = 'http://localhost:3000';
 
 module.exports = {
     auth0ClientId,
@@ -36,7 +36,6 @@ module.exports = {
     storeData,
     getData,
     deleteData,
-    BASE_URL,
     LOCAL,
     AWS_ACCESS_KEY_ID,
     AWS_SECRET_ACCESS_KEY,
