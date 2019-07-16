@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { Store } from '../context/';
 import { View, Text } from 'react-native';
-import { getFavoriteSubtopics } from '../utils/Requests';
+import { getFavoriteSubtopics } from '../context/actions/subtopicActions';
 // import { withNavigation } from 'react-navigation';
 import { Container } from 'native-base';
 

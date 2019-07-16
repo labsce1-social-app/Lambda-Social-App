@@ -2,7 +2,6 @@ import React from 'react';
 import AppNavigator from './AppNavigator';
 import { Root } from 'native-base';
 import { StoreProvider } from './src/context/';
-import { Root } from 'native-base';
 
 // const instructions = Platform.select({
 //   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',

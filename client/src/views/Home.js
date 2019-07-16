@@ -7,7 +7,10 @@ import { Container } from 'native-base';
 import { Store } from '../context/';
 import { getDiscussions } from '../context/actions/discussionActions';
 import { isAuthed } from '../context/actions/authActions';
-import { getSubtopics } from '../context/actions/subtopicActions';
+import {
+  getSubtopics,
+  getFavoriteSubtopics
+} from '../context/actions/subtopicActions';
 
 // this home is referring to TopDiscussions component ONLY
 
