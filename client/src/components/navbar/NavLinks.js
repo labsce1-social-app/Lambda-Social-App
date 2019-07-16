@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, Toast, CardItem, Icon, Text, Right } from 'native-base';
-import { handleAuth, handleLogout } from '../../utils/Requests';
+import { handleAuth, handleLogout } from '../../context/actions/authActions';
 
 const NavLinks = ({ navigation, state, dispatch, text }) => {
   const handleLogging = () => {
@@ -37,6 +37,12 @@ const NavLinks = ({ navigation, state, dispatch, text }) => {
     });
   };
 
+  const handleSearch = () => {
+    navigation.navigate('Hashtags', {
+      subId: state.user.id
+    });
+  };
+
   return (
     <Card>
       <CardItem>
@@ -67,6 +73,19 @@ const NavLinks = ({ navigation, state, dispatch, text }) => {
         />
         <Text style={{ color: state.isAuthenticated ? 'black' : 'gray' }}>
           Favorite Subs
+        </Text>
+        <Right>
+          <Icon name="arrow-forward" />
+        </Right>
+      </CardItem>
+      <CardItem button onPress={() => handleSearch()}>
+        <Icon
+          active
+          name="md-grid"
+          style={{ color: state.isAuthenticated ? 'black' : 'gray' }}
+        />
+        <Text style={{ color: state.isAuthenticated ? 'black' : 'gray' }}>
+          Hashtag Search
         </Text>
         <Right>
           <Icon name="arrow-forward" />

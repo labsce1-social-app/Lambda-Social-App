@@ -3,7 +3,7 @@ import { Store } from '../context/';
 // TODO: remove this later and place into it's own route
 import Sort from '../components/discussions/Sort';
 import Discussions from '../components/discussions/Discussions';
-import { getRecentDiscussions } from '../utils/Requests';
+import { getRecentDiscussions } from '../context/actions/discussionActions';
 import { withNavigation } from 'react-navigation';
 import { Container } from 'native-base';
 

@@ -3,11 +3,12 @@ import { Text, Icon } from 'native-base';
 
 import Home from './src/views/Home';
 import DiscussionsPage from './src/views/DiscussionsPage';
+import DiscussionsByHashtags from './src/views/DiscussionsByHashtags';
 import PostPage from './src/views/PostPage';
 import SubtopicsPage from './src/views/SubtopicsPage';
 import SubtopicsLoading from './src/components/subtopics/SubtopicsLoading';
 import AddSModal from './src/components/subtopics/AddSModal';
-
+import HashtagPage from './src/views/HashtagPage';
 import {
   createDrawerNavigator,
   createAppContainer,
@@ -15,11 +16,9 @@ import {
 } from 'react-navigation';
 
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-
 import DrawerContent from './src/components/navbar/DrawerContent';
 import DrawerButton from './src/components/navbar/DrawerButton';
 import CreateDiscussion from './src/components/discussions/CreateDiscussion';
-import CreateButton from './src/components/navbar/CreateButton';
 import RecentDiscussionsPage from './src/views/RecentDiscussionsPage';
 import FavoriteSubtopicsPage from './src/views/FavoriteSubtopicsPage';
 
@@ -67,7 +66,16 @@ const SubtopicsStack = createStackNavigator(
       screen: DiscussionsPage
     },
     RecentDiscussions: {
-      screen: RecentDiscussionsPage
+      screen: RecentDiscussionsPage,
+    },
+    DiscussionsByHashtags: {
+      screen: DiscussionsByHashtags
+    },
+    Hashtags: {
+      screen: HashtagPage,
+      navigationOptions: ({ navigation }) => ({
+        title: 'Search'
+      })
     },
     Load: {
       screen: SubtopicsLoading

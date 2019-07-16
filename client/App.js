@@ -1,5 +1,6 @@
 import React from 'react';
 import AppNavigator from './AppNavigator';
+import { Root } from 'native-base';
 import { StoreProvider } from './src/context/';
 import { Root } from 'native-base';
 

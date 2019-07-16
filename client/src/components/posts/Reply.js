@@ -5,6 +5,7 @@ import { View, StyleSheet } from 'react-native';
 import moment from 'moment';
 
 const Reply = ({ item }) => {
+
     return (
         <View style={style.reply_container}>
             <CardItem style={styles.cardItem}>

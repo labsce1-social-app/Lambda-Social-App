@@ -54,7 +54,6 @@ const Comment = ({
                         return (
                             <Reply
                                 item={item}
-
                             />
                         )
                     }}

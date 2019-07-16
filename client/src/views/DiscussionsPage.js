@@ -8,8 +8,8 @@ import {
   getDiscussionsForSub,
   favoriteTheSubtopic,
   unFavoriteTheSubtopic
-} from '../utils/Requests';
-import { withNavigation } from 'react-navigation';
+} from '../context/actions/discussionActions';
+import { withNavigationFocus, withNavigation } from 'react-navigation';
 import { Container, Icon, Toast } from 'native-base';
 import FabButton from '../components/discussions/FabButton';
 
@@ -19,9 +19,12 @@ const DiscussionsPage = props => {
   const { state, dispatch } = useContext(Store);
   const subId = props.navigation.getParam('subId');
 
+  //withNavigationFocus HOC gives access to isFocused props which returns a boolean
+  // when the page is being focused. Using this as a subscription listener to see if the
+  // component has changed
   useEffect(() => {
     getDiscussionsForSub(subId, dispatch);
-  }, [subId]);
+  }, [props.isFocused]);
 
   const favorite = async (subId, userId) => {
     const sub = {
@@ -92,4 +95,4 @@ DiscussionsPage.navigationOptions = ({ navigation }) => ({
   }
 });
 
-export default withNavigation(DiscussionsPage);
+export default withNavigationFocus(withNavigation(DiscussionsPage));

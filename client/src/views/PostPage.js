@@ -1,8 +1,8 @@
-import React, { useEffect, useContext, useState, useRef } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { Store } from '../context';
 import Post from '../components/posts/Post';
 import FabButton from '../components/posts/FabButton';
-import { getCommentsByDiscussionId } from '../utils/Requests';
+import { getCommentsByDiscussionId } from '../context/actions/commentActions';
 import { Container } from 'native-base';
 import { withNavigation } from 'react-navigation';
 import KeyboardShift from '../common/KeyboardShift';

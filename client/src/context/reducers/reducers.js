@@ -12,6 +12,7 @@ export const initialState = {
   discussions: [],
   discussions_loading: false,
   discussions_error: '',
+  dscussions_error: '',
   isAuthenticated: false,
   user: null,
   comments: null,
@@ -21,7 +22,10 @@ export const initialState = {
   newImage: null,
   newImage_error: '',
   upvote_error: '',
-  favorite: false
+  favorite: false,
+  hashtags: null,
+  hashtags_loading: false,
+  hashtags_error: ''
 };
 // all of the reducer conditions, we can use the dispatch method to interact with this by simply passing in a type and sending the payload.
 export const reducer = (state = initialState, action) => {
@@ -125,7 +129,6 @@ export const reducer = (state = initialState, action) => {
         isAuthenticated: false,
         user: null
       };
-
     case 'CREATE_SUBTOPIC':
       const { title, creater_id, id } = action.payload;
       return {
@@ -135,6 +138,13 @@ export const reducer = (state = initialState, action) => {
           { creater_id, title, username: state.user.username, id },
           ...state.subtopics
         ]
+      };
+    case 'CREATE_SUBTOPIC_FAILED':
+      return {
+        ...state,
+        subtopics_loading: false,
+        subtopics: [...state.subtopics],
+        subtopics_error: action.payload
       };
     case 'SENDING_IMAGE':
       return {
@@ -158,23 +168,17 @@ export const reducer = (state = initialState, action) => {
         newImage_error: action.payload
       };
     case 'CREATED_DISCUSSION':
-      const { content, image, subtopic_id } = action.payload;
-
       return {
         ...state,
         newImage: '',
-        discussions: [
-          ...state.discussions,
-          {
-            id: action.payload.id,
-            title: action.payload.title,
-            content,
-            creater_id,
-            image,
-            subtopic_id,
-            username: state.user.username
-          }
-        ]
+        discussions: action.payload,
+        discussions_loading: false,
+        discussions_error: ''
+      };
+    case 'CREATE_DISCUSSION_FAILED':
+      return {
+        ...state,
+        dscussions_error: action.payload
       };
     case 'CREATED_COMMENT':
       const { payload } = action;
@@ -215,7 +219,7 @@ export const reducer = (state = initialState, action) => {
         comments: {
           ['0']: {
             ...state.comments[0],
-            upvotes: parseInt(state.comments['0'].upvotes) + 1,
+            upvotes: action.payload,
             voted: true
           },
           comments: [...state.comments.comments]
@@ -227,17 +231,35 @@ export const reducer = (state = initialState, action) => {
         comments: {
           ['0']: {
             ...state.comments[0],
-            upvotes: parseInt(state.comments['0'].upvotes) - 1,
+            upvotes: action.payload,
             voted: true
           },
           comments: [...state.comments.comments]
         }
       };
-
     case 'VOTE_ACTION_FAILED':
       return {
         ...state,
         upvote_error: action.payload
+      };
+    case 'FETCHING_HASHTAGS':
+      return {
+        ...state,
+        hashtags_loading: true,
+        hashtags_error: ''
+      };
+    case 'FETCH_HASHTAGS_SUCCESSFULLY':
+      return {
+        ...state,
+        hashtags: action.payload,
+        hashtags_loading: false,
+        hashtags_error: ''
+      };
+    case 'FETCH_HASHTAGS_FAILED':
+      return {
+        ...state,
+        hashtags_loading: false,
+        hashtags_error: action.payload
       };
     case 'FAVORITE_SUBTOPICS_FETCHED':
       return {

@@ -1,5 +1,5 @@
 const db = require('../../data/dbconfig.js');
-const isEmpty = require('../utils/');
+const { isEmpty } = require('../utils/');
 
 const getCommentsByDiscussionId = (discussion_id) => {
   return db.raw(
@@ -59,10 +59,7 @@ discussion.id as id,
 discussion.content as discussion_content,
 discussion.image as discussion_image,
 discussion.created_at as discussion_date,
-(select count(upvote.user_id)
-	from upvote
-			where upvote.discussion_id = ${discussion_id}
-) as upvotes,
+(select sum( upvote.vote) from upvote where upvote.discussion_id = ${discussion_id}) as upvotes,
 (select exists
  	(
 		select upvote.user_id

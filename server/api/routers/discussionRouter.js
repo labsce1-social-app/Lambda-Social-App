@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const db = require('../../data/dbconfig.js');
 const {
+  addHashTags,
   joinUsersAndSubtopic,
   joinUsersAndSubtopicAtId,
   canInsertDisucssion,
@@ -13,9 +14,11 @@ const {
   joinUsersAtSubtopicId,
   getHashTagsByDiscussionId,
   getCommentedDiscussionsbyUserId,
-  createDiscussion
+  createDiscussion,
+  getDistinctHashtags,
+  getDiscussionsByHashtags
 } = require('../helpers/index.js');
-const isEmpty = require('../utils/');
+const { isEmpty, flattenArray } = require('../utils/');
 // used for updated timestamps
 const moment = require('moment');
 let timestamp = moment().format('YYYY-MM-DD HH:mm:ss');
@@ -32,39 +35,25 @@ TESTS: {
 
 router.get('/?', async (req, res) => {
   const { sort } = req.query;
-  try {
-    // map through discussions to inject hashtags
-    const top = await topDiscussions(sort).map(async item => {
-      // use reduce to get the compare values
-      return await getHashTagsByDiscussionId(item.id).reduce(
-        async (acc, { hashtag }) => {
-          // flatten array of hashtags (they come in nested)
-          const flattenDeep = arr => {
-            return arr.reduce(
-              (acc, val) =>
-                Array.isArray(val)
-                  ? acc.concat(flattenDeep(val))
-                  : acc.concat(val),
-              []
-            );
-          };
-          // build an obj to send out
-          // spread items and add the hashtags
-          // filter to remove null and undefined hashtags
-          let obj = {
-            ...item,
-            hashtags: flattenDeep([acc.hashtags, hashtag]).filter(n => n)
-          };
-          return obj;
-        },
-        []
-      );
-    });
-    // return the function
-    return res.status(200).json(top);
-  } catch (err) {
-    return res.status(500).json(err);
-  }
+  // map through discussions to inject hashtags
+  const top = await topDiscussions(sort).map(async item => {
+    // use reduce to get the compare values
+    return await getHashTagsByDiscussionId(item.id).reduce(
+      async (acc, { hashtag }) => {
+        // build an obj to send out
+        // spread items and add the hashtags
+        // filter to remove null and undefined hashtags
+        let obj = {
+          ...item,
+          hashtags: flattenArray([acc.hashtags, hashtag]).filter(n => n)
+        };
+        return obj;
+      },
+      []
+    );
+  });
+  // return the function
+  return res.status(200).json(top);
 });
 
 /*
@@ -124,40 +113,24 @@ TESTS: {
 
 router.get('/s/:id', async (req, res) => {
   const { id } = req.params;
-  try {
-    const top = await joinUsersAtSubtopicId(id);
-    top.map(async item => {
-      // use reduce to get the compare values
-      return await getHashTagsByDiscussionId(item.id).reduce(
-        async (acc, { hashtag }) => {
-          // flatten array of hashtags (they come in nested)
-          const flattenDeep = arr => {
-            return arr.reduce(
-              (acc, val) =>
-                Array.isArray(val)
-                  ? acc.concat(flattenDeep(val))
-                  : acc.concat(val),
-              []
-            );
-          };
-          // build an obj to send out
-          // spread items and add the hashtags
-          // filter to remove null and undefined hashtags
-          let obj = {
-            ...item,
-            hashtags: flattenDeep([acc.hashtags, hashtag]).filter(n => n)
-          };
-
-          return obj;
-        },
-        []
-      );
-    });
-    // return the function
-    return res.status(200).json(top);
-  } catch (err) {
-    return res.status(500).json(err);
-  }
+  const top = await joinUsersAtSubtopicId(id).map(async item => {
+    // use reduce to get the compare values
+    return await getHashTagsByDiscussionId(item.id).reduce(
+      async (acc, { hashtag }) => {
+        // build an obj to send out
+        // spread items and add the hashtags
+        // filter to remove null and undefined hashtags
+        let obj = {
+          ...item,
+          hashtags: flattenArray([acc.hashtags, hashtag]).filter(n => n)
+        };
+        return obj;
+      },
+      []
+    );
+  });
+  // return the function
+  return res.status(200).json(top);
 });
 
 /*
@@ -204,16 +177,37 @@ TESTS: {
 }
 */
 
-router.post('/create', (req, res) => {
-  createDiscussion(req.body)
-    .then(discussion => {
-      res
-        .status(201)
-        .json({ discussion, message: 'Succesfully created discussion' });
+router.post('/create', async (req, res) => {
+  const { title, creater_id, content, image, subtopic_id, hashtags } = req.body;
+
+  const flatTags = await flattenArray(hashtags)
+  await createDiscussion(title, creater_id, content, image, subtopic_id)
+    .then(async (disc) => {
+      disc.map(async (discuss) => {
+        flatTags.map(async (hashtag) => {
+          return addHashTags(discuss.id, hashtag);
+        })
+      })
     })
-    .catch(err => {
-      res.status(500).json({ error: err });
-    });
+
+  const top = await joinUsersAtSubtopicId(subtopic_id).map(async item => {
+    // use reduce to get the compare values
+    return await getHashTagsByDiscussionId(item.id).reduce(
+      async (acc, { hashtag }) => {
+        // build an obj to send out
+        // spread items and add the hashtags
+        // filter to remove null and undefined hashtags
+        let obj = {
+          ...item,
+          hashtags: flattenArray([acc.hashtags, hashtag]).filter(n => n)
+        };
+        return obj;
+      },
+      []
+    );
+  });
+
+  res.status(201).json(top);
 });
 
 /*
@@ -340,5 +334,46 @@ router.delete('/:id', async (req, res) => {
       });
   }
 });
+
+/*
+  POST Method (GET doesn't work for some reason)
+  @PARAM = NONE
+  ROUTE = discussions/hashtags
+  RETURN = [ { "hashtag": STRING } ]
+*/
+router.post('/hashtags', async (req, res) => {
+  const hash = await getDistinctHashtags()
+  return res.status(200).json(hash);
+});
+
+/*
+  POST Method
+  @PARAM = hash (Object with hashtag string)
+  ROUTE = discussions/byhashtags
+  RETURN = [ { "hashtag": STRING } ]
+*/
+router.post('/byhashtags', async (req, res) => {
+  const { hash } = req.body;
+  const top = await getDiscussionsByHashtags(hash).map(async item => {
+    // use reduce to get the compare values
+    return await getHashTagsByDiscussionId(item.id).reduce(
+      async (acc, { hashtag }) => {
+        // build an obj to send out
+        // spread items and add the hashtags
+        // filter to remove null and undefined hashtags
+        let obj = {
+          ...item,
+          hashtags: flattenArray([acc.hashtags, hashtag]).filter(n => n)
+        };
+        return obj;
+      },
+      []
+    );
+  });
+  // return the function
+  return res.status(200).json(top);
+});
+
+
 
 module.exports = router;

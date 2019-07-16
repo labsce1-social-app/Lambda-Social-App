@@ -4,7 +4,7 @@ import {
     Text, TouchableOpacity, Animated
 } from 'react-native';
 
-const Reaction = ({ count, image, handlePressFirst, handlePressSecond, voted }) => {
+const Reaction = ({ count, image, handlePress, voted, color }) => {
     const [springValue, setSprintValue] = useState(new Animated.Value(0.3));
     const [clicked, setClicked] = useState(false)
 
@@ -15,15 +15,14 @@ const Reaction = ({ count, image, handlePressFirst, handlePressSecond, voted }) 
                 friction: 1,
             }).start();
             setClicked(true)
-            handlePressFirst()
         } else {
             Animated.spring(springValue, {
                 toValue: 0.3,
                 friction: 1,
             }).start();
             setClicked(false)
-            handlePressSecond()
         }
+        handlePress()
     }
     return (
         <TouchableOpacity
@@ -33,7 +32,7 @@ const Reaction = ({ count, image, handlePressFirst, handlePressSecond, voted }) 
             <Animated.Image
                 source={image}
                 style={[styles.imageView,
-                { transform: [{ scale: springValue }], alignSelf: 'center' }
+                { transform: [{ scale: springValue }], alignSelf: 'center', tintColor: color, width: 80, height: 80 }
                 ]}>
             </Animated.Image>
             <Text style={{ color: voted ? '#0064B5' : '#000000' }}>{count}</Text>
@@ -42,8 +41,9 @@ const Reaction = ({ count, image, handlePressFirst, handlePressSecond, voted }) 
 }
 
 Reaction.defaultProps = {
-    handlePressFirst: () => { },
-    handlePressSecond: () => { }
+    handlePress: () => { },
+    color: null,
+    count: null
 }
 
 const styles = StyleSheet.create({
@@ -58,6 +58,9 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
         backgroundColor: 'transparent',
+    },
+    upvoteColor: {
+        color: 'green'
     }
 });
 

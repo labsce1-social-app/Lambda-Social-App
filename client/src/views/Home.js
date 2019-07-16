@@ -5,14 +5,9 @@ import Discussions from '../components/discussions/Discussions';
 import Sort from '../components/discussions/Sort';
 import { Container } from 'native-base';
 import { Store } from '../context/';
-import {
-  getDiscussions,
-  isAuthed,
-  getSubtopics,
-  getFavoriteSubtopics
-} from '../utils/Requests';
-
-import { getData } from '../utils/AsyncStorage';
+import { getDiscussions } from '../context/actions/discussionActions';
+import { isAuthed } from '../context/actions/authActions';
+import { getSubtopics } from '../context/actions/subtopicActions';
 
 // this home is referring to TopDiscussions component ONLY
 
