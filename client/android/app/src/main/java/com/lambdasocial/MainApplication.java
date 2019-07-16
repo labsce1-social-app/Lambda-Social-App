@@ -5,7 +5,6 @@ import android.app.Application;
 import com.facebook.react.ReactApplication;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.horcrux.svg.SvgPackage;
-import com.amazonaws.RNAWSCognitoPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.auth0.react.A0Auth0Package;
@@ -32,7 +31,6 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new VectorIconsPackage(),
             new SvgPackage(),
-            new RNAWSCognitoPackage(),
             new ImagePickerPackage(),
             new AsyncStoragePackage(),
             new A0Auth0Package(),
