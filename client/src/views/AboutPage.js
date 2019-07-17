@@ -2,10 +2,17 @@ import React from 'react';
 import About from '../components/about/About';
 import { Container } from 'native-base';
 import { withNavigation } from 'react-navigation';
+import { Platform } from 'react-native';
 
 const AboutPage = (props) => {
+
     return (
-        <Container style={{ backgroundColor: Platform.OS === 'ios' ? '#FFFFFF' : '#F6F8FA', padding: 5 }}>
+        <Container
+            style={{
+                backgroundColor: Platform.OS === 'ios'
+                    ? '#FFFFFF' : '#F6F8FA',
+                padding: 5
+            }}>
             <About />
         </Container>
     )
