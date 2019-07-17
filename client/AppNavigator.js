@@ -31,17 +31,30 @@ const HomeStack = createStackNavigator({
       title: `${navigation.state.routeName}`,
 
       headerStyle: {
-        elevation: 3 // removes shadow for android
+        elevation: 3
       },
 
       headerLeft: <DrawerButton navigation={navigation} />
     })
   },
+
   Post: {
     screen: PostPage
   },
+
+  Discussions: {
+    screen: DiscussionsPage
+  },
+
   FavoriteSubtopics: {
     screen: FavoriteSubtopicsPage
+  },
+
+  PostADiscussion: {
+    screen: CreateDiscussion,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Start a Discussion'
+    })
   }
 });
 
@@ -52,64 +65,60 @@ const SubtopicsStack = createStackNavigator({
       title: `${navigation.state.routeName}`,
 
       headerStyle: {
-        elevation: 3 // removes shadow for android
+        elevation: 3
       },
 
       headerLeft: <DrawerButton navigation={navigation} />
     })
+  },
+  Post: {
+    screen: PostPage
+  },
+
+  Discussions: {
+    screen: DiscussionsPage
+  },
+
+  RecentDiscussions: {
+    screen: RecentDiscussionsPage
+  },
+
+  DiscussionsByHashtags: {
+    screen: DiscussionsByHashtags
+  },
+
+  Hashtags: {
+    screen: HashtagPage,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Search'
+    })
+  },
+
+  Load: {
+    screen: SubtopicsLoading
+  },
+
+  PostADiscussion: {
+    screen: CreateDiscussion,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Start a Discussion'
+    })
   }
-  // Post: {
-  //   screen: PostPage
-  // },
-  // Discussions: {
-  //   screen: DiscussionsPage
-  // },
-  // RecentDiscussions: {
-  //   screen: RecentDiscussionsPage
-  // },
-  // DiscussionsByHashtags: {
-  //   screen: DiscussionsByHashtags
-  // },
-  // Hashtags: {
-  //   screen: HashtagPage,
-  //   navigationOptions: ({ navigation }) => ({
-  //     title: 'Search'
-  //   })
-  // },
-  // Load: {
-  //   screen: SubtopicsLoading
-  // },
-  // PostADiscussion: {
-  //   screen: CreateDiscussion,
-  //   navigationOptions: ({ navigation }) => ({
-  //     title: 'Start a Discussion'
-  //   })
-  // }
 });
 
 const FooterNavigator = createBottomTabNavigator(
   {
     Home: {
-      screen: Home,
-      navigationOptions: ({ navigation }) => ({
-        title: `${navigation.state.routeName}`,
-
-        headerStyle: {
-          elevation: 3 // removes shadow for android
-        },
-
-        tabBarIcon: <Icon name="home" />,
-
-        headerLeft: <DrawerButton navigation={navigation} />
-        // headerMode: 'none'
-      })
+      screen: HomeStack,
+      navigationOptions: {
+        tabBarIcon: <Icon name="home" />
+      }
     },
 
     SubTopics: {
       screen: SubtopicsStack,
       navigationOptions: {
-        tabBarIcon: <Icon name="md-albums" />,
-        headerMode: 'none'
+        tabBarIcon: <Icon name="md-albums" />
       }
     }
   },
@@ -137,58 +146,10 @@ const FooterNavigator = createBottomTabNavigator(
   }
 );
 
-const tabStack = createStackNavigator(
-  {
-    bottomTab: {
-      screen: FooterNavigator,
-      navigationOptions: {
-        headerMode: 'none'
-      }
-    },
-
-    Post: {
-      screen: PostPage
-    },
-
-    FavoriteSubtopics: {
-      screen: FavoriteSubtopicsPage
-    },
-
-    Discussions: {
-      screen: DiscussionsPage
-    },
-
-    RecentDiscussions: {
-      screen: RecentDiscussionsPage
-    },
-
-    DiscussionsByHashtags: {
-      screen: DiscussionsByHashtags
-    },
-
-    Hashtags: {
-      screen: HashtagPage,
-      navigationOptions: ({ navigation }) => ({
-        title: 'Search'
-      })
-    },
-
-    PostADiscussion: {
-      screen: CreateDiscussion,
-      navigationOptions: ({ navigation }) => ({
-        title: 'Start a Discussion'
-      })
-    }
-  },
-  {
-    headerMode: 'none'
-  }
-);
-
 const rootDrawer = createDrawerNavigator(
   {
     Top: {
-      screen: tabStack
+      screen: FooterNavigator
     }
   },
 
