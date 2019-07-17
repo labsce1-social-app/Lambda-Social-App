@@ -28,11 +28,11 @@ const HashtagPage = props => {
   );
 };
 
-HashtagPage.navigationOptions = ({ navigation }) => ({
-  title: `${navigation.getParam('title')}`,
-  headerTitleStyle: {
-    fontSize: 16
-  }
-});
+// HashtagPage.navigationOptions = ({ navigation }) => ({
+//   title: `${navigation.getParam('title')}`,
+//   headerTitleStyle: {
+//     fontSize: 16
+//   }
+// });
 
 export default HashtagPage;

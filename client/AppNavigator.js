@@ -30,10 +30,6 @@ const HomeStack = createStackNavigator({
     navigationOptions: ({ navigation }) => ({
       title: `${navigation.state.routeName}`,
 
-      headerStyle: {
-        elevation: 3
-      },
-
       headerLeft: <DrawerButton navigation={navigation} />
     })
   },
@@ -63,10 +59,6 @@ const SubtopicsStack = createStackNavigator({
     screen: SubtopicsPage,
     navigationOptions: ({ navigation }) => ({
       title: `${navigation.state.routeName}`,
-
-      headerStyle: {
-        elevation: 3
-      },
 
       headerLeft: <DrawerButton navigation={navigation} />
     })
@@ -106,10 +98,6 @@ const FavoritesStack = createStackNavigator({
     navigationOptions: ({ navigation }) => ({
       title: `Favorite Subtopics`,
 
-      headerStyle: {
-        elevation: 3
-      },
-
       headerLeft: <DrawerButton navigation={navigation} />
     })
   },
@@ -137,7 +125,8 @@ const Search = createStackNavigator({
   Hashtags: {
     screen: HashtagPage,
     navigationOptions: ({ navigation }) => ({
-      title: 'Search By Hashtags'
+      title: 'Search By Hashtags',
+      headerLeft: <DrawerButton navigation={navigation} />
     })
   },
 
