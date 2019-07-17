@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useInterval } from 'react';
 import { StatusBar } from 'react-native';
-import { withNavigation } from 'react-navigation';
+import { withNavigation, withNavigationFocus } from 'react-navigation';
 import Discussions from '../components/discussions/Discussions';
 import Sort from '../components/discussions/Sort';
 import { Container } from 'native-base';
@@ -66,4 +66,4 @@ const Home = props => {
   );
 };
 
-export default withNavigation(Home);
+export default Home;

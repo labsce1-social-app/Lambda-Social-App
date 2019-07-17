@@ -5,32 +5,34 @@ import Hashtag from '../components/hashtags/Hashtag';
 import { withNavigation } from 'react-navigation';
 import { Container } from 'native-base';
 
+const HashtagPage = props => {
+  const { state, dispatch } = useContext(Store);
 
-const HashtagPage = (props) => {
-    const { state, dispatch } = useContext(Store);
+  useEffect(
+    () => {
+      getHashtags(dispatch);
+    },
+    () => getHashtags()
+  );
 
-    useEffect(() => {
-        getHashtags(dispatch);
-    }, () => getHashtags());
-
-    return (
-        <Container style={{
-            backgroundColor: '#F6F8FA',
-            width: '100%',
-            padding: 10
-        }}>
-            <Hashtag loading={state.hashtags_loading}
-                hashtags={state.hashtags}
-            />
-        </Container>
-    )
-}
+  return (
+    <Container
+      style={{
+        backgroundColor: '#F6F8FA',
+        width: '100%',
+        padding: 10
+      }}
+    >
+      <Hashtag loading={state.hashtags_loading} hashtags={state.hashtags} />
+    </Container>
+  );
+};
 
 HashtagPage.navigationOptions = ({ navigation }) => ({
-    title: `${navigation.getParam('title')}`,
-    headerTitleStyle: {
-        fontSize: 16
-    }
+  title: `${navigation.getParam('title')}`,
+  headerTitleStyle: {
+    fontSize: 16
+  }
 });
 
-export default withNavigation(HashtagPage);
+export default HashtagPage;
