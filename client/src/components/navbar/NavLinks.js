@@ -28,15 +28,6 @@ const NavLinks = ({ navigation, state, dispatch, text }) => {
     }
   };
 
-  //   const handleFavorites = () => {
-  //     Toast.show({
-  //       text: 'Feature coming soon',
-  //       buttonText: 'Okay',
-  //       type: 'success',
-  //       duration: 5000
-  //     });
-  //   };
-
   const handleSearch = () => {
     navigation.navigate('Hashtags', {
       subId: state.user.id
@@ -45,13 +36,14 @@ const NavLinks = ({ navigation, state, dispatch, text }) => {
 
   return (
     <Card>
-      <CardItem>
+      <CardItem button onPress={() => navigation.navigate('AboutPage')}>
         <Icon active name="md-swap" />
         <Text>About LS Social</Text>
         <Right>
           <Icon name="arrow-forward" />
         </Right>
       </CardItem>
+
       <CardItem button onPress={() => handleRecent()}>
         <Icon
           active
@@ -65,6 +57,7 @@ const NavLinks = ({ navigation, state, dispatch, text }) => {
           <Icon name="arrow-forward" />
         </Right>
       </CardItem>
+
       <CardItem button onPress={() => navigation.navigate('FavoriteSubtopics')}>
         <Icon
           active
@@ -78,6 +71,7 @@ const NavLinks = ({ navigation, state, dispatch, text }) => {
           <Icon name="arrow-forward" />
         </Right>
       </CardItem>
+
       <CardItem button onPress={() => handleSearch()}>
         <Icon
           active
