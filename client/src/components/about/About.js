@@ -1,12 +1,16 @@
 import React from 'react';
-import { View, Linking } from 'react-native';
-import { Text, Thumbnail, CardItem, Left, Body, Card, Icon } from 'native-base';
+import { ScrollView, Linking } from 'react-native';
+import { Text, Thumbnail, CardItem, Left, Body, Card, Icon, View } from 'native-base';
 
 const About = () => {
     return (
-        <View>
+        <ScrollView>
             <Card>
+                <Text style={{ textAlign: 'center', marginTop: 10, fontSize: 24 }}>About LS</Text>
+                <CardItem>
 
+                    <Text>LS was designed to provide a safe environment where Lambda School students, staff and potential future students can come together. This app hopes to serve as a middle point where developers can speak about the tech they're passionate about, ask for help, start a project together and all around socialize.</Text>
+                </CardItem>
                 <Text style={{ textAlign: 'center', marginTop: 10, fontSize: 24 }}>LS Team</Text>
 
                 <CardItem>
@@ -15,8 +19,11 @@ const About = () => {
                         <Body>
                             <Text>Will Schulz</Text>
                             <Text note>Team Lead</Text>
-                            <Icon name="logo-github" onPress={() => Linking.openURL("https://github.com/kittenman29")} />
+                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', width: 80 }}>
 
+                                <Icon name="logo-github" onPress={() => Linking.openURL("https://github.com/kittenman29")} />
+                                <Icon name="logo-linkedin" onPress={() => Linking.openURL("https://www.linkedin.com/in/william-schulz/")} />
+                            </View>
                         </Body>
                     </Left>
                 </CardItem>
@@ -27,7 +34,11 @@ const About = () => {
                         <Body>
                             <Text>Tristan Linehan</Text>
                             <Text note>Team Lead</Text>
-                            <Icon name="logo-github" onPress={() => Linking.openURL("https://github.com/tlinehan")} />
+                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', width: 80 }}>
+
+                                <Icon name="logo-github" onPress={() => Linking.openURL("https://github.com/tlinehan")} />
+                                <Icon name="logo-linkedin" onPress={() => Linking.openURL("https://www.linkedin.com/in/tristan-linehan")} />
+                            </View>
                         </Body>
                     </Left>
                 </CardItem>
@@ -37,7 +48,11 @@ const About = () => {
                         <Body>
                             <Text>Carlos Lantigua</Text>
                             <Text note>Software Engineer</Text>
-                            <Icon name="logo-github" onPress={() => Linking.openURL("https://github.com/CLantigua2")} />
+
+                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', width: 80 }}>
+                                <Icon name="logo-github" onPress={() => Linking.openURL("https://github.com/CLantigua2")} />
+                                <Icon name="logo-linkedin" onPress={() => Linking.openURL("https://www.linkedin.com/in/carlos-lantigua/")} />
+                            </View>
                         </Body>
                     </Left>
                 </CardItem>
@@ -47,8 +62,11 @@ const About = () => {
                         <Body>
                             <Text>Luis Diaz</Text>
                             <Text note>Software Engineer</Text>
-                            <Icon name="logo-github" onPress={() => Linking.openURL("https://github.com/Luisdh")} />
+                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', width: 80 }}>
 
+                                <Icon name="logo-github" onPress={() => Linking.openURL("https://github.com/Luisdh")} />
+                                <Icon name="logo-linkedin" onPress={() => Linking.openURL("https://www.linkedin.com/in/luis-diaz-herrera-11a306168/")} />
+                            </View>
                         </Body>
                     </Left>
                 </CardItem>
@@ -58,8 +76,12 @@ const About = () => {
                         <Body>
                             <Text>Michelle Paredes</Text>
                             <Text note>Software Engineer</Text>
-                            <Icon name="logo-github" onPress={() => Linking.openURL("https://github.com/mparedes003")} />
+                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', width: 80 }}>
 
+                                <Icon name="logo-github" onPress={() => Linking.openURL("https://github.com/mparedes003")} />
+                                <Icon name="logo-linkedin" onPress={() => Linking.openURL("https://www.linkedin.com/in/michellegparedes/")} />
+
+                            </View>
                         </Body>
                     </Left>
                 </CardItem>
@@ -69,13 +91,17 @@ const About = () => {
                         <Body>
                             <Text>Conner Hoessly</Text>
                             <Text note>Software Engineer</Text>
-                            <Icon name="logo-github" onPress={() => Linking.openURL("https://github.com/TRIF3X")} />
+                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', width: 80 }}>
 
+                                <Icon name="logo-github" onPress={() => Linking.openURL("https://github.com/TRIF3X")} />
+                                <Icon name="logo-linkedin" onPress={() => Linking.openURL("https://www.linkedin.com/in/conner-hoessly/")} />
+
+                            </View>
                         </Body>
                     </Left>
                 </CardItem>
             </Card>
-        </View>
+        </ScrollView>
     )
 }
 
