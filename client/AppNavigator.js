@@ -87,15 +87,77 @@ const SubtopicsStack = createStackNavigator({
     screen: DiscussionsByHashtags
   },
 
+  // FavoriteSubtopics: {
+  //   screen: FavoriteSubtopicsPage
+  // },
+
+  PostADiscussion: {
+    screen: CreateDiscussion,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Start a Discussion'
+    })
+  }
+});
+
+const FavoritesStack = createStackNavigator({
+  FavoriteSubtopics: {
+    screen: FavoriteSubtopicsPage,
+
+    navigationOptions: ({ navigation }) => ({
+      title: `Favorite Subtopics`,
+
+      headerStyle: {
+        elevation: 3
+      },
+
+      headerLeft: <DrawerButton navigation={navigation} />
+    })
+  },
+  Post: {
+    screen: PostPage
+  },
+
+  Discussions: {
+    screen: DiscussionsPage,
+    navigationOptions: {
+      tabBarVisible: false
+    }
+  },
+
+  RecentDiscussions: {
+    screen: RecentDiscussionsPage
+  },
+
+  DiscussionsByHashtags: {
+    screen: DiscussionsByHashtags
+  }
+});
+
+const Search = createStackNavigator({
   Hashtags: {
     screen: HashtagPage,
     navigationOptions: ({ navigation }) => ({
-      title: 'Search'
+      title: 'Search By Hashtags'
     })
   },
 
-  Load: {
-    screen: SubtopicsLoading
+  Post: {
+    screen: PostPage
+  },
+
+  Discussions: {
+    screen: DiscussionsPage,
+    navigationOptions: {
+      tabBarVisible: false
+    }
+  },
+
+  RecentDiscussions: {
+    screen: RecentDiscussionsPage
+  },
+
+  DiscussionsByHashtags: {
+    screen: DiscussionsByHashtags
   },
 
   PostADiscussion: {
@@ -120,6 +182,19 @@ const FooterNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarIcon: <Icon name="md-albums" />
       }
+    },
+    Favorited: {
+      screen: FavoritesStack,
+      navigationOptions: {
+        tabBarIcon: <Icon name="md-star" />
+      }
+    },
+    Search: {
+      screen: Search,
+      navigationOptions: ({ navigation }) => ({
+        // title: 'Search',
+        tabBarIcon: <Icon name="md-grid" />
+      })
     }
   },
   {
