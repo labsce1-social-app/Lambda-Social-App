@@ -45,10 +45,52 @@ const HomeStack = createStackNavigator({
   }
 });
 
-const SubtopicsStack = createStackNavigator(
+const SubtopicsStack = createStackNavigator({
+  Subtopics: {
+    screen: SubtopicsPage,
+    navigationOptions: ({ navigation }) => ({
+      title: `${navigation.state.routeName}`,
+
+      headerStyle: {
+        elevation: 3 // removes shadow for android
+      },
+
+      headerLeft: <DrawerButton navigation={navigation} />
+    })
+  }
+  // Post: {
+  //   screen: PostPage
+  // },
+  // Discussions: {
+  //   screen: DiscussionsPage
+  // },
+  // RecentDiscussions: {
+  //   screen: RecentDiscussionsPage
+  // },
+  // DiscussionsByHashtags: {
+  //   screen: DiscussionsByHashtags
+  // },
+  // Hashtags: {
+  //   screen: HashtagPage,
+  //   navigationOptions: ({ navigation }) => ({
+  //     title: 'Search'
+  //   })
+  // },
+  // Load: {
+  //   screen: SubtopicsLoading
+  // },
+  // PostADiscussion: {
+  //   screen: CreateDiscussion,
+  //   navigationOptions: ({ navigation }) => ({
+  //     title: 'Start a Discussion'
+  //   })
+  // }
+});
+
+const FooterNavigator = createBottomTabNavigator(
   {
-    Subtopics: {
-      screen: SubtopicsPage,
+    Home: {
+      screen: Home,
       navigationOptions: ({ navigation }) => ({
         title: `${navigation.state.routeName}`,
 
@@ -56,62 +98,18 @@ const SubtopicsStack = createStackNavigator(
           elevation: 3 // removes shadow for android
         },
 
+        tabBarIcon: <Icon name="home" />,
+
         headerLeft: <DrawerButton navigation={navigation} />
+        // headerMode: 'none'
       })
-    },
-    Post: {
-      screen: PostPage
-    },
-    Discussions: {
-      screen: DiscussionsPage
-    },
-    RecentDiscussions: {
-      screen: RecentDiscussionsPage,
-    },
-    DiscussionsByHashtags: {
-      screen: DiscussionsByHashtags
-    },
-    Hashtags: {
-      screen: HashtagPage,
-      navigationOptions: ({ navigation }) => ({
-        title: 'Search'
-      })
-    },
-    Load: {
-      screen: SubtopicsLoading
-    },
-    PostADiscussion: {
-      screen: CreateDiscussion,
-      navigationOptions: ({ navigation }) => ({
-        title: 'Start a Discussion'
-      })
-    },
-
-    Modal: {
-      screen: AddSModal,
-      navigationOptions: ({ navigation }) => ({
-        title: 'Add Subtopic'
-      })
-    }
-  },
-  {
-    mode: 'modal'
-  }
-);
-
-const FooterNavigator = createBottomTabNavigator(
-  {
-    Home: {
-      screen: HomeStack,
-      navigationOptions: {
-        tabBarIcon: <Icon name="home" />
-      }
     },
 
     SubTopics: {
       screen: SubtopicsStack,
       navigationOptions: {
-        tabBarIcon: <Icon name="md-albums" />
+        tabBarIcon: <Icon name="md-albums" />,
+        headerMode: 'none'
       }
     }
   },
@@ -139,10 +137,58 @@ const FooterNavigator = createBottomTabNavigator(
   }
 );
 
+const tabStack = createStackNavigator(
+  {
+    bottomTab: {
+      screen: FooterNavigator,
+      navigationOptions: {
+        headerMode: 'none'
+      }
+    },
+
+    Post: {
+      screen: PostPage
+    },
+
+    FavoriteSubtopics: {
+      screen: FavoriteSubtopicsPage
+    },
+
+    Discussions: {
+      screen: DiscussionsPage
+    },
+
+    RecentDiscussions: {
+      screen: RecentDiscussionsPage
+    },
+
+    DiscussionsByHashtags: {
+      screen: DiscussionsByHashtags
+    },
+
+    Hashtags: {
+      screen: HashtagPage,
+      navigationOptions: ({ navigation }) => ({
+        title: 'Search'
+      })
+    },
+
+    PostADiscussion: {
+      screen: CreateDiscussion,
+      navigationOptions: ({ navigation }) => ({
+        title: 'Start a Discussion'
+      })
+    }
+  },
+  {
+    headerMode: 'none'
+  }
+);
+
 const rootDrawer = createDrawerNavigator(
   {
     Top: {
-      screen: FooterNavigator
+      screen: tabStack
     }
   },
 
