@@ -13,18 +13,23 @@ const FavoriteButton = ({ subId }) => {
     const [favorited, setFavorited] = useState(false);
 
     useEffect(() => {
-        favoriteChecker()
-    }, [favorite])
+        if (!isEmpty(state.favorite_subtopics)) {
+            favoriteChecker()
+        }
+    }, [state.favorite_subtopics])
 
     const favoriteChecker = () => {
-        if (!isEmpty(state.favorite_subtopics)) {
-            state.favorite_subtopics.forEach((item) => {
-                if (item.id === subId) {
-                    console.log("IT'S TRUEEEE")
-                    return setFavorited(true)
-                }
-            })
-        }
+        console.log(subId)
+        // if (state.favorite_subtopics.hasOwnProperty(subId)) {
+        //     setFavorited(true);
+        // } else {
+        //     setFavorited(false)
+        // }
+        state.favorite_subtopics.filter((item) => {
+            if (item.id === subId) {
+                setFavorited(true)
+            }
+        })
     }
 
     const favorite = async (subId, userId) => {
@@ -53,6 +58,31 @@ const FavoriteButton = ({ subId }) => {
         setFavorited(false)
     };
 
+    const contentManager = () => {
+        let content;
+        if (favorited === false) {
+            content = (
+                <TouchableOpacity
+                    onPress={() => favorite(subId, state.user.id)}
+                    style={{ flex: 1, flexDirection: 'row', alignItems: 'center', width: '70%', justifyContent: 'space-between' }}
+                >
+                    <Text>Add to Favorite</Text>
+                    <Image source={require("../../assets/favorite.png")} style={{ tintColor: 'gray' }} />
+                </TouchableOpacity>)
+        } else {
+            content = (
+
+                <TouchableOpacity onPress={() => unFavorite(subId, state.user.id)}
+                    style={{ flex: 1, flexDirection: 'row', alignItems: 'center', width: '70%', justifyContent: 'space-between' }}>
+                    <Text>Remove From Favorite</Text>
+                    <Image source={require("../../assets/favorite.png")} style={{ tintColor: 'yellow' }} />
+                </TouchableOpacity>
+            )
+
+        }
+        return content;
+    }
+
     return (
         <Card
             style={{
@@ -68,21 +98,7 @@ const FavoriteButton = ({ subId }) => {
                 width: '60%',
             }}
         >
-            {favorited === true ? (
-                <TouchableOpacity
-                    onPress={() => unFavorite(subId, state.user.id)}
-                    style={{ flex: 1, flexDirection: 'row', alignItems: 'center', width: '70%', justifyContent: 'space-between' }}
-                >
-                    <Text>Add to Favorite</Text>
-                    <Image source={require("../../assets/favorite.png")} style={{ tintColor: 'gray' }} />
-                </TouchableOpacity>
-            ) : (
-                    <TouchableOpacity onPress={() => favorite(subId, state.user.id)}
-                        style={{ flex: 1, flexDirection: 'row', alignItems: 'center', width: '70%', justifyContent: 'space-between' }}>
-                        <Text>Remove From Favorite</Text>
-                        <Image source={require("../../assets/favorite.png")} style={{ tintColor: 'yellow' }} />
-                    </TouchableOpacity>
-                )}
+            {contentManager()}
         </Card>
     )
 }
