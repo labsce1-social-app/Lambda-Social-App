@@ -9,6 +9,8 @@ import SubtopicsPage from './src/views/SubtopicsPage';
 import SubtopicsLoading from './src/components/subtopics/SubtopicsLoading';
 import AddSModal from './src/components/subtopics/AddSModal';
 import HashtagPage from './src/views/HashtagPage';
+import AboutPage from './src/views/AboutPage';
+
 import {
   createDrawerNavigator,
   createAppContainer,
@@ -42,7 +44,10 @@ const HomeStack = createStackNavigator({
   },
   FavoriteSubtopics: {
     screen: FavoriteSubtopicsPage
-  }
+  },
+  AboutPage: {
+    screen: AboutPage
+  },
 });
 
 const SubtopicsStack = createStackNavigator(
