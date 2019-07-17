@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const db = require('../../data/dbconfig.js');
 
 const {
   getUsersFavSubtopics,
@@ -35,13 +34,11 @@ router.post('/favorite', async (req, res) => {
   if (await canFavorite(req.body)) {
     addFavoriteSubtopicToUser(req.body)
       .then(ret => {
-        console.log('SUCCESS ADDING: ', ret);
         getUsersFavSubtopics(ret[0].user_id).then(favSubs => {
           res.status(200).json(favSubs);
         });
       })
       .catch(err => {
-        console.log('COULDNT INSERT ', err);
         res.status(500).json({ error: err });
       });
   } else {
@@ -52,20 +49,10 @@ router.post('/favorite', async (req, res) => {
 /**
  * unsubscribe from a subtopic with subtopic_id
  */
-router.post('/unfavorite', (req, res) => {
+router.post('/unfavorite', async (req, res) => {
   const { subId, userId } = req.body;
-
-  unFavoriteSubtopicById(subId, userId)
-    .then(ret => {
-      // console.log('DELTED IN ROUTER: ', ret);
-      if (ret) res.json({ Message: 'Nothing to unfavorite' });
-      getUsersFavSubtopics(userId).then(subs => {
-        res.status(200).json(subs);
-      });
-    })
-    .catch(err => {
-      res.status(500).json({ error: err });
-    });
+  const unfav = await unFavoriteSubtopicById(subId, userId);
+  return res.status(200).json(unfav);
 });
 
 module.exports = router;

@@ -22,7 +22,6 @@ export const initialState = {
   newImage: null,
   newImage_error: '',
   upvote_error: '',
-  favorite: false,
   hashtags: null,
   hashtags_loading: false,
   hashtags_error: ''
@@ -267,17 +266,19 @@ export const reducer = (state = initialState, action) => {
         favorite_subtopics: action.payload
       };
     case 'SUBTOPIC_FAVORITED':
-      console.log(action.payload)
       return {
         ...state,
-        favorite: true,
         favorite_subtopics: action.payload
       };
     case 'UN_FAVORITE':
       return {
         ...state,
-        favorite: false,
-        favorite_subtopics: action.payload
+        favorite_subtopics: state.favorite_subtopics.filter((item) => {
+          const id = action.payload[0]
+          if (item.id !== id) {
+            return item
+          }
+        })
       };
     default:
       throw new Error('not a valid action');

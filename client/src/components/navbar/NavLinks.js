@@ -28,15 +28,6 @@ const NavLinks = ({ navigation, state, dispatch, text }) => {
     }
   };
 
-  //   const handleFavorites = () => {
-  //     Toast.show({
-  //       text: 'Feature coming soon',
-  //       buttonText: 'Okay',
-  //       type: 'success',
-  //       duration: 5000
-  //     });
-  //   };
-
   const handleSearch = () => {
     navigation.navigate('Hashtags', {
       subId: state.user.id
@@ -45,7 +36,7 @@ const NavLinks = ({ navigation, state, dispatch, text }) => {
 
   return (
     <Card>
-      <CardItem>
+      <CardItem button onPress={() => navigation.navigate('AboutPage')}>
         <Icon active name="md-swap" />
         <Text>About LS Social</Text>
         <Right>
