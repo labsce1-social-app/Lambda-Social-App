@@ -17,7 +17,8 @@ const FavoriteSubtopics = props => {
       getFavoriteSubtopics(dispatch, state.user.id);
     },
     () => getFavoriteSubtopics()
-  ), [state.user.id];
+  ),
+    [state.user.id];
 
   return (
     <Container>
@@ -25,12 +26,5 @@ const FavoriteSubtopics = props => {
     </Container>
   );
 };
-
-FavoriteSubtopics.navigationOptions = ({ navigation }) => ({
-  title: 'Favorite Subtopics',
-  headerTitleStyle: {
-    fontSize: 16
-  }
-})
 
 export default FavoriteSubtopics;

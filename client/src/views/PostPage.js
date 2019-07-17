@@ -15,7 +15,7 @@ const PostPage = props => {
 
   // handle life cycle for comments
   const { state, dispatch } = useContext(Store);
-  const [isReplying, setIsReplying] = useState(false)
+  const [isReplying, setIsReplying] = useState(false);
   const [isReplyingToComment, setIsReplyingToComment] = useState(false);
   const postId = props.navigation.getParam('postId', 'None');
   const postTitle = props.navigation.getParam('title');
@@ -25,19 +25,27 @@ const PostPage = props => {
   // useEffect is treated as componentDidMount and componentWillUnmount
   useEffect(
     () => {
-      getCommentsByDiscussionId(JSON.stringify(postId), dispatch, state.user.id);
+      getCommentsByDiscussionId(
+        JSON.stringify(postId),
+        dispatch,
+        state.user.id
+      );
     },
     () => getCommentsByDiscussionId()
   );
 
   const closeInputs = () => {
-    setIsReplying(false)
-  }
+    setIsReplying(false);
+  };
 
   return (
     <KeyboardShift>
-      <Container style={{ backgroundColor: Platform.OS === 'ios' ? '#FFFFFF' : '#F6F8FA', padding: 5 }}>
-
+      <Container
+        style={{
+          backgroundColor: Platform.OS === 'ios' ? '#FFFFFF' : '#F6F8FA',
+          padding: 5
+        }}
+      >
         <Post
           postTitle={postTitle}
           isReplying={isReplying}
@@ -50,8 +58,8 @@ const PostPage = props => {
           <FabButton
             isreplying={isReplying}
             replyToComment={() => {
-              scrollView.current.scrollToEnd({ animated: true })
-              setIsReplying(!isReplying)
+              scrollView.current.scrollToEnd({ animated: true });
+              setIsReplying(!isReplying);
             }}
             postId={JSON.stringify(postId)}
           />
@@ -61,4 +69,4 @@ const PostPage = props => {
   );
   // return <Thread />
 };
-export default withNavigation(PostPage);
+export default PostPage;

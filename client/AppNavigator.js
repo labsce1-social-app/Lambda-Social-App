@@ -32,9 +32,39 @@ const HomeStack = createStackNavigator({
     navigationOptions: ({ navigation }) => ({
       title: `${navigation.state.routeName}`,
 
-      headerStyle: {
-        elevation: 3 // removes shadow for android
-      },
+      headerLeft: <DrawerButton navigation={navigation} />
+    })
+  },
+
+  Post: {
+    screen: PostPage
+  },
+
+  Discussions: {
+    screen: DiscussionsPage
+  },
+
+  FavoriteSubtopics: {
+    screen: FavoriteSubtopicsPage
+  },
+
+  PostADiscussion: {
+    screen: CreateDiscussion,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Start a Discussion'
+    })
+  }
+
+  AboutPage: {
+    screen: AboutPage
+  },
+});
+
+const SubtopicsStack = createStackNavigator({
+  Subtopics: {
+    screen: SubtopicsPage,
+    navigationOptions: ({ navigation }) => ({
+      title: `${navigation.state.routeName}`,
 
       headerLeft: <DrawerButton navigation={navigation} />
     })
@@ -42,67 +72,96 @@ const HomeStack = createStackNavigator({
   Post: {
     screen: PostPage
   },
-  FavoriteSubtopics: {
-    screen: FavoriteSubtopicsPage
+
+  Discussions: {
+    screen: DiscussionsPage
   },
-  AboutPage: {
-    screen: AboutPage
+
+  RecentDiscussions: {
+    screen: RecentDiscussionsPage
   },
+
+  DiscussionsByHashtags: {
+    screen: DiscussionsByHashtags
+  },
+
+  // FavoriteSubtopics: {
+  //   screen: FavoriteSubtopicsPage
+  // },
+
+  PostADiscussion: {
+    screen: CreateDiscussion,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Start a Discussion'
+    })
+  }
 });
 
-const SubtopicsStack = createStackNavigator(
-  {
-    Subtopics: {
-      screen: SubtopicsPage,
-      navigationOptions: ({ navigation }) => ({
-        title: `${navigation.state.routeName}`,
+const FavoritesStack = createStackNavigator({
+  FavoriteSubtopics: {
+    screen: FavoriteSubtopicsPage,
 
-        headerStyle: {
-          elevation: 3 // removes shadow for android
-        },
+    navigationOptions: ({ navigation }) => ({
+      title: `Favorite Subtopics`,
 
-        headerLeft: <DrawerButton navigation={navigation} />
-      })
-    },
-    Post: {
-      screen: PostPage
-    },
-    Discussions: {
-      screen: DiscussionsPage
-    },
-    RecentDiscussions: {
-      screen: RecentDiscussionsPage,
-    },
-    DiscussionsByHashtags: {
-      screen: DiscussionsByHashtags
-    },
-    Hashtags: {
-      screen: HashtagPage,
-      navigationOptions: ({ navigation }) => ({
-        title: 'Search'
-      })
-    },
-    Load: {
-      screen: SubtopicsLoading
-    },
-    PostADiscussion: {
-      screen: CreateDiscussion,
-      navigationOptions: ({ navigation }) => ({
-        title: 'Start a Discussion'
-      })
-    },
+      headerLeft: <DrawerButton navigation={navigation} />
+    })
+  },
+  Post: {
+    screen: PostPage
+  },
 
-    Modal: {
-      screen: AddSModal,
-      navigationOptions: ({ navigation }) => ({
-        title: 'Add Subtopic'
-      })
+  Discussions: {
+    screen: DiscussionsPage,
+    navigationOptions: {
+      tabBarVisible: false
     }
   },
-  {
-    mode: 'modal'
+
+  RecentDiscussions: {
+    screen: RecentDiscussionsPage
+  },
+
+  DiscussionsByHashtags: {
+    screen: DiscussionsByHashtags
   }
-);
+});
+
+const Search = createStackNavigator({
+  Hashtags: {
+    screen: HashtagPage,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Search By Hashtags',
+      headerLeft: <DrawerButton navigation={navigation} />
+    })
+  },
+
+  Post: {
+    screen: PostPage
+  },
+
+  Discussions: {
+    screen: DiscussionsPage,
+    navigationOptions: {
+      tabBarVisible: false
+    }
+  },
+
+  RecentDiscussions: {
+    screen: RecentDiscussionsPage
+  },
+
+  DiscussionsByHashtags: {
+    screen: DiscussionsByHashtags
+  },
+
+  PostADiscussion: {
+    screen: CreateDiscussion,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Start a Discussion'
+    })
+  }
+});
 
 const FooterNavigator = createBottomTabNavigator(
   {
@@ -118,6 +177,19 @@ const FooterNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarIcon: <Icon name="md-albums" />
       }
+    },
+    Favorited: {
+      screen: FavoritesStack,
+      navigationOptions: {
+        tabBarIcon: <Icon name="md-star" />
+      }
+    },
+    Search: {
+      screen: Search,
+      navigationOptions: ({ navigation }) => ({
+        // title: 'Search',
+        tabBarIcon: <Icon name="md-grid" />
+      })
     }
   },
   {

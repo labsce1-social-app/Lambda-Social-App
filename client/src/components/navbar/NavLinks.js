@@ -58,33 +58,6 @@ const NavLinks = ({ navigation, state, dispatch, text }) => {
         </Right>
       </CardItem>
 
-      <CardItem button onPress={() => navigation.navigate('FavoriteSubtopics')}>
-        <Icon
-          active
-          name="md-star"
-          style={{ color: state.isAuthenticated ? 'black' : 'gray' }}
-        />
-        <Text style={{ color: state.isAuthenticated ? 'black' : 'gray' }}>
-          Favorite Subs
-        </Text>
-        <Right>
-          <Icon name="arrow-forward" />
-        </Right>
-      </CardItem>
-
-      <CardItem button onPress={() => handleSearch()}>
-        <Icon
-          active
-          name="md-grid"
-          style={{ color: state.isAuthenticated ? 'black' : 'gray' }}
-        />
-        <Text style={{ color: state.isAuthenticated ? 'black' : 'gray' }}>
-          Hashtag Search
-        </Text>
-        <Right>
-          <Icon name="arrow-forward" />
-        </Right>
-      </CardItem>
       <CardItem button onPress={() => handleLogging()}>
         <Icon active name="md-power" />
         <Text>{text}</Text>

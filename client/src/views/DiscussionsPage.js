@@ -22,20 +22,17 @@ const DiscussionsPage = props => {
 
   return (
     <Container style={{ backgroundColor: '#F6F8FA', padding: 5 }}>
-      <FavoriteButton
-        subId={subId} />
+      <FavoriteButton subId={subId} />
 
       <Discussions
         loading={state.discussions_loading}
         discussions={state.discussions}
       />
-      {
-        props.navigation.state.routeName === 'Discussions' &&
-          state.isAuthenticated ? (
-            <FabButton />
-          ) : null
-      }
-    </Container >
+      {props.navigation.state.routeName === 'Discussions' &&
+      state.isAuthenticated ? (
+        <FabButton />
+      ) : null}
+    </Container>
   );
 };
 
@@ -47,4 +44,4 @@ DiscussionsPage.navigationOptions = ({ navigation }) => ({
   }
 });
 
-export default withNavigationFocus(withNavigation(DiscussionsPage));
+export default withNavigationFocus(DiscussionsPage);

@@ -12,13 +12,17 @@ const DrawerContent = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <UserProfile user={state.user} />
-      <NavLinks state={state} dispatch={dispatch} navigation={navigation}
-        text={state.isAuthenticated === false ? "Signin" : "Signout"} />
+      <NavLinks
+        state={state}
+        dispatch={dispatch}
+        navigation={navigation}
+        text={state.isAuthenticated === false ? 'Signin' : 'Signout'}
+      />
     </View>
   );
 };
 
-export default withNavigation(DrawerContent);
+export default DrawerContent;
 
 const styles = StyleSheet.create({
   container: {
@@ -26,7 +30,7 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     backgroundColor: '#F7F7F7'
   }
-})
+});
 
 /***Dynamic way of listing routes if we want to add routes to drawer */
 
