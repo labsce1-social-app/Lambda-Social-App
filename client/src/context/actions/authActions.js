@@ -1,14 +1,23 @@
 import { isEmpty, getData, axios, storeData, jwtDecode, deleteData, Auth0, auth0ClientId, auth0Domain, local, postgres } from './constants';
+import DeviceInfo from 'react-native-device-info';
+import RNRestart from 'react-native-restart';
 
 // check if a user is logged in
 export const isAuthed = async dispatch => {
     try {
-        const value = await getData('accessToken');
-        if (!isEmpty(value)) {
-            return dispatch({ type: 'SET_CURRENT_USER', payload: value });
+        const accessToken = await getData('accessToken');
+        if (!isEmpty(accessToken)) {
+            return dispatch({ type: 'SET_CURRENT_USER', payload: accessToken });
         }
-        return value;
+        return accessToken;
     } catch (err) {
+        const refresh = await getItem("refreshToken", {})
+        const regToken = await auth0.auth.refreshToken({ refreshToken: refresh })
+        setItem("accessToken", regToken);
+        RNRestart.Restart();
+
+
+
         console.log(err);
     }
 };
@@ -21,14 +30,16 @@ export const handleAuth = async dispatch => {
         const getAuth = await auth0.webAuth.authorize({
             scope: 'openid profile email offline_access',
             audience: 'https://lambdasocial.auth0.com/api/v2/',
+            device: DeviceInfo.getUniqueID(),
             prompt: 'login'
         });
-        const { idToken, accessToken } = getAuth;
+        const { idToken, accessToken, refreshToken } = getAuth;
         // rather than another call to auth0 decode idToken for info from auth0
         const decUser = await jwtDecode(idToken);
-        const storeUser = await storeData('user', accessToken);
+        const storeUser = await storeData('user', accessToken, {});
+        const storeRefresh = await storeData('refreshToken', refreshToken, {})
         const followup = await getUser(decUser, dispatch); // send access_token
-        return { storeUser, followup };
+        return { storeUser, followup, storeRefresh };
     } catch (error) {
         console.log('error in login', error);
     }

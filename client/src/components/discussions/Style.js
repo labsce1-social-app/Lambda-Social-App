@@ -15,12 +15,13 @@ export default StyleSheet.create({
         marginBottom: 10
     },
     date: {
-        // fontSize: 12,
-        // color: 'rgb(120, 120, 120)'
+        fontSize: 14,
+        color: 'rgb(120, 120, 120)'
     },
     username: {
+        color: 'rgb(120, 120, 120)',
+        fontSize: 14,
         fontStyle: 'italic',
-        marginLeft: 10
     },
     comment: {
         flex: 1,
@@ -43,9 +44,9 @@ export default StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        width: '50%',
-        margin: 10,
-        marginTop: 40,
+        width: '60%',
+        // margin: 15,
+        marginTop: 10,
         alignSelf: 'flex-start'
     },
     hashtags: {

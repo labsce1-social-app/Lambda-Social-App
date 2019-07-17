@@ -24,49 +24,62 @@ const Discussion = props => {
           })
         }
       >
-        <Left>
-          <Body>
-            <Text style={style.title}>{props.title}</Text>
-            <Text
-              numberOfLines={1}
-              style={{ marginBottom: 10, fontSize: 20, marginLeft: 3 }}
-            >
-              {props.discussion}
-            </Text>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                marginBottom: 10,
-                justifyContent: 'flex-start'
-              }}
-            >
-              <Text style={style.username}>{props.name} &#8226; </Text>
-              <Text style={style.date}>{moment(props.date).fromNow()}</Text>
+        <Body style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start' }}>
+          <Left>
+            <View style={{ width: '15%' }}>
+              {!isEmpty(props.image) && props.image.includes('https://') && (
+                <Image
+                  // style={style.avatar}
+                  style={{ width: 100, height: 165 }}
+                  source={{ uri: props.image }} />
+              )}
             </View>
-            {!isEmpty(props.image) && props.image.includes('https://') && (
-              <Image style={style.avatar} source={{ uri: props.image }} />
-            )}
-            <View style={style.stats}>
-              <Reaction
-                image={require('../../assets/comments.png')}
-                count={props.comment}
-              />
-              <Text>{'  '}</Text>
-              <Reaction
-                image={require('../../assets/up.png')}
-                count={props.upvotes}
-                voted={props.voted}
-                color="green"
-              />
-              <Reaction
-                image={require('../../assets/down.png')}
-                voted={props.voted}
-                color="orange"
-              />
-            </View>
-          </Body>
-        </Left>
+          </Left>
+          <View style={{ width: '75%' }}>
+            <CardItem style={{ flex: 1, flexDirection: 'column', alignItems: 'flex-start' }}>
+
+              <Text style={style.title}>{props.title}</Text>
+              <Text
+                numberOfLines={1}
+                style={{ marginBottom: 10, fontSize: 18 }}
+              >
+                {props.discussion}
+              </Text>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  marginBottom: 10,
+                  justifyContent: 'flex-start'
+                }}
+              >
+                <Text style={style.username}>{props.name} &#8226; </Text>
+                <Text style={style.date}>{moment(props.date).fromNow()}</Text>
+              </View>
+              {/* {!isEmpty(props.image) && props.image.includes('https://') && (
+                <Image style={style.avatar} source={{ uri: props.image }} />
+              )} */}
+              <View style={style.stats}>
+                <Reaction
+                  image={require('../../assets/comments.png')}
+                  count={props.comment}
+                />
+                <Text style={{ marginRight: 10 }}>{'  '}</Text>
+                <Reaction
+                  image={require('../../assets/up.png')}
+                  count={props.upvotes}
+                  voted={props.voted}
+                  color="green"
+                />
+                <Reaction
+                  image={require('../../assets/down.png')}
+                  voted={props.voted}
+                  color="orange"
+                />
+              </View>
+            </CardItem>
+          </View>
+        </Body>
       </CardItem>
       <CardItem style={style.hashtags}>{props.hashtags}</CardItem>
     </Card>

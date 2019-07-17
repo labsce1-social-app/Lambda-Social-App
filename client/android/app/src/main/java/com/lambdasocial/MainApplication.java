@@ -3,6 +3,10 @@ package com.lambdasocial;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import br.com.classapp.RNSensitiveInfo.RNSensitiveInfoPackage;
+import com.avishayil.rnrestart.ReactNativeRestartPackage;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
+import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.horcrux.svg.SvgPackage;
 import com.imagepicker.ImagePickerPackage;
@@ -29,6 +33,10 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNSensitiveInfoPackage(),
+            new ReactNativeRestartPackage(),
+            new RNDeviceInfo(),
+            new ReactNativeConfigPackage(),
             new VectorIconsPackage(),
             new SvgPackage(),
             new ImagePickerPackage(),
