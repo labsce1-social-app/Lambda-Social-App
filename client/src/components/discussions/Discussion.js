@@ -27,15 +27,16 @@ const Discussion = props => {
         <Body style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start' }}>
           <Left>
             <View style={{ width: '15%' }}>
-              {!isEmpty(props.image) && props.image.includes('https://') && (
-                <Image
-                  // style={style.avatar}
-                  style={{ width: 100, height: 165 }}
-                  source={{ uri: props.image }} />
-              )}
+              {!isEmpty(props.image)
+                && (
+                  <Image
+                    // style={style.avatar}
+                    style={{ width: 100, height: 165 }}
+                    source={{ uri: props.image }} />
+                )}
             </View>
           </Left>
-          <View style={{ width: '75%' }}>
+          <View style={{ width: !isEmpty(props.image) ? '75%' : '100%' }}>
             <CardItem style={{ flex: 1, flexDirection: 'column', alignItems: 'flex-start' }}>
 
               <Text style={style.title}>{props.title}</Text>
@@ -56,9 +57,7 @@ const Discussion = props => {
                 <Text style={style.username}>{props.name} &#8226; </Text>
                 <Text style={style.date}>{moment(props.date).fromNow()}</Text>
               </View>
-              {/* {!isEmpty(props.image) && props.image.includes('https://') && (
-                <Image style={style.avatar} source={{ uri: props.image }} />
-              )} */}
+
               <View style={style.stats}>
                 <Reaction
                   image={require('../../assets/comments.png')}
