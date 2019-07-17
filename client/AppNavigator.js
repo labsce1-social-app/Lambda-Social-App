@@ -53,7 +53,7 @@ const HomeStack = createStackNavigator({
     navigationOptions: ({ navigation }) => ({
       title: 'Start a Discussion'
     })
-  }
+  },
 
   AboutPage: {
     screen: AboutPage
