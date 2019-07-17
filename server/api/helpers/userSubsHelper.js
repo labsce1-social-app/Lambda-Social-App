@@ -34,15 +34,8 @@ const addFavoriteSubtopicToUser = body => {
 };
 
 const unFavoriteSubtopicById = (subId, userId) => {
-  return db
-    .raw(
-      `DELETE FROM subtopic_users
-      WHERE subtopic_users.subtopic_id = '${subId}' AND
-      subtopic_users.user_id = '${userId}'`
-    )
-    .then(res => {
-      res.json(res)
-    });
+  return db('subtopic_users').where({ 'subtopic_id': subId, 'user_id': userId }).del()
+    .returning('subtopic_id')
 };
 
 const canFavorite = async sub => {
