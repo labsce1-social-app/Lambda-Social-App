@@ -9,13 +9,13 @@ import { Icon, Toast } from 'native-base';
 
 import { Store } from '../../context/';
 
-const FavoritesTab = ({ navigation }) => {
+const FavoritesTab = props => {
   const { state, dispatch } = useContext(Store);
 
   const handleRoute = () => {
     if (state.isAuthenticated === false)
       Toast.show({
-        text: 'You aint logged in!',
+        text: 'Login first',
         buttonText: 'Ok'
       });
     else navigation.navigate('Favorited');
@@ -23,17 +23,13 @@ const FavoritesTab = ({ navigation }) => {
 
   return (
     <Icon
-      onPress={() => {
-        handleRoute();
+      style={{
+        color: props.tintColor
       }}
+      onPress={() => props.navigation.navigate('Favorited')}
       name="md-star"
     />
   );
 };
 
 export default FavoritesTab;
-
-{
-  /* <TouchableOpacity onPress={() => navigation.navigate('Favorited')}>
-</TouchableOpacity> */
-}

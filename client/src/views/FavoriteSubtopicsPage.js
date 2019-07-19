@@ -27,7 +27,15 @@ const FavoriteSubtopics = props => {
 
   return (
     <Container>
-      <Subtopics subtopics={state.favorite_subtopics} />
+      {state.isAuthenticated ? (
+        <Subtopics subtopics={state.favorite_subtopics} />
+      ) : (
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <Text style={{ textAlign: 'center', fontSize: 14 }}>
+            Log in first
+          </Text>
+        </View>
+      )}
     </Container>
   );
 };

@@ -190,7 +190,11 @@ const FooterNavigator = createBottomTabNavigator(
       screen: FavoritesStack,
       navigationOptions: ({ navigation }) => ({
         tabBarIcon: ({ tintColor }) => (
-          <FavoritesTab tintColor={tintColor} navigation={navigation} />
+          <FavoritesTab
+            tintColor={tintColor}
+            color={tintColor}
+            navigation={navigation}
+          />
         )
       })
     },
@@ -219,7 +223,6 @@ const FooterNavigator = createBottomTabNavigator(
       tabStyle: {
         borderRadius: 5,
         margin: 3
-        // width: 30
       },
 
       style: {
