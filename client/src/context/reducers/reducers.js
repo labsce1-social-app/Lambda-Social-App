@@ -14,7 +14,7 @@ export const initialState = {
   discussions_error: '',
   dscussions_error: '',
   isAuthenticated: false,
-  user: null,
+  user: {},
   comments: null,
   comments_loading: false,
   comments_error: '',
