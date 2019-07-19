@@ -25,10 +25,16 @@ const PostPage = props => {
   // useEffect is treated as componentDidMount and componentWillUnmount
   useEffect(
     () => {
+      let user_id;
+      if (state.user) {
+        user_id = state.user.id;
+      } else {
+        user_id = 'null';
+      }
       getCommentsByDiscussionId(
         JSON.stringify(postId),
         dispatch,
-        state.user.id
+        user_id
       );
     },
     () => getCommentsByDiscussionId()
@@ -69,4 +75,4 @@ const PostPage = props => {
   );
   // return <Thread />
 };
-export default PostPage;
+export default withNavigation(PostPage);
