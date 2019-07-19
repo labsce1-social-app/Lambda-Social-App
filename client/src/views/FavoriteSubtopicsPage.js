@@ -14,11 +14,16 @@ const FavoriteSubtopics = props => {
 
   useEffect(
     () => {
-      getFavoriteSubtopics(dispatch, state.user.id);
+      loadFavorites(dispatch);
     },
-    () => getFavoriteSubtopics()
-  ),
-    [state.user.id];
+    () => loadFavorites()
+  );
+
+  const loadFavorites = async dispatch => {
+    if (state.isAuthenticated) {
+      await getFavoriteSubtopics(dispatch, state.user.id);
+    }
+  };
 
   return (
     <Container>
