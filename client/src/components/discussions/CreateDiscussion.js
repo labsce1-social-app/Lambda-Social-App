@@ -10,7 +10,7 @@ import {
   Container,
   Icon
 } from 'native-base';
-import { Image, TextInput, Platform } from 'react-native';
+import { Image, TextInput, Platform, TouchableOpacity } from 'react-native';
 import {
   addDiscussion,
   uploadImage,
@@ -170,14 +170,19 @@ const CreateDiscussion = props => {
           >
             {image ? (
               <View>
-                <Icon
-                  style={{ marginLeft: 8 }}
-                  name="close"
+                <TouchableOpacity
+                  style={{
+                    width: 50,
+                    padding: 6
+                  }}
                   onPress={() => handleImage(dispatch)}
-                />
+                >
+                  <Icon name="close" />
+                </TouchableOpacity>
+
                 <Image
                   source={{ uri: state.newImage }}
-                  style={{ width: 200, height: 200 }}
+                  style={{ width: 400, height: 200 }}
                 />
               </View>
             ) : state.newImage_loading === true ? (
