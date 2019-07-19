@@ -213,7 +213,7 @@ const FooterNavigator = createBottomTabNavigator(
       keyboardHidesTabBar: true,
       activeTintColor: 'black',
       // activeBackgroundColor: '#d3d3d3',
-      inactiveTintColor: 'grey',
+      inactiveTintColor: '#b2b2b2',
       showLabel: false,
 
       labelStyle: {
@@ -234,6 +234,7 @@ const FooterNavigator = createBottomTabNavigator(
         elevation: 3,
         borderTopColor: 'transparent',
         height: 52
+        // backgroundColor: '#303030'
       }
     }
   }
