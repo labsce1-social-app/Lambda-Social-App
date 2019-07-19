@@ -48,7 +48,6 @@
 		52891B28026D47C1B9F19BEC /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD76F818E076474CBD2E2883 /* Octicons.ttf */; };
 		564CCE6DEBD240A0A3CF2B0B /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 182CCEE8E22A4E49959F54AF /* libReactNativeConfig.a */; };
 		5A849A532D88427988955438 /* libRNSVG-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A15331957D4087A693EEFD /* libRNSVG-tvOS.a */; };
-		65CC735022C711AB0062E2F7 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65CC732422C711AB0062E2F7 /* Default-568h@2x.png */; };
 		6C5CC6DB13944E4D98E02600 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE4C8CC0DDF6484AA09085E4 /* FontAwesome5_Solid.ttf */; };
 		76A5E8C18860497FA6BF7B65 /* libRNVectorIcons-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C86F2EBBC23847BBAE1B374D /* libRNVectorIcons-tvOS.a */; };
 		7B1613EEE4564804AFB65534 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E540084706F488CA2704825 /* libRNGestureHandler.a */; };
@@ -505,7 +504,6 @@
 		5E8BE75BBDA54F39868561ED /* libA0Auth0.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libA0Auth0.a; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		60D756B8DE42493EB07A67B8 /* libRNCAsyncStorage.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNCAsyncStorage.a; sourceTree = "<group>"; };
-		65CC732422C711AB0062E2F7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		81DD0BFF4AFC4FF2A0A8C4ED /* libRNSensitiveInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSensitiveInfo.a; sourceTree = "<group>"; };
 		8213C09C8D044D658E113AD0 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
@@ -950,7 +948,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				65CC732422C711AB0062E2F7 /* Default-568h@2x.png */,
 				13B07FAE1A68108700A75B9A /* LambdaSocial */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* LambdaSocialTests */,
@@ -1578,7 +1575,6 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				65CC735022C711AB0062E2F7 /* Default-568h@2x.png in Resources */,
 				304627E90D834A7BB3C7C539 /* Roboto_medium.ttf in Resources */,
 				FD872B9B81A644B5919C4545 /* Roboto.ttf in Resources */,
 				EF74BADC2A794E5283408C0D /* rubicon-icon-font.ttf in Resources */,
@@ -1806,6 +1802,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = BPT922KHDN;
@@ -1839,6 +1836,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = BPT922KHDN;
 				HEADER_SEARCH_PATHS = (
