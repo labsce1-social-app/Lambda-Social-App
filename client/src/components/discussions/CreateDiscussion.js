@@ -76,10 +76,10 @@ const CreateDiscussion = props => {
     props.navigation.navigate('Discussions', { subId: subId });
   };
 
-  const handleImage = async dispatch => {
-    await setImage(null);
+  const handleImage = dispatch => {
+    setImage('');
 
-    await removeImage(dispatch);
+    removeImage(dispatch);
   };
 
   return (
@@ -168,7 +168,7 @@ const CreateDiscussion = props => {
               marginTop: 15
             }}
           >
-            {image || state.newImage ? (
+            {image ? (
               <View>
                 <Icon
                   style={{ marginLeft: 8 }}
