@@ -14,11 +14,16 @@ const FavoriteSubtopics = props => {
 
   useEffect(
     () => {
-      getFavoriteSubtopics(dispatch, state.user.id);
+      let user_id;
+      if (state.user) {
+        user_id = state.user.id;
+      } else {
+        user_id = 'null'
+      }
+      getFavoriteSubtopics(dispatch, user_id);
     },
     () => getFavoriteSubtopics()
-  ),
-    [state.user.id];
+  );
 
   return (
     <Container>
