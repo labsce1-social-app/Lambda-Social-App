@@ -166,6 +166,11 @@ export const reducer = (state = initialState, action) => {
         newImage: '',
         newImage_error: action.payload
       };
+    case 'RESET_IMAGE':
+      return {
+        ...state,
+        newImage: ''
+      };
     case 'CREATED_DISCUSSION':
       return {
         ...state,
@@ -273,10 +278,10 @@ export const reducer = (state = initialState, action) => {
     case 'UN_FAVORITE':
       return {
         ...state,
-        favorite_subtopics: state.favorite_subtopics.filter((item) => {
-          const id = action.payload[0]
+        favorite_subtopics: state.favorite_subtopics.filter(item => {
+          const id = action.payload[0];
           if (item.id !== id) {
-            return item
+            return item;
           }
         })
       };
