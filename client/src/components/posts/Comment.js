@@ -17,6 +17,7 @@ const Comment = ({
     hideInput,
     isReplyingToComment,
     commentDetails,
+    isAuthed
 }) => {
     const [isReplying, setIsReplying] = useState(false)
     // fires when reply button is pressed on a comment
@@ -33,17 +34,20 @@ const Comment = ({
                     <Text style={styles.date}>{name} {moment(date).fromNow()}</Text>
                     <Text>{comment}</Text>
                     <Right style={{ width: '98%' }}>
-                        <TouchableOpacity
-                            style={styles.touchable}
-                            onPress={() => handleReplyPress()}
-                        >
-                            <Image
-                                style={{ width: 20, height: 20 }}
-                                source={require('../../assets/reply.png')}
-                            />
+                        {isAuthed === false ? null : (
 
-                            <Text style={styles.reply}>Reply</Text>
-                        </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.touchable}
+                                onPress={() => handleReplyPress()}
+                            >
+                                <Image
+                                    style={{ width: 20, height: 20 }}
+                                    source={require('../../assets/reply.png')}
+                                />
+                                <Text style={styles.reply}>Reply</Text>
+                            </TouchableOpacity>
+                        )
+                        }
                     </Right>
                 </Body>
             </CardItem>
