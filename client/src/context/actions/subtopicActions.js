@@ -36,7 +36,7 @@ export const getSubtopics = async dispatch => {
 };
 
 export const getFavoriteSubtopics = async (dispatch, id) => {
-  console.log('USER ID SENDING', id);
+  // console.log('USER ID SENDING', id);
   try {
     let res = await axios.get(`${postgres}/subtopic_users/${id}`);
 
