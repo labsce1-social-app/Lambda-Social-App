@@ -24,7 +24,7 @@ export const initialState = {
   upvote_error: '',
   hashtags: null,
   hashtags_loading: false,
-  hashtags_error: ''
+  hashtags_error: '',
 };
 // all of the reducer conditions, we can use the dispatch method to interact with this by simply passing in a type and sending the payload.
 export const reducer = (state = initialState, action) => {
@@ -110,23 +110,6 @@ export const reducer = (state = initialState, action) => {
         comments: initialState.comments,
         comments_loading: false,
         comments_error: action.payload
-      };
-    case 'SET_CURRENT_USER':
-      return {
-        ...state,
-        isAuthenticated: true,
-        user: action.payload
-      };
-    case 'AUTH_FAIL':
-      return {
-        ...state,
-        error: action.payload
-      };
-    case 'LOGOUT':
-      return {
-        ...state,
-        isAuthenticated: false,
-        user: null
       };
     case 'CREATE_SUBTOPIC':
       const { title, creater_id, id } = action.payload;
@@ -279,6 +262,25 @@ export const reducer = (state = initialState, action) => {
             return item
           }
         })
+      };
+    case 'SET_CURRENT_USER':
+      return {
+        ...state,
+        isAuthenticated: true,
+        user: action.payload,
+        logged_out: false
+      };
+    case 'AUTH_FAIL':
+      return {
+        ...state,
+        error: action.payload
+      };
+    case 'LOGOUT':
+      return {
+        ...state,
+        favorite_subtopics: null,
+        isAuthenticated: false,
+        user: null
       };
     default:
       throw new Error('not a valid action');

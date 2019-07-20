@@ -3,7 +3,7 @@ import { Store } from '../context/';
 import { View, Text } from 'react-native';
 import { getFavoriteSubtopics } from '../context/actions/subtopicActions';
 // import { withNavigation } from 'react-navigation';
-import { Container } from 'native-base';
+import { Container, Card, CardItem } from 'native-base';
 
 import Subtopics from '../components/subtopics/Subtopics';
 
@@ -22,12 +22,18 @@ const FavoriteSubtopics = props => {
       }
       getFavoriteSubtopics(dispatch, user_id);
     },
-    () => getFavoriteSubtopics()
+    [state.user]
   );
 
   return (
     <Container>
-      <Subtopics subtopics={state.favorite_subtopics} />
+      {state.isAuthenticated === true ?
+        <Subtopics subtopics={state.favorite_subtopics} />
+        : <Card>
+          <CardItem>
+            <Text>Please Sign in</Text>
+          </CardItem>
+        </Card>}
     </Container>
   );
 };
