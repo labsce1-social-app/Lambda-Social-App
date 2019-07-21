@@ -12,7 +12,9 @@ import {
   Header,
   Body,
   Title,
-  Left
+  Left,
+  Card,
+  CardItem
 } from 'native-base';
 import { Image, TextInput, Platform, TouchableOpacity } from 'react-native';
 import {
@@ -47,12 +49,13 @@ const CreateDiscussion = props => {
   });
 
   const submitHandler = () => {
-    if (content.match(/#[a-zA-z]+/gi)) {
-      hashtags.push(content.match(/#[a-zA-z]+/gi));
+    const tag = new RegExp(/(^|\B)#(?![0-9_]+\b)([a-zA-Z0-9-_]{1,30})(\b|\r)/g);
+    if (content.match(tag)) {
+      hashtags.push(content.match(tag));
     }
     const post = {
       title,
-      content: content.replace(/#[a-zA-z]+/gi, ''),
+      content: content.replace(tag, ''),
       image: image,
       creater_id: state.user.id,
       subtopic_id: subId,
@@ -91,7 +94,8 @@ const CreateDiscussion = props => {
   return (
     <Container
       style={{
-        height: '100%'
+        height: '100%',
+        backgroundColor: '#F6F8FA', padding: 5
       }}
     >
       <NavigationEvents
@@ -102,109 +106,117 @@ const CreateDiscussion = props => {
       />
 
       <Content>
-        <Form
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            width: '100%',
-            height: '100%',
-            ...Platform.select({
-              ios: {
-                padding: 20
-              }
-            })
-          }}
-        >
-          <View
+        <Card>
+
+          <Form
             style={{
               flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              marginTop: 15,
-              width: '80%',
-              marginBottom: 0
-            }}
-          >
-            <Button bordered onPress={() => uploadImage(dispatch)}>
-              <Text>Upload an image</Text>
-            </Button>
-
-            {state.newImage_loading === true ? (
-              <Button bordered light>
-                <Text>Done</Text>
-              </Button>
-            ) : (
-              <Button bordered success onPress={() => submitHandler()}>
-                <Text>Done</Text>
-              </Button>
-            )}
-          </View>
-
-          <View
-            style={{
+              alignItems: 'center',
               width: '100%',
-              borderBottomColor: 'grey',
-              borderBottomWidth: 0.5,
-              marginBottom: 10,
-              padding: 3,
+              height: '100%',
               ...Platform.select({
                 ios: {
-                  marginTop: 20
+                  padding: 20
                 }
               })
             }}
           >
-            <TextInput placeholder="Title" onChangeText={e => setTitle(e)} />
-          </View>
 
-          <View style={{ width: '100%', padding: 3 }}>
-            <TextInput
+            <CardItem
               style={{
-                // width: '100%',
-                height: 200,
-                justifyContent: 'flex-start',
-                textAlignVertical: 'top'
+                width: '100%',
+                borderBottomColor: 'grey',
+                borderBottomWidth: 0.5,
+                marginBottom: 10,
+                padding: 3,
+                ...Platform.select({
+                  ios: {
+                    marginTop: 20
+                  }
+                })
               }}
-              placeholderTextColor="grey"
-              numberOLines={10}
-              multiline={true}
-              placeholder="Tell us what your post is about. Use hashtags if you would like to label your post."
-              onChangeText={e => setContent(e)}
-            />
-          </View>
+            >
+              <TextInput placeholder="Title" onChangeText={e => setTitle(e)} />
+            </CardItem>
 
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: 15
-            }}
-          >
-            {image ? (
-              <View>
-                <TouchableOpacity
-                  style={{
-                    width: 50,
-                    padding: 6
-                  }}
-                  onPress={() => handleImage(dispatch)}
-                >
-                  <Icon name="close" />
-                </TouchableOpacity>
+            <CardItem style={{ width: '100%', padding: 3 }}>
+              <TextInput
+                style={{
+                  // width: '100%',
+                  height: 200,
+                  justifyContent: 'flex-start',
+                  textAlignVertical: 'top',
+                  borderColor: "#F6F8FA",
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  padding: 5
+                }}
+                placeholderTextColor="grey"
+                numberOLines={10}
+                multiline={true}
+                placeholder="Tell us what your post is about. Use hashtags if you would like to label your post."
+                onChangeText={e => setContent(e)}
+              />
+            </CardItem>
 
-                <Image
-                  source={{ uri: state.newImage }}
-                  style={{ width: 400, height: 200 }}
-                />
-              </View>
-            ) : state.newImage_loading === true ? (
-              <Spinner />
-            ) : (
-              <Text>Add an image</Text>
-            )}
-          </View>
-        </Form>
+            <CardItem
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 15
+              }}
+            >
+              {image ? (
+                <CardItem>
+                  <TouchableOpacity
+                    style={{
+                      width: 50,
+                      padding: 6
+                    }}
+                    onPress={() => handleImage(dispatch)}
+                  >
+                    <Icon name="close" />
+                  </TouchableOpacity>
+
+                  <Image
+                    source={{ uri: state.newImage }}
+                    style={{ width: 400, height: 200 }}
+                  />
+                </CardItem>
+              ) : state.newImage_loading === true ? (
+                <Spinner />
+              ) : null}
+            </CardItem>
+
+            <CardItem
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                marginTop: 15,
+                width: '80%',
+                marginBottom: 0
+              }}
+            >
+              <Button iconLeft onPress={() => uploadImage(dispatch)}>
+                <Icon name="md-image" />
+                <Text>Image</Text>
+              </Button>
+
+              {state.newImage_loading === true ? (
+                <Button bordered light>
+                  <Text>Done</Text>
+                </Button>
+              ) : (
+                  <Button iconLeft success onPress={() => submitHandler()}>
+                    <Icon name="md-checkbox-outline" />
+                    <Text>Done</Text>
+                  </Button>
+                )}
+            </CardItem>
+          </Form>
+        </Card>
       </Content>
     </Container>
   );
