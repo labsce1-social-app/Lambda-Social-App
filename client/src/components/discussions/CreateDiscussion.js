@@ -8,7 +8,11 @@ import {
   Toast,
   Spinner,
   Container,
-  Icon
+  Icon,
+  Header,
+  Body,
+  Title,
+  Left
 } from 'native-base';
 import { Image, TextInput, Platform, TouchableOpacity } from 'react-native';
 import {
@@ -19,7 +23,11 @@ import {
 import { isEmpty } from '../../utils/utility';
 import { Store } from '../../context';
 
-import { withNavigationFocus, NavigationEvents } from 'react-navigation';
+import {
+  StackActions,
+  NavigationActions,
+  NavigationEvents
+} from 'react-navigation';
 
 const hashtags = [];
 
@@ -30,12 +38,10 @@ const CreateDiscussion = props => {
 
   const [image, setImage] = useState('');
 
-  const [visible, setVisible] = useState(true);
-
   const subId = props.navigation.getParam('subId');
 
   useEffect(() => {
-    if (image !== state.newImage && state.newImage) {
+    if (image !== state.newImage) {
       return setImage(state.newImage);
     }
   });
@@ -88,6 +94,13 @@ const CreateDiscussion = props => {
         height: '100%'
       }}
     >
+      <NavigationEvents
+        // onWillFocus={payload => console.log('will focus', payload)}
+        // onDidFocus={payload => console.log('did focus', payload)}
+        onWillBlur={payload => handleImage(dispatch)}
+        onDidBlur={payload => handleImage(dispatch)}
+      />
+
       <Content>
         <Form
           style={{

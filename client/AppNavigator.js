@@ -256,7 +256,6 @@ const rootDrawer = createDrawerNavigator(
 
   {
     initialRouteName: 'Top',
-    unmountInactiveRoutes: true,
     contentComponent: props => <DrawerContent {...props} />
   }
 );
