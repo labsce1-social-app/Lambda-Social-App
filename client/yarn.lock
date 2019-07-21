@@ -5270,11 +5270,6 @@ react-native-safe-area-view@^0.14.1:
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-1.0.0-alpha.22.tgz#7a120377b52aa9bbb94d0b8541a014026be9289b"
   integrity sha512-kSyAt0AeVU6N7ZonfV6dP6iZF8B7Bce+tk3eujXhzBGsLg0VSLnU7uE9VqJF0xdQrHR91ZjGgVMieo/8df9KTA==
 
-react-native-sensitive-info@^5.4.2:
-  version "5.4.2"
-  resolved "https://registry.yarnpkg.com/react-native-sensitive-info/-/react-native-sensitive-info-5.4.2.tgz#d2454991707927f27b5cdedfe21a07f30a5afd22"
-  integrity sha512-C8eROsdK4/hPokgGXkAJ+FfDyF9ml48GyJHNT4pdVCbpA54Y3Ow6CTBKq6OE4djaBQsJ6Xim1iPNea25ark1fg==
-
 react-native-svg@^9.5.1:
   version "9.5.1"
   resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-9.5.1.tgz#eb21fa7eb5d71649620541e6549c6ed425d80240"
