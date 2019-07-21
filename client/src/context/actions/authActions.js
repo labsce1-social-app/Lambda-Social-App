@@ -6,18 +6,13 @@ import RNRestart from 'react-native-restart';
 export const isAuthed = async dispatch => {
     try {
         const accessToken = await getData('accessToken');
-        if (!isEmpty(accessToken)) {
-            return dispatch({ type: 'SET_CURRENT_USER', payload: accessToken });
-        }
-        return accessToken;
+        const followup = await dispatch({ type: 'SET_CURRENT_USER', payload: accessToken });
+        return { accessToken, followup };
     } catch (err) {
         const refresh = await getItem("refreshToken", {})
         const regToken = await auth0.auth.refreshToken({ refreshToken: refresh })
         setItem("accessToken", regToken);
         RNRestart.Restart();
-
-
-
         console.log(err);
     }
 };
