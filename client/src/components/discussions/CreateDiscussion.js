@@ -9,6 +9,10 @@ import {
   Spinner,
   Container,
   Icon,
+  Header,
+  Body,
+  Title,
+  Left,
   Card,
   CardItem
 } from 'native-base';
@@ -21,7 +25,11 @@ import {
 import { isEmpty } from '../../utils/utility';
 import { Store } from '../../context';
 
-import { withNavigationFocus, NavigationEvents } from 'react-navigation';
+import {
+  StackActions,
+  NavigationActions,
+  NavigationEvents
+} from 'react-navigation';
 
 const hashtags = [];
 
@@ -32,12 +40,10 @@ const CreateDiscussion = props => {
 
   const [image, setImage] = useState('');
 
-  const [visible, setVisible] = useState(true);
-
   const subId = props.navigation.getParam('subId');
 
   useEffect(() => {
-    if (image !== state.newImage && state.newImage) {
+    if (image !== state.newImage) {
       return setImage(state.newImage);
     }
   });
@@ -92,6 +98,13 @@ const CreateDiscussion = props => {
         backgroundColor: '#F6F8FA', padding: 5
       }}
     >
+      <NavigationEvents
+        // onWillFocus={payload => console.log('will focus', payload)}
+        // onDidFocus={payload => console.log('did focus', payload)}
+        onWillBlur={payload => handleImage(dispatch)}
+        onDidBlur={payload => handleImage(dispatch)}
+      />
+
       <Content>
         <Card>
 

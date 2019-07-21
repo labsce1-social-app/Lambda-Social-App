@@ -127,6 +127,13 @@ const FavoritesStack = createStackNavigator({
 
   DiscussionsByHashtags: {
     screen: DiscussionsByHashtags
+  },
+
+  PostADiscussion: {
+    screen: CreateDiscussion,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Start a Discussion'
+    })
   }
 });
 

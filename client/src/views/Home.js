@@ -50,8 +50,12 @@ const Home = props => {
   // gather favorite subtopics helper function
   const getUserSubs = async dispatch => {
     let userId = await getData('accessToken');
-    userId = userId.id;
-    await getFavoriteSubtopics(dispatch, userId);
+    if (userId === null) {
+      return null;
+    } else {
+      userId = userId.id;
+      await getFavoriteSubtopics(dispatch, userId);
+    }
   };
 
   return (
