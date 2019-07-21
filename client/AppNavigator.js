@@ -127,6 +127,13 @@ const FavoritesStack = createStackNavigator({
 
   DiscussionsByHashtags: {
     screen: DiscussionsByHashtags
+  },
+
+  PostADiscussion: {
+    screen: CreateDiscussion,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Start a Discussion'
+    })
   }
 });
 
@@ -249,6 +256,7 @@ const rootDrawer = createDrawerNavigator(
 
   {
     initialRouteName: 'Top',
+    unmountInactiveRoutes: true,
     contentComponent: props => <DrawerContent {...props} />
   }
 );
