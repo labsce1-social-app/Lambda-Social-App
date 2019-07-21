@@ -5,7 +5,7 @@ import FabButton from '../components/posts/FabButton';
 import { getCommentsByDiscussionId } from '../context/actions/commentActions';
 import { Container } from 'native-base';
 import { withNavigation } from 'react-navigation';
-import KeyboardShift from '../common/KeyboardShift';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Platform } from 'react-native';
 
 const PostPage = props => {
@@ -45,13 +45,15 @@ const PostPage = props => {
   };
 
   return (
-    <KeyboardShift>
-      <Container
-        style={{
-          backgroundColor: Platform.OS === 'ios' ? '#FFFFFF' : '#F6F8FA',
-          padding: 5
-        }}
-      >
+    <Container
+      style={{
+        backgroundColor: Platform.OS === 'ios' ? '#FFFFFF' : '#F6F8FA',
+        padding: 5
+      }}
+    >
+      <KeyboardAwareScrollView
+        extraScrollHeight={10}
+        enableOnAndroid={true}>
         <Post
           postTitle={postTitle}
           isReplying={isReplying}
@@ -60,18 +62,18 @@ const PostPage = props => {
           hideInput={() => closeInputs()}
           postId={JSON.stringify(postId)}
         />
-        {state.isAuthenticated ? (
-          <FabButton
-            isreplying={isReplying}
-            replyToComment={() => {
-              scrollView.current.scrollToEnd({ animated: true });
-              setIsReplying(!isReplying);
-            }}
-            postId={JSON.stringify(postId)}
-          />
-        ) : null}
-      </Container>
-    </KeyboardShift>
+      </KeyboardAwareScrollView>
+      {state.isAuthenticated ? (
+        <FabButton
+          isreplying={isReplying}
+          replyToComment={() => {
+            scrollView.current.scrollToEnd({ animated: true });
+            setIsReplying(!isReplying);
+          }}
+          postId={JSON.stringify(postId)}
+        />
+      ) : null}
+    </Container>
   );
   // return <Thread />
 };
