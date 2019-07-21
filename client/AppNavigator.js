@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, Icon } from 'native-base';
+import { Icon } from 'native-base';
+import { Text } from 'react-native';
 
 import Home from './src/views/Home';
 import DiscussionsPage from './src/views/DiscussionsPage';
@@ -23,6 +24,8 @@ import DrawerButton from './src/components/navbar/DrawerButton';
 import CreateDiscussion from './src/components/discussions/CreateDiscussion';
 import RecentDiscussionsPage from './src/views/RecentDiscussionsPage';
 import FavoriteSubtopicsPage from './src/views/FavoriteSubtopicsPage';
+
+import FavoritesTab from './src/components/navbar/FavoritesTab';
 
 // this component serves as a routing page, it will render everything based on the current url so it will be used to navigate the site.
 
@@ -57,7 +60,7 @@ const HomeStack = createStackNavigator({
 
   AboutPage: {
     screen: AboutPage
-  },
+  }
 });
 
 const SubtopicsStack = createStackNavigator({
@@ -168,38 +171,58 @@ const FooterNavigator = createBottomTabNavigator(
     Home: {
       screen: HomeStack,
       navigationOptions: {
-        tabBarIcon: <Icon name="home" />
+        tabBarIcon: ({ tintColor }) => (
+          <Icon style={{ color: tintColor }} name="home" />
+        )
       }
     },
 
     SubTopics: {
       screen: SubtopicsStack,
       navigationOptions: {
-        tabBarIcon: <Icon name="md-albums" />
+        tabBarIcon: ({ tintColor }) => (
+          <Icon style={{ color: tintColor }} name="md-albums" />
+        )
       }
     },
+
     Favorited: {
       screen: FavoritesStack,
-      navigationOptions: {
-        tabBarIcon: <Icon name="md-star" />
-      }
+      navigationOptions: ({ navigation }) => ({
+        tabBarIcon: ({ tintColor }) => (
+          <FavoritesTab
+            tintColor={tintColor}
+            color={tintColor}
+            navigation={navigation}
+          />
+        )
+      })
     },
+
     Search: {
       screen: Search,
-      navigationOptions: ({ navigation }) => ({
-        // title: 'Search',
-        tabBarIcon: <Icon name="md-grid" />
-      })
+      navigationOptions: {
+        tabBarIcon: ({ tintColor }) => (
+          <Icon style={{ color: tintColor }} name="md-grid" />
+        )
+      }
     }
   },
   {
     tabBarOptions: {
       keyboardHidesTabBar: true,
-      activeTintColor: '#bb1333',
+      activeTintColor: 'black',
       // activeBackgroundColor: '#d3d3d3',
-      inactiveTintColor: 'grey',
+      inactiveTintColor: '#b2b2b2',
+      showLabel: false,
+
       labelStyle: {
         fontWeight: 'bold'
+      },
+
+      tabStyle: {
+        borderRadius: 5,
+        margin: 3
       },
 
       style: {
@@ -211,6 +234,7 @@ const FooterNavigator = createBottomTabNavigator(
         elevation: 3,
         borderTopColor: 'transparent',
         height: 52
+        // backgroundColor: '#303030'
       }
     }
   }

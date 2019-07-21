@@ -14,26 +14,28 @@ const FavoriteSubtopics = props => {
 
   useEffect(
     () => {
-      let user_id;
-      if (state.user) {
-        user_id = state.user.id;
-      } else {
-        user_id = 'null'
-      }
-      getFavoriteSubtopics(dispatch, user_id);
+      loadFavorites(dispatch);
     },
-    [state.user]
+    () => loadFavorites()
   );
+
+  const loadFavorites = async dispatch => {
+    if (state.isAuthenticated) {
+      await getFavoriteSubtopics(dispatch, state.user.id);
+    }
+  };
 
   return (
     <Container>
-      {state.isAuthenticated === true ?
+      {state.isAuthenticated ? (
         <Subtopics subtopics={state.favorite_subtopics} />
-        : <Card>
-          <CardItem>
-            <Text>Please Sign in</Text>
-          </CardItem>
-        </Card>}
+      ) : (
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <Text style={{ textAlign: 'center', fontSize: 14 }}>
+            Log in first
+          </Text>
+        </View>
+      )}
     </Container>
   );
 };

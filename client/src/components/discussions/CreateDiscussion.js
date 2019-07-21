@@ -7,12 +7,19 @@ import {
   Text,
   Toast,
   Spinner,
-  Container
+  Container,
+  Icon
 } from 'native-base';
-import { Image, TextInput, Platform } from 'react-native';
-import { addDiscussion, uploadImage } from '../../context/actions/discussionActions';
+import { Image, TextInput, Platform, TouchableOpacity } from 'react-native';
+import {
+  addDiscussion,
+  uploadImage,
+  removeImage
+} from '../../context/actions/discussionActions';
 import { isEmpty } from '../../utils/utility';
 import { Store } from '../../context';
+
+import { withNavigationFocus, NavigationEvents } from 'react-navigation';
 
 const hashtags = [];
 
@@ -23,11 +30,12 @@ const CreateDiscussion = props => {
 
   const [image, setImage] = useState('');
 
+  const [visible, setVisible] = useState(true);
+
   const subId = props.navigation.getParam('subId');
 
-
   useEffect(() => {
-    if (image !== state.newImage) {
+    if (image !== state.newImage && state.newImage) {
       return setImage(state.newImage);
     }
   });
@@ -68,6 +76,11 @@ const CreateDiscussion = props => {
     props.navigation.navigate('Discussions', { subId: subId });
   };
 
+  const handleImage = dispatch => {
+    setImage('');
+
+    removeImage(dispatch);
+  };
 
   return (
     <Container
@@ -108,10 +121,10 @@ const CreateDiscussion = props => {
                 <Text>Done</Text>
               </Button>
             ) : (
-                <Button bordered success onPress={() => submitHandler()}>
-                  <Text>Done</Text>
-                </Button>
-              )}
+              <Button bordered success onPress={() => submitHandler()}>
+                <Text>Done</Text>
+              </Button>
+            )}
           </View>
 
           <View
@@ -123,7 +136,7 @@ const CreateDiscussion = props => {
               padding: 3,
               ...Platform.select({
                 ios: {
-                  marginTop: 20,
+                  marginTop: 20
                 }
               })
             }}
@@ -137,8 +150,7 @@ const CreateDiscussion = props => {
                 // width: '100%',
                 height: 200,
                 justifyContent: 'flex-start',
-                textAlignVertical: 'top',
-
+                textAlignVertical: 'top'
               }}
               placeholderTextColor="grey"
               numberOLines={10}
@@ -157,15 +169,27 @@ const CreateDiscussion = props => {
             }}
           >
             {image ? (
-              <Image
-                source={{ uri: image }}
-                style={{ width: 200, height: 200 }}
-              />
+              <View>
+                <TouchableOpacity
+                  style={{
+                    width: 50,
+                    padding: 6
+                  }}
+                  onPress={() => handleImage(dispatch)}
+                >
+                  <Icon name="close" />
+                </TouchableOpacity>
+
+                <Image
+                  source={{ uri: state.newImage }}
+                  style={{ width: 400, height: 200 }}
+                />
+              </View>
             ) : state.newImage_loading === true ? (
               <Spinner />
             ) : (
-                  <Text>Add an image</Text>
-                )}
+              <Text>Add an image</Text>
+            )}
           </View>
         </Form>
       </Content>
