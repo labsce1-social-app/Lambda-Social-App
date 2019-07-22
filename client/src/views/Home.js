@@ -13,6 +13,7 @@ import {
 } from '../context/actions/subtopicActions';
 import { getData } from '../utils/AsyncStorage';
 import { isEmpty } from '../utils/utility';
+import { theme } from '../common/theme';
 
 // this home is referring to TopDiscussions component ONLY
 
@@ -59,7 +60,7 @@ const Home = props => {
   };
 
   return (
-    <Container style={{ backgroundColor: '#F6F8FA', padding: 5 }}>
+    <Container style={{ backgroundColor: theme.colors.offWhite, padding: 5 }}>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
       <Sort />
       <Discussions

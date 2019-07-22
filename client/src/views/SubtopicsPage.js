@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { Store } from '../context';
-
+import { theme } from '../common/theme';
 import Subtopics from '../components/subtopics/Subtopics';
 import { Container } from 'native-base';
 import AddSub from '../components/subtopics/AddSub';
@@ -9,7 +9,7 @@ const SubtopicsPage = props => {
   const { state, dispatch } = useContext(Store);
 
   return (
-    <Container style={{ backgroundColor: '#F6F8FA', padding: 5 }}>
+    <Container style={{ backgroundColor: theme.colors.offWhite, padding: 5 }}>
       <AddSub />
       <Subtopics subtopics={state.subtopics} />
     </Container>

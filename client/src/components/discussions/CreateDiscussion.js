@@ -49,7 +49,7 @@ const CreateDiscussion = props => {
   });
 
   const submitHandler = () => {
-    const tag = new RegExp(/(^|\B)#(?![0-9_]+\b)([a-zA-Z0-9-_]{1,30})(\b|\r)/g);
+    const tag = new RegExp(/#[a-zA-z0-9-_-]+/gi);
     if (content.match(tag)) {
       hashtags.push(content.match(tag));
     }
