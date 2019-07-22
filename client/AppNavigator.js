@@ -7,24 +7,21 @@ import DiscussionsPage from './src/views/DiscussionsPage';
 import DiscussionsByHashtags from './src/views/DiscussionsByHashtags';
 import PostPage from './src/views/PostPage';
 import SubtopicsPage from './src/views/SubtopicsPage';
-import SubtopicsLoading from './src/components/subtopics/SubtopicsLoading';
-import AddSModal from './src/components/subtopics/AddSModal';
 import HashtagPage from './src/views/HashtagPage';
 import AboutPage from './src/views/AboutPage';
+import RecentDiscussionsPage from './src/views/RecentDiscussionsPage';
+import FavoriteSubtopicsPage from './src/views/FavoriteSubtopicsPage';
 
 import {
   createDrawerNavigator,
   createAppContainer,
   createStackNavigator
 } from 'react-navigation';
-
 import { createBottomTabNavigator } from 'react-navigation-tabs';
+
 import DrawerContent from './src/components/navbar/DrawerContent';
 import DrawerButton from './src/components/navbar/DrawerButton';
 import CreateDiscussion from './src/components/discussions/CreateDiscussion';
-import RecentDiscussionsPage from './src/views/RecentDiscussionsPage';
-import FavoriteSubtopicsPage from './src/views/FavoriteSubtopicsPage';
-
 import FavoritesTab from './src/components/navbar/FavoritesTab';
 
 // this component serves as a routing page, it will render everything based on the current url so it will be used to navigate the site.
@@ -47,10 +44,6 @@ const HomeStack = createStackNavigator({
     screen: DiscussionsPage
   },
 
-  FavoriteSubtopics: {
-    screen: FavoriteSubtopicsPage
-  },
-
   PostADiscussion: {
     screen: CreateDiscussion,
     navigationOptions: ({ navigation }) => ({
@@ -62,6 +55,20 @@ const HomeStack = createStackNavigator({
     screen: AboutPage
   }
 });
+
+HomeStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
+
+  return {
+    tabBarVisible
+  };
+};
+
+/************************************************************************/
 
 const SubtopicsStack = createStackNavigator({
   Subtopics: {
@@ -88,10 +95,6 @@ const SubtopicsStack = createStackNavigator({
     screen: DiscussionsByHashtags
   },
 
-  // FavoriteSubtopics: {
-  //   screen: FavoriteSubtopicsPage
-  // },
-
   PostADiscussion: {
     screen: CreateDiscussion,
     navigationOptions: ({ navigation }) => ({
@@ -99,6 +102,20 @@ const SubtopicsStack = createStackNavigator({
     })
   }
 });
+
+SubtopicsStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+
+  if (navigation.state.index > 1) {
+    tabBarVisible = false;
+  }
+
+  return {
+    tabBarVisible
+  };
+};
+
+/************************************************************************/
 
 const FavoritesStack = createStackNavigator({
   FavoriteSubtopics: {
@@ -137,6 +154,20 @@ const FavoritesStack = createStackNavigator({
   }
 });
 
+FavoritesStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+
+  if (navigation.state.index > 1) {
+    tabBarVisible = false;
+  }
+
+  return {
+    tabBarVisible
+  };
+};
+
+/************************************************************************/
+
 const Search = createStackNavigator({
   Hashtags: {
     screen: HashtagPage,
@@ -172,6 +203,20 @@ const Search = createStackNavigator({
     })
   }
 });
+
+Search.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+
+  if (navigation.state.index > 1) {
+    tabBarVisible = false;
+  }
+
+  return {
+    tabBarVisible
+  };
+};
+
+/************************************************************************/
 
 const FooterNavigator = createBottomTabNavigator(
   {
@@ -246,6 +291,8 @@ const FooterNavigator = createBottomTabNavigator(
     }
   }
 );
+
+/************************************************************************/
 
 const rootDrawer = createDrawerNavigator(
   {
