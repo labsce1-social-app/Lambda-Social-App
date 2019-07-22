@@ -4,6 +4,7 @@ import { getHashtags } from '../context/actions/discussionActions';
 import Hashtag from '../components/hashtags/Hashtag';
 import { withNavigation } from 'react-navigation';
 import { Container } from 'native-base';
+import { theme } from '../common/theme';
 
 const HashtagPage = props => {
   const { state, dispatch } = useContext(Store);
@@ -18,7 +19,7 @@ const HashtagPage = props => {
   return (
     <Container
       style={{
-        backgroundColor: '#F6F8FA',
+        backgroundColor: theme.colors.offWhite,
         width: '100%',
         padding: 10
       }}

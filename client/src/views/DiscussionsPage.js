@@ -7,6 +7,8 @@ import { withNavigationFocus, withNavigation } from 'react-navigation';
 import { Container } from 'native-base';
 import FabButton from '../components/discussions/FabButton';
 import FavoriteButton from '../components/subtopics/FavoriteButton';
+import { theme } from '../common/theme';
+
 
 // this DiscussionsPage is referring to all discussions inside of a chosen subtopic ONLY
 
@@ -21,7 +23,7 @@ const DiscussionsPage = props => {
   }, [props.isFocused]);
 
   return (
-    <Container style={{ backgroundColor: '#F6F8FA', padding: 5 }}>
+    <Container style={{ backgroundColor: theme.colors.offWhite, padding: 5 }}>
       <FavoriteButton subId={subId} />
 
       <Discussions
@@ -29,9 +31,9 @@ const DiscussionsPage = props => {
         discussions={state.discussions}
       />
       {props.navigation.state.routeName === 'Discussions' &&
-      state.isAuthenticated ? (
-        <FabButton />
-      ) : null}
+        state.isAuthenticated ? (
+          <FabButton />
+        ) : null}
     </Container>
   );
 };

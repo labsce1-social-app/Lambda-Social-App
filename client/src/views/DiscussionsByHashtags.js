@@ -7,6 +7,8 @@ import { getByHashtags } from '../context/actions/discussionActions';
 import { withNavigation } from 'react-navigation';
 import { Container } from 'native-base';
 import FabButton from '../components/discussions/FabButton';
+import { theme } from '../common/theme';
+
 
 
 // This component will retrieve discussions based on chosen hashtag in the search function
@@ -19,7 +21,7 @@ const DiscussionsByHashtags = props => {
     }, [hashtag]);
 
     return (
-        <Container style={{ backgroundColor: '#F6F8FA', padding: 5 }}>
+        <Container style={{ backgroundColor: theme.colors.offWhite, padding: 5 }}>
             <Sort />
             <Discussions
                 loading={state.discussions_loading}

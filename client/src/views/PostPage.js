@@ -7,6 +7,7 @@ import { Container } from 'native-base';
 import { withNavigation } from 'react-navigation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Platform } from 'react-native';
+import { theme } from '../common/theme';
 
 const PostPage = props => {
   // get ref to scrollview to automatically scroll to the bottom
@@ -47,7 +48,7 @@ const PostPage = props => {
   return (
     <Container
       style={{
-        backgroundColor: Platform.OS === 'ios' ? '#FFFFFF' : '#F6F8FA',
+        backgroundColor: Platform.OS === 'ios' ? theme.colors.white : theme.colors.offWhite,
         padding: 5
       }}
     >
