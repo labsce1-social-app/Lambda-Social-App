@@ -45,8 +45,9 @@ import separatorTheme from "./Separator";
 import pickerTheme from "./Picker"
 import variable from "./../variables/platform";
 import darkTheme from '../variables/darkTheme';
+import material from '../variables/material';
 
-export default (variables /*: * */ = darkTheme) => {
+export default (variables /*: * */ = variable) => {
   const theme = {
     variables,
     "NativeBase.Left": {

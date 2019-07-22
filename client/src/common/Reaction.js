@@ -35,7 +35,7 @@ const Reaction = ({ count, image, handlePress, voted, color }) => {
                 { transform: [{ scale: springValue }], alignSelf: 'center', tintColor: color, width: 80, height: 80 }
                 ]}>
             </Animated.Image>
-            <Text style={{ color: voted ? '#0064B5' : '#000000' }}>{count}</Text>
+            <Text style={{ color: voted ? '#0064B5' : '' }}>{count}</Text>
         </TouchableOpacity>
     );
 }
@@ -58,9 +58,6 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
         backgroundColor: 'transparent',
-    },
-    upvoteColor: {
-        color: 'green'
     }
 });
 

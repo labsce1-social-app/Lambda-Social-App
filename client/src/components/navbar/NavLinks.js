@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Toast, CardItem, Icon, Text, Right } from 'native-base';
 import { handleAuth, handleLogout } from '../../context/actions/authActions';
+import { theme } from '../../common/theme';
 
 const NavLinks = ({ navigation, state, dispatch, text }) => {
   const handleLogging = () => {
@@ -35,7 +36,7 @@ const NavLinks = ({ navigation, state, dispatch, text }) => {
   };
 
   return (
-    <Card>
+    <Card style={{ background: theme.colors.white }}>
       <CardItem button onPress={() => navigation.navigate('AboutPage')}>
         <Icon active name="md-swap" />
         <Text>About LS Social</Text>

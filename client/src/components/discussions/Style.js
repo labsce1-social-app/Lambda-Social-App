@@ -57,10 +57,6 @@ export default StyleSheet.create({
         marginBottom: 10,
         justifyContent: 'space-evenly',
     },
-    badgeColors: {
-        backgroundColor: '#d9534f',
-        margin: 5,
-    },
     hashtagText: {
         fontSize: 14,
         color: 'slateblue'

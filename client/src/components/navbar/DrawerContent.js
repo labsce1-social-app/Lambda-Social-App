@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { withNavigation } from 'react-navigation';
-
+import { theme } from '../../common/theme';
 import { Store } from '../../context';
 import UserProfile from './UserProfile';
 import NavLinks from './NavLinks';
@@ -28,7 +27,8 @@ const styles = StyleSheet.create({
   container: {
     padding: 15,
     paddingTop: 50,
-    backgroundColor: '#F7F7F7'
+    backgroundColor: theme.colors.white,
+    height: '100%'
   }
 });
 

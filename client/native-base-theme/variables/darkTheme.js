@@ -110,7 +110,7 @@ export default {
     brandSuccess: "#5cb85c",
     brandDanger: "#d9534f",
     brandWarning: "#f0ad4e",
-    brandDark: "#000",
+    brandDark: "#fff", // changed for brand colors
     brandLight: "#f4f4f4",
 
     //Container
@@ -218,28 +218,29 @@ export default {
     },
 
     // Segment
-    segmentBackgroundColor: platform === "ios" ? "#363333" : "#363333",
-    segmentActiveBackgroundColor: platform === "ios" ? "#007aff" : "#fff",
-    segmentTextColor: platform === "ios" ? "#fff" : "#fff",
-    segmentActiveTextColor: platform === "ios" ? "#fff" : "#3F51B5",
-    segmentBorderColor: platform === "ios" ? "#007aff" : "#fff",
-    segmentBorderColorMain: platform === "ios" ? "#a7a6ab" : "#3F51B5",
+    // segmentBackgroundColor: platform === "ios" ? "#363333" : "#363333",
+    // segmentActiveBackgroundColor: platform === "ios" ? "#007aff" : "#fff",
+    // segmentTextColor: platform === "ios" ? "#fff" : "#fff",
+    // segmentActiveTextColor: platform === "ios" ? "#fff" : "#3F51B5",
+    // segmentBorderColor: platform === "ios" ? "#007aff" : "#fff",
+    // segmentBorderColorMain: platform === "ios" ? "#a7a6ab" : "#3F51B5",
 
     // Spinner
     defaultSpinnerColor: "#45D56E",
     inverseSpinnerColor: "#1A191B",
 
     // Tab
-    tabDefaultBg: platform === "ios" ? "#000" : "#3F51B5",
-    topTabBarTextColor: platform === "ios" ? "#6b6b6b" : "#b3c7f9",
-    topTabBarActiveTextColor: platform === "ios" ? "#007aff" : "#fff",
-    topTabBarBorderColor: platform === "ios" ? "#a7a6ab" : "#fff",
-    topTabBarActiveBorderColor: platform === "ios" ? "#007aff" : "#fff",
+    // tabDefaultBg: platform === "ios" ? "#000" : "#3F51B5",
+    // topTabBarTextColor: platform === "ios" ? "#6b6b6b" : "#b3c7f9",
+    // topTabBarActiveTextColor: platform === "ios" ? "#007aff" : "#fff",
+    // topTabBarBorderColor: platform === "ios" ? "#a7a6ab" : "#fff",
+    // topTabBarActiveBorderColor: platform === "ios" ? "#007aff" : "#fff",
 
     // Tabs
-    tabBgColor: "#000",
-    // tabBgColor: "#F8F8F8",
-    tabFontSize: 15,
+    // tabBgColor: "#000",
+    // // tabBgColor: "#F8F8F8",
+    // tabFontSize: 15,
+
 
     // Text
     textColor: "#F6E9E9",
@@ -250,11 +251,11 @@ export default {
     },
 
     // Title
-    titleFontfamily: platform === "ios" ? "System" : "Roboto_medium",
-    titleFontSize: platform === "ios" ? 17 : 19,
-    subTitleFontSize: platform === "ios" ? 11 : 14,
-    subtitleColor: platform === "ios" ? "#fff" : "#FFF",
-    titleFontColor: platform === "ios" ? "#fff" : "#FFF",
+    // titleFontfamily: platform === "ios" ? "System" : "Roboto_medium",
+    // titleFontSize: platform === "ios" ? 17 : 19,
+    // subTitleFontSize: platform === "ios" ? 11 : 14,
+    // subtitleColor: platform === "ios" ? "#fff" : "#FFF",
+    // titleFontColor: platform === "ios" ? "#fff" : "#FFF",
 
     // Other
     borderRadiusBase: platform === "ios" ? 5 : 2,
