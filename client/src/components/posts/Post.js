@@ -55,6 +55,7 @@ const Post = React.forwardRef((props, ref) => {
                     postId={props.postId}
                     hideInput={props.hideInput}
                     setIsReplying={props.setIsReplying}
+                    isAuthed={state.isAuthenticated}
                   />
                 </Suspense>
               );

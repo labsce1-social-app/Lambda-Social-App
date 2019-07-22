@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Image, TouchableOpacity } from 'react-native';
 import { Store } from '../../context/';
-import { Icon, Toast, Card, Text } from 'native-base';
+import { Toast, Card, Text } from 'native-base';
 import { isEmpty } from '../../utils/utility';
 import {
     favoriteTheSubtopic,
@@ -19,12 +19,7 @@ const FavoriteButton = ({ subId }) => {
     }, [state.favorite_subtopics])
 
     const favoriteChecker = () => {
-        console.log(subId)
-        // if (state.favorite_subtopics.hasOwnProperty(subId)) {
-        //     setFavorited(true);
-        // } else {
-        //     setFavorited(false)
-        // }
+
         state.favorite_subtopics.filter((item) => {
             if (item.id === subId) {
                 setFavorited(true)
@@ -32,7 +27,16 @@ const FavoriteButton = ({ subId }) => {
         })
     }
 
+    const isNotAuthed = () => {
+        return Toast.show({
+            text: "Please Sign in first",
+            buttonText: 'Okay',
+            duration: 3000,
+        })
+    }
+
     const favorite = async (subId, userId) => {
+
         const sub = {
             subtopic_id: subId,
             user_id: userId
@@ -63,7 +67,7 @@ const FavoriteButton = ({ subId }) => {
         if (favorited === false) {
             content = (
                 <TouchableOpacity
-                    onPress={() => favorite(subId, state.user.id)}
+                    onPress={() => state.isAuthenticated === false ? isNotAuthed() : favorite(subId, state.user.id)}
                     style={{ flex: 1, flexDirection: 'row', alignItems: 'center', width: '70%', justifyContent: 'space-between' }}
                 >
                     <Text>Add to Favorite</Text>
@@ -72,7 +76,7 @@ const FavoriteButton = ({ subId }) => {
         } else {
             content = (
 
-                <TouchableOpacity onPress={() => unFavorite(subId, state.user.id)}
+                <TouchableOpacity onPress={() => state.isAuthenticated === false ? isNotAuthed() : unFavorite(subId, state.user.id)}
                     style={{ flex: 1, flexDirection: 'row', alignItems: 'center', width: '70%', justifyContent: 'space-between' }}>
                     <Text>Remove From Favorite</Text>
                     <Image source={require("../../assets/favorite.png")} style={{ tintColor: 'yellow' }} />
