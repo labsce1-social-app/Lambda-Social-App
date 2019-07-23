@@ -13,7 +13,6 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io').listen(server);
 
-
 // middleware
 app.use(express.json());
 middleware(app);
@@ -25,14 +24,17 @@ app.use('/comments', commentRouter);
 app.use('/upvotes', upvoteRouter);
 app.use('/subtopic_users', subtopicUsersRouter);
 
-
 // configure sanity check
 app.get('/', (req, res) =>
   res.status(200).send({ Success: 'Sanity check working...' })
 );
 
-io.on('connection', (socket) => {
+io.on('connection', socket => {
   console.log('socket connected!!');
-})
+  // create sub event
+  socket.on('create sub', msg => {
+    console.log(msg);
+  });
+});
 
 module.exports = server;
