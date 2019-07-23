@@ -102,7 +102,8 @@ export const removeImage = async dispatch => {
   return await dispatch({ type: 'RESET_IMAGE' });
 };
 
-export const addDiscussion = async (body, dispatch, nav) => {
+export const addDiscussion = async (body, dispatch) => {
+  console.log("BODY: ", body)
   dispatch({ type: 'DISCUSSIONS_FETCHING' });
   const apiBody = {
     title: body.title,
@@ -120,7 +121,7 @@ export const addDiscussion = async (body, dispatch, nav) => {
       type: 'CREATED_DISCUSSION',
       payload: res.data
     });
-
+    console.log(res.data)
     return { res, followup };
   } catch (err) {
     dispatch({

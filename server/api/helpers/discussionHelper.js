@@ -69,7 +69,12 @@ on comment.discussion_id = discussion.id
 where comment.user_id = '${id}'
 GROUP BY discussion.id
 ORDER BY discussion.updated_at DESC
-`).then(res => res.rows);
+`).then(res => {
+    return res.rows
+  })
+    .catch(err => {
+      console.log(err)
+    });
 };
 
 const getHashTagsByDiscussionId = id => {
@@ -79,7 +84,12 @@ const getHashTagsByDiscussionId = id => {
   select hashtag.hashtag, hashtag.discussion_id from hashtag where hashtag.discussion_id = ${id}
   `
     )
-    .then(res => res.rows);
+    .then(res => {
+      return res.rows
+    })
+    .catch(err => {
+      console.log(err)
+    });
 };
 
 const addHashTags = (discussion_id, hashtag) => {

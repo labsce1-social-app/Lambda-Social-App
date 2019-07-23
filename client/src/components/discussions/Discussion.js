@@ -68,12 +68,12 @@ const Discussion = props => {
                   image={require('../../assets/up.png')}
                   count={props.upvotes}
                   voted={props.voted}
-                  color="green"
+                  colorTint="green"
                 />
                 <Reaction
                   image={require('../../assets/down.png')}
                   voted={props.voted}
-                  color="orange"
+                  colorTint="orange"
                 />
               </View>
             </CardItem>

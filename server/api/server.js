@@ -9,22 +9,30 @@ const {
   subtopicUsersRouter
 } = require('./routers/');
 
-const server = express();
+const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io').listen(server);
+
 
 // middleware
-server.use(express.json());
-middleware(server);
+app.use(express.json());
+middleware(app);
 
-server.use('/users', userRouter);
-server.use('/subtopics', subtopicRouter);
-server.use('/discussions', discussionRouter);
-server.use('/comments', commentRouter);
-server.use('/upvotes', upvoteRouter);
-server.use('/subtopic_users', subtopicUsersRouter);
+app.use('/users', userRouter);
+app.use('/subtopics', subtopicRouter);
+app.use('/discussions', discussionRouter);
+app.use('/comments', commentRouter);
+app.use('/upvotes', upvoteRouter);
+app.use('/subtopic_users', subtopicUsersRouter);
+
 
 // configure sanity check
-server.get('/', (req, res) =>
+app.get('/', (req, res) =>
   res.status(200).send({ Success: 'Sanity check working...' })
 );
+
+io.on('connection', (socket) => {
+  console.log('socket connected!!');
+})
 
 module.exports = server;
