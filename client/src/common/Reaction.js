@@ -42,8 +42,8 @@ const Reaction = ({ count, image, handlePress, voted, color }) => {
 
 Reaction.defaultProps = {
     handlePress: () => { },
-    color: null,
-    count: null
+    // color: undefined,
+    // count: null
 }
 
 const styles = StyleSheet.create({

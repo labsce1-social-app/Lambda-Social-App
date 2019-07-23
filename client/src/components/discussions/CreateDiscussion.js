@@ -31,7 +31,7 @@ import {
   NavigationEvents
 } from 'react-navigation';
 
-const hashtags = [];
+let hashtags = [];
 
 const CreateDiscussion = props => {
   const { state, dispatch } = useContext(Store);
@@ -49,7 +49,7 @@ const CreateDiscussion = props => {
   });
 
   const submitHandler = () => {
-    const tag = new RegExp(/#[a-zA-z0-9-_-]+/gi);
+    const tag = new RegExp(/#[a-zA-z0-9]+/gi);
     if (content.match(tag)) {
       hashtags.push(content.match(tag));
     }
@@ -83,6 +83,7 @@ const CreateDiscussion = props => {
     addDiscussion(post, dispatch, props.navigation);
 
     props.navigation.navigate('Discussions', { subId: subId });
+    hashtags = [];
   };
 
   const handleImage = dispatch => {

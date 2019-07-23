@@ -3,7 +3,7 @@ import { Store } from '../context/';
 // TODO: remove this later and place into it's own route
 import Discussions from '../components/discussions/Discussions';
 import { getDiscussionsForSub } from '../context/actions/discussionActions';
-import { withNavigationFocus, withNavigation } from 'react-navigation';
+import { withNavigation } from 'react-navigation';
 import { Container } from 'native-base';
 import FabButton from '../components/discussions/FabButton';
 import FavoriteButton from '../components/subtopics/FavoriteButton';
@@ -20,7 +20,7 @@ const DiscussionsPage = props => {
   // component has changed
   useEffect(() => {
     getDiscussionsForSub(subId, dispatch);
-  }, [props.isFocused]);
+  }, []);
 
   return (
     <Container style={{ backgroundColor: theme.colors.offWhite, padding: 5 }}>
@@ -46,4 +46,4 @@ DiscussionsPage.navigationOptions = ({ navigation }) => ({
   }
 });
 
-export default withNavigationFocus(DiscussionsPage);
+export default withNavigation(DiscussionsPage);

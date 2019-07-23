@@ -33,14 +33,14 @@ const Discussions = props => {
                 <Text
                   onPress={() =>
                     props.navigation.navigate('DiscussionsByHashtags', {
-                      hashtag: hashtag,
-                      title: hashtag
+                      hashtag: hashtag.hashtag,
+                      title: hashtag.hashtag
                     })
                   }
                   style={style.hashtagText}
-                  key={`hashtag-${hashtag[0]}-${index}`}
+                  key={`hashtag-${hashtag.hashtag}-${index}`}
                 >
-                  {hashtag}
+                  {hashtag.hashtag}
                 </Text>
               ))
             }
@@ -51,12 +51,12 @@ const Discussions = props => {
       refreshing={props.loading}
     />
   ) : (
-    <View>
-      <Text style={{ padding: 15, height: config.deviceHeight * 0.65 }}>
-        Looks like no one has created a discussion in this subtopic yet...
+        <View>
+          <Text style={{ padding: 15, height: config.deviceHeight * 0.65 }}>
+            Looks like no one has created a discussion in this subtopic yet...
       </Text>
-    </View>
-  );
+        </View>
+      );
 };
 
 export default withNavigation(Discussions);
