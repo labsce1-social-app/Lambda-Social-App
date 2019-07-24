@@ -122,7 +122,7 @@ const FavoritesStack = createStackNavigator({
     screen: FavoriteSubtopicsPage,
 
     navigationOptions: ({ navigation }) => ({
-      title: `Favorite Subtopics`,
+      title: `Joined Subtopics`,
 
       headerLeft: <DrawerButton navigation={navigation} />
     })

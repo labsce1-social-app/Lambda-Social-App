@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Image, TouchableOpacity } from 'react-native';
+import { Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { Store } from '../../context/';
 import { Toast, Card, Text } from 'native-base';
 import { isEmpty } from '../../utils/utility';
@@ -68,43 +68,50 @@ const FavoriteButton = ({ subId }) => {
             content = (
                 <TouchableOpacity
                     onPress={() => state.isAuthenticated === false ? isNotAuthed() : favorite(subId, state.user.id)}
-                    style={{ flex: 1, flexDirection: 'row', alignItems: 'center', width: '70%', justifyContent: 'space-between' }}
+                    style={styles().button}
                 >
-                    <Text>Add to Favorite</Text>
-                    <Image source={require("../../assets/favorite.png")} style={{ tintColor: 'gray' }} />
-                </TouchableOpacity>)
-        } else {
-            content = (
-
-                <TouchableOpacity onPress={() => state.isAuthenticated === false ? isNotAuthed() : unFavorite(subId, state.user.id)}
-                    style={{ flex: 1, flexDirection: 'row', alignItems: 'center', width: '70%', justifyContent: 'space-between' }}>
-                    <Text>Remove From Favorite</Text>
-                    <Image source={require("../../assets/favorite.png")} style={{ tintColor: 'yellow' }} />
+                    <Image source={require("../../assets/join.png")} style={{ tintColor: '#fff', flex: 1, width: 30, height: 30, resizeMode: 'contain' }} />
+                    <Text style={{ color: '#fff', fontWeight: 'bold' }}>Join</Text>
                 </TouchableOpacity>
             )
-
+        } else {
+            content = (
+                <TouchableOpacity onPress={() => state.isAuthenticated === false ? isNotAuthed() : unFavorite(subId, state.user.id)}
+                    style={styles().button}>
+                    <Image source={require("../../assets/join.png")} style={{ tintColor: 'yellow', flex: 1, width: 30, height: 30, resizeMode: 'contain' }} />
+                    <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }} >Leave</Text>
+                </TouchableOpacity>
+            )
         }
         return content;
     }
 
     return (
-        <Card
-            style={{
-                flex: 1,
-                // backgroundColor: 'red',
-                flexDirection: 'row',
-                justifyContent: 'flex-end',
-                height: 50,
-                minHeight: 50,
-                maxHeight: 50,
-                padding: 10,
-                marginBottom: 15,
-                width: '60%',
-            }}
-        >
+        <Card style={styles(favorited).container}>
             {contentManager()}
-        </Card>
-    )
+        </Card>)
 }
 
 export default FavoriteButton;
+
+const styles = (favorited) => StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: favorited === true ? '#1976d2' : '#63a4ff',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        height: 50,
+        minHeight: 50,
+        maxHeight: 50,
+        padding: 15,
+        marginBottom: 15,
+        width: 125,
+    },
+    button: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '100%',
+        justifyContent: 'space-between'
+    }
+})

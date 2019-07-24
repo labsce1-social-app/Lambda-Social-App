@@ -9,8 +9,8 @@ const DrawerButton = props => {
   return (
     <TouchableOpacity onPress={() => props.navigation.toggleDrawer()}>
       <Image
-        style={{ width: 28, height: 28, marginLeft: 9 }}
-        source={require('../../assets/Lambda_Logo_Red.png')}
+        style={{ width: 28, height: 28, marginLeft: 30, tintColor: '#dd2c00' }}
+        source={require('../../assets/LSLogo.png')}
       />
     </TouchableOpacity>
   );
