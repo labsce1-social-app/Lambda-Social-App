@@ -22,9 +22,7 @@ const canInsertUser = async function (user) {
 };
 
 const getUserById = (user_id) => {
-  return db.raw(`
-  select * from users where users.id = '${user_id}'`)
-    .then(res => res.rows);
+  return db('users').where({ 'id': user_id })
 }
 
 const updateUserById = (user_id, updates) => {

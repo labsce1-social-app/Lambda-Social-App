@@ -25,16 +25,16 @@ router.get('/', (req, res) => {
 });
 
 /*
-GET ROUTE get single user
+POST (works as a GET) ROUTE get single user
 @PARAM = id
-ROUTE = '/users/:id
+ROUTE = '/users/profile
 returns = a single user object
 */
 
-router.get('/:id', async (req, res) => {
-  const { id } = req.params;
+router.post('/profile', async (req, res) => {
+  const { id } = req.body;
   const getUser = await getUserById(id);
-  return res.status(200).json(getUser);
+  return res.status(200).json(getUser[0]);
 });
 
 /*

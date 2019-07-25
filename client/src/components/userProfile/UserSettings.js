@@ -7,8 +7,14 @@ const UserSettings = ({ user }) => {
         <Card>
             <CardItem>
                 <Image source={{ uri: user.avatar }} />
+            </CardItem>
+            <CardItem>
                 <Text>{user.username}</Text>
+            </CardItem>
+            <CardItem>
                 <Text>{user.title}</Text>
+            </CardItem>
+            <CardItem>
                 <Text>Joined {user.created_at}</Text>
             </CardItem>
         </Card>

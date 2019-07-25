@@ -21,14 +21,10 @@ export const getData = async (key) => {
     }
 }
 
-export const deleteData = async (key) => {
+export const deleteData = async () => {
     try {
-        await AsyncStorage.clear((err) => {
-            if (err) {
-                console.log(err)
-            }
-        })
-        return true;
+        return AsyncStorage.getAllKeys()
+            .then(AsyncStorage.multiRemove)
     } catch (err) {
         console.log(err)
         return false;
