@@ -1,23 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import { Thumbnail, Card, CardItem, Text, Button, Icon, Left, Input } from 'native-base';
+import { uploadImage } from '../../context/actions/discussionActions';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { isEmpty } from '../../utils/utility';
 
-const UserSettings = ({ user }) => {
+const UserSettings = ({ user, dispatch, newImage }) => {
     const [editing, setEditing] = useState(false)
     const [username, setUserName] = useState(user.username);
     const [title, setTitle] = useState(user.title);
+    const [avatar, setAvatar] = useState(user.avatar);
+
+    useEffect(() => {
+        if (!isEmpty(newImage)) {
+            return setAvatar(newImage);
+        }
+    }, [newImage])
+
+    const handleImage = () => {
+        return uploadImage(dispatch);
+    }
 
     const renderContent = () => {
         let content;
         if (editing === false) {
             content = (
                 <Card>
-                    <CardItem>
-                        <Thumbnail source={{ uri: user.avatar }} />
-                        <Text style={{ marginLeft: 20 }}>Name: {user.username}</Text>
+                    <CardItem header>
+                        <Thumbnail source={{ uri: avatar }} />
+                        <Text style={{ marginLeft: 20 }}>Name: {username}</Text>
                     </CardItem>
                     <CardItem>
-                        <Text>Title: {user.title ? user.title : 'No Title Yet'}</Text>
+                        <Text>Title: {title ? title : 'No Title Yet'}</Text>
                     </CardItem>
                     <CardItem>
                         <Text>Joined {moment(user.created_at).format('DD/MMM/YYYY')}</Text>
@@ -47,8 +61,11 @@ const UserSettings = ({ user }) => {
         } else {
             content = (
                 <Card>
-                    <CardItem>
-                        <Thumbnail source={{ uri: user.avatar }} />
+                    <CardItem header>
+                        <TouchableOpacity onPress={() => handleImage()}>
+
+                            <Thumbnail source={{ uri: avatar }} />
+                        </TouchableOpacity>
                         <Text style={{ marginLeft: 20 }}>Name: </Text>
                         <Input rounded value={username} onChange={e => setUserName(e)} />
                     </CardItem>
