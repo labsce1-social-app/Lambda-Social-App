@@ -21,6 +21,21 @@ const canInsertUser = async function (user) {
   return canAdd;
 };
 
+const getUserById = (user_id) => {
+  return db('users').where({ 'id': user_id })
+}
+
+const updateUserById = (user_id, updates) => {
+  return db('users as u').where({ 'u.id': user_id }).update(updates)
+}
+
+const deleteUserById = (user_id) => {
+  return db('users as u').where({ 'u.id': user_id }).del()
+}
+
 module.exports = {
-  canInsertUser
+  canInsertUser,
+  getUserById,
+  updateUserById,
+  deleteUserById
 };

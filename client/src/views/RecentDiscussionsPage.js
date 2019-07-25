@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { Store } from '../context/';
 // TODO: remove this later and place into it's own route
-import Sort from '../components/discussions/Sort';
 import Discussions from '../components/discussions/Discussions';
 import { getRecentDiscussions } from '../context/actions/discussionActions';
 import { withNavigation } from 'react-navigation';
@@ -18,7 +17,6 @@ const DiscussionsPage = props => {
 
     return (
         <Container>
-            <Sort />
             <Discussions
                 loading={state.discussions_loading}
                 discussions={state.discussions}

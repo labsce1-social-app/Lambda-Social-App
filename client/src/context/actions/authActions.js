@@ -25,16 +25,27 @@ export const handleAuth = async dispatch => {
         const getAuth = await auth0.webAuth.authorize({
             scope: 'openid profile email offline_access',
             audience: 'https://lambdasocial.auth0.com/api/v2/',
-            device: DeviceInfo.getUniqueID(),
+            // device: DeviceInfo.getUniqueID(),
             prompt: 'login'
         });
         const { idToken, accessToken, refreshToken } = getAuth;
         // rather than another call to auth0 decode idToken for info from auth0
-        const decUser = await jwtDecode(idToken);
-        const storeUser = await storeData('user', accessToken, {});
-        const storeRefresh = await storeData('refreshToken', refreshToken, {})
+        let decUser
+        if (idToken) {
+            decUser = await jwtDecode(idToken);
+            await storeData('user', accessToken, {});
+        } else {
+            decUser = await jwtDecode(refreshToken);
+            await storeData('refreshToken', refreshToken, {})
+        }
+        await storeData('accessToken', {
+            username: decUser.nickname,
+            avatar: decUser.picture,
+            id: decUser.sub
+        });
+        console.log("IDTOKEN: ", decUser)
         const followup = await getUser(decUser, dispatch); // send access_token
-        return { storeUser, followup, storeRefresh };
+        return followup;
     } catch (error) {
         console.log('error in login', error);
     }
@@ -42,24 +53,27 @@ export const handleAuth = async dispatch => {
 
 // get user from our db
 const getUser = async (user, dispatch) => {
-    storeData('accessToken', {
-        username: user.nickname,
-        avatar: user.picture,
-        id: user.sub
-    });
+
     try {
-        const res = await axios.get(`${postgres}/users/${user.sub}`);
+        const res = await axios.post(`${postgres}/users/profile`, { id: user.sub });
+
         if (res.data) {
             const send = await dispatch({
                 type: 'SET_CURRENT_USER',
                 payload: res.data // user's auth0 sub is being saved as id in state(state.user.id)
             });
-            return send;
-        } else {
-            return makeUser(user, dispatch);
+            const storeUser = await storeData('accessToken', {
+                username: res.data.username,
+                avatar: res.data.avatar,
+                id: res.data.id,
+                title: res.data.title,
+                created_at: res.data.created_at
+            });
+            return { send, storeUser };
         }
     } catch (err) {
         console.log('axios call error', err);
+        return makeUser(user, dispatch);
     }
 };
 

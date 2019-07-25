@@ -27,6 +27,10 @@ exports.up = function (knex, Promise) {
       .text('avatar')
       .notNullable();
 
+    // adding just for user profile purposes
+    user
+      .string('title')
+
     user
       .timestamps(true, true);
   });

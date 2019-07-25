@@ -11,7 +11,7 @@ import HashtagPage from './src/views/HashtagPage';
 import AboutPage from './src/views/AboutPage';
 import RecentDiscussionsPage from './src/views/RecentDiscussionsPage';
 import FavoriteSubtopicsPage from './src/views/FavoriteSubtopicsPage';
-
+import UserPage from './src/views/UserPage';
 import {
   createDrawerNavigator,
   createAppContainer,
@@ -35,7 +35,9 @@ const HomeStack = createStackNavigator({
       headerLeft: <DrawerButton navigation={navigation} />
     })
   },
-
+  UserPage: {
+    screen: UserPage
+  },
   Post: {
     screen: PostPage
   },
@@ -122,7 +124,7 @@ const FavoritesStack = createStackNavigator({
     screen: FavoriteSubtopicsPage,
 
     navigationOptions: ({ navigation }) => ({
-      title: `Favorite Subtopics`,
+      title: `Joined Subtopics`,
 
       headerLeft: <DrawerButton navigation={navigation} />
     })
