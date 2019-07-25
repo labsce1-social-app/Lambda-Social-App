@@ -1,5 +1,10 @@
 const router = require('express').Router();
-const { canInsertUser } = require('../helpers/index.js');
+const {
+  canInsertUser,
+  getUserById,
+  updateUserById,
+  deleteUserById
+} = require('../helpers/index.js');
 const db = require('../../data/dbconfig.js');
 
 /*
@@ -26,18 +31,10 @@ ROUTE = '/users/:id
 returns = a single user object
 */
 
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   const { id } = req.params;
-
-  db('users')
-    .where({ id })
-    .first()
-    .then(user => {
-      res.status(200).json(user);
-    })
-    .catch(err => {
-      res.status(500).json({ error: err });
-    });
+  const getUser = await getUserById(id);
+  return res.status(200).json(getUser);
 });
 
 /*
@@ -108,17 +105,8 @@ router.put('/:id', async (req, res) => {
     // Username will be rejected if name already exists
   } else {
     if (await canInsertUser(user)) {
-      db('users')
-        .where(id)
-        .update(user)
-        .then(user => {
-          res
-            .status(201)
-            .json({ id: user, message: 'Succesfully updated user' });
-        })
-        .catch(err => {
-          res.status(500).json({ error: err });
-        });
+      const update = await updateUserById(id, user)
+      return res.status(200).json(update)
     } else {
       res.status(500).json({ error: 'user already exists' });
     }
@@ -134,24 +122,10 @@ returns = returns success if valid
 
 // this delete route is for dev purposes only
 // TODO: Protect delete route behind login middleware
-router.delete('/:id', (req, res) => {
-  const id = req.params;
-
-  db('users')
-    .where(id)
-    .del()
-    .then(count => {
-      if (count === 0) {
-        res.status(401).json({ message: 'user not found' });
-      } else {
-        res
-          .status(200)
-          .json({ message: `user id: ${id.id} successfuly deleted` });
-      }
-    })
-    .catch(err => {
-      res.status(500).json({ error: err });
-    });
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  const del = await deleteUserById(id);
+  return res.status(200).json(del);
 });
 
 module.exports = router;
