@@ -3,7 +3,8 @@ const {
   canInsertUser,
   getUserById,
   updateUserById,
-  deleteUserById
+  deleteUserById,
+  addUser
 } = require('../helpers/index.js');
 const db = require('../../data/dbconfig.js');
 
@@ -32,8 +33,16 @@ returns = a single user object
 */
 
 router.post('/profile', async (req, res) => {
-  const { id } = req.body;
-  const getUser = await getUserById(id);
+  const { userData } = req.body;
+
+  let getUser;
+
+  if (await canInsertUser(userData.username)) {
+    getUser = await addUser(userData);
+  } else {
+    getUser = await getUserById(userData.id);
+  }
+  console.log('SERVER RESPONSE', getUser);
   return res.status(200).json(getUser[0]);
 });
 
@@ -105,8 +114,8 @@ router.put('/:id', async (req, res) => {
     // Username will be rejected if name already exists
   } else {
     if (await canInsertUser(user)) {
-      const update = await updateUserById(id, user)
-      return res.status(200).json(update)
+      const update = await updateUserById(id, user);
+      return res.status(200).json(update);
     } else {
       res.status(500).json({ error: 'user already exists' });
     }
