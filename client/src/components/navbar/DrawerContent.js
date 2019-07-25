@@ -10,7 +10,7 @@ const DrawerContent = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <UserProfile user={state.user} />
+      <UserProfile user={state.user} navigation={navigation} />
       <NavLinks
         state={state}
         dispatch={dispatch}

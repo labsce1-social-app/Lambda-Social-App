@@ -3,10 +3,10 @@ import { CardItem, Card, Text, Body, Thumbnail } from "native-base";
 import { StyleSheet } from 'react-native';
 import { isEmpty } from '../../utils/utility';
 
-const UserProfile = ({ user }) => {
+const UserProfile = ({ user, navigation }) => {
     return (
         <Card style={styles.container}>
-            <CardItem header style={styles.avatar}>
+            <CardItem header style={styles.avatar} button onPress={() => navigation.navigate('UserPage')}>
                 <Thumbnail style={{ width: 50, height: 50 }} source={!isEmpty(user) ? { uri: user.avatar } : require('../../assets/useravatar.png')} />
             </CardItem>
             <CardItem>
