@@ -24,7 +24,7 @@
 - add an image to a discussion to better express yourself or just go full text.
 
 ### Contributors
-### Team (in alphabetical order)
+### Team
 | Members         |      GitHub   |  LinkedIn |
 |-----------------|-------------  |------|
 | Carlos Lantigua | https://github.com/CLantigua2 |   https://www.linkedin.com/in/carlos-lantigua/ |
