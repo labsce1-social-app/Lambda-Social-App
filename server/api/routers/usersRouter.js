@@ -34,7 +34,7 @@ returns = a single user object
 
 router.post('/profile', async (req, res) => {
   const { userData } = req.body;
-  console.log(userData)
+
   let getUser;
   if (await canInsertUser(userData.id)) {
     getUser = await addUser(userData);
@@ -57,11 +57,9 @@ returns = returns new user info
 
 router.put('/', async (req, res) => {
   const user = req.body;
-  if (await canInsertUser(user.id)) {
-    const updatedUser = await updateUserById(user);
-    console.log("UPDATE: ", updatedUser)
-    return res.status(200).json(updatedUser);
-  }
+  console.log(user)
+  const updatedUser = await updateUserById(user);
+  return res.status(200).json(updatedUser[0]);
 });
 
 /*

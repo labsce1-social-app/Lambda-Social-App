@@ -27,22 +27,23 @@ const UserSettings = ({ user, dispatch, newImage, loading }) => {
             username, title, avatar, id: user.id
         }
         if (isEmpty(username)) {
-            Toast.show({
+            return Toast.show({
                 text: "Username Can't be empty!",
                 buttonText: 'Okay',
                 type: 'warning'
             })
         }
         if (isEmpty(avatar)) {
-            Toast.show({
+            return Toast.show({
                 text: "Your avatar can't be empty",
                 buttonText: 'Okey',
                 type: 'warning'
             })
-        } else {
-            setEditing(false);
-            return updateUser(dispatch, data);
         }
+
+        const up = updateUser(dispatch, data);
+        const close = setEditing(false);
+        return { up, close }
     }
 
     const renderContent = () => {
