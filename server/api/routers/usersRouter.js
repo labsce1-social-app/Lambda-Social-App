@@ -91,7 +91,7 @@ returns = returns new user info
 router.put('/:id', async (req, res) => {
   const id = req.params;
   const user = req.body;
-
+  console.log(id, user)
   // Username must not be empty, contains 0-25 characters
   if (
     user.username.length === 0 ||

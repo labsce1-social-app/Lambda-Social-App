@@ -9,7 +9,7 @@ const UserPage = props => {
 
     return (
         <Container style={{ backgroundColor: theme.colors.offWhite, padding: 5 }}>
-            <UserSettings user={state.user} dispatch={dispatch} newImage={state.newImage} />
+            <UserSettings user={state.user} dispatch={dispatch} newImage={state.newImage} loading={state.newImage_loading} />
         </Container>
     );
 };

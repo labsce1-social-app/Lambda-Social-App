@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
-import { Thumbnail, Card, CardItem, Text, Button, Icon, Left, Input } from 'native-base';
+import { Thumbnail, Card, CardItem, Text, Button, Icon, Input, Spinner, Toast } from 'native-base';
 import { uploadImage } from '../../context/actions/discussionActions';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { isEmpty } from '../../utils/utility';
+import { updateUser } from '../../context/actions/userActions';
 
-const UserSettings = ({ user, dispatch, newImage }) => {
+const UserSettings = ({ user, dispatch, newImage, loading }) => {
     const [editing, setEditing] = useState(false)
     const [username, setUserName] = useState(user.username);
     const [title, setTitle] = useState(user.title);
@@ -19,6 +20,27 @@ const UserSettings = ({ user, dispatch, newImage }) => {
 
     const handleImage = () => {
         return uploadImage(dispatch);
+    }
+
+    const updateUserProfile = () => {
+        const data = {
+            username, title, avatar, id: user.id
+        }
+        if (isEmpty(username)) {
+            Toast.show({
+                text: "Username Can't be empty!",
+                buttonText: 'Okay',
+                type: 'warning'
+            })
+        }
+        if (isEmpty(avatar)) {
+            Toast.show({
+                text: "Your avatar can't be empty",
+                buttonText: 'Okey',
+                type: 'warning'
+            })
+        }
+        return updateUser(dispatch, data);
     }
 
     const renderContent = () => {
@@ -62,24 +84,25 @@ const UserSettings = ({ user, dispatch, newImage }) => {
             content = (
                 <Card>
                     <CardItem header>
-                        <TouchableOpacity onPress={() => handleImage()}>
+                        {loading === true ? <Spinner /> : <TouchableOpacity onPress={() => handleImage()}>
 
                             <Thumbnail source={{ uri: avatar }} />
                         </TouchableOpacity>
+                        }
                         <Text style={{ marginLeft: 20 }}>Name: </Text>
-                        <Input rounded value={username} onChange={e => setUserName(e)} />
+                        <Input rounded value={username} onChangeText={e => setUserName(e)} />
                     </CardItem>
                     <CardItem>
                         <Text>Title: </Text>
-                        <Input rounded value={title} onChange={e => setTitle(e)}
+                        <Input rounded value={title} onChangeText={e => setTitle(e)}
                             placeholder="Software Engineer at LambdaSchool" />
                     </CardItem>
                     <CardItem>
                         <Text>Joined {moment(user.created_at).format('DD/MMM/YYYY')}</Text>
                     </CardItem>
-                    <CardItem>
+                    <CardItem style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
                         <Button
-                            onPress={() => setEditing(false)}
+                            onPress={() => updateUserProfile()}
                             rounded success iconLeft style={{
                                 borderColor: '#ddd',
                                 borderBottomWidth: 0,
@@ -91,6 +114,20 @@ const UserSettings = ({ user, dispatch, newImage }) => {
                             }}>
                             <Icon name="md-checkmark" />
                             <Text>Done</Text>
+                        </Button>
+                        <Button
+                            onPress={() => setEditing(false)}
+                            rounded danger iconLeft style={{
+                                borderColor: '#ddd',
+                                borderBottomWidth: 0,
+                                shadowColor: '#000',
+                                shadowOffset: { width: 0, height: 2 },
+                                shadowOpacity: 0.8,
+                                shadowRadius: 2,
+                                elevation: 1,
+                            }}>
+                            <Icon name="md-close" />
+                            <Text>Cancel</Text>
                         </Button>
                     </CardItem>
 
