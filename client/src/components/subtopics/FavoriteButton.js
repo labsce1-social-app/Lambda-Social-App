@@ -106,12 +106,20 @@ const styles = (favorited) => StyleSheet.create({
         padding: 15,
         marginBottom: 15,
         width: 125,
+        borderColor: '#ddd',
+        borderBottomWidth: 0,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        elevation: 1,
     },
     button: {
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         width: '100%',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+
     }
 })

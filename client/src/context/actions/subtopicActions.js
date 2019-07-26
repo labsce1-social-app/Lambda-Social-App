@@ -36,12 +36,8 @@ export const getSubtopics = async dispatch => {
 };
 
 export const getFavoriteSubtopics = async (dispatch, id) => {
-  // console.log('USER ID SENDING', id);
   try {
     let res = await axios.get(`${postgres}/subtopic_users/${id}`);
-
-    console.log(res.data);
-
     dispatch({ type: 'FAVORITE_SUBTOPICS_FETCHED', payload: res.data });
   } catch (err) {
     console.log(err);
@@ -49,7 +45,6 @@ export const getFavoriteSubtopics = async (dispatch, id) => {
 };
 
 export const favoriteTheSubtopic = async (dispatch, sub) => {
-  // console.log(sub);
 
   try {
     let res = await axios.post(`${postgres}/subtopic_users/favorite`, sub);
@@ -66,7 +61,6 @@ export const favoriteTheSubtopic = async (dispatch, sub) => {
 };
 
 export const unFavoriteTheSubtopic = async (dispatch, sub) => {
-  // console.log('SUB TO UNSUB', sub);
   const unSub = {
     subId: sub.subId,
     userId: sub.userId

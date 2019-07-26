@@ -9,10 +9,6 @@ import {
   Spinner,
   Container,
   Icon,
-  Header,
-  Body,
-  Title,
-  Left,
   Card,
   CardItem
 } from 'native-base';

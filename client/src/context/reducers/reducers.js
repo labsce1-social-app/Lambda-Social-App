@@ -14,7 +14,9 @@ export const initialState = {
   discussions_error: '',
   dscussions_error: '',
   isAuthenticated: false,
+  user_update_loading: false,
   user: {},
+  user_update_failed: '',
   comments: null,
   comments_loading: false,
   comments_error: '',
@@ -275,6 +277,25 @@ export const reducer = (state = initialState, action) => {
         user: action.payload,
         logged_out: false
       };
+    case 'USER_UPDATING_LOADING':
+      return {
+        ...state,
+        user_update_loading: true,
+        user_update_failed: '',
+      };
+    case 'USER_UPDATED':
+      return {
+        ...state,
+        user: action.payload,
+        user_update_loading: false,
+        user_update_failed: '',
+      };
+    case 'USER_UPDATE_FAILED':
+      return {
+        ...state,
+        user_update_failed: action.payload,
+        user_update_loading: false
+      }
     case 'AUTH_FAIL':
       return {
         ...state,

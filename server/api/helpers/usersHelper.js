@@ -1,12 +1,12 @@
 const db = require('../../data/dbconfig.js');
 
 // function returns true if username doesn't exist in database
-const canInsertUser = async function(user) {
+const canInsertUser = async function (id) {
   let canAdd = false;
 
   await db('users')
     .select()
-    .where('username', user)
+    .where('id', id)
     .then(rows => {
       if (rows.length === 0) {
         canAdd = true;
@@ -25,10 +25,12 @@ const getUserById = user_id => {
   return db('users').where({ id: user_id });
 };
 
-const updateUserById = (user_id, updates) => {
+const updateUserById = (updates) => {
+  console.log("UPDATES: ", updates)
   return db('users as u')
-    .where({ 'u.id': user_id })
-    .update(updates);
+    .where({ 'u.id': updates.id })
+    .update(updates)
+    .returning('*');
 };
 
 const deleteUserById = user_id => {
