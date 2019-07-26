@@ -1,12 +1,11 @@
-import postgres from './constants';
-import axios from 'axios';
+import { axios, postgres } from './constants';
+
 
 export const updateUser = async (dispatch, user) => {
-    console.log(user)
+    const { id, username, title } = user;
     dispatch({ type: 'USER_UPDATING_LOADING' })
     try {
-        const res = await axios.put(`${postgres}/users/${user.id}`, user);
-        console.log(res.data)
+        const res = await axios.put(`${postgres}/users/`, { id, username, title });
         const followup = await dispatch({ type: 'USER_UPDATED', payload: res.data });
         return { res, followup }
     } catch (err) {

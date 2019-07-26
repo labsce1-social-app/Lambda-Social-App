@@ -39,8 +39,10 @@ const UserSettings = ({ user, dispatch, newImage, loading }) => {
                 buttonText: 'Okey',
                 type: 'warning'
             })
+        } else {
+            setEditing(false);
+            return updateUser(dispatch, data);
         }
-        return updateUser(dispatch, data);
     }
 
     const renderContent = () => {

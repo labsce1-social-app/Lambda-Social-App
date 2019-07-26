@@ -34,10 +34,9 @@ returns = a single user object
 
 router.post('/profile', async (req, res) => {
   const { userData } = req.body;
-
+  console.log(userData)
   let getUser;
-
-  if (await canInsertUser(userData.username)) {
+  if (await canInsertUser(userData.id)) {
     getUser = await addUser(userData);
   } else {
     getUser = await getUserById(userData.id);
@@ -56,28 +55,12 @@ ROUTE = '/users/:id
 returns = returns new user info
 */
 
-router.put('/:id', async (req, res) => {
-  const id = req.params;
+router.put('/', async (req, res) => {
   const user = req.body;
-  console.log(id, user)
-  // Username must not be empty, contains 0-25 characters
-  if (
-    user.username.length === 0 ||
-    user.username.length > 25 ||
-    user.username === ''
-  ) {
-    res.status(400).json({
-      message:
-        'username must not be blank and must contain up to 25 characters.'
-    });
-    // Username will be rejected if name already exists
-  } else {
-    if (await canInsertUser(user)) {
-      const update = await updateUserById(id, user);
-      return res.status(200).json(update);
-    } else {
-      res.status(500).json({ error: 'user already exists' });
-    }
+  if (await canInsertUser(user.id)) {
+    const updatedUser = await updateUserById(user);
+    console.log("UPDATE: ", updatedUser)
+    return res.status(200).json(updatedUser);
   }
 });
 
