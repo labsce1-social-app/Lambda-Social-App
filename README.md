@@ -1,10 +1,28 @@
-# Lambda-Social-App
-
+# Neral Mobile App
+A Android and iOS social media application aimed at users in the technology fields.
 
 # Table of Contents
 - [Tech Stack](#tech-stack)
     - [Front End](#frontend-built-using)
     - [Back End](#backend-built-using)
+    
+## Tech Stack
+#### Front End
+ - React Native
+ - ContextAPI
+ - Native-base
+ - Auth0
+ 
+ #### Back End
+ - Node
+ - Express
+ - KnexJS
+ - faker
+ - Express-JWT
+ 
+ #### Database
+ - SQLite3
+ - PostgreSQL
 
 ## About this app
 - This application had a lot of it's inspiration drawn from a need to have a safe environment where users could gather to talk about code and tech. The idea behind this app is that users can come in and enjoy the content without having to login. If you would like to participate, we invite you to join in with Auth0 authentication for security. 
