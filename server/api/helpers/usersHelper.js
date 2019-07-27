@@ -26,7 +26,7 @@ const getUserById = user_id => {
 };
 
 const updateUserById = (updates) => {
-  console.log("UPDATES: ", updates)
+
   return db('users as u')
     .where({ 'u.id': updates.id })
     .update(updates)

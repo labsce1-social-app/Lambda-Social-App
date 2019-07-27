@@ -1,11 +1,12 @@
-import React, { useContext, useEffect, useInterval } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StatusBar } from 'react-native';
 import { withNavigation, withNavigationFocus } from 'react-navigation';
 import Discussions from '../components/discussions/Discussions';
 import Sort from '../components/discussions/Sort';
-import { Container } from 'native-base';
+import { Container, Left, Text, Card, CardItem, View } from 'native-base';
+import { Image } from 'react-native';
 import { Store } from '../context/';
-import { getDiscussions } from '../context/actions/discussionActions';
+import { getDiscussions, getStats } from '../context/actions/discussionActions';
 import { isAuthed } from '../context/actions/authActions';
 import {
   getSubtopics,
@@ -14,11 +15,18 @@ import {
 import { getData } from '../utils/AsyncStorage';
 import { isEmpty } from '../utils/utility';
 import { theme } from '../common/theme';
+import Stats from '../components/discussions/Stats';
+import { ScrollView } from 'react-native-gesture-handler';
 
 // this home is referring to TopDiscussions component ONLY
 
 const Home = props => {
   const { state, dispatch } = useContext(Store);
+  const [stats, setStats] = useState(null);
+
+  useEffect(() => {
+    getStats(setStats);
+  }, () => getStats())
 
   useEffect(
     () => {
@@ -61,13 +69,34 @@ const Home = props => {
 
   return (
     <Container style={{ backgroundColor: theme.colors.offWhite, padding: 5 }}>
-      <StatusBar backgroundColor="white" barStyle="dark-content" />
-      <Sort />
-      <Discussions
-        loading={state.top_discussions_loading}
-        discussions={state.top_discussions}
-      />
-    </Container>
+      <ScrollView>
+
+        <StatusBar backgroundColor="white" barStyle="dark-content" />
+
+        <Card>
+          <CardItem header>
+            <Text>Welcome to Neral </Text>
+            <Image style={{ justifyContent: 'center', width: 30, height: 30, resizeMode: 'contain', tintColor: 'red' }} source={require('../assets/LSLogo.png')} />
+            <Text> connect and inspire</Text>
+          </CardItem>
+          {stats && stats.map((stat, i) => {
+            return (
+              <Stats
+                key={i}
+                stats={stat}
+              />
+            )
+          })
+          }
+        </Card>
+        <Sort />
+        <Text style={{ marginLeft: 15, marginBottom: 10 }}>See What's Trending</Text>
+        <Discussions
+          loading={state.top_discussions_loading}
+          discussions={state.top_discussions}
+        />
+      </ScrollView>
+    </Container >
   );
 };
 

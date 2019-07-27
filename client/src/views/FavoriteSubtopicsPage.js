@@ -10,7 +10,7 @@ import Subtopics from '../components/subtopics/Subtopics';
 // this DiscussionsPage is referring to all discussions inside of a chosen subtopic ONLY
 const FavoriteSubtopics = props => {
   const { state, dispatch } = useContext(Store);
-  // console.log('IN FAVORITES USER ID ', state.user.id);
+
 
   useEffect(
     () => {

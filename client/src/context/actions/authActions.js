@@ -58,7 +58,7 @@ export const handleAuth = async dispatch => {
       avatar: decUser.picture,
       id: decUser.sub
     });
-    console.log('IDTOKEN: ', decUser);
+
     const followup = await getUser(decUser, dispatch); // send access_token
     return followup;
   } catch (error) {
@@ -78,7 +78,6 @@ const getUser = async (user, dispatch) => {
   try {
     const res = await axios.post(`${postgres}/users/profile`, { userData });
 
-    console.log('RESPONSE FROM POST', res.data);
     if (res.data) {
       const send = await dispatch({
         type: 'SET_CURRENT_USER',
@@ -91,7 +90,7 @@ const getUser = async (user, dispatch) => {
         title: res.data.title,
         created_at: res.data.created_at
       });
-      console.log('DISPATCH', send);
+
       return { send, storeUser };
     }
   } catch (err) {

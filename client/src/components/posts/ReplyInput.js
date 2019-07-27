@@ -30,6 +30,7 @@ const ReplyInput = ({ commentDetails, postId, hideInput, setFlagToFalse }) => {
             comment_id: commentDetails.id,
             username: state.user.username
         }
+
         addCommentReply(dispatch, newComment);
         setComment('');
         setUsername('');

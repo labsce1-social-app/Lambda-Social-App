@@ -16,7 +16,8 @@ const {
   getCommentedDiscussionsbyUserId,
   createDiscussion,
   getDistinctHashtags,
-  getDiscussionsByHashtags
+  getDiscussionsByHashtags,
+  getStats
 } = require('../helpers/index.js');
 const { isEmpty, flattenArray } = require('../utils/');
 // used for updated timestamps
@@ -370,6 +371,9 @@ router.post('/byhashtags', async (req, res) => {
   return res.status(200).json(top);
 });
 
-
+router.post('/stats', async (req, res) => {
+  const stats = await getStats();
+  res.status(200).send(stats);
+})
 
 module.exports = router;

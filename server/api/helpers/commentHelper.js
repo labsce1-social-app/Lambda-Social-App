@@ -113,7 +113,7 @@ const checkValidUserComments = async user_id => {
   let isValid = false;
 
   await db('users')
-    .where('user_id', user_id)
+    .where('users.id', user_id)
     .then(id => {
       if (id.length > 0) {
         isValid = true;

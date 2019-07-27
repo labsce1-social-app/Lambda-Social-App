@@ -98,7 +98,7 @@ const UserSettings = ({ user, dispatch, newImage, loading }) => {
                     <CardItem>
                         <Text>Title: </Text>
                         <Input rounded value={title} onChangeText={e => setTitle(e)}
-                            placeholder="Software Engineer at LambdaSchool" />
+                            placeholder="Software Engineer at Neral" />
                     </CardItem>
                     <CardItem>
                         <Text>Joined {moment(user.created_at).format('DD/MMM/YYYY')}</Text>

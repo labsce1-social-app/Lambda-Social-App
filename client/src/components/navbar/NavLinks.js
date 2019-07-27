@@ -39,7 +39,7 @@ const NavLinks = ({ navigation, state, dispatch, text }) => {
     <Card style={{ background: theme.colors.white }}>
       <CardItem button onPress={() => navigation.navigate('AboutPage')}>
         <Icon active name="md-swap" />
-        <Text>About LS Social</Text>
+        <Text>About Neral</Text>
         <Right>
           <Icon name="arrow-forward" />
         </Right>

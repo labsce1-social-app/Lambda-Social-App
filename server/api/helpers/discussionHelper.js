@@ -299,9 +299,20 @@ ORDER BY discussion.updated_at DESC
 `).then(res => res.rows);
 }
 
+const getStats = async () => {
+  const stats = await db
+    .raw(`select
+(select count(users.id) from users) as total_users,
+(select count(comment.id) from comment) as total_comments,
+(select count(subtopic.id) from subtopic) as total_subtopics`)
+    .then(res => res.rows);
+
+  return stats;
+}
 
 
 module.exports = {
+  getStats,
   addHashTags,
   createDiscussion,
   joinUsersAndSubtopic,

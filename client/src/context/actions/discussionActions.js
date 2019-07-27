@@ -103,7 +103,7 @@ export const removeImage = async dispatch => {
 };
 
 export const addDiscussion = async (body, dispatch) => {
-  console.log("BODY: ", body)
+
   dispatch({ type: 'DISCUSSIONS_FETCHING' });
   const apiBody = {
     title: body.title,
@@ -121,7 +121,7 @@ export const addDiscussion = async (body, dispatch) => {
       type: 'CREATED_DISCUSSION',
       payload: res.data
     });
-    console.log(res.data)
+
     return { res, followup };
   } catch (err) {
     dispatch({
@@ -161,3 +161,12 @@ export const getByHashtags = async (dispatch, hashtag) => {
     dispatch({ type: 'DISCUSSIONS_FAILED', payload: err });
   }
 };
+
+export const getStats = async (setStats) => {
+  try {
+    let res = await axios.post(`${postgres}/discussions/stats`)
+    setStats(res.data);
+  } catch (err) {
+    console.log(error)
+  }
+}
