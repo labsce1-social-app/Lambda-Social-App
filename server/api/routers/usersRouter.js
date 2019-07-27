@@ -41,7 +41,7 @@ router.post('/profile', async (req, res) => {
   } else {
     getUser = await getUserById(userData.id);
   }
-  console.log('SERVER RESPONSE', getUser);
+
   return res.status(200).json(getUser[0]);
 });
 
