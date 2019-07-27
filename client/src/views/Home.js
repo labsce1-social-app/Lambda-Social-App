@@ -76,7 +76,7 @@ const Home = props => {
         <Card>
           <CardItem header>
             <Text>Welcome to Neral </Text>
-            <Image style={{ justifyContent: 'center', width: 30, height: 30, resizeMode: 'contain', tintColor: 'red' }} source={require('../assets/LSLogo.png')} />
+            <Image style={{ justifyContent: 'center', width: 30, height: 30, resizeMode: 'contain', tintColor: 'red' }} source={require('../assets/LSLogo1.png')} />
             <Text> connect and inspire</Text>
           </CardItem>
           {stats && stats.map((stat, i) => {
