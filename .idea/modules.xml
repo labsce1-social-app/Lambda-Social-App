@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Lambda-Social-App.iml" filepath="$PROJECT_DIR$/.idea/Lambda-Social-App.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/neral.iml" filepath="$PROJECT_DIR$/.idea/neral.iml" />
     </modules>
   </component>
 </project>

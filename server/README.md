@@ -1,4 +1,4 @@
-# Lambda-Social-App Server
+# neral Server
 
 This is a REST CRUD API with endpoints to create, read, edit and update data in a database.
 
@@ -18,11 +18,11 @@ FORK
 [how to fork](https://help.github.com/articles/fork-a-repo/)
 
 CLONE
-`git clone git@github.com:labsce1-social-app/Lambda-Social-App.git`
+`git clone git@github.com:labsce1-social-app/neral.git`
 this will clone the repository locally to your machine.
 
 SETUP
-`cd Lambda-Social-App`
+`cd neral`
 `yarn`
 this will move you in to the project directory then using yarn you will download and install the dependencies.
 
