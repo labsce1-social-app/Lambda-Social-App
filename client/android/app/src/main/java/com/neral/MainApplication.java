@@ -1,4 +1,4 @@
-package com.lambdasocial;
+package com.neral;
 
 import android.app.Application;
 
@@ -30,18 +30,9 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
-            new ReactNativeRestartPackage(),
-            new RNDeviceInfo(),
-            new ReactNativeConfigPackage(),
-            new VectorIconsPackage(),
-            new SvgPackage(),
-            new ImagePickerPackage(),
-            new AsyncStoragePackage(),
-            new A0Auth0Package(),
-            new RNGestureHandlerPackage()
-      );
+      return Arrays.<ReactPackage>asList(new MainReactPackage(), new ReactNativeRestartPackage(), new RNDeviceInfo(),
+          new ReactNativeConfigPackage(), new VectorIconsPackage(), new SvgPackage(), new ImagePickerPackage(),
+          new AsyncStoragePackage(), new A0Auth0Package(), new RNGestureHandlerPackage());
     }
 
     @Override
