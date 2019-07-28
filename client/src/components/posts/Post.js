@@ -66,7 +66,7 @@ const Post = React.forwardRef((props, ref) => {
             <Comment
               image="../../assets/lambdaschool.png"
               date={new Date().now()}
-              name="NeralBot"
+              name="neralBot"
               comment="No one has posted yet"
             />
           ) : (

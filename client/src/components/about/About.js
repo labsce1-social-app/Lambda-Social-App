@@ -6,12 +6,12 @@ const About = () => {
     return (
         <ScrollView>
             <Card>
-                <Text style={{ textAlign: 'center', marginTop: 10, fontSize: 24 }}>About Neral</Text>
+                <Text style={{ textAlign: 'center', marginTop: 10, fontSize: 24 }}>About neral</Text>
                 <CardItem>
 
-                    <Text>Neral was designed to provide a safe environment where Developers, designers and other tech specialists could come together and talk about the tech that excites them. This app hopes to serve as a middle point where all can speak about the tech they're passionate about, ask for help, start a project together and all around socialize.</Text>
+                    <Text>neral was designed to provide a safe environment where Developers, designers and other tech specialists could come together and talk about the tech that excites them. This app hopes to serve as a middle point where all can speak about the tech they're passionate about, ask for help, start a project together and all around socialize.</Text>
                 </CardItem>
-                <Text style={{ textAlign: 'center', marginTop: 10, fontSize: 24 }}>Neral Team</Text>
+                <Text style={{ textAlign: 'center', marginTop: 10, fontSize: 24 }}>neral Team</Text>
 
                 <CardItem>
                     <Left>
