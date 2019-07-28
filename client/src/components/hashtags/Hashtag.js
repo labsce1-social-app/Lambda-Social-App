@@ -15,7 +15,7 @@ const Hashtag = (props) => {
                 data={props.hashtags}
                 renderItem={({ item }) => (
                     <Button
-                        style={{ margin: 10, alignSelf: null }}
+                        style={{ margin: 10, alignSelf: null, color: 'purple' }}
                         bordered
                         // style={{ alignSelf: null, width: '100%' }}
                         onPress={() => props.navigation.navigate('DiscussionsByHashtags', {

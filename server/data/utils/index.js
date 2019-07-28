@@ -37,6 +37,8 @@ const rec_user_id = arr => {
 // picks a random item in an array
 const pickOne = item => item[Math.floor(Math.random() * item.length)];
 
+/* FACTORY FUNCTIONS */
+// functions that return an object
 // create a user object
 function generateUsers() {
   return {
