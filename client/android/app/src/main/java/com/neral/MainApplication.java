@@ -3,6 +3,7 @@ package com.neral;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import io.invertase.firebase.RNFirebasePackage;
 import com.avishayil.rnrestart.ReactNativeRestartPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
@@ -30,7 +31,8 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(new MainReactPackage(), new ReactNativeRestartPackage(), new RNDeviceInfo(),
+      return Arrays.<ReactPackage>asList(new MainReactPackage(),
+            new RNFirebasePackage(), new ReactNativeRestartPackage(), new RNDeviceInfo(),
           new ReactNativeConfigPackage(), new VectorIconsPackage(), new SvgPackage(), new ImagePickerPackage(),
           new AsyncStoragePackage(), new A0Auth0Package(), new RNGestureHandlerPackage());
     }
