@@ -21,6 +21,9 @@ import com.facebook.soloader.SoLoader;
 import java.util.Arrays;
 import java.util.List;
 
+import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
@@ -32,7 +35,7 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(new MainReactPackage(),
-            new RNFirebasePackage(), new ReactNativeRestartPackage(), new RNDeviceInfo(),
+            new RNFirebasePackage(),new RNFirebaseMessagingPackage(), new ReactNativeRestartPackage(), new RNDeviceInfo(),
           new ReactNativeConfigPackage(), new VectorIconsPackage(), new SvgPackage(), new ImagePickerPackage(),
           new AsyncStoragePackage(), new A0Auth0Package(), new RNGestureHandlerPackage());
     }
