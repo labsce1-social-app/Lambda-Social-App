@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "590428820475",
+    "firebase_url": "https://neral-app.firebaseio.com",
+    "project_id": "neral-app",
+    "storage_bucket": "neral-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:590428820475:android:519d1d38ef7ebbbc",
+        "android_client_info": {
+          "package_name": "com.neral"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "590428820475-1ns08q0j560qpsssib31qc7eoav3pq1l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrhgtvfn5daOBjfHEFnwX94Tc3fQYAtF4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "590428820475-1ns08q0j560qpsssib31qc7eoav3pq1l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
