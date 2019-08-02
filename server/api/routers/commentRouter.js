@@ -8,9 +8,10 @@ const {
   checkValidUserComments,
   checkValidDiscussionComments,
   checkMatchInComments,
-  getRepliesByCommentId
+  getRepliesByCommentId,
+  createComment
 } = require('../helpers/index.js');
-const {isEmpty} = require('../utils/');
+const { isEmpty } = require('../utils/');
 // used for updated timestamps
 const moment = require('moment');
 let timestamp = moment().format('YYYY-MM-DD HH:mm:ss');
@@ -114,36 +115,9 @@ TESTS: {
 */
 
 router.post('/create', async (req, res) => {
-  const { comment_post, discussion_id, user_id } = req.body;
-
-  if (isEmpty(comment_post) || isEmpty(discussion_id) || isEmpty(user_id)) {
-    res.status(400).json({
-      error: 'comment_post, discussion_id, and user_id must be present'
-    });
-  } else if ((checkValidUserComments(user_id)) === false) {
-    res.status(500).json({ error: `invalid user_id: ${user_id} sent` });
-  } else if ((checkValidDiscussionComments(discussion_id)) === false) {
-    res
-      .status(500)
-      .json({ error: `invalid discussion_id: ${discussion_id} sent` });
-  } else {
-    db('comment')
-      .insert({
-        comment_post,
-        discussion_id,
-        user_id,
-        created_at: timestamp,
-        updated_at: timestamp,
-      })
-      .then(comment => {
-        res
-          .status(201)
-          .json({ id: comment, message: 'Succesfully created comment' });
-      })
-      .catch(err => {
-        res.status(500).json({ error: 'server error' });
-      });
-  }
+  const comment = await createComment(req.body, req.body.comment_id)
+  console.log(comment)
+  return res.status(201).json({ comment })
 });
 
 /*
@@ -168,6 +142,7 @@ TESTS: {
 
 router.post('/create/reply', async (req, res) => {
   const { comment_post, discussion_id, user_id, comment_id } = req.body;
+  console.log(comment_id)
 
   if (isEmpty(comment_post) || isEmpty(discussion_id) || isEmpty(user_id) || isEmpty(comment_id)) {
     res.status(400).json({

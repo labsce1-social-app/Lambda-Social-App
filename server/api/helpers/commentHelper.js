@@ -161,6 +161,26 @@ const checkMatchInComments = async (id, user_id) => {
   return isValid;
 };
 
+const createComment = (body, comment_id = null) => {
+  const { comment_post, discussion_id, user_id } = body
+  return db.raw(`
+  with rows as (
+    INSERT INTO comment (comment_post, discussion_id, user_id, comment_id)
+    values (${comment_post}, ${discussion_id}, ${user_id}, ${comment_id}) RETURNING *
+    )
+    select
+    rows.id,
+		comment_post,
+		discussion_id,
+		user_id,
+		comment_id,
+		username
+	from rows
+	INNER JOIN users
+	on rows.user_id = users.id
+  `)
+}
+
 module.exports = {
   getCommentsByDiscussionId,
   getRepliesByCommentId,
@@ -169,5 +189,6 @@ module.exports = {
   getPostDetailByDiscussionId,
   checkValidUserComments,
   checkValidDiscussionComments,
-  checkMatchInComments
+  checkMatchInComments,
+  createComment
 };
