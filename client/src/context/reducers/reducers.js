@@ -170,13 +170,12 @@ export const reducer = (state = initialState, action) => {
         dscussions_error: action.payload
       };
     case 'CREATED_COMMENT':
-      const { payload } = action;
       const { comments } = state.comments;
       return {
         ...state,
         comments: {
           ['0']: { ...state.comments['0'] },
-          comments: [...comments, payload]
+          comments: [...comments, action.payload]
         },
         comments_error: ''
       };
