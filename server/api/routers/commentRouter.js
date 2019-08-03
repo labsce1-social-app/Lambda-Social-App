@@ -116,8 +116,8 @@ TESTS: {
 
 router.post('/create', async (req, res) => {
   const comment = await createComment(req.body, req.body.comment_id)
-  console.log(comment)
-  return res.status(201).json({ comment })
+  console.log(...comment)
+  return res.status(201).json(...comment)
 });
 
 /*

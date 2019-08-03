@@ -161,24 +161,26 @@ const checkMatchInComments = async (id, user_id) => {
   return isValid;
 };
 
-const createComment = (body, comment_id = null) => {
+const createComment = async (body, comment_id = null) => {
   const { comment_post, discussion_id, user_id } = body
-  return db.raw(`
-  with rows as (
-    INSERT INTO comment (comment_post, discussion_id, user_id, comment_id)
-    values (${comment_post}, ${discussion_id}, ${user_id}, ${comment_id}) RETURNING *
-    )
-    select
-    rows.id,
-		comment_post,
-		discussion_id,
-		user_id,
-		comment_id,
-		username
-	from rows
-	INNER JOIN users
-	on rows.user_id = users.id
-  `)
+  const user = await db('users')
+    .select('username')
+    .where({ 'users.id': user_id })
+    .first();
+  // console.log(user)
+  const query = await db('comment')
+    .insert({
+      comment_post,
+      discussion_id,
+      user_id,
+      comment_id,
+    })
+    .returning('*')
+    .then(comment => {
+      return comment;
+    })
+  query[0].username = user.username;
+  return query;
 }
 
 module.exports = {
