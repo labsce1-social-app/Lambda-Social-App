@@ -161,6 +161,28 @@ const checkMatchInComments = async (id, user_id) => {
   return isValid;
 };
 
+const createComment = async (body, comment_id = null) => {
+  const { comment_post, discussion_id, user_id } = body
+  const user = await db('users')
+    .select('username')
+    .where({ 'users.id': user_id })
+    .first();
+  // console.log(user)
+  const query = await db('comment')
+    .insert({
+      comment_post,
+      discussion_id,
+      user_id,
+      comment_id,
+    })
+    .returning('*')
+    .then(comment => {
+      return comment;
+    })
+  query[0].username = user.username;
+  return query;
+}
+
 module.exports = {
   getCommentsByDiscussionId,
   getRepliesByCommentId,
@@ -169,5 +191,6 @@ module.exports = {
   getPostDetailByDiscussionId,
   checkValidUserComments,
   checkValidDiscussionComments,
-  checkMatchInComments
+  checkMatchInComments,
+  createComment
 };

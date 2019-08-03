@@ -2,17 +2,11 @@ import { postgres, local, axios } from './constants';
 
 // create a comment (not a reply)
 export const addComment = async (dispatch, body) => {
-    const newReply = {
-        user_id: body.user_id,
-        comment_post: body.comment_post,
-        discussion_id: body.discussion_id,
-        username: body.username
-    }
     try {
         let res = await axios.post(`${postgres}/comments/create`, body);
         let followup = await dispatch({
             type: 'CREATED_COMMENT',
-            payload: newReply
+            payload: { ...res.data, replies: [] }
         });
 
         return { res, followup };
@@ -24,18 +18,11 @@ export const addComment = async (dispatch, body) => {
 
 // create a comment (not a reply)
 export const addCommentReply = async (dispatch, body) => {
-    const newReply = {
-        user_id: body.user_id,
-        comment_post: body.comment_post,
-        discussion_id: body.discussion_id,
-        comment_id: body.comment_id,
-        username: body.username
-    }
     try {
-        let res = await axios.post(`${postgres}/comments/create/reply`, body);
+        let res = await axios.post(`${postgres}/comments/create`, body);
         let followup = await dispatch({
             type: 'CREATED_REPLY',
-            payload: newReply
+            payload: res.data
         });
 
         return { res, followup };
