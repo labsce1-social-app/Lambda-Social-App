@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from 'react';
-import { Store } from '../context/';
+import { Store } from '../context';
 // TODO: remove this later and place into it's own route
 import Sort from '../components/discussions/Sort';
 import Discussions from '../components/discussions/Discussions';
-import { getByHashtags } from '../context/actions/discussionActions';
+import { getByHashtags } from '../context/actions/discussion.actions';
 import { withNavigation } from 'react-navigation';
 import { Container } from 'native-base';
 import FabButton from '../components/discussions/FabButton';

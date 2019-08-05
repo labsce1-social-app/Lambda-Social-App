@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
-import { Store } from '../context/';
+import { Store } from '../context';
 import { View, Text } from 'react-native';
-import { getFavoriteSubtopics } from '../context/actions/subtopicActions';
+import { getFavoriteSubtopics } from '../context/actions/subtopic.actions';
 // import { withNavigation } from 'react-navigation';
 import { Container, Card, CardItem } from 'native-base';
 
@@ -30,12 +30,12 @@ const FavoriteSubtopics = props => {
       {state.isAuthenticated ? (
         <Subtopics subtopics={state.favorite_subtopics} />
       ) : (
-        <View style={{ flex: 1, justifyContent: 'center' }}>
-          <Text style={{ textAlign: 'center', fontSize: 14 }}>
-            Log in first
+          <View style={{ flex: 1, justifyContent: 'center' }}>
+            <Text style={{ textAlign: 'center', fontSize: 14 }}>
+              Log in first
           </Text>
-        </View>
-      )}
+          </View>
+        )}
     </Container>
   );
 };

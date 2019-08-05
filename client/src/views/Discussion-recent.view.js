@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react';
-import { Store } from '../context/';
+import { Store } from '../context';
 // TODO: remove this later and place into it's own route
 import Discussions from '../components/discussions/Discussions';
-import { getRecentDiscussions } from '../context/actions/discussionActions';
+import { getRecentDiscussions } from '../context/actions/discussion.actions';
 import { withNavigation } from 'react-navigation';
 import { Container } from 'native-base';
 

@@ -6,7 +6,7 @@ import { isEmpty } from '../../utils/utility';
 import {
     favoriteTheSubtopic,
     unFavoriteTheSubtopic
-} from '../../context/actions/subtopicActions';
+} from '../../context/actions/subtopic.actions';
 
 const FavoriteButton = ({ subId }) => {
     const { state, dispatch } = useContext(Store);

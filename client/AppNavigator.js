@@ -2,16 +2,16 @@ import React from 'react';
 import { Icon } from 'native-base';
 import { Text } from 'react-native';
 
-import Home from './src/views/Home';
-import DiscussionsPage from './src/views/DiscussionsPage';
-import DiscussionsByHashtags from './src/views/DiscussionsByHashtags';
-import PostPage from './src/views/PostPage';
-import SubtopicsPage from './src/views/SubtopicsPage';
-import HashtagPage from './src/views/HashtagPage';
-import AboutPage from './src/views/AboutPage';
-import RecentDiscussionsPage from './src/views/RecentDiscussionsPage';
-import FavoriteSubtopicsPage from './src/views/FavoriteSubtopicsPage';
-import UserPage from './src/views/UserPage';
+import Home from './src/views/Home.view';
+import DiscussionsPage from './src/views/Discussions.view';
+import DiscussionsByHashtags from './src/views/Discussion-hashtags.view';
+import PostPage from './src/views/Post.view';
+import SubtopicsPage from './src/views/Subtopics.view';
+import HashtagPage from './src/views/Hashtage.view';
+import AboutPage from './src/views/About.view';
+import RecentDiscussionsPage from './src/views/Discussion-recent.view';
+import FavoriteSubtopicsPage from './src/views/Favorite-subtopics.view';
+import UserPage from './src/views/User.view';
 import {
   createDrawerNavigator,
   createAppContainer,

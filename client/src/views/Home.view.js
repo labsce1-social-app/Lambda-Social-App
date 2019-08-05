@@ -5,13 +5,13 @@ import Discussions from '../components/discussions/Discussions';
 import Sort from '../components/discussions/Sort';
 import { Container, Left, Text, Card, CardItem, View } from 'native-base';
 import { Image } from 'react-native';
-import { Store } from '../context/';
-import { getDiscussions, getStats } from '../context/actions/discussionActions';
-import { isAuthed } from '../context/actions/authActions';
+import { Store } from '../context';
+import { getDiscussions, getStats } from '../context/actions/discussion.actions';
+import { isAuthed } from '../context/actions/auth.actions';
 import {
   getSubtopics,
   getFavoriteSubtopics
-} from '../context/actions/subtopicActions';
+} from '../context/actions/subtopic.actions';
 import { getData } from '../utils/AsyncStorage';
 import { isEmpty } from '../utils/utility';
 import { theme } from '../common/theme';

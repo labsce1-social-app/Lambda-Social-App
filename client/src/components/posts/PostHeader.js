@@ -11,7 +11,7 @@ import { Image, View } from 'react-native';
 import Reaction from '../../common/Reaction';
 import style from './Style';
 import moment from 'moment';
-import { upvoteDiscussion, downvoteDiscussion } from '../../context/actions/upvoteActions';
+import { upvoteDiscussion, downvoteDiscussion } from '../../context/actions/upvote.actions';
 
 // doesn't seem to be used??
 // const ImagePost = props => {

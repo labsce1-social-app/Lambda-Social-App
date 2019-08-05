@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import { Store } from '../context';
 import Post from '../components/posts/Post';
 import FabButton from '../components/posts/FabButton';
-import { getCommentsByDiscussionId } from '../context/actions/commentActions';
+import { getCommentsByDiscussionId } from '../context/actions/comment.actions';
 import { Container } from 'native-base';
 import { withNavigation } from 'react-navigation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';

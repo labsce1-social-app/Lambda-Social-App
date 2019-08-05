@@ -12,7 +12,7 @@ import {
   View
 } from 'native-base';
 
-import { createSubtopic } from '../../context/actions/subtopicActions';
+import { createSubtopic } from '../../context/actions/subtopic.actions';
 
 import { Store } from '../../context';
 

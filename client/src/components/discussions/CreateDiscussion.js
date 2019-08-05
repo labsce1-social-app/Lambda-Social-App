@@ -17,7 +17,7 @@ import {
   addDiscussion,
   uploadImage,
   removeImage
-} from '../../context/actions/discussionActions';
+} from '../../context/actions/discussion.actions';
 import { isEmpty } from '../../utils/utility';
 import { Store } from '../../context';
 

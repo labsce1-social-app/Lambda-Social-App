@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Input, Item } from 'native-base';
 import { StyleSheet } from 'react-native';
-import { addComment } from '../../context/actions/commentActions';
+import { addComment } from '../../context/actions/comment.actions';
 import { Store } from '../../context';
 
 const CommentInput = (props) => {

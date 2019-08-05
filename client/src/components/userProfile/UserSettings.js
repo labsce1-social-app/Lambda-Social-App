@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import { Thumbnail, Card, CardItem, Text, Button, Icon, Input, Spinner, Toast } from 'native-base';
-import { uploadImage } from '../../context/actions/discussionActions';
+import { uploadImage } from '../../context/actions/discussion.actions';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { isEmpty } from '../../utils/utility';
-import { updateUser } from '../../context/actions/userActions';
+import { updateUser } from '../../context/actions/user.actions';
 
 const UserSettings = ({ user, dispatch, newImage, loading }) => {
     const [editing, setEditing] = useState(false)

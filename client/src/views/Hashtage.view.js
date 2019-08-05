@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
-import { Store } from '../context/';
-import { getHashtags } from '../context/actions/discussionActions';
+import { Store } from '../context';
+import { getHashtags } from '../context/actions/discussion.actions';
 import Hashtag from '../components/hashtags/Hashtag';
 import { withNavigation } from 'react-navigation';
 import { Container } from 'native-base';
