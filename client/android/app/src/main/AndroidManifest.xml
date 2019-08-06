@@ -37,9 +37,9 @@
         </intent-filter>
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
-      <service android:name="io.invertase.firebase.messaging.RNFirebaseMessagingService">
+      <service android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationListenerService">
         <intent-filter>
-          <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            <action android:name="com.google.firebase.MESSAGING_EVENT" />
         </intent-filter>
       </service>
       <service android:name="io.invertase.firebase.messaging.RNFirebaseInstanceIdService">
