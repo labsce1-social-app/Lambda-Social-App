@@ -109,9 +109,6 @@ const Home = props => {
 
   return (
     <Container style={{ backgroundColor: theme.colors.offWhite, padding: 5 }}>
-      <Button title="PUSH" onPress={() => localSend()}>
-        <Text>PUSH</Text>
-      </Button>
       <ScrollView>
         <StatusBar backgroundColor="white" barStyle="dark-content" />
 
