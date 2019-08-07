@@ -85,7 +85,7 @@ export default Comment;
 const styles = StyleSheet.create({
     viewContainer: {
         flex: 0,
-        padding: 2
+        padding: 2,
     },
     cardItem: {
         flex: 1,
