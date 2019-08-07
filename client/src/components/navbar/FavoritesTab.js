@@ -11,9 +11,10 @@ import { Store } from '../../context/';
 
 const FavoritesTab = props => {
   const { state, dispatch } = useContext(Store);
-
+  const { auth: { isAuthenticated } } = state;
+  console.log("ISAUTH: ", isAuthenticated)
   const handleRoute = () => {
-    if (state.isAuthenticated === false)
+    if (isAuthenticated === false)
       Toast.show({
         text: 'Login first',
         buttonText: 'Ok'

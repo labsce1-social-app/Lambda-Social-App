@@ -2,13 +2,13 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Store } from '../../context/';
 import { Item, Label, Input, Form, Button, Text, Toast } from 'native-base';
 import { View, Keyboard, Platform } from 'react-native';
-import { createSubtopic } from '../../context/actions/subtopic.actions';
+import { createSubtopic } from '../../context/subtopics/subtopics.actions';
 import { isEmpty } from '../../utils/utility';
 
 const AddSub = () => {
   const { state, dispatch } = useContext(Store);
   const [input, setInput] = useState('');
-
+  const { auth: { user, isAuthenticated }, subtopics: { subtopics_error } } = state;
   const createSub = () => {
     Keyboard.dismiss()
     if (isEmpty(input)) {
@@ -18,23 +18,23 @@ const AddSub = () => {
         duration: 3000
       })
     }
-    createSubtopic(input, state.user.id, dispatch);
+    createSubtopic(input, user.id, dispatch);
     setInput('');
   };
 
   useEffect(() => {
-    if (!isEmpty(state.subtopics_error)) {
+    if (!isEmpty(subtopics_error)) {
       Toast.show({
-        text: `${state.subtopics_error}`,
+        text: `${subtopics_error}`,
         buttonText: 'Okay',
         duration: 3000
       })
       setInput('')
     }
-  }, [state.subtopics_error])
+  }, [subtopics_error])
   return (
     <Form onSubmitEditing={() => createSub()}>
-      {state.isAuthenticated === false ? (
+      {isAuthenticated === false ? (
         <Item disabled>
           <Label>Sign In To Create a Subtopic...</Label>
         </Item>

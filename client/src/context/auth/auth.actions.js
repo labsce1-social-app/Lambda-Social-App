@@ -10,16 +10,24 @@ import {
   auth0Domain,
   local,
   postgres
-} from './constants';
+} from '../actions/constants';
 import DeviceInfo from 'react-native-device-info';
 import RNRestart from 'react-native-restart';
+import {
+  USER_UPDATING_LOADING,
+  USER_UPDATED,
+  USER_UPDATE_FAILED,
+  LOGOUT,
+  SET_CURRENT_USER,
+  AUTH_FAIL
+} from './auth.actions.js';
 
 // check if a user is logged in
 export const isAuthed = async dispatch => {
   try {
     const accessToken = await getData('accessToken');
     const followup = await dispatch({
-      type: 'SET_CURRENT_USER',
+      type: SET_CURRENT_USER,
       payload: accessToken
     });
     return { accessToken, followup };
@@ -80,7 +88,7 @@ const getUser = async (user, dispatch) => {
 
     if (res.data) {
       const send = await dispatch({
-        type: 'SET_CURRENT_USER',
+        type: SET_CURRENT_USER,
         payload: res.data // user's auth0 sub is being saved as id in state(state.user.id)
       });
       const storeUser = await storeData('accessToken', {
@@ -102,9 +110,22 @@ const getUser = async (user, dispatch) => {
 export const handleLogout = async dispatch => {
   try {
     const del = await deleteData();
-    const dis = await dispatch({ type: 'LOGOUT' });
+    const dis = await dispatch({ type: LOGOUT });
     return { del, dis };
   } catch (err) {
     console.log(err);
   }
 };
+
+export const updateUser = async (dispatch, user) => {
+  const { id, username, title } = user;
+  dispatch({ type: USER_UPDATING_LOADING })
+  try {
+    const res = await axios.put(`${postgres}/users/`, { id, username, title });
+    const followup = await dispatch({ type: USER_UPDATED, payload: res.data });
+    return { res, followup }
+  } catch (err) {
+    console.log(err)
+    return dispatch({ type: USER_UPDATE_FAILED });
+  }
+}

@@ -6,21 +6,21 @@ import { isEmpty } from '../../utils/utility';
 import {
     favoriteTheSubtopic,
     unFavoriteTheSubtopic
-} from '../../context/actions/subtopic.actions';
+} from '../../context/subtopics/subtopics.actions';
 
 const FavoriteButton = ({ subId }) => {
     const { state, dispatch } = useContext(Store);
     const [favorited, setFavorited] = useState(false);
-
+    const { subtopics: { favorite_subtopics }, auth: { user, isAuthenticated } } = state;
     useEffect(() => {
-        if (!isEmpty(state.favorite_subtopics)) {
+        if (!isEmpty(favorite_subtopics)) {
             favoriteChecker()
         }
-    }, [state.favorite_subtopics])
+    }, [favorite_subtopics])
 
     const favoriteChecker = () => {
 
-        state.favorite_subtopics.filter((item) => {
+        favorite_subtopics.filter((item) => {
             if (item.id === subId) {
                 setFavorited(true)
             }
@@ -67,7 +67,7 @@ const FavoriteButton = ({ subId }) => {
         if (favorited === false) {
             content = (
                 <TouchableOpacity
-                    onPress={() => state.isAuthenticated === false ? isNotAuthed() : favorite(subId, state.user.id)}
+                    onPress={() => isAuthenticated === false ? isNotAuthed() : favorite(subId, user.id)}
                     style={styles().button}
                 >
                     <Image source={require("../../assets/join.png")} style={{ tintColor: '#fff', flex: 1, width: 30, height: 30, resizeMode: 'contain' }} />
@@ -76,7 +76,7 @@ const FavoriteButton = ({ subId }) => {
             )
         } else {
             content = (
-                <TouchableOpacity onPress={() => state.isAuthenticated === false ? isNotAuthed() : unFavorite(subId, state.user.id)}
+                <TouchableOpacity onPress={() => isAuthenticated === false ? isNotAuthed() : unFavorite(subId, user.id)}
                     style={styles().button}>
                     <Image source={require("../../assets/join.png")} style={{ tintColor: 'yellow', flex: 1, width: 30, height: 30, resizeMode: 'contain' }} />
                     <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }} >Leave</Text>

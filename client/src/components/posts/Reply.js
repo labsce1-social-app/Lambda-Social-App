@@ -14,8 +14,7 @@ const Reply = ({ item }) => {
                     <Text>{item.comment_post}</Text>
                 </Body>
             </CardItem>
-
-        </View >
+        </View>
     )
 }
 

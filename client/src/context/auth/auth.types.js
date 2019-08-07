@@ -1,0 +1,6 @@
+export const USER_UPDATING_LOADING = 'USER_UPDATING_LOADING';
+export const USER_UPDATED = 'USER_UPDATED';
+export const USER_UPDATE_FAILED = 'USER_UPDATE_FAILED';
+export const LOGOUT = 'LOGOUT';
+export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+export const AUTH_FAIL = 'AUTH_FAIL';

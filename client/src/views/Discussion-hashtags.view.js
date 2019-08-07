@@ -3,7 +3,7 @@ import { Store } from '../context';
 // TODO: remove this later and place into it's own route
 import Sort from '../components/discussions/Sort';
 import Discussions from '../components/discussions/Discussions';
-import { getByHashtags } from '../context/actions/discussion.actions';
+import { getByHashtags } from '../context/discussions/discussions.actions';
 import { withNavigation } from 'react-navigation';
 import { Container } from 'native-base';
 import FabButton from '../components/discussions/FabButton';
@@ -16,6 +16,7 @@ const DiscussionsByHashtags = props => {
     const { state, dispatch } = useContext(Store);
     const hashtag = props.navigation.getParam('hashtag');
 
+    const { discussions: { discussions_loading, discussions }, auth: { isAuthenticated } } = state
     useEffect(() => {
         getByHashtags(dispatch, hashtag);
     }, [hashtag]);
@@ -24,11 +25,11 @@ const DiscussionsByHashtags = props => {
         <Container style={{ backgroundColor: theme.colors.offWhite, padding: 5 }}>
             <Sort />
             <Discussions
-                loading={state.discussions_loading}
-                discussions={state.discussions}
+                loading={discussions_loading}
+                discussions={discussions}
             />
             {props.navigation.state.routeName === 'Discussions' &&
-                state.isAuthenticated ? (
+                isAuthenticated ? (
                     <FabButton />
                 ) : null}
         </Container>

@@ -7,11 +7,11 @@ import AddSub from '../components/subtopics/AddSub';
 // this component will render all of the subtopics, I'm not sure if we'll need the scrollview component or not, it's pretty useless I think.
 const SubtopicsPage = props => {
   const { state, dispatch } = useContext(Store);
-
+  const { subtopics: { subtopics } } = state;
   return (
     <Container style={{ backgroundColor: theme.colors.offWhite, padding: 5 }}>
       <AddSub />
-      <Subtopics subtopics={state.subtopics} />
+      <Subtopics subtopics={subtopics} />
     </Container>
   );
 };

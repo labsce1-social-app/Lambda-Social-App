@@ -1,11 +1,11 @@
 import React from 'react';
 import { Card, Toast, CardItem, Icon, Text, Right } from 'native-base';
-import { handleAuth, handleLogout } from '../../context/actions/auth.actions';
+import { handleAuth, handleLogout } from '../../context/auth/auth.actions';
 import { theme } from '../../common/theme';
 
-const NavLinks = ({ navigation, state, dispatch, text }) => {
+const NavLinks = ({ navigation, isAuthenticated, user, dispatch, text }) => {
   const handleLogging = () => {
-    if (state.isAuthenticated === false) {
+    if (isAuthenticated === false) {
       handleAuth(dispatch);
       navigation.closeDrawer();
     } else {
@@ -15,9 +15,9 @@ const NavLinks = ({ navigation, state, dispatch, text }) => {
   };
 
   const handleRecent = () => {
-    if (state.isAuthenticated === true) {
+    if (isAuthenticated === true) {
       navigation.navigate('RecentDiscussions', {
-        subId: state.user.id
+        subId: user.id
       });
     } else {
       Toast.show({
@@ -31,7 +31,7 @@ const NavLinks = ({ navigation, state, dispatch, text }) => {
 
   const handleSearch = () => {
     navigation.navigate('Hashtags', {
-      subId: state.user.id
+      subId: user.id
     });
   };
 
@@ -49,9 +49,9 @@ const NavLinks = ({ navigation, state, dispatch, text }) => {
         <Icon
           active
           name="md-pulse"
-          style={{ color: state.isAuthenticated ? 'black' : 'gray' }}
+          style={{ color: isAuthenticated ? 'black' : 'gray' }}
         />
-        <Text style={{ color: state.isAuthenticated ? 'black' : 'gray' }}>
+        <Text style={{ color: isAuthenticated ? 'black' : 'gray' }}>
           Recent Posts
         </Text>
         <Right>

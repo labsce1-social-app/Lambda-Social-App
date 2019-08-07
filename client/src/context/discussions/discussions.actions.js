@@ -6,7 +6,25 @@ import {
   axios,
   local,
   postgres
-} from './constants';
+} from '../actions/constants';
+import {
+  SENDING_IMAGE,
+  IMAGE_FAILED,
+  IMAGE_SUCCESS,
+  TOP_DISCUSSIONS_FETCHING,
+  TOP_DISCUSSIONS_FETCHED,
+  TOP_DISCUSSIONS_FAILED,
+  DISCUSSIONS_FETCHING,
+  DISCUSSIONS_FETCHED,
+  DISCUSSIONS_FAILED,
+  RESET_IMAGE,
+  CREATED_DISCUSSION,
+  CREATE_DISCUSSION_FAILED,
+  FETCH_HASHTAGS_FAILED,
+  SORT_CHANGE_SUCCESS,
+  FETCHING_HASHTAGS,
+  FETCH_HASHTAGS_SUCCESSFULLY
+} from './discussions.types';
 
 // handles aws image uploading
 export const uploadImage = dispatch => {
@@ -30,12 +48,12 @@ export const uploadImage = dispatch => {
       secretKey: AWS_SECRET_ACCESS_KEY,
       successActionStatus: 201
     };
-    dispatch({ type: 'SENDING_IMAGE' });
+    dispatch({ type: SENDING_IMAGE });
     RNS3.put(file, config)
       .then(response => {
         if (response.status === 403) {
           return dispatch({
-            type: 'IMAGE_FAILED',
+            type: IMAGE_FAILED,
             payload: 'Failed to upload image to S3'
           });
         } else {
@@ -45,14 +63,14 @@ export const uploadImage = dispatch => {
                         location: "https://lambdasocialbucket.s3.amazonaws.com/s3%2FIMG_0111.HEIC"
                   */
           return dispatch({
-            type: 'IMAGE_SUCCESS',
+            type: IMAGE_SUCCESS,
             payload: response.body.postResponse.location
           });
         }
       })
       .catch(err => {
         console.log(err);
-        return dispatch({ type: 'IMAGE_FAILED', payload: err });
+        return dispatch({ type: IMAGE_FAILED, payload: err });
       });
   });
 };
@@ -60,24 +78,24 @@ export const uploadImage = dispatch => {
 export const getDiscussions = async (query, dispatch) => {
   // handle loading state
   const q = new URLSearchParams({ sort: query });
-  dispatch({ type: 'TOP_DISCUSSIONS_FETCHING', payload: true });
+  dispatch({ type: TOP_DISCUSSIONS_FETCHING, payload: true });
   try {
     const res = await axios.get(`${postgres}/discussions/?${q.toString()}`);
-    return dispatch({ type: 'TOP_DISCUSSIONS_FETCHED', payload: res.data });
+    return dispatch({ type: TOP_DISCUSSIONS_FETCHED, payload: res.data });
   } catch (err) {
     console.log(err);
-    return dispatch({ type: 'TOP_DISCUSSIONS_FAILED', payload: err });
+    return dispatch({ type: TOP_DISCUSSIONS_FAILED, payload: err });
   }
 };
 
 export const getDiscussionsForSub = async (id, dispatch) => {
   try {
-    await dispatch({ type: 'DISCUSSIONS_FETCHING', payload: true });
+    await dispatch({ type: DISCUSSIONS_FETCHING, payload: true });
     const res = await axios.get(`${postgres}/discussions/s/${id}`);
-    return dispatch({ type: 'DISCUSSIONS_FETCHED', payload: res.data });
+    return dispatch({ type: DISCUSSIONS_FETCHED, payload: res.data });
   } catch (err) {
     console.log(err);
-    return dispatch({ type: 'DISCUSSIONS_FAILED', payload: err });
+    return dispatch({ type: DISCUSSIONS_FAILED, payload: err });
   }
 };
 
@@ -86,25 +104,25 @@ export const getRecentDiscussions = async (id, dispatch) => {
     id
   };
   try {
-    await dispatch({ type: 'DISCUSSIONS_FETCHING', payload: true });
+    await dispatch({ type: DISCUSSIONS_FETCHING, payload: true });
     const res = await axios.post(`${postgres}/discussions/recent`, body);
     return dispatch({
-      type: 'DISCUSSIONS_FETCHED',
+      type: DISCUSSIONS_FETCHED,
       payload: res.data
     });
   } catch (err) {
     console.log(err);
-    return dispatch({ type: 'DISCUSSIONS_FAILED', payload: err });
+    return dispatch({ type: DISCUSSIONS_FAILED, payload: err });
   }
 };
 
 export const removeImage = async dispatch => {
-  return await dispatch({ type: 'RESET_IMAGE' });
+  return await dispatch({ type: RESET_IMAGE });
 };
 
 export const addDiscussion = async (body, dispatch) => {
 
-  dispatch({ type: 'DISCUSSIONS_FETCHING' });
+  dispatch({ type: DISCUSSIONS_FETCHING });
   const apiBody = {
     title: body.title,
     content: body.content,
@@ -118,14 +136,14 @@ export const addDiscussion = async (body, dispatch) => {
     let res = await axios.post(`${postgres}/discussions/create`, apiBody);
 
     let followup = await dispatch({
-      type: 'CREATED_DISCUSSION',
+      type: CREATED_DISCUSSION,
       payload: res.data
     });
 
     return { res, followup };
   } catch (err) {
     dispatch({
-      type: 'CREATE_DISCUSSION_FAILED',
+      type: CREATE_DISCUSSION_FAILED,
       payload: res.response.data
     });
     console.log(err);
@@ -133,7 +151,7 @@ export const addDiscussion = async (body, dispatch) => {
 };
 
 export const getHashtags = async dispatch => {
-  dispatch({ type: 'FETCHING_HASHTAGS' });
+  dispatch({ type: FETCHING_HASHTAGS });
   try {
     let res = await axios.post(`${postgres}/discussions/hashtags`);
     let followup = await dispatch({
@@ -142,23 +160,23 @@ export const getHashtags = async dispatch => {
     });
     return { res, followup };
   } catch (err) {
-    dispatch({ type: 'FETCH_HASHTAGS_FAILED', payload: err });
+    dispatch({ type: FETCH_HASHTAGS_FAILED, payload: err });
   }
 };
 
 export const getByHashtags = async (dispatch, hashtag) => {
-  dispatch({ type: 'DISCUSSIONS_FETCHING' });
+  dispatch({ type: DISCUSSIONS_FETCHING });
   try {
     let res = await axios.post(`${postgres}/discussions/byhashtags`, {
       hash: hashtag
     });
     let followup = await dispatch({
-      type: 'DISCUSSIONS_FETCHED',
+      type: DISCUSSIONS_FETCHED,
       payload: res.data
     });
     return { res, followup };
   } catch (err) {
-    dispatch({ type: 'DISCUSSIONS_FAILED', payload: err });
+    dispatch({ type: DISCUSSIONS_FAILED, payload: err });
   }
 };
 

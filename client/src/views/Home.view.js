@@ -6,12 +6,12 @@ import Sort from '../components/discussions/Sort';
 import { Container, Left, Text, Card, CardItem, View } from 'native-base';
 import { Image } from 'react-native';
 import { Store } from '../context';
-import { getDiscussions, getStats } from '../context/actions/discussion.actions';
-import { isAuthed } from '../context/actions/auth.actions';
+import { getDiscussions, getStats } from '../context/discussions/discussions.actions';
+import { isAuthed } from '../context/auth/auth.actions';
 import {
   getSubtopics,
   getFavoriteSubtopics
-} from '../context/actions/subtopic.actions';
+} from '../context/subtopics/subtopics.actions';
 import { getData } from '../utils/AsyncStorage';
 import { isEmpty } from '../utils/utility';
 import { theme } from '../common/theme';
@@ -23,7 +23,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 const Home = props => {
   const { state, dispatch } = useContext(Store);
   const [stats, setStats] = useState(null);
-
+  const { discussions: { sortBy, top_discussions_loading, top_discussions } } = state;
+  console.log(state)
   useEffect(() => {
     getStats(setStats);
   }, () => getStats())
@@ -37,8 +38,8 @@ const Home = props => {
 
   // gather top discussions
   useEffect(() => {
-    getDiscussions(state.sortBy, dispatch);
-  }, [state.sortBy]);
+    getDiscussions(sortBy, dispatch);
+  }, [sortBy]);
 
   // gather all subtopics
   useEffect(
@@ -92,8 +93,8 @@ const Home = props => {
         <Sort />
         <Text style={{ marginLeft: 15, marginBottom: 10 }}>See What's Trending</Text>
         <Discussions
-          loading={state.top_discussions_loading}
-          discussions={state.top_discussions}
+          loading={top_discussions_loading}
+          discussions={top_discussions}
         />
       </ScrollView>
     </Container >

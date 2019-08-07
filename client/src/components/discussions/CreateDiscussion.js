@@ -17,7 +17,7 @@ import {
   addDiscussion,
   uploadImage,
   removeImage
-} from '../../context/actions/discussion.actions';
+} from '../../context/discussions/discussions.actions';
 import { isEmpty } from '../../utils/utility';
 import { Store } from '../../context';
 
@@ -37,6 +37,7 @@ const CreateDiscussion = props => {
   const [image, setImage] = useState('');
 
   const subId = props.navigation.getParam('subId');
+  const { discussions: { newImage, newImage_loading } } = state;
 
   useEffect(() => {
     if (image !== state.newImage) {
@@ -175,13 +176,12 @@ const CreateDiscussion = props => {
                   >
                     <Icon name="close" />
                   </TouchableOpacity>
-
                   <Image
-                    source={{ uri: state.newImage }}
+                    source={{ uri: newImage }}
                     style={{ width: 400, height: 200 }}
                   />
                 </CardItem>
-              ) : state.newImage_loading === true ? (
+              ) : newImage_loading === true ? (
                 <Spinner />
               ) : null}
             </CardItem>
@@ -201,7 +201,7 @@ const CreateDiscussion = props => {
                 <Text>Image</Text>
               </Button>
 
-              {state.newImage_loading === true ? (
+              {newImage_loading === true ? (
                 <Button bordered light>
                   <Text>Done</Text>
                 </Button>

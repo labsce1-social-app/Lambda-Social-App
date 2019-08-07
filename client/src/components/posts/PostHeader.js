@@ -11,7 +11,7 @@ import { Image, View } from 'react-native';
 import Reaction from '../../common/Reaction';
 import style from './Style';
 import moment from 'moment';
-import { upvoteDiscussion, downvoteDiscussion } from '../../context/actions/upvote.actions';
+import { upvoteDiscussion, downvoteDiscussion } from '../../context/comments/comments.actions';
 
 // doesn't seem to be used??
 // const ImagePost = props => {
@@ -25,11 +25,11 @@ import { upvoteDiscussion, downvoteDiscussion } from '../../context/actions/upvo
 
 const PostHeader = props => {
   const { state, dispatch } = useContext(Store);
-
+  const { auth: { user } } = state;
   // handles adding upvotes, sends data to context reducer
   const upvote = (discussion_id) => {
     const newUpvote = {
-      user_id: state.user.id,
+      user_id: user.id,
       discussion_id
     }
     upvoteDiscussion(dispatch, newUpvote);
@@ -37,7 +37,7 @@ const PostHeader = props => {
 
   const downvote = (discussion_id) => {
     const newDownvote = {
-      user_id: state.user.id,
+      user_id: user.id,
       discussion_id
     }
     downvoteDiscussion(dispatch, newDownvote);

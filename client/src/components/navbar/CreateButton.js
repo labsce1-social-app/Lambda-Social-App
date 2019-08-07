@@ -9,10 +9,10 @@ import { Store } from '../../context';
 
 const DrawerButton = ({ navigation }) => {
   const { state, dispatch } = useContext(Store);
-
+  const { auth: { isAuthenticated } } = state;
   const handleModal = () => {
 
-    if (state.isAuthenticated === false) {
+    if (isAuthenticated === false) {
       Toast.show({
         text: 'You must be logged in!',
         buttonText: 'Okay',

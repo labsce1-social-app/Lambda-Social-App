@@ -14,9 +14,9 @@ const Comment = lazy(() => import('./Comment'));
 const Post = React.forwardRef((props, ref) => {
   // bring in state and dispatch
   const { state } = useContext(Store);
-  const { comments, comments_loading } = state;
+  const { comments: { comments: { comments }, comments_loading }, auth: { isAuthenticated } } = state;
 
-  return state.comments_loading ? (
+  return comments_loading ? (
     <Spinner />
   ) : (
       <ScrollView ref={ref}>
@@ -55,14 +55,14 @@ const Post = React.forwardRef((props, ref) => {
                       postId={props.postId}
                       hideInput={props.hideInput}
                       setIsReplying={props.setIsReplying}
-                      isAuthed={state.isAuthenticated}
+                      isAuthed={isAuthenticated}
                     />
                   </Suspense>
                 );
               }}
               keyExtractor={(item, index) => `${index}-${item.comment_id}`}
             />
-          ) : !isEmpty(comments) && comments.comments.length === 0 ? (
+          ) : !isEmpty(comments) && comments.length === 0 ? (
             <Comment
               image="../../assets/lambdaschool.png"
               date={new Date().now()}

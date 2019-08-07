@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import { Store } from '../context';
 import Post from '../components/posts/Post';
 import FabButton from '../components/posts/FabButton';
-import { getCommentsByDiscussionId } from '../context/actions/comment.actions';
+import { getCommentsByDiscussionId } from '../context/comments/comments.actions';
 import { Container } from 'native-base';
 import { withNavigation } from 'react-navigation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -20,7 +20,7 @@ const PostPage = props => {
   const [isReplyingToComment, setIsReplyingToComment] = useState(false);
   const postId = props.navigation.getParam('postId', 'None');
   const postTitle = props.navigation.getParam('title');
-
+  const { auth: { isAuthenticated } } = state;
   // need to get the data here because it is where we have access to the id from react router.
 
   // useEffect is treated as componentDidMount and componentWillUnmount
@@ -64,7 +64,7 @@ const PostPage = props => {
           postId={JSON.stringify(postId)}
         />
       </KeyboardAwareScrollView>
-      {state.isAuthenticated ? (
+      {isAuthenticated ? (
         <FabButton
           isreplying={isReplying}
           replyToComment={() => {

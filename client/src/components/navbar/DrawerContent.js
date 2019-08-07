@@ -7,15 +7,16 @@ import NavLinks from './NavLinks';
 
 const DrawerContent = ({ navigation }) => {
   const { state, dispatch } = useContext(Store);
-
+  const { auth: { user, isAuthenticated } } = state;
+  console.log(state)
   return (
     <View style={styles.container}>
-      <UserProfile user={state.user} navigation={navigation} />
+      <UserProfile user={user} navigation={navigation} />
       <NavLinks
         state={state}
         dispatch={dispatch}
         navigation={navigation}
-        text={state.isAuthenticated === false ? 'Signin' : 'Signout'}
+        text={isAuthenticated === false ? 'Signin' : 'Signout'}
       />
     </View>
   );
