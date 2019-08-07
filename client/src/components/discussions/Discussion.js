@@ -26,13 +26,13 @@ const Discussion = props => {
       >
         <Body style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start' }}>
           <Left>
-            <View style={{ width: '15%' }}>
+            <View style={{ width: !isEmpty(props.image) ? '15%' : null }}>
               {!isEmpty(props.image)
                 && (
                   <Image
                     // style={style.avatar}
                     style={{ width: 100, height: 165 }}
-                    source={{ uri: props.image }} />
+                    source={props.image.includes('http://') && !isEmpty(props.image) ? require('../../NeralSplash.png') : { uri: props.image }} />
                 )}
             </View>
           </Left>
