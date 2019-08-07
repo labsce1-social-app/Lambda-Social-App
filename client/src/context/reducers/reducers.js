@@ -4,10 +4,14 @@ import { commentsReducer, commentState } from '../comments/comments.reducer';
 import { subtopicsReducer, subtopicState } from '../subtopics/subtopics.reducer';
 import combineReducers from './combineReducer';
 
-const reducers = { authReducer, commentsReducer, subtopicsReducer, discussionReducer };
 
 // exports root reducer
-export const rootReducer = combineReducers(reducers)
+export const rootReducer = combineReducers({
+  auth: authReducer,
+  comments: commentsReducer,
+  subtopics: subtopicsReducer,
+  discussions: discussionReducer
+})
 
 // exports initial state object
 export const initialState = {

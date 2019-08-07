@@ -1,5 +1,5 @@
 import { axios, local, postgres } from '../actions/constants';
-import { SUBTOPICS_FETCHING, CREATE_SUBTOPIC, CREATE_SUBTOPIC_FAILED, FAVORITE_SUBTOPICS_FETCHED, SUBTOPIC_FAVORITED, UN_FAVORITE, SUBTOPICS_FAILED } from './subtopics.types';
+import { SUBTOPICS_FETCHING, CREATE_SUBTOPIC, CREATE_SUBTOPIC_FAILED, FAVORITE_SUBTOPICS_FETCHED, SUBTOPIC_FAVORITED, UN_FAVORITE, SUBTOPICS_FAILED, SUBTOPICS_FETCHED } from './subtopics.types';
 
 export const createSubtopic = async (info, sub, dispatch) => {
   dispatch({ type: SUBTOPICS_FETCHING });

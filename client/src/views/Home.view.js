@@ -97,7 +97,7 @@ const Home = props => {
           discussions={top_discussions}
         />
       </ScrollView>
-    </Container >
+    </Container>
   );
 };
 

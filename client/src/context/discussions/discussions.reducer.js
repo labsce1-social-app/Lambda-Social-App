@@ -34,6 +34,7 @@ export const discussionState = {
     newImage_error: '',
 }
 export const discussionReducer = (state, action) => {
+    console.log("DISCUSSION STATE: ", state)
     switch (action.payload) {
         case TOP_DISCUSSIONS_FETCHING:
             return {

@@ -13,6 +13,7 @@ const FavoritesTab = props => {
   const { state, dispatch } = useContext(Store);
   const { auth: { isAuthenticated } } = state;
   console.log("ISAUTH: ", isAuthenticated)
+
   const handleRoute = () => {
     if (isAuthenticated === false)
       Toast.show({

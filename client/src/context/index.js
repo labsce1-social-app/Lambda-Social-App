@@ -8,6 +8,8 @@ export const Store = createContext({ state: {}, dispatch: () => { } });
 // export the provider to be wrapped around the app
 export function StoreProvider({ children }) {
     const [state, dispatch] = useReducer(rootReducer, initialState)
+    console.log("INIT STATE: ", state)
+
     const value = { state, dispatch };
     return <Store.Provider value={value}>{children}</Store.Provider>;
 }
