@@ -31,7 +31,7 @@
           <category android:name="android.intent.category.DEFAULT" />
           <category android:name="android.intent.category.BROWSABLE" />
           <data
-              android:host="neral.auth0.com"
+              android:host="lambdasocial.auth0.com"
               android:pathPrefix="/android/${applicationId}/callback"
               android:scheme="${applicationId}" />
         </intent-filter>
