@@ -6,7 +6,7 @@ import { isEmpty } from '../../utils/utility';
 const UserProfile = ({ user, navigation }) => {
     return (
         <Card style={styles.container}>
-            <CardItem header style={styles.avatar} button onPress={() => navigation.navigate('UserPage')}>
+            <CardItem header style={styles.avatar} button onPress={() => !isEmpty(user) ? navigation.navigate('UserPage') : {}}>
                 <Thumbnail style={{ width: 50, height: 50 }} source={!isEmpty(user) ? { uri: user.avatar } : require('../../assets/useravatar.png')} />
             </CardItem>
             <CardItem>

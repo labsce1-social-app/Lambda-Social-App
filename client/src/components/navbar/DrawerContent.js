@@ -4,6 +4,7 @@ import { theme } from '../../common/theme';
 import { Store } from '../../context';
 import UserProfile from './UserProfile';
 import NavLinks from './NavLinks';
+import { isEmpty } from '../../utils/utility';
 
 const DrawerContent = ({ navigation }) => {
   const { state, dispatch } = useContext(Store);
@@ -15,7 +16,7 @@ const DrawerContent = ({ navigation }) => {
         state={state}
         dispatch={dispatch}
         navigation={navigation}
-        text={state.isAuthenticated === false ? 'Signin' : 'Signout'}
+        text={state.isAuthenticated === false || isEmpty(state.user) ? 'Signin' : 'Signout'}
       />
     </View>
   );

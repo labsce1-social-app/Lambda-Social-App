@@ -10,18 +10,18 @@ import {
 
 // handles aws image uploading
 export const uploadImage = dispatch => {
-  ImagePicker.showImagePicker({}, response => {
-    /*response returns an object with all of the information about the selected image.
-        returns data, fileName, fileSize, height, isVertical, latitude, longitude, origURL,
-        timestamp, type, uri, width.
-        */
-    // extract this data for the file upload
+  ImagePicker.openPicker({
+    cropping: true,
+    width: 500,
+    height: 500,
+  }).then(image => {
+    console.log(image)
     const file = {
-      uri: response.uri,
-      name: response.fileName,
-      type: 'image/png'
-    };
-    // s3 configurations
+      uri: image.sourceURL,
+      name: image.filename,
+      type: image.mime
+    }
+    // s3 config
     const config = {
       keyPrefix: 's3/',
       bucket: 'lambdasocialbucket',
@@ -54,7 +54,54 @@ export const uploadImage = dispatch => {
         console.log(err);
         return dispatch({ type: 'IMAGE_FAILED', payload: err });
       });
-  });
+  })
+  // s3 configurations
+
+  // ImagePicker.showImagePicker({}, response => {
+  //   /*response returns an object with all of the information about the selected image.
+  //       returns data, fileName, fileSize, height, isVertical, latitude, longitude, origURL,
+  //       timestamp, type, uri, width.
+  //       */
+  //   // extract this data for the file upload
+  //   const file = {
+  //     uri: response.uri,
+  //     name: response.fileName,
+  //     type: 'image/png'
+  //   };
+  //   // s3 configurations
+  //   const config = {
+  //     keyPrefix: 's3/',
+  //     bucket: 'lambdasocialbucket',
+  //     region: 'us-east-1',
+  //     accessKey: AWS_ACCESS_KEY_ID,
+  //     secretKey: AWS_SECRET_ACCESS_KEY,
+  //     successActionStatus: 201
+  //   };
+  //   dispatch({ type: 'SENDING_IMAGE' });
+  //   RNS3.put(file, config)
+  //     .then(response => {
+  //       if (response.status === 403) {
+  //         return dispatch({
+  //           type: 'IMAGE_FAILED',
+  //           payload: 'Failed to upload image to S3'
+  //         });
+  //       } else {
+  //         /*
+  //                   response will come back looking like this, we'll want
+  //                   the location for the POST request to make a discussion.
+  //                       location: "https://lambdasocialbucket.s3.amazonaws.com/s3%2FIMG_0111.HEIC"
+  //                 */
+  //         return dispatch({
+  //           type: 'IMAGE_SUCCESS',
+  //           payload: response.body.postResponse.location
+  //         });
+  //       }
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //       return dispatch({ type: 'IMAGE_FAILED', payload: err });
+  //     });
+  // });
 };
 
 export const getDiscussions = async (query, dispatch) => {

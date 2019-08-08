@@ -2,10 +2,12 @@ import React from 'react';
 import { Card, Toast, CardItem, Icon, Text, Right } from 'native-base';
 import { handleAuth, handleLogout } from '../../context/actions/authActions';
 import { theme } from '../../common/theme';
+import { isEmpty } from '../../utils/utility';
 
 const NavLinks = ({ navigation, state, dispatch, text }) => {
+  console.log(isEmpty(state.user))
   const handleLogging = () => {
-    if (state.isAuthenticated === false) {
+    if (state.isAuthenticated === false || isEmpty(state.user)) {
       handleAuth(dispatch);
       navigation.closeDrawer();
     } else {
@@ -15,7 +17,7 @@ const NavLinks = ({ navigation, state, dispatch, text }) => {
   };
 
   const handleRecent = () => {
-    if (state.isAuthenticated === true) {
+    if (state.isAuthenticated === true && !isEmpty(state.user)) {
       navigation.navigate('RecentDiscussions', {
         subId: state.user.id
       });
@@ -29,11 +31,6 @@ const NavLinks = ({ navigation, state, dispatch, text }) => {
     }
   };
 
-  const handleSearch = () => {
-    navigation.navigate('Hashtags', {
-      subId: state.user.id
-    });
-  };
 
   return (
     <Card style={{ background: theme.colors.white }}>
@@ -49,9 +46,9 @@ const NavLinks = ({ navigation, state, dispatch, text }) => {
         <Icon
           active
           name="md-pulse"
-          style={{ color: state.isAuthenticated ? 'black' : 'gray' }}
+          style={{ color: state.isAuthenticated || !isEmpty(state.user) ? 'black' : 'gray' }}
         />
-        <Text style={{ color: state.isAuthenticated ? 'black' : 'gray' }}>
+        <Text style={{ color: state.isAuthenticated || !isEmpty(state.user) ? 'black' : 'gray' }}>
           Recent Posts
         </Text>
         <Right>

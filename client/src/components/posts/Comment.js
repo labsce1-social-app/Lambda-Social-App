@@ -17,7 +17,8 @@ const Comment = ({
     hideInput,
     isReplyingToComment,
     commentDetails,
-    isAuthed
+    isAuthed,
+    navigation
 }) => {
     const [isReplying, setIsReplying] = useState(false)
     // fires when reply button is pressed on a comment
@@ -31,7 +32,9 @@ const Comment = ({
         <View style={styles.viewContainer}>
             <CardItem style={styles.cardItem}>
                 <Body style={styles.body}>
-                    <Text style={styles.date}>{name} {moment(date).fromNow()}</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('userview', { userName: name })}>
+                        <Text style={styles.date}>{name} {moment(date).fromNow()}</Text>
+                    </TouchableOpacity>
                     <Text>{comment}</Text>
                     <Right style={{ width: '98%' }}>
                         {isAuthed === false ? null : (
