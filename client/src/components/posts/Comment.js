@@ -72,10 +72,12 @@ const Comment = ({
                 : null}
             {isReplying === true ? (
                 <ReplyInput
+                    key={id}
                     postId={postId}
                     hideInput={hideInput}
                     isReplyingToComment={isReplyingToComment}
                     hideInput={hideInput}
+                    user_id={user_id}
                     commentDetails={commentDetails}
                     setFlagToFalse={() => setIsReplying(false)}
                 />

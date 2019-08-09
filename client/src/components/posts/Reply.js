@@ -3,23 +3,28 @@ import style from './Style';
 import { CardItem, Text, Body } from 'native-base';
 import { View, StyleSheet } from 'react-native';
 import moment from 'moment';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { withNavigation } from 'react-navigation';
 
-const Reply = ({ item }) => {
+const Reply = ({ item, navigation }) => {
 
     return (
         <View style={style.reply_container}>
             <CardItem style={styles.cardItem}>
                 <Body style={styles.body}>
-                    <Text style={styles.date}>{item.username} {moment(item.created_date).fromNow()}</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('UserViewPage', {
+                        'userId': item.user_id, 'userName': item.username
+                    })}>
+                        <Text style={styles.date}>{item.username} {moment(item.created_date).fromNow()}</Text>
+                    </TouchableOpacity>
                     <Text>{item.comment_post}</Text>
                 </Body>
             </CardItem>
-
-        </View >
+        </View>
     )
 }
 
-export default Reply;
+export default withNavigation(Reply);
 
 const styles = StyleSheet.create({
     cardItem: {
