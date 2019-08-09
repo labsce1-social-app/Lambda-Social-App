@@ -49,7 +49,8 @@ const PostPage = props => {
     <Container
       style={{
         backgroundColor: Platform.OS === 'ios' ? theme.colors.white : theme.colors.offWhite,
-        padding: 5
+        padding: 5,
+        paddingBottom: 80
       }}
     >
       <KeyboardAwareScrollView

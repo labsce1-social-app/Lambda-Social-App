@@ -41,6 +41,7 @@ const Post = React.forwardRef((props, ref) => {
               scrollEnabled={false}
               data={comments.comments}
               renderItem={({ item }) => {
+
                 return (
                   <Suspense fallback={<Spinner />}>
                     <Comment
@@ -51,11 +52,13 @@ const Post = React.forwardRef((props, ref) => {
                       item={item.replies}
                       passCommentDetails={() => props.startReply()}
                       commentDetails={item}
+                      userId={item.user_id}
                       isReplyingToComment={props.isReplyingToComment}
                       postId={props.postId}
                       hideInput={props.hideInput}
                       setIsReplying={props.setIsReplying}
                       isAuthed={state.isAuthenticated}
+                      navigation={props.navigation}
                     />
                   </Suspense>
                 );

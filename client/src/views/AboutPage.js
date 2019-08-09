@@ -20,7 +20,7 @@ const AboutPage = (props) => {
 }
 
 AboutPage.navigationOptions = ({ navigation }) => ({
-    title: 'About LS',
+    title: 'About neral',
     headerTitleStyle: {
         fontSize: 16,
     }

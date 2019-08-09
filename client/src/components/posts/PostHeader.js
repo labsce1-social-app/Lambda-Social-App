@@ -12,7 +12,7 @@ import Reaction from '../../common/Reaction';
 import style from './Style';
 import moment from 'moment';
 import { upvoteDiscussion, downvoteDiscussion } from '../../context/actions/upvoteActions';
-
+import { isEmpty } from '../../utils/utility';
 // doesn't seem to be used??
 // const ImagePost = props => {
 //   if (!props.discussion_image) {
@@ -63,7 +63,12 @@ const PostHeader = props => {
 
           <Image
             style={style.post_image}
-            source={{ uri: props.discussion_image }}
+            source={
+              props.discussion_image.includes('http://') &&
+                !isEmpty(props.discussion_image) ?
+                require('../../NeralSplash.png') :
+                { uri: props.discussion_image }
+            }
           />
         </View>
         <View style={{
@@ -73,7 +78,7 @@ const PostHeader = props => {
         }}>
           <Reaction
             image={require('../../assets/up.png')}
-            count={props.upvotes}
+            count={props.upvotes ? props.upvotes : '0'}
             voted={props.voted}
             color="green"
             handlePress={() => upvote(props.id)}

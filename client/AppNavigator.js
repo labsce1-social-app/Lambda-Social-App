@@ -12,6 +12,7 @@ import AboutPage from './src/views/AboutPage';
 import RecentDiscussionsPage from './src/views/RecentDiscussionsPage';
 import FavoriteSubtopicsPage from './src/views/FavoriteSubtopicsPage';
 import UserPage from './src/views/UserPage';
+import UserViewPage from './src/views/UserViewPage';
 import {
   createDrawerNavigator,
   createAppContainer,
@@ -37,6 +38,9 @@ const HomeStack = createStackNavigator({
   },
   UserPage: {
     screen: UserPage
+  },
+  UserViewPage: {
+    screen: UserViewPage
   },
   Post: {
     screen: PostPage

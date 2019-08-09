@@ -6,7 +6,7 @@ module.exports = {
     connection: {
       database: 'lambdasocial',
       user: 'postgres',
-      password: 'lambdasocialiscool'
+      password: process.env.DB_PASSWORD
     },
     migrations: {
       tableName: 'knex_migrations',

@@ -5,7 +5,7 @@ import { withNavigation } from 'react-navigation';
 
 const Hashtag = (props) => {
     return (
-        <Card style={{ padding: 10, backgroundColor: '#FFFFFF' }}>
+        <Card style={{ padding: 10, backgroundColor: '#FFFFFF', height: '100%' }}>
             <FlatList
                 horizontal={false}
                 columnWrapperStyle={{ flexWrap: 'wrap', flex: 1 }}

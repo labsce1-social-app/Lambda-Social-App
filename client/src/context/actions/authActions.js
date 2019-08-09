@@ -98,6 +98,8 @@ const getUser = async (user, dispatch) => {
   }
 };
 
+
+
 // logout a user through state
 export const handleLogout = async dispatch => {
   try {

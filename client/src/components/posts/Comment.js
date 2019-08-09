@@ -6,6 +6,7 @@ import moment from 'moment';
 import Reply from './Reply.js';
 import { isEmpty } from '../../utils/utility';
 import ReplyInput from './ReplyInput';
+import { withNavigation } from 'react-navigation';
 
 const Comment = ({
     comment,
@@ -17,7 +18,9 @@ const Comment = ({
     hideInput,
     isReplyingToComment,
     commentDetails,
-    isAuthed
+    isAuthed,
+    userId,
+    navigation
 }) => {
     const [isReplying, setIsReplying] = useState(false)
     // fires when reply button is pressed on a comment
@@ -31,7 +34,9 @@ const Comment = ({
         <View style={styles.viewContainer}>
             <CardItem style={styles.cardItem}>
                 <Body style={styles.body}>
-                    <Text style={styles.date}>{name} {moment(date).fromNow()}</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('UserViewPage', { 'userId': userId, 'userName': name })}>
+                        <Text style={styles.date}>{name} {moment(date).fromNow()}</Text>
+                    </TouchableOpacity>
                     <Text>{comment}</Text>
                     <Right style={{ width: '98%' }}>
                         {isAuthed === false ? null : (
@@ -55,6 +60,7 @@ const Comment = ({
                 <FlatList
                     data={item}
                     renderItem={({ item }) => {
+                        console.log(item)
                         return (
                             <Reply
                                 item={item}
@@ -62,7 +68,7 @@ const Comment = ({
                         )
                     }}
                     // TODO: figure out how to pass the key for this
-                    keyExtractor={({ item }) => `${item}`}
+                    keyExtractor={(item, i) => `${item}-${i}`}
                 />
                 : null}
             {isReplying === true ? (
@@ -71,21 +77,22 @@ const Comment = ({
                     hideInput={hideInput}
                     isReplyingToComment={isReplyingToComment}
                     hideInput={hideInput}
+                    user_id={user_id}
                     commentDetails={commentDetails}
                     setFlagToFalse={() => setIsReplying(false)}
                 />
             ) : null}
-        </View >
+        </View>
     )
 }
 
 
-export default Comment;
+export default withNavigation(Comment);
 
 const styles = StyleSheet.create({
     viewContainer: {
         flex: 0,
-        padding: 2
+        padding: 2,
     },
     cardItem: {
         flex: 1,
