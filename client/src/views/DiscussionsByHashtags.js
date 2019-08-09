@@ -22,7 +22,7 @@ const DiscussionsByHashtags = props => {
 
     return (
         <Container style={{ backgroundColor: theme.colors.offWhite, padding: 5 }}>
-            <Sort />
+
             <Discussions
                 loading={state.discussions_loading}
                 discussions={state.discussions}
