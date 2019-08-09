@@ -3,7 +3,6 @@ package com.neral;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.avishayil.rnrestart.ReactNativeRestartPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
@@ -31,8 +30,7 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(new MainReactPackage(),
-            new PickerPackage(), new ReactNativeRestartPackage(), new RNDeviceInfo(),
+      return Arrays.<ReactPackage>asList(new MainReactPackage(), new ReactNativeRestartPackage(), new RNDeviceInfo(),
           new ReactNativeConfigPackage(), new VectorIconsPackage(), new SvgPackage(), new ImagePickerPackage(),
           new AsyncStoragePackage(), new A0Auth0Package(), new RNGestureHandlerPackage());
     }

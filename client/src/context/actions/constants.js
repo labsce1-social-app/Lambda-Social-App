@@ -9,7 +9,7 @@ import {
 import { storeData, getData, deleteData } from '../../utils/AsyncStorage';
 import { isEmpty } from '../../utils/utility';
 import Auth0 from 'react-native-auth0';
-import ImagePicker from 'react-native-image-crop-picker';
+import ImagePicker from 'react-native-image-picker';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import { RNS3 } from 'react-native-aws3';

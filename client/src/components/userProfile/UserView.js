@@ -1,11 +1,11 @@
 import React from 'react';
 import moment from 'moment';
-import { Thumbnail, Card, CardItem, Text } from 'native-base';
-
+import { Thumbnail, Card, CardItem, Text, Spinner } from 'native-base';
+import { isEmpty } from '../../utils/utility';
 
 const UserView = ({ user }) => {
-    return (
-        <Card>
+    return !isEmpty(user) ?
+        (<Card>
             <CardItem header>
                 <Thumbnail source={{ uri: user.avatar }} />
                 <Text style={{ marginLeft: 20 }}>Name: {user.username}</Text>
@@ -16,8 +16,9 @@ const UserView = ({ user }) => {
             <CardItem>
                 <Text>Joined {moment(user.created_at).format('DD/MMM/YYYY')}</Text>
             </CardItem>
-        </Card>
-    )
+        </Card>)
+        : <Spinner />
+
 }
 
 export default UserView;

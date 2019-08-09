@@ -6,6 +6,7 @@ import moment from 'moment';
 import Reply from './Reply.js';
 import { isEmpty } from '../../utils/utility';
 import ReplyInput from './ReplyInput';
+import { withNavigation } from 'react-navigation';
 
 const Comment = ({
     comment,
@@ -18,6 +19,7 @@ const Comment = ({
     isReplyingToComment,
     commentDetails,
     isAuthed,
+    userId,
     navigation
 }) => {
     const [isReplying, setIsReplying] = useState(false)
@@ -32,7 +34,7 @@ const Comment = ({
         <View style={styles.viewContainer}>
             <CardItem style={styles.cardItem}>
                 <Body style={styles.body}>
-                    <TouchableOpacity onPress={() => navigation.navigate('userview', { userName: name })}>
+                    <TouchableOpacity onPress={() => navigation.navigate('UserViewPage', { 'userId': userId, 'userName': name })}>
                         <Text style={styles.date}>{name} {moment(date).fromNow()}</Text>
                     </TouchableOpacity>
                     <Text>{comment}</Text>
@@ -78,12 +80,12 @@ const Comment = ({
                     setFlagToFalse={() => setIsReplying(false)}
                 />
             ) : null}
-        </View >
+        </View>
     )
 }
 
 
-export default Comment;
+export default withNavigation(Comment);
 
 const styles = StyleSheet.create({
     viewContainer: {

@@ -13,3 +13,14 @@ export const updateUser = async (dispatch, user) => {
         return dispatch({ type: 'USER_UPDATE_FAILED' });
     }
 }
+
+export const viewUserProfile = async (userData) => {
+
+    try {
+        const res = await axios.post(`${postgres}/users/profile`, { userData });
+        console.log(res)
+        return res.data;
+    } catch (err) {
+        console.log(err)
+    }
+}
