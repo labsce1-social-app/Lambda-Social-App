@@ -5,7 +5,7 @@ import { theme } from '../../common/theme';
 import { isEmpty } from '../../utils/utility';
 
 const NavLinks = ({ navigation, state, dispatch, text }) => {
-  console.log(isEmpty(state.user))
+
   const handleLogging = () => {
     if (state.isAuthenticated === false || isEmpty(state.user)) {
       handleAuth(dispatch);

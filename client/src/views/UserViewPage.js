@@ -22,7 +22,7 @@ const UserViewPage = ({ navigation }) => {
 
     // beautiful call backs
     const setUser = () => viewUserProfile(userData, setUserProfile);
-    console.log(userProfile)
+
     return (
         <Container style={{ backgroundColor: theme.colors.offWhite, padding: 5 }}>
             <UserView user={userProfile} loading={isEmpty(userProfile)} />
