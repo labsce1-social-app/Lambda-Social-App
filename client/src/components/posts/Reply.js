@@ -7,7 +7,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { withNavigation } from 'react-navigation';
 
 const Reply = ({ item, navigation }) => {
-
     return (
         <View style={style.reply_container}>
             <CardItem style={styles.cardItem}>

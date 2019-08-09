@@ -60,6 +60,7 @@ const Comment = ({
                 <FlatList
                     data={item}
                     renderItem={({ item }) => {
+                        console.log(item)
                         return (
                             <Reply
                                 item={item}
@@ -67,12 +68,11 @@ const Comment = ({
                         )
                     }}
                     // TODO: figure out how to pass the key for this
-                    keyExtractor={({ item }) => `${item}`}
+                    keyExtractor={(item, i) => `${item}-${i}`}
                 />
                 : null}
             {isReplying === true ? (
                 <ReplyInput
-                    key={id}
                     postId={postId}
                     hideInput={hideInput}
                     isReplyingToComment={isReplyingToComment}
