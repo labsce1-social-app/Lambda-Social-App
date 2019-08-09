@@ -5,21 +5,27 @@ import UserView from '../components/userProfile/UserView';
 import { Container } from 'native-base';
 import { viewUserProfile } from '../context/actions/userActions';
 import { isEmpty } from '../utils/utility';
-
+import { withNavigationFocus } from 'react-navigation';
 // this component will render all of the UserProfile, I'm not sure if we'll need the scrollview component or not, it's pretty useless I think.
 const UserViewPage = ({ navigation }) => {
-    const [userData, setUserData] = useState(null);
-    const { state, dispatch } = useContext(Store);
+    const [userProfile, setUserProfile] = useState(null);
     const userId = navigation.getParam('userId');
 
+
+    // backend is expecting and object called userData with an id param. If I changed it in the backend it might mess up other components that are using this endpoint.
+    const userData = {
+        id: userId
+    }
     useEffect(() => {
-        return setUser();
-    }, [])
-    const setUser = () => setUserData(viewUserProfile(userId));
-    console.log(userData)
+        setUser(setUser);
+    }, () => setUser())
+
+    // beautiful call backs
+    const setUser = () => viewUserProfile(userData, setUserProfile);
+    console.log(userProfile)
     return (
         <Container style={{ backgroundColor: theme.colors.offWhite, padding: 5 }}>
-            <UserView user={userData} loading={isEmpty(userData)} />
+            <UserView user={userProfile} loading={isEmpty(userProfile)} />
         </Container>
     );
 };
@@ -32,4 +38,4 @@ UserViewPage.navigationOptions = ({ navigation }) => ({
     }
 });
 
-export default UserViewPage;
+export default withNavigationFocus(UserViewPage);

@@ -14,12 +14,12 @@ export const updateUser = async (dispatch, user) => {
     }
 }
 
-export const viewUserProfile = async (userData) => {
+export const viewUserProfile = async (userData, setData) => {
 
     try {
         const res = await axios.post(`${postgres}/users/profile`, { userData });
-        console.log(res)
-        return res.data;
+        let { data } = res;
+        return setData(data);
     } catch (err) {
         console.log(err)
     }
