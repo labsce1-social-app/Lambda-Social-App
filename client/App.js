@@ -8,51 +8,74 @@ import material from './native-base-theme/variables/material';
 import io from 'socket.io-client';
 // import { LOCAL, IP } from 'react-native-dotenv';
 import firebase from 'react-native-firebase';
-import AsyncStorage from '@react-native-community/async-storage';
+// import AsyncStorage from '@react-native-community/async-storage';
+
+// import * as pushNotify from './src/utils/pushNotification';
+import PushNotification from 'react-native-push-notification';
+
+import { Alert } from 'react-native';
 
 // this is where the entire app gets exported from, the context store provider is wrapped around here to give everything access to the store
 export default (App = () => {
   useEffect(() => {
-    checkPermission();
-    // console.log(firebase);
+    getfcmToken();
   }, []);
 
-  const checkPermission = async () => {
-    try {
-      const enabled = await firebase.messaging().hasPermission();
-      if (enabled) {
-        getToken();
-      } else {
-        requestPermission();
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  const getfcmToken = async () => {
+    const fcmToken = await firebase.messaging().getToken();
+    await configure();
+    console.log(fcmToken);
   };
+  const configure = () => {
+    // console.log('call configure');
+    PushNotification.configure({
+      // (optional) Called when Token is generated (iOS and Android)
+      senderID: '590428820475',
 
-  const getToken = async () => {
-    let fcmToken = await AsyncStorage.getItem('fcmToken');
-    if (!fcmToken) {
-      fcmToken = await firebase.messaging().getToken();
-      console.log('DIDNT GET TOKEN', fcmToken);
-      if (fcmToken) {
-        // user has a device token
-        console.log('GOT TOKEN', fcmToken);
-        await AsyncStorage.setItem('fcmToken', fcmToken);
-      }
-    }
-  };
+      onRegister: token => {
+        console.log('TOKEN:', token);
 
-  const requestPermission = async () => {
-    try {
-      await firebase.messaging().requestPermission();
-      // User has authorised
-      getToken();
-    } catch (error) {
-      // User has rejected permissions
-      console.log('permission rejected');
-    }
+        Alert.alert(
+          'Alert Title',
+          `TOKEN ${token}`,
+          [
+            {
+              text: 'Ask me later',
+              onPress: () => console.log('Ask me later pressed')
+            },
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel'
+            },
+            { text: 'OK', onPress: () => console.log('OK Pressed') }
+          ],
+          { cancelable: false }
+        );
+      },
+
+      // (required) Called when a remote or local notification is opened or received
+      onNotification: function(notification) {
+        console.log('NOTIFICATION:', notification);
+
+        // process the notification
+      },
+
+      // ANDROID ONLY: GCM or FCM Sender ID (product_number) (optional - not required for local notifications, but is need to receive remote push notifications)
+
+      // Should the initial notification be popped automatically
+      // default: true
+      popInitialNotification: true,
+
+      /**
+       * (optional) default: true
+       * - Specified if permissions (ios) and token (android and ios) will requested or not,
+       * - if not, you must call PushNotificationsHandler.requestPermissions() later
+       */
+      requestPermissions: true
+    });
   };
+  // PushNotification.requestPermissions('590428820475');
 
   return (
     <StyleProvider style={getTheme(darkTheme)}>
