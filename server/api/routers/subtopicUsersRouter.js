@@ -7,6 +7,11 @@ const {
   canFavorite
 } = require('../helpers/userSubsHelper');
 
+const {
+  sendPush,
+  subNotificationsBySubtopic
+} = require('../helpers/notificationHelper');
+
 /**
  **** ROUTE /subtopic_users
  */
@@ -30,11 +35,12 @@ router.get('/:id', (req, res) => {
  * Takes in user_id and subtopic_id
  */
 router.post('/favorite', async (req, res) => {
-
   if (await canFavorite(req.body)) {
     addFavoriteSubtopicToUser(req.body)
       .then(ret => {
         getUsersFavSubtopics(ret[0].user_id).then(favSubs => {
+          subNotificationsBySubtopic();
+
           res.status(200).json(favSubs);
         });
       })
