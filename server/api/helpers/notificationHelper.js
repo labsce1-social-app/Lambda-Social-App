@@ -2,20 +2,21 @@ const admin = require('firebase-admin');
 
 const serviceAccount = require('../../../server/firebaseAdminSDK.json');
 
-const sendPush = () => {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: 'https://neral-app.firebaseio.com'
-  });
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: 'https://neral-app.firebaseio.com'
+});
 
+const sendPush = () => {
   let registrationToken =
     'dbC55Tlf-xI:APA91bF1YCxO8V1wBcRzmsADCAq-RX_NJuS6b2wcTyrxkJ9O-G_GWjiU0_4o3uSnPGx32HwU5wZLEOlfZzhmf3L2-_dqkYQUa9VmLobC2DJZhfSyuHZx5oDpt0dbYBvHejyyDeH5y8UE';
 
-  let payload = {
+  let message = {
     notification: {
-      title: 'HELP',
-      body: 'HOPE THIS WORKS'
-    }
+      title: '$GOOG up 1.43% on the day',
+      body: '$GOOG gained 11.80 points to close at 835.67, up 1.43% on the day.'
+    },
+    token: registrationToken
   };
 
   let options = {
@@ -27,7 +28,7 @@ const sendPush = () => {
   // registration token.
   admin
     .messaging()
-    .sendToDevice(registrationToken, payload, options)
+    .send(message)
     .then(response => {
       // Response is a message ID string.
       console.log('Successfully sent message:', response);
