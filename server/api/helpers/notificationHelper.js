@@ -13,10 +13,11 @@ const sendPush = () => {
 
   let message = {
     notification: {
-      title: '$GOOG up 1.43% on the day',
-      body: '$GOOG gained 11.80 points to close at 835.67, up 1.43% on the day.'
+      title: 'Subbed',
+      body: 'All worked out'
     },
-    token: registrationToken
+    // token: registrationToken
+    topic: 'subtopic'
   };
 
   let options = {
@@ -38,6 +39,27 @@ const sendPush = () => {
     });
 };
 
+const subNotificationsBySubtopic = () => {
+  let registrationTokens = [
+    'dbC55Tlf-xI:APA91bF1YCxO8V1wBcRzmsADCAq-RX_NJuS6b2wcTyrxkJ9O-G_GWjiU0_4o3uSnPGx32HwU5wZLEOlfZzhmf3L2-_dqkYQUa9VmLobC2DJZhfSyuHZx5oDpt0dbYBvHejyyDeH5y8UE'
+  ];
+
+  let topic = 'subtopic'; // take in subtopic title
+
+  admin
+    .messaging()
+    .subscribeToTopic(registrationTokens, topic)
+    .then(function(response) {
+      // See the MessagingTopicManagementResponse reference documentation
+      // for the contents of response.
+      console.log('Successfully subscribed to topic:', response);
+    })
+    .catch(function(error) {
+      console.log('Error subscribing to topic:', error);
+    });
+};
+
 module.exports = {
-  sendPush
+  sendPush,
+  subNotificationsBySubtopic
 };
