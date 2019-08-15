@@ -8,10 +8,8 @@ import material from './native-base-theme/variables/material';
 import io from 'socket.io-client';
 // import { LOCAL, IP } from 'react-native-dotenv';
 import firebase from 'react-native-firebase';
-// import AsyncStorage from '@react-native-community/async-storage';
-
-// import * as pushNotify from './src/utils/pushNotification';
 import PushNotification from 'react-native-push-notification';
+import { getData, storeData } from './src/utils/AsyncStorage';
 
 import { Alert } from 'react-native';
 
@@ -22,10 +20,21 @@ export default (App = () => {
   }, []);
 
   const getfcmToken = async () => {
-    const fcmToken = await firebase.messaging().getToken();
+    let pushToken = await getData('deviceToken');
+
+    if (!pushToken) {
+      pushToken = await firebase.messaging().getToken();
+
+      if (pushToken) {
+        await storeData('deviceToken', pushToken);
+      }
+    }
+
     await configure();
-    console.log(fcmToken);
+
+    // console.log(pushToken);
   };
+
   const configure = () => {
     // console.log('call configure');
     PushNotification.configure({
